@@ -22,14 +22,17 @@ d.window.document.getElementById("fn").value = "Lucía <b>";
 click(d, '[data-a="nom"]');
 d.window.document.getElementById("fe").value = "22";
 click(d, '[data-a="est"]');
-if (!txt(d).includes("A qué Virgen le rezas") || !txt(d).includes("Paso 3 de 3") || d.window.document.querySelectorAll('[data-a="adv"]').length !== 12) throw new Error("paso 3: " + txt(d).slice(0, 160));
-click(d, '[data-a="adv"][data-k="fatima"]');
+if (!txt(d).includes("A qué Virgen le rezas") || !txt(d).includes("Paso 3 de 3") || d.window.document.querySelectorAll('[data-a="advt"]').length !== 12) throw new Error("paso 3: " + txt(d).slice(0, 160));
+if (!d.window.document.querySelector('[data-a="advok"]').disabled) throw new Error("deja seguir sin elegir");
+click(d, '[data-a="advt"][data-k="fatima"]'); click(d, '[data-a="advt"][data-k="lourdes"]'); click(d, '[data-a="advt"][data-k="lourdes"]');
+if (!txt(d).includes("Listo, elegí 1")) throw new Error("conteo de selección: " + txt(d).slice(-80));
+click(d, '[data-a="advok"]');
 // al elegirla se abre su página, todavía dentro de la bienvenida
-if (!txt(d).includes("Cova da Iria") || !txt(d).includes("Paso 3 de 3") || !txt(d).includes("La encuentras siempre en Hoy") || d.window.document.querySelector(".tabs")) throw new Error("no muestra a la Virgen elegida: " + txt(d).slice(0, 200));
-click(d, '[data-a="go"][data-v="advs"]'); if (!txt(d).includes("Paso 3 de 3")) throw new Error("elegir otra sale de la bienvenida"); click(d, '[data-a="adv"][data-k="fatima"]');
+if (!txt(d).includes("Cova da Iria") || !txt(d).includes("Paso 3 de 3") || !txt(d).includes("Cada día te llega su mensaje") || d.window.document.querySelector(".tabs")) throw new Error("no muestra a la Virgen elegida: " + txt(d).slice(0, 200));
+click(d, '[data-a="advsel"]'); if (!txt(d).includes("Paso 3 de 3") || !d.window.document.querySelector('.ni.on[data-k="fatima"]')) throw new Error("cambiar elección sale de la bienvenida"); click(d, '[data-a="advok"]');
 click(d, '[data-a="entra"]');
 let t = txt(d);
-if (!t.includes("Tu Virgen") || !t.includes("Nuestra Señora de Fátima") || !t.includes("Ver su historia y su oración")) throw new Error("hoy sin la Virgen elegida: " + t.slice(0, 300));
+if (!t.includes("Mensaje del día") || !t.includes("Nuestra Señora de Fátima") || !t.includes("Ver su historia y su oración")) throw new Error("hoy sin la Virgen elegida: " + t.slice(0, 300));
 if (!t.includes("Buenos días, Lucía <b>")) throw new Error("saludo: " + t.slice(0, 80));
 if (!t.includes("Lunes 23 de noviembre")) throw new Error("fecha mal");
 if (!t.includes("Tiempo ordinario")) throw new Error("tiempo litúrgico mal: " + t.slice(0, 200));
@@ -41,14 +44,18 @@ if (d.window.document.querySelector("h1").innerHTML.includes("<b>")) throw new E
 // 1b. advocación: página, fiesta, oración y cambio
 click(d, '.fra'); t = txt(d);
 for (const m of ["Cova da Iria", "Su fiesta es el 13 de mayo. Faltan 171 días.", "Oh Jesús mío, perdona nuestros pecados", "Francisco y Jacinta fueron canonizados en 2017"]) if (!t.includes(m)) throw new Error("advocación sin «" + m + "»: " + t.slice(0, 300));
-click(d, '[data-a="go"][data-v="advs"]'); if (d.window.document.querySelectorAll('[data-a="adv"]').length !== 12 || !d.window.document.querySelector('.ni.on[data-k="fatima"]') || txt(d).includes("Paso 3")) throw new Error("selector de advocación");
-click(d, '[data-a="adv"][data-k="carmen"]'); if (!txt(d).includes("Flor del Carmelo") || !txt(d).includes("16 de julio")) throw new Error("no cambia a Carmen: " + txt(d).slice(0, 200));
-click(d, '.hd [data-a="go"]'); if (!txt(d).includes("Nuestra Señora del Carmen") || !txt(d).includes("Buenos días")) throw new Error("no regresa a hoy con la nueva advocación: " + txt(d).slice(0, 200));
-{ const x = open("https://atrio.test/?demo=1&fecha=2026-12-12&v=adv"), tx = txt(x); if (!tx.includes("Hoy es su fiesta.") || !tx.includes("«¿No estoy yo aquí, que soy tu madre?»")) throw new Error("día de fiesta: " + tx.slice(0, 300));
-  const vistas = new Set(); for (let k = 13; k <= 28; k++) { const y = open("https://atrio.test/?demo=1&fecha=2026-11-" + k), q = y.window.document.querySelector(".fra .ci"); if (!q) throw new Error("hoy sin frase el día " + k); vistas.add(q.textContent); }
+click(d, '[data-a="advsel"]'); if (d.window.document.querySelectorAll('[data-a="advt"]').length !== 12 || !d.window.document.querySelector('.ni.on[data-k="fatima"]') || txt(d).includes("Paso 3")) throw new Error("selector de advocación");
+click(d, '[data-a="advt"][data-k="carmen"]'); click(d, '[data-a="advok"]');
+if (!txt(d).includes("Fátima") || !d.window.document.querySelectorAll(".chip").length) throw new Error("sin chips con dos Vírgenes: " + txt(d).slice(0, 200));
+click(d, '.chip[data-k="carmen"]'); if (!txt(d).includes("Flor del Carmelo") || !txt(d).includes("16 de julio")) throw new Error("chip no cambia a Carmen: " + txt(d).slice(0, 200));
+click(d, '[data-a="go"][data-v="hoy"]');
+// con dos Vírgenes, el mensaje del día se turna entre ellas
+{ const quien = new Set(); for (let k = 13; k <= 16; k++) { const y = open("https://atrio.test/?demo=1&adv=fatima,carmen&fecha=2026-11-" + k); quien.add(y.window.document.querySelector(".fra b").textContent); } if (quien.size !== 2) throw new Error("no se turnan: " + [...quien]); }
+{ const x = open("https://atrio.test/?demo=1&adv=guadalupe&fecha=2026-12-12&v=adv"), tx = txt(x); if (!tx.includes("Hoy es su fiesta.") || !tx.includes("«¿No estoy yo aquí, que soy tu madre?»")) throw new Error("día de fiesta: " + tx.slice(0, 300));
+  const vistas = new Set(); for (let k = 13; k <= 28; k++) { const y = open("https://atrio.test/?demo=1&adv=guadalupe&fecha=2026-11-" + k), q = y.window.document.querySelector(".fra .ci"); if (!q) throw new Error("hoy sin frase el día " + k); vistas.add(q.textContent); }
   if (vistas.size !== 8) throw new Error("la frase del día no rota bien: " + vistas.size); }
 
-click(d, '[data-a="go"][data-v="rezar"]'); if (!txt(d).includes("Tu Virgen") || !txt(d).includes("Su historia, su oración y la frase de hoy")) throw new Error("Rezar sin Tu Virgen"); click(d, '.row[data-a="go"][data-v="adv"]'); if (!txt(d).includes("Flor del Carmelo") || !txt(d).includes("Cambiar de Virgen")) throw new Error("Rezar no abre a la Virgen"); click(d, '.hd [data-a="go"]'); if (!txt(d).includes("Los cuatro misterios")) throw new Error("no regresa a Rezar"); click(d, '[data-a="go"][data-v="hoy"]');
+click(d, '[data-a="go"][data-v="rezar"]'); if (!txt(d).includes("Tus Vírgenes")) throw new Error("Rezar sin Tus Vírgenes"); click(d, '.row[data-a="verv"][data-k="carmen"]'); if (!txt(d).includes("Flor del Carmelo") || !txt(d).includes("Elegir mis Vírgenes")) throw new Error("Rezar no abre a la Virgen"); click(d, '.hd [data-a="go"]'); if (!txt(d).includes("Los cuatro misterios")) throw new Error("no regresa a Rezar"); click(d, '[data-a="go"][data-v="hoy"]');
 
 // 2. rosario completo
 click(d, '[data-a="ros"]');

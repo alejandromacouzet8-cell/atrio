@@ -54,9 +54,9 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   click(a, '[data-a="go"][data-v="hoy"]'); click(a, '[data-a="go"][data-v="yo"]'); if (!txt(a).includes("Guardar mi avance con Google")) throw new Error("sin botón de Google"); click(a, '[data-a="login"]'); await wait(1500);
   if (!txt(a).includes("Tu avance está guardado") || !nubeRows.u1 || !nubeRows.u1.datos.d["2026-12-03"].r) throw new Error("nube: " + JSON.stringify(nubeRows).slice(0, 200) + txt(a).slice(0, 200));
   const e = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-04", pretendToBeVisual: true }); e.window.scrollTo = () => {}; const fs2 = fakeSupabase(); e.window.supabase = fs2; e.window.eval(sc); await wait(30);
-  click(e, '[data-a="go"][data-v="nom"]'); e.window.document.getElementById("fn").value = "Lucía"; click(e, '[data-a="nom"]'); click(e, '[data-a="est"]'); click(e, '[data-a="adv"][data-k="lourdes"]'); click(e, '[data-a="entra"]'); click(e, '[data-a="go"][data-v="yo"]'); click(e, '[data-a="login"]'); await wait(1500);
+  click(e, '[data-a="go"][data-v="nom"]'); e.window.document.getElementById("fn").value = "Lucía"; click(e, '[data-a="nom"]'); click(e, '[data-a="est"]'); click(e, '[data-a="advt"][data-k="lourdes"]'); click(e, '[data-a="advok"]'); click(e, '[data-a="entra"]'); click(e, '[data-a="go"][data-v="yo"]'); click(e, '[data-a="login"]'); await wait(1500);
   if (!/1\s*rosario rezado/.test(txt(e).replace(/\s+/g, " ")) && !txt(e).includes("1rosario rezado")) throw new Error("no recupera el avance en otro teléfono: " + txt(e).slice(0, 300));
-  if (!txt(e).includes("Nuestra Señora de Lourdes") || nubeRows.u1.datos.v !== "lourdes") throw new Error("la advocación no viaja con la cuenta: " + JSON.stringify(nubeRows.u1.datos).slice(0, 120));
+  if (!txt(e).includes("Lourdes") || nubeRows.u1.datos.vs[0] !== "lourdes") throw new Error("la advocación no viaja con la cuenta: " + JSON.stringify(nubeRows.u1.datos).slice(0, 120));
   if (viola.length) throw new Error("rebasó el límite de presencia del servidor: " + viola.join(", "));
   if (errs.length) throw new Error("errores: " + errs.join(" | "));
   console.log("presencia por cliente:", JSON.stringify(Object.values(tracks)), "| mensajes de la cuenta:", enviados);
