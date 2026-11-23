@@ -187,3 +187,11 @@ h1.xl{font-size:44px;line-height:46px;letter-spacing:-.6px}
 .ins{text-wrap:balance}
 .nb h2{text-wrap:balance}
 .pie{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;padding:28px 22px calc(16px + env(safe-area-inset-bottom));background:linear-gradient(rgba(11,50,55,0),#0B3237 42%);z-index:5}
+.advg .ni{position:relative}
+.pal{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:11px;background:var(--oro);color:var(--manto);display:flex;align-items:center;justify-content:center}
+.btn:disabled{opacity:.45;cursor:default;box-shadow:none}
+.chips{display:flex;gap:8px;overflow-x:auto;margin:10px -22px 0;padding:0 22px 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:40px;padding:0 16px;border-radius:20px;border:1px solid rgba(230,194,122,.4);background:none;color:var(--txt);font-family:var(--se);font-weight:600;font-size:16px;cursor:pointer;white-space:nowrap}
+.chip.on{background:var(--oro);border-color:var(--oro);color:var(--manto)}
+.chip:focus-visible{outline:2px solid var(--oroc);outline-offset:2px}

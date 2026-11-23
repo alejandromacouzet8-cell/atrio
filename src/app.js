@@ -11,7 +11,8 @@
     go: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l5 5-5 5"/></svg>',
     bell: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17c1.6-1.6 2-3.4 2-6a5 5 0 0 1 10 0c0 2.6.4 4.4 2 6z"/><path d="M10 20a2.1 2.1 0 0 0 4 0"/></svg>',
     sun: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>',
-    st: `<svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" aria-hidden="true"><polygon points="${S16}"/></svg>`,
+    ok: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.4l2.6 2.6L11 4.4"/></svg>',
+    st: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 2.5h2.8v5.6H19v2.8h-5.6v10.6h-2.8V10.9H5V8.1h5.6z"/></svg>',
     pin: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10.5" r="2.4"/></svg>',
     yo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.9-4 3.9-6 7.5-6s6.6 2 7.5 6"/></svg>'
   };
@@ -52,7 +53,8 @@
   try { const r = localStorage.getItem("atrio1"); if (r) S = Object.assign(S, JSON.parse(r)); } catch (_) {}
   let U = null, tNube = 0;
   const save = () => { try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} clearTimeout(tNube); tNube = setTimeout(nube, 1200); };
-  if (Q.get("demo")) { S.n = S.n || "Lucía"; if (S.e < 0) S.e = 22; if (Q.get("adv")) S.v = Q.get("adv"); }
+  if (Q.get("demo")) { S.n = S.n || "Lucía"; if (S.e < 0) S.e = 22; if (Q.get("adv")) S.vs = Q.get("adv").split(","); }
+  if (!Array.isArray(S.vs)) S.vs = S.v ? [S.v] : [];
 
   /* ---------- fechas y tiempo litúrgico ---------- */
   const FAKE = Q.get("fecha");
@@ -87,16 +89,21 @@
   function racha() { let n = 0, d = dia(now()); if (!(S.d[key(d)] || {}).r) d = add(d, -1); while ((S.d[key(d)] || {}).r) { n++; d = add(d, -1); } return n; }
   const total = () => Object.keys(S.d).filter((k) => S.d[k].r).length;
   const estado = (i) => (i === 99 ? "Fuera de México" : (MX.e[i] || [""])[0]);
-  const adv = () => ADV.find((x) => x.k === S.v) || ADV[0];
+  const mis = () => { const l = (S.vs || []).map((k) => ADV.find((x) => x.k === k)).filter(Boolean); return l.length ? l : [ADV[0]]; };
   const advN = (a) => a.p + " " + a.c;
   function fiesta(a) { const t = dia(now()); let d = new Date(t.getFullYear(), a.f[1] - 1, a.f[0]); if (d < t) d = new Date(t.getFullYear() + 1, a.f[1] - 1, a.f[0]); return Math.round((d - t) / 864e5); }
+  const nDia = () => { const t = dia(now()); return Math.floor((t.getTime() - t.getTimezoneOffset() * 6e4) / 864e5); };
+  // La Virgen del día: la que tenga fiesta hoy; si no, se turnan entre las que elegiste
+  const delDia = () => { const l = mis(); return l.find((a) => !fiesta(a)) || l[nDia() % l.length]; };
+  let va = "";
+  const adv = () => mis().find((x) => x.k === va) || delDia();
   function frase(a) {
     if (!fiesta(a)) return a.fr[0];
     const todas = []; for (let i = 0; i < Math.max(a.fr.length, MARIA.length); i++) { if (a.fr[i]) todas.push(a.fr[i]); if (MARIA[i]) todas.push(MARIA[i]); }
-    const t = dia(now()); return todas[Math.floor((t.getTime() - t.getTimezoneOffset() * 6e4) / 864e5) % todas.length];
+    return todas[Math.floor(nDia() / mis().length) % todas.length];
   }
   const cita = (f) => `<span class="ci">${f[0] === "c" ? "«" + f[1] + "»" : f[1]}</span>`;
-  const deHoy = (extra) => { const a = adv(), f = frase(a); return `<button class="fra${extra || ""}" data-a="go" data-v="adv" aria-label="Tu Virgen: ${advN(a)}. Ver su historia y su oración"><span class="fh"><span class="md">${EMA[a.k]}</span><span class="g"><span class="ru">${fiesta(a) ? "Tu Virgen" : "Hoy es su fiesta"}</span><b>${advN(a)}</b></span><span class="fl">${I.go}</span></span>${cita(f)}<small>${f[2]}</small><span class="fv">Ver su historia y su oración</span></button>`; };
+  const deHoy = (extra) => { const a = delDia(), f = frase(a); return `<button class="fra${extra || ""}" data-a="verv" data-k="${a.k}" aria-label="Mensaje del día, de ${advN(a)}. Ver su historia y su oración"><span class="fh"><span class="md">${EMA[a.k]}</span><span class="g"><span class="ru">${fiesta(a) ? "Mensaje del día" : "Hoy es su fiesta"}</span><b>${advN(a)}</b></span><span class="fl">${I.go}</span></span>${cita(f)}<small>${f[2]}</small><span class="fv">Ver su historia y su oración</span></button>`; };
 
   /* ---------- campana ---------- */
   let AC = null;
@@ -172,7 +179,7 @@
     if (!SB || !U) return;
     try { SB.from("progreso").select("datos").eq("user_id", U.id).maybeSingle().then((r) => {
       const R = (r && r.data && r.data.datos) || null;
-      if (R) { const d = Object.assign({}, R.d || {}); Object.keys(S.d).forEach((k) => { d[k] = Object.assign({}, d[k] || {}, S.d[k]); }); const nv = Object.assign({}, R.nov || {}); Object.keys(S.nov).forEach((y) => { nv[y] = Object.assign({}, nv[y] || {}, S.nov[y]); }); S.d = d; S.nov = nv; if (!S.n && R.n) S.n = R.n; if (!S.v && R.v) S.v = R.v; if (S.e < 0 && R.e >= 0) S.e = R.e; }
+      if (R) { const d = Object.assign({}, R.d || {}); Object.keys(S.d).forEach((k) => { d[k] = Object.assign({}, d[k] || {}, S.d[k]); }); const nv = Object.assign({}, R.nov || {}); Object.keys(S.nov).forEach((y) => { nv[y] = Object.assign({}, nv[y] || {}, S.nov[y]); }); S.d = d; S.nov = nv; if (!S.n && R.n) S.n = R.n; if (!S.vs.length && (R.vs || R.v)) S.vs = R.vs || [R.v]; if (S.e < 0 && R.e >= 0) S.e = R.e; }
       try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} nube(); render();
     }, () => {}); } catch (_) {}
   }
@@ -272,7 +279,7 @@
   function encendidos() { if (velasHoy) return Object.assign({}, velasHoy); const lit = {}; vivos().forEach((p) => { const pr = p.presence || {}; if (pr.r && !p.isMe && MX.e[pr.e]) lit[pr.e] = (lit[pr.e] || 0) + 1; }); return lit; }
 
   /* ---------- pantallas ---------- */
-  let view = "hoy", ros = null, nd = 1, vn = 0, msg = "", paso3 = 0, vuelve = "hoy";
+  let view = "hoy", ros = null, nd = 1, vn = 0, msg = "", paso3 = 0, vuelve = "hoy", sel = [];
   const V = {
     bien: () => `<section class="v d in">${sky()}<div class="hd z" style="justify-content:flex-start;gap:10px"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M6.5 24.5V13a7.5 7.5 0 0 1 15 0v11.5M3.5 24.5h21" stroke="#E6C27A" stroke-width="1.6" stroke-linecap="round"/><polygon transform="translate(8 8.2) scale(.75)" fill="#E6C27A" points="${S16}"/></svg><b style="font-family:var(--se);font-size:26px;font-weight:600">Atrio</b></div>${portal()}
       <p class="z" style="margin-top:14px;font-family:var(--se);font-style:italic;font-weight:500;font-size:33px;line-height:39px">¿No estoy yo aquí,<br>que soy tu madre?</p><p class="ru z" style="margin-top:8px;font-size:16px">Santa María de Guadalupe a san Juan Diego, 1531</p>
@@ -285,17 +292,19 @@
       <label class="lab z" for="fe">Tu estado</label><select class="fld z" id="fe">${MX.e.map((e, i) => `<option value="${i}"${i === (S.e < 0 ? 6 : S.e) ? " selected" : ""}>${e[0]}</option>`).join("")}<option value="99"${S.e === 99 ? " selected" : ""}>Fuera de México</option></select>
       <p class="note z" style="margin-top:12px">Tu nombre y tu avance se guardan solo en este dispositivo.</p>
       <button class="btn go mt z" data-a="est">Entrar a Atrio</button></section>`,
-    advs: () => `<section class="v d in">${sky()}${hd([paso3 ? "est" : "adv"], paso3 ? "Paso 3 de 3" : "Tu Virgen")}<h1 class="z" style="margin-top:${paso3 ? 30 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Es la misma María, con el nombre que le dan en tu casa. Puedes cambiarla cuando quieras.</p>
-      <div class="advg z">${ADV.map((a) => `<button class="ni${a.k === S.v ? " on" : ""}" data-a="adv" data-k="${a.k}" aria-label="${advN(a)}"><span class="em">${EMA[a.k]}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`).join("")}</div>
-      <p class="note z" style="margin-top:18px">¿No está la tuya? Iremos sumando más advocaciones.</p></section>`,
+    advs: () => { const n = sel.length; return `<section class="v d in" style="padding-bottom:120px">${sky()}${hd([paso3 ? "est" : "adv"], paso3 ? "Paso 3 de 3" : "Tus Vírgenes")}<h1 class="z" style="margin-top:${paso3 ? 30 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Elige una o varias. Es la misma María, con el nombre que le dan en tu casa.</p>
+      <div class="advg z">${ADV.map((a) => { const on = sel.includes(a.k); return `<button class="ni${on ? " on" : ""}" data-a="advt" data-k="${a.k}" aria-pressed="${on}" aria-label="${advN(a)}">${on ? `<span class="pal">${I.ok}</span>` : ""}<span class="em">${EMA[a.k]}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`; }).join("")}</div>
+      <p class="note z" style="margin-top:18px">¿No está la tuya? Iremos sumando más advocaciones.</p>
+      <div class="pie"><button class="btn go" data-a="advok"${n ? "" : " disabled"}>${n ? (n === 1 ? "Listo, elegí 1" : "Listo, elegí " + n) : "Elige al menos una"}</button></div></section>`; },
     adv: () => { const a = adv(), ff = fiesta(a), f = frase(a);
       const ob = paso3 === 2;
       return `<section class="v d in"${ob ? ' style="padding-bottom:120px"' : ""}>${sky()}${hd([ob ? "advs" : vuelve], ob ? "Paso 3 de 3" : "Tu Virgen")}
+        ${mis().length > 1 ? `<div class="chips z">${mis().map((x) => `<button class="chip${x.k === a.k ? " on" : ""}" data-a="verv" data-k="${x.k}">${x.c}</button>`).join("")}</div>` : ""}
         <div class="nicho z"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em">${EMA[a.k]}</span><p class="ru">${a.p}</p><h2>${a.c}</h2><p class="ins">${a.l}</p><p class="fie">${ff ? `Su fiesta es el ${a.f[0]} de ${MESES[a.f[1] - 1]}. ${ff === 1 ? "Es mañana." : "Faltan " + ff + " días."}` : "Hoy es su fiesta."}</p></div></div>
-        <p class="tit z">Para hoy</p><div class="z c">${cita(f)}<p class="note" style="margin-top:8px">${f[2]}</p></div>
+        <p class="tit z">${a.k === delDia().k ? "Mensaje del día" : "Su mensaje"}</p><div class="z c">${cita(f)}<p class="note" style="margin-top:8px">${f[2]}</p></div>
         <p class="tit z">Su historia</p>${a.h.map((x) => `<p class="his z">${x}</p>`).join("")}${a.fx ? `<p class="note z" style="margin-top:12px">${a.fx}</p>` : ""}
         <p class="tit z">Oración</p>${a.o[0] === "Oración" ? "" : `<p class="ru z c">${a.o[0]}</p>`}<p class="pr z c" style="font-size:20px;line-height:30px">${a.o[1]}</p>
-        <div class="z" style="padding-top:28px">${ob ? `<p class="note c">La encuentras siempre en Hoy, en Rezar y en Yo.</p><button class="lk" data-a="go" data-v="advs" style="display:block;margin:4px auto 0">Elegir otra</button><div class="pie"><button class="btn go" data-a="entra">Entrar a Atrio</button></div>` : `<button class="btn go" data-a="ros">Rezar el rosario de hoy</button><button class="lk" data-a="go" data-v="advs" style="display:block;margin:4px auto 0">Cambiar de Virgen</button>`}</div></section>`; },
+        <div class="z" style="padding-top:28px">${ob ? `<p class="note c">${mis().length > 1 ? "Cada día te llega el mensaje de una de ellas, en Hoy." : "Cada día te llega su mensaje, en Hoy."}</p><button class="lk" data-a="advsel" style="display:block;margin:4px auto 0">Cambiar mi elección</button><div class="pie"><button class="btn go" data-a="entra">Entrar a Atrio</button></div>` : `<button class="btn go" data-a="ros">Rezar el rosario de hoy</button><button class="lk" data-a="advsel" style="display:block;margin:4px auto 0">Elegir mis Vírgenes</button>`}</div></section>`; },
     hoy: () => {
       const d = now(), h = d.getHours(), tp = tiempo(d), set = MIS_DIA[d.getDay()], nv = nov(), hh = hoy(), rc = racha();
       const nvTxt = nv.n ? `Día ${nv.n} de 9` : nv.fiesta ? "Hoy es su fiesta" : nv.f === 1 ? "Empieza mañana" : `Empieza el 3 de diciembre, faltan ${nv.f} días`;
@@ -322,7 +331,7 @@
           <div class="nb"><span class="em">${EM[set]}</span><p class="ru">${hh.r ? "Ya lo rezaste hoy" : "Hoy, " + DIAS[d.getDay()].toLowerCase()}</p><h2>Santo rosario</h2><p class="ins">${MIS[set].n}</p>
           <button class="btn go" data-a="ros">${hh.r ? "Rezarlo otra vez" : "Empezar a rezar"}</button><button class="lk" data-a="go" data-v="sala">Rezarlo en familia</button></div></div>
         <p class="tit">Los cuatro misterios</p><div class="ret">${ni("gozosos")}${ni("luminosos")}${ni("dolorosos")}${ni("gloriosos")}</div>
-        <p class="tit">Tu Virgen</p><div class="card"><button class="row" data-a="go" data-v="adv"><span class="md">${EMA[adv().k]}</span><span class="g"><b>${advN(adv())}</b><small>Su historia, su oración y la frase de hoy</small></span>${I.go}</button></div>
+        <p class="tit">${mis().length > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="card">${mis().map((x) => `<button class="row" data-a="verv" data-k="${x.k}"><span class="md">${EMA[x.k]}</span><span class="g"><b>${advN(x)}</b><small>${x.k === delDia().k ? "Hoy te trae el mensaje del día" : "Su historia y su oración"}</small></span>${I.go}</button>`).join("")}<button class="row" data-a="advsel"><span class="g"><b style="font-size:16px">Elegir mis Vírgenes</b></span>${I.go}</button></div>
         <p class="tit">Devociones</p><div class="card">${row('data-a="go" data-v="vir"', "virgen", "Devociones a la Virgen", "Bajo tu amparo, Acordaos y más")}${row('data-a="go" data-v="ang"', "angelus", "Ángelus", hh.a ? "Ya lo rezaste hoy" : "A mediodía, con campana")}${row('data-a="go" data-v="nov"', "novena", "Novena de Guadalupe", nvTxt)}</div>${tabs("rezar")}</section>`;
     },
     ros: () => {
@@ -359,7 +368,7 @@
       return `<section class="v d n tb in">${sky()}<div class="hd" style="align-items:flex-start"><div><p class="ru">Tu bitácora</p><h1>${esc(S.n)}</h1></div><span aria-hidden="true" style="flex:none;margin-top:8px;width:44px;height:44px;border-radius:22px;background:var(--teal);color:var(--card);font-family:var(--se);font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center">${esc(S.n.slice(0, 1).toUpperCase())}</span></div>
       <div class="st"><div><b>${racha()}</b><span>${racha() === 1 ? "día seguido" : "días seguidos"}</span></div><div><b>${total()}</b><span>${total() === 1 ? "rosario rezado" : "rosarios rezados"}</span></div></div>
       <div class="card" style="margin-top:12px;padding:12px 12px 14px"><p class="ru" style="margin:0 6px 6px;font-size:16px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)} de ${y}</p><div class="cal">${c}</div></div>
-      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="go" data-v="adv"><span class="g"><b>Mi Virgen</b><small>${advN(adv())}</small></span>${I.go}</button><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
+      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
       ${SB ? (U ? `<div class="card" style="margin-top:12px"><div class="row" style="cursor:default"><span class="g"><b>Tu avance está guardado</b><small>${esc(U.email || "Cuenta de Google")}</small></span><span class="ok">Listo</span></div><button class="row" data-a="logout"><span class="g"><b>Cerrar sesión</b></span>${I.go}</button></div>` : `<button class="btn te" data-a="login" style="margin-top:12px">Guardar mi avance con Google</button><p class="note" style="margin-top:8px">Sin cuenta, tu avance vive solo en este teléfono.</p>`) : `<p class="note" style="margin-top:12px">Tu avance se guarda solo en este dispositivo.</p>`}${tabs("yo")}</section>`; },
     sala: () => {
       const cab = sky() + hd(["hoy"], "Rosario en familia");
@@ -381,13 +390,16 @@
   /* ---------- acciones ---------- */
   function aviso(t) { msg = t; render(); setTimeout(() => { msg = ""; const x = document.querySelector(".toast"); if (x) x.remove(); }, 2600); }
   function fin() { const s = ros; ros = null; marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {}); go("listo"); }
-  function go(v) { if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est)$/.test(view)) view = "bien"; try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {} render(); try { window.scrollTo(0, 0); } catch (_) {} }
+  function go(v) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est)$/.test(view)) view = "bien"; try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {} render(); try { window.scrollTo(0, 0); } catch (_) {} }
   function render() { despierta(view === "ros"); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); }
   const A = {
     go: (d) => go(d.v),
     nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; save(); go("est"); },
-    est: () => { S.e = parseInt(document.getElementById("fe").value, 10); save(); presLobby(); if (S.v) go("hoy"); else { paso3 = 1; go("advs"); } },
-    adv: (d) => { S.v = ADV.some((x) => x.k === d.k) ? d.k : ADV[0].k; save(); if (paso3) paso3 = 2; go("adv"); },
+    est: () => { S.e = parseInt(document.getElementById("fe").value, 10); save(); presLobby(); if (S.vs.length) go("hoy"); else { paso3 = 1; sel = []; go("advs"); } },
+    advt: (d) => { if (!ADV.some((x) => x.k === d.k)) return; sel = sel.includes(d.k) ? sel.filter((k) => k !== d.k) : sel.concat(d.k); render(); },
+    advsel: () => { sel = S.vs.slice(); go("advs"); },
+    advok: () => { if (!sel.length) return; S.vs = ADV.filter((x) => sel.includes(x.k)).map((x) => x.k); S.v = S.vs[0]; save(); va = ""; if (paso3) paso3 = 2; go("adv"); },
+    verv: (d) => { va = d.k; go("adv"); },
     entra: () => { paso3 = 0; go("hoy"); },
     ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0 }; ros.p = pasos(); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); go("ros"); },
     rosala: () => { ros = { set: MIS_DIA[now().getDay()], i: 0, sala: 1 }; ros.p = pasos(); presSala(); go("ros"); },
