@@ -337,7 +337,17 @@ p.pin.z{margin-top:10px}
 .ppl.gr .cara{width:76px;height:76px}
 .ppl.gr .cara b{font-size:30px}
 .ppl.gr small{max-width:100px;font-size:14px;line-height:18px}
-.ro.sl .ring{height:clamp(128px,calc(100vh - 590px),236px);height:clamp(128px,calc(100dvh - 560px),236px)}
+.ro.sl .ring{margin-top:40px;height:clamp(150px,calc(100vh - 520px),250px);height:clamp(150px,calc(100dvh - 490px),250px)}
+.orb{position:absolute;inset:0;pointer-events:none}
+.of{position:absolute;width:38px;height:38px;margin:-19px 0 0 -19px}
+.of .cara{width:38px;height:38px}
+.of .cara b{font-size:16px}
+.of.ld .cara{border-color:var(--oro);border-width:2px}
+.of.vz .cara{border-color:rgba(230,194,122,.75)}
+.of.habla .cara{border-color:var(--oroc);box-shadow:0 0 0 3px rgba(244,220,166,.55),0 0 18px rgba(244,220,166,.5)}
+.of .mm{width:17px;height:17px;right:-5px;bottom:-5px;border-width:1.5px}
+.of .mm svg{width:10px;height:10px}
+.of.me video{transform:scaleX(-1)}
 .vzb.ic2{flex:none;width:50px;padding:0}
 .vzb.ch.ic2,.vzr.ch .ic2{width:36px;min-height:36px}
 .vzr.ch .vzb{min-height:36px;padding:0 12px;border-radius:18px;font-size:14px}
