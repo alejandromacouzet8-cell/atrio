@@ -339,28 +339,56 @@ const VIR = [
       }
     } catch (_) {}
   }
-  let sono = "";
-  setInterval(() => { const d = now(); if (S.ang && S.n && d.getHours() === 12 && d.getMinutes() < 10 && sono !== key(d) && !hoy().a && view !== "ros") { sono = key(d); bell(3); go("ang"); } }, 20000);
+  let sono = "", tic = 0, WL = null;
+  function despierta(on) {
+    try {
+      if (on) { if (!WL && navigator.wakeLock && document.visibilityState === "visible") navigator.wakeLock.request("screen").then((w) => { WL = w; w.addEventListener("release", () => { if (WL === w) WL = null; }); }, () => {}); }
+      else if (WL) { const w = WL; WL = null; w.release().catch(() => {}); }
+    } catch (_) {}
+  }
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") { despierta(view === "ros"); if (view === "mapa" || view === "listo") cargaVelas(); } });
+  setInterval(() => { const d = now(); if (++tic % 3 === 0 && (view === "mapa" || view === "listo") && !document.hidden) cargaVelas(); if (S.ang && S.n && d.getHours() === 12 && d.getMinutes() < 10 && sono !== key(d) && !hoy().a && view !== "ros") { sono = key(d); bell(3); go("ang"); } }, 20000);
 
   /* ---------- sala y mapa en vivo (solo cuando la plataforma lo permite) ---------- */
   const SB_URL = "https://dzvbmibnrsdubwoqolgk.supabase.co", SB_KEY = "sb_publishable_5_GfPgfqO5o_3Ex_nUsZyw_zkstzjBE";
   let RM = null, peersL = [], sala = null, peersS = [], lead = false, codigo = "", SB = null, velasHoy = null;
   function sbRoom(cli) {
-    const me = Math.random().toString(36).slice(2, 12);
+    // El servidor cierra el canal a quien manda más de 5 cambios de presencia en 30 s. Por eso la presencia
+    // lleva solo lo que casi no cambia (quién está, quién dirige) y la cuenta del rosario viaja por "broadcast".
+    const me = Math.random().toString(36).slice(2, 12), RAPIDO = { on: 1, i: 1, set: 1, fin: 1 };
+    let marcas = [];
     const mk = (name) => {
-      let st = {}, subs = [], mine = {}, ok = false;
-      const ch = cli.channel(name, { config: { presence: { key: me } } });
-      const fire = () => { const peers = Object.keys(st).map((k) => ({ peer: k, isMe: k === me, kind: "viewer", presence: (st[k] && st[k][0]) || {} })); subs.forEach((f) => { try { f({ peers }); } catch (_) {} }); };
-      ch.on("presence", { event: "sync" }, () => { st = ch.presenceState(); fire(); });
-      ch.subscribe((x) => { if (x === "SUBSCRIBED") { ok = true; ch.track(mine); } });
+      let ch = null, st = {}, subs = [], lento = {}, rapido = {}, deOtros = {}, ok = false, fuera = false, ultimo = "", llaves = "", tT = 0, tR = 0;
+      const fire = () => { const peers = Object.keys(st).map((k) => { const m = st[k] || []; return { peer: k, isMe: k === me, kind: "viewer", presence: Object.assign({}, m[m.length - 1] || {}, k === me ? rapido : deOtros[k] || {}) }; }); subs.forEach((f) => { try { f({ peers }); } catch (_) {} }); };
+      const di = () => { if (ok && !fuera && lento.lead) try { ch.send({ type: "broadcast", event: "st", payload: { k: me, s: rapido } }); } catch (_) {} };
+      const track = () => {
+        clearTimeout(tT); if (!ok || fuera) return;
+        const j = JSON.stringify(lento); if (j === ultimo) return;
+        const t = Date.now(); marcas = marcas.filter((x) => t - x < 31000);
+        if (marcas.length >= 4) { tT = setTimeout(track, 31000 - (t - marcas[0])); return; }
+        marcas.push(t); ultimo = j; try { ch.track(lento); } catch (_) {}
+      };
+      const abre = () => {
+        if (fuera) return; ok = false;
+        const c = ch = cli.channel(name, { config: { presence: { key: me } } });
+        c.on("presence", { event: "sync" }, () => { if (c !== ch) return; st = c.presenceState(); Object.keys(deOtros).forEach((k) => { if (!st[k]) delete deOtros[k]; }); const l = Object.keys(st).sort().join(); if (l !== llaves) { llaves = l; di(); } fire(); });
+        c.on("broadcast", { event: "st" }, (m) => { const q = m && m.payload; if (c === ch && q && q.k && q.k !== me) { deOtros[q.k] = q.s || {}; fire(); } });
+        c.subscribe((x) => {
+          if (c !== ch || fuera) return;
+          if (x === "SUBSCRIBED") { ok = true; ultimo = ""; track(); di(); }
+          else { ok = false; clearTimeout(tR); tR = setTimeout(() => { if (c === ch && !ok && !fuera) { try { cli.removeChannel(c); } catch (_) {} abre(); } }, 6000); }
+        });
+      };
+      abre();
+      const tB = setInterval(di, 5000);
       return {
-        presence: (p) => { Object.keys(p).forEach((k) => { if (p[k] === null) delete mine[k]; else mine[k] = p[k]; }); if (ok) ch.track(mine); return Promise.resolve(); },
+        presence: (q) => { let l = 0, r = 0; Object.keys(q).forEach((k) => { const T = RAPIDO[k] ? rapido : lento, v = q[k]; if (v === null || v === undefined) { if (k in T) { delete T[k]; RAPIDO[k] ? r++ : l++; } } else if (T[k] !== v) { T[k] = v; RAPIDO[k] ? r++ : l++; } }); if (l) track(); if (r) { di(); fire(); } return Promise.resolve(); },
         onPeers: (fn) => { subs.push(fn); fire(); return () => {}; },
-        leave: () => { try { cli.removeChannel(ch); } catch (_) {} return Promise.resolve(); },
-        join: (n) => Promise.resolve(mk(n))
+        leave: () => { fuera = true; clearTimeout(tT); clearTimeout(tR); clearInterval(tB); try { cli.removeChannel(ch); } catch (_) {} return Promise.resolve(); }
       };
     };
-    return mk("atrio-lobby");
+    // Sin canal general: el mapa se arma con las veladoras guardadas, así solo abre conexión quien entra a una sala.
+    return { presence: () => Promise.resolve(), onPeers: () => () => {}, join: (n) => Promise.resolve(mk(n)) };
   }
   function nube() { if (!SB || !U) return; try { SB.from("progreso").upsert({ user_id: U.id, datos: S, actualizado: new Date().toISOString() }).then(() => {}, () => {}); } catch (_) {} }
   function sincroniza() {
@@ -373,7 +401,9 @@ const VIR = [
   }
   function cargaVelas() {
     if (!SB) return;
-    try { SB.from("velas").select("estado").eq("dia", key(now())).limit(5000).then((r) => { if (r && r.data) { const c = {}; r.data.forEach((x) => { c[x.estado] = (c[x.estado] || 0) + 1; }); velasHoy = c; if (view === "mapa" || view === "listo") render(); } }, () => {}); } catch (_) {}
+    const pon = (c) => { const j = JSON.stringify(c); if (j === JSON.stringify(velasHoy)) return; velasHoy = c; if (view === "mapa" || view === "listo") render(); };
+    const lento = () => SB.from("velas").select("estado").eq("dia", key(now())).limit(1000).then((q) => { if (q && q.data) { const c = {}; q.data.forEach((x) => { c[x.estado] = (c[x.estado] || 0) + 1; }); pon(c); } }, () => {});
+    try { SB.rpc("velas_del_dia", { d: key(now()) }).then((r) => { if (r && r.data && !r.error) { const c = {}; r.data.forEach((x) => { c[x.estado] = x.n; }); pon(c); } else lento(); }, lento); } catch (_) {}
   }
   function enciende() {
     if (!SB || hoy().v || !MX.e[S.e]) return;
@@ -396,8 +426,8 @@ const VIR = [
         r.onPeers((c) => { peersL = c.peers || []; if (view === "mapa" || view === "listo" || (view === "sala" && !sala)) render(); }, () => { RM = null; peersL = []; });
         presLobby(); if (view === "sala") render();
       }).catch(() => {});
-      else if (n < 3 && SB_URL.indexOf("http") !== 0) setTimeout(() => conecta(n + 1), 700);
-      else if (!window.claude) setTimeout(conectaSB, 0);
+      else if (SB_URL.indexOf("http") === 0) setTimeout(conectaSB, 0);
+      else if (n < 8) setTimeout(() => conecta(n + 1), 700);
     } catch (_) {}
   }
   conecta(0);
@@ -518,8 +548,8 @@ const VIR = [
       <div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>
       ${n > 1 ? `<p class="note z" style="margin-top:12px">Ahora mismo hay ${n} personas con Atrio abierto.</p>` : ""}
       <button class="btn go mt z" data-a="go" data-v="hoy">Volver a hoy</button>${SB && !U ? `<button class="lk c z" data-a="login" style="margin-top:4px">Guardar mi avance con Google</button>` : `<button class="lk c z" data-a="copiar" style="margin-top:4px">Copiar invitación para mi familia</button>`}</section>`; },
-    mapa: () => { const lit = encendidos(), n = vivos().length, r = hoy().r, c = Object.keys(lit).length + (r && MX.e[S.e] && !lit[S.e] ? 1 : 0); return `<section class="v d tb in">${sky()}<p class="ru z">México en oración</p><h1 class="z">${r ? "Tu veladora está encendida" : "Enciende tu estado"}</h1><p class="sub z">${r ? esc(estado(S.e)) + " brilla hoy por tu rosario." : "Cada rosario terminado enciende una veladora en " + esc(estado(S.e)) + "."}</p>
-      <div class="z mapa-full"><div class="halo"></div>${mapa(lit, r ? S.e : -1, 1, `<div class="cuenta"><p class="num">${c}</p><p>${c === 1 ? "estado encendido" : "estados encendidos"} ${velasHoy ? "hoy" : "ahora"}${n > 1 ? `<br>${n} personas rezando con Atrio` : ""}</p></div>`)}</div>
+    mapa: () => { const lit = encendidos(), n = vivos().length, r = hoy().r, mio = r && MX.e[S.e] ? 1 : 0, c = Object.keys(lit).filter((k) => MX.e[k]).length + (mio && !lit[S.e] ? 1 : 0), tot = Object.keys(lit).reduce((a, k) => a + (MX.e[k] ? lit[k] : 0), 0) + (mio && (!velasHoy || !lit[S.e]) ? 1 : 0); return `<section class="v d tb in">${sky()}<p class="ru z">México en oración</p><h1 class="z">${r ? "Tu veladora está encendida" : "Enciende tu estado"}</h1><p class="sub z">${r ? esc(estado(S.e)) + " brilla hoy por tu rosario." : "Cada rosario terminado enciende una veladora en " + esc(estado(S.e)) + "."}</p>
+      <div class="z mapa-full"><div class="halo"></div>${mapa(lit, r ? S.e : -1, 1, `<div class="cuenta"><p class="num">${tot}</p><p>${tot === 1 ? "veladora encendida" : "veladoras encendidas"} ${velasHoy ? "hoy" : "ahora"}<br>${tot ? `en ${c} ${c === 1 ? "estado" : "estados"}` : "Enciende la primera."}${n > 1 ? `<br>${n} personas con Atrio abierto` : ""}</p></div>`)}</div>
       <p class="note z" style="margin-top:4px">${velasHoy ? "Cada veladora es un rosario terminado hoy en ese estado." : RM ? "El mapa muestra a quienes tienen Atrio abierto en este momento." : "En esta versión el mapa muestra tu veladora."}</p>
       ${r ? "" : `<button class="btn go z" style="margin-top:14px" data-a="ros">Rezar el rosario de hoy</button>`}${tabs("mapa", 1)}</section>`; },
     nov: () => { const nv = nov(), he = novHechos(); return `<section class="v d in">${sky()}${hd(["hoy"], "Del 3 al 11 de diciembre")}<h1 class="z" style="margin-top:10px">Novena de Guadalupe</h1><p class="sub z">${nv.n ? `Hoy es el día ${nv.n} de 9.` : nv.fiesta ? "Hoy es 12 de diciembre, su fiesta." : `Empieza el 3 de diciembre. ${nv.f === 1 ? "Falta un día" : "Faltan " + nv.f + " días"}; mientras, puedes leer cada día.`}</p>
@@ -562,7 +592,7 @@ const VIR = [
   function aviso(t) { msg = t; render(); setTimeout(() => { msg = ""; const x = document.querySelector(".toast"); if (x) x.remove(); }, 2600); }
   function fin() { const s = ros; ros = null; marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {}); go("listo"); }
   function go(v) { view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est)$/.test(view)) view = "bien"; try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {} render(); try { window.scrollTo(0, 0); } catch (_) {} }
-  function render() { app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); }
+  function render() { despierta(view === "ros"); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); }
   const A = {
     go: (d) => go(d.v),
     nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; save(); go("est"); },

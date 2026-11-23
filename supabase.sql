@@ -28,4 +28,12 @@ drop policy if exists "progreso propio cambiar" on public.progreso;
 create policy "progreso propio cambiar" on public.progreso for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
 revoke all on public.progreso from anon;
 grant select, insert, update on public.progreso to authenticated;
+
+-- Cuenta de veladoras por estado para un día (respeta las reglas de lectura de la tabla)
+create or replace function public.velas_del_dia(d date)
+returns table (estado smallint, n integer)
+language sql stable
+set search_path = ''
+as $$ select v.estado, count(*)::integer from public.velas v where v.dia = d group by v.estado $$;
+grant execute on function public.velas_del_dia(date) to anon, authenticated;
 select 'listo' as atrio;
