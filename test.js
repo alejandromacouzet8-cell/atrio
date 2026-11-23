@@ -31,16 +31,17 @@ if (!d.window.document.querySelector('[data-a="advok"]').disabled) throw new Err
 click(d, '[data-a="advt"][data-k="fatima"]'); click(d, '[data-a="advt"][data-k="lourdes"]'); click(d, '[data-a="advt"][data-k="lourdes"]');
 if (!txt(d).includes("Listo, elegí 1")) throw new Error("conteo de selección: " + txt(d).slice(-80));
 click(d, '[data-a="advok"]');
-// paso 4: tu camino (sacramentos), se puede saltar
-if (!txt(d).includes("Tu camino de fe") || !txt(d).includes("Paso 4 de 5") || d.window.document.querySelectorAll('[data-a="sac"]').length !== 4 || !txt(d).includes("Saltar este paso")) throw new Error("paso 4: " + txt(d).slice(0, 200));
-click(d, '[data-a="sac"][data-k="b"]'); click(d, '[data-a="sac"][data-k="c"]'); click(d, '[data-a="sac"][data-k="m"]'); click(d, '[data-a="sac"][data-k="m"]');
-if ((txt(d).match(/Recibido/g) || []).length !== 2 || d.window.document.querySelectorAll(".cam li.enc").length !== 2) throw new Error("sacramentos marcados: " + txt(d).slice(0, 300));
-click(d, '.btn[data-a="camok"]');
+// paso 4: por quién vas a rezar (intención), se puede saltar
+if (!txt(d).includes("¿Por quién vas a rezar?") || !txt(d).includes("Paso 4 de 5") || !txt(d).includes("Saltar este paso") || d.window.document.querySelectorAll('[data-a="pich"]').length !== 5) throw new Error("paso 4: " + txt(d).slice(0, 200));
+d.window.document.getElementById("fi").value = "Por mi mamá <i>";
+click(d, '[data-a="pich"][data-k="2"]'); if (d.window.document.getElementById("fi").value !== "Por mi mamá <i>, por un enfermo") throw new Error("chip de intención: " + d.window.document.getElementById("fi").value);
+click(d, '[data-a="pich"][data-k="2"]'); if (d.window.document.getElementById("fi").value !== "Por mi mamá <i>, por un enfermo") throw new Error("chip repetido");
+click(d, '.btn[data-a="piok"]');
 // paso 5: resumen
-{ const x = txt(d); for (const m of ["Tu atrio está listo", "Paso 5 de 5", "Lucía <b>", "Quintana Roo", "Fátima", "Bautismo", "Primera Comunión", "Entrar a Atrio"]) if (!x.includes(m)) throw new Error("resumen sin «" + m + "»: " + x.slice(0, 300)); if (x.includes("Matrimonio") || x.includes("Google") || d.window.document.querySelector(".tabs")) throw new Error("resumen con de más: " + x.slice(0, 300)); if (d.window.document.querySelector("h2").innerHTML.includes("<b>")) throw new Error("nombre sin escapar en el resumen"); }
+{ const x = txt(d); for (const m of ["Tu atrio está listo", "Paso 5 de 5", "Lucía <b>", "Quintana Roo", "Fátima", "Tu intención", "«Por mi mamá <i>, por un enfermo»", "Entrar a Atrio"]) if (!x.includes(m)) throw new Error("resumen sin «" + m + "»: " + x.slice(0, 300)); if (x.includes("Bautismo") || x.includes("Google") || d.window.document.querySelector(".tabs")) throw new Error("resumen con de más: " + x.slice(0, 300)); if (d.window.document.querySelector("h2").innerHTML.includes("<b>")) throw new Error("nombre sin escapar en el resumen"); }
 click(d, '.hd [data-a="go"]'); if (!txt(d).includes("Paso 4 de 5")) throw new Error("regresar del resumen");
-{ const g = open("https://atrio.test/?fecha=2026-11-23", d.window.localStorage.getItem("atrio1")); if (!txt(g).includes("Paso 4 de 5") || (txt(g).match(/Recibido/g) || []).length !== 2) throw new Error("no retoma en Tu camino: " + txt(g).slice(0, 160)); }
-click(d, '.btn[data-a="camok"]');
+{ const g = open("https://atrio.test/?fecha=2026-11-23", d.window.localStorage.getItem("atrio1")); if (!txt(g).includes("Paso 4 de 5") || g.window.document.getElementById("fi").value !== "Por mi mamá <i>, por un enfermo") throw new Error("no retoma en la intención: " + txt(g).slice(0, 160)); }
+click(d, '.btn[data-a="piok"]');
 click(d, '[data-a="entra"]');
 if (!d.window.document.querySelector(".frw .dov") || !d.window.document.querySelector(".fra.trae")) throw new Error("la paloma no trae el mensaje el primer día");
 { const g = open("https://atrio.test/?fecha=2026-11-23", d.window.localStorage.getItem("atrio1")); if (txt(g).includes("Paso ") || !g.window.document.querySelector(".tabs")) throw new Error("terminada la bienvenida, vuelve a pedirla: " + txt(g).slice(0, 160)); if (g.window.document.querySelector(".dov") || !txt(g).includes("Mensaje del día")) throw new Error("la paloma sale dos veces el mismo día");
@@ -73,6 +74,7 @@ click(d, '[data-a="go"][data-v="rezar"]'); if (!txt(d).includes("Tus Vírgenes")
 
 // 2. rosario completo
 click(d, '[data-a="ros"]');
+if (!txt(d).includes("Tu intención") || !txt(d).includes("«Por mi mamá <i>, por un enfermo»")) throw new Error("el rosario no muestra la intención: " + txt(d).slice(0, 200));
 { const q = (x) => d.window.document.querySelector(x); if (!q('.rpie .rb .btn[data-a="sig"]') || !q('.rpie .ra[data-a="ant"]').disabled) throw new Error("rosario: barra fija al empezar");
   click(d, '[data-a="ant"]'); if (!txt(d).includes("1/73")) throw new Error("regresar deshabilitado se movió");
   click(d, '[data-a="sig"]'); if (!q('.rpie .rb .btn[data-a="sig"]') || q('.rpie .ra').disabled || !q(".ro.sg")) throw new Error("rosario: barra fija en el paso 2");
@@ -96,10 +98,10 @@ click(d, '[data-a="cerrar"]');
 click(d, '[data-a="go"][data-v="mapa"]'); if (!txt(d).includes("Tu veladora está encendida")) throw new Error("mapa");
 if (d.window.document.querySelectorAll("svg path").length < 2) throw new Error("mapa sin trazo");
 click(d, '[data-a="go"][data-v="yo"]'); if (!txt(d).includes("rosario rezado")) throw new Error("yo");
-if (!txt(d).includes("Mi camino") || !txt(d).includes("Bautismo, Primera Comunión")) throw new Error("yo sin camino: " + txt(d).slice(-400));
+if (!txt(d).includes("Por quién rezo") || !txt(d).includes("Por mi mamá <i>, por un enfermo")) throw new Error("yo sin intención: " + txt(d).slice(-400));
 { const v = d.window.document.getElementById("fv"); if (!v || !v.checked) throw new Error("vibración debe venir encendida"); v.checked = false; v.dispatchEvent(new d.window.Event("change", { bubbles: true })); if (JSON.parse(d.window.localStorage.getItem("atrio1")).vib !== 0) throw new Error("no guarda vibración apagada"); v.checked = true; v.dispatchEvent(new d.window.Event("change", { bubbles: true })); if (JSON.parse(d.window.localStorage.getItem("atrio1")).vib !== 1) throw new Error("no guarda vibración encendida"); }
-click(d, '[data-a="go"][data-v="cam"]'); if (txt(d).includes("Paso 4") || txt(d).includes("Saltar")) throw new Error("camino fuera de la bienvenida"); click(d, '[data-a="sac"][data-k="f"]'); click(d, '[data-a="camok"]'); if (!txt(d).includes("Bautismo, Primera Comunión, Confirmación")) throw new Error("no guarda el camino");
-click(d, '[data-a="go"][data-v="nom"]'); if (!txt(d).includes("Tus datos")) throw new Error("editar datos"); click(d, '[data-a="nom"]'); click(d, '[data-a="est"]'); if (!txt(d).includes("Mi camino")) throw new Error("editar datos no regresa a Yo");
+click(d, '[data-a="go"][data-v="pid"]'); if (txt(d).includes("Paso 4") || txt(d).includes("Saltar")) throw new Error("intención fuera de la bienvenida"); d.window.document.getElementById("fi").value = "  Por mi abuelo   Juan "; click(d, '[data-a="piok"]'); if (!txt(d).includes("Por mi abuelo Juan")) throw new Error("no guarda la intención");
+click(d, '[data-a="go"][data-v="nom"]'); if (!txt(d).includes("Tus datos")) throw new Error("editar datos"); click(d, '[data-a="nom"]'); click(d, '[data-a="est"]'); if (!txt(d).includes("Por quién rezo")) throw new Error("editar datos no regresa a Yo");
 click(d, '[data-a="go"][data-v="hoy"]'); click(d, '[data-a="go"][data-v="nov"]');
 if (d.window.document.querySelectorAll('[data-a="novd"]').length !== 9) throw new Error("novena sin 9 días");
 click(d, '[data-a="novd"][data-n="6"]'); if (!txt(d).includes("que soy tu madre")) throw new Error("día 6");

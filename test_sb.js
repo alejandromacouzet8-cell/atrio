@@ -56,14 +56,14 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   if (!txt(a).includes("Tu avance está guardado") || !nubeRows.u1 || !nubeRows.u1.datos.d["2026-12-03"].r) throw new Error("nube: " + JSON.stringify(nubeRows).slice(0, 200) + txt(a).slice(0, 200));
   const e = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-04&google=1", pretendToBeVisual: true }); e.window.scrollTo = () => {}; const fs2 = fakeSupabase(); e.window.supabase = fs2; e.window.eval(sc); await wait(30);
   if (!txt(e).includes("Ya tengo cuenta")) throw new Error("bienvenida sin «Ya tengo cuenta»");
-  click(e, '[data-a="empieza"]'); e.window.document.getElementById("fn").value = "Lucía"; click(e, '[data-a="nom"]'); click(e, '[data-a="est"]'); click(e, '[data-a="advt"][data-k="lourdes"]'); click(e, '[data-a="advok"]'); click(e, '[data-a="sac"][data-k="b"]'); click(e, '.btn[data-a="camok"]');
+  click(e, '[data-a="empieza"]'); e.window.document.getElementById("fn").value = "Lucía"; click(e, '[data-a="nom"]'); click(e, '[data-a="est"]'); click(e, '[data-a="advt"][data-k="lourdes"]'); click(e, '[data-a="advok"]'); e.window.document.getElementById("fi").value = "Por mi abuela"; click(e, '.btn[data-a="piok"]');
   if (!txt(e).includes("Guardar con Google") || !txt(e).includes("Ahora no")) throw new Error("resumen sin guardar con Google: " + txt(e).slice(-300));
   click(e, '[data-a="login"]'); await wait(1500);
   if (!txt(e).includes("Tu avance se guarda en tu cuenta")) throw new Error("resumen después de entrar: " + txt(e).slice(-300));
   click(e, '[data-a="entra"]'); if (txt(e).includes("vive solo en este teléfono")) throw new Error("sigue pidiendo guardar con sesión"); click(e, '[data-a="go"][data-v="yo"]');
   if (!/1\s*rosario rezado/.test(txt(e).replace(/\s+/g, " ")) && !txt(e).includes("1rosario rezado")) throw new Error("no recupera el avance en otro teléfono: " + txt(e).slice(0, 300));
   if (!txt(e).includes("Lourdes") || nubeRows.u1.datos.vs[0] !== "lourdes") throw new Error("la advocación no viaja con la cuenta: " + JSON.stringify(nubeRows.u1.datos).slice(0, 120));
-  if (!nubeRows.u1.datos.sac || !nubeRows.u1.datos.sac.b) throw new Error("el camino no viaja con la cuenta");
+  if (nubeRows.u1.datos.pi !== "Por mi abuela") throw new Error("la intención no viaja con la cuenta");
   // teléfono nuevo: «Ya tengo cuenta» en la bienvenida recupera todo y salta los pasos
   const f = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-05&google=1", pretendToBeVisual: true }); f.window.scrollTo = () => {}; f.window.supabase = fakeSupabase(); f.window.eval(sc); await wait(30);
   click(f, '[data-a="login"]'); await wait(1500);
