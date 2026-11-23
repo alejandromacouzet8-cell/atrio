@@ -195,3 +195,4 @@ h1.xl{font-size:44px;line-height:46px;letter-spacing:-.6px}
 .chip{flex:none;min-height:40px;padding:0 16px;border-radius:20px;border:1px solid rgba(230,194,122,.4);background:none;color:var(--txt);font-family:var(--se);font-weight:600;font-size:16px;cursor:pointer;white-space:nowrap}
 .chip.on{background:var(--oro);border-color:var(--oro);color:var(--manto)}
 .chip:focus-visible{outline:2px solid var(--oroc);outline-offset:2px}
+.fig{display:block;width:118px;height:auto;margin:-6px auto 4px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35))}

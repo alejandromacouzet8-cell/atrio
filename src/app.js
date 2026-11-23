@@ -46,6 +46,30 @@
     auxiliadora: em('<path d="M24 5l13 4.5v11c0 9.4-5.2 16.6-13 21.5-7.8-4.9-13-12.1-13-21.5v-11z"/>' + sp(24, 21.5, 0.95)),
     dolores: em('<path d="M24 41C14 33.5 8.5 27.6 8.5 21.2c0-4.3 3.3-7.7 7.5-7.7 3.2 0 6 1.9 8 5 2-3.1 4.8-5 8-5 4.2 0 7.5 3.4 7.5 7.7C39.5 27.6 34 33.5 24 41z"/><path d="M11.5 7.5L37 38M17.3 9.8l-4.6 3.8"/><circle cx="10.6" cy="6.4" r="1.2"/>')
   };
+  /* Silueta de María en línea dorada (original). Cada advocación suma sus atributos. */
+  function figura(k) {
+    const G = "#E6C27A", st = (x, y, e) => `<polygon transform="translate(${(x - 8 * e).toFixed(1)} ${(y - 8 * e).toFixed(1)}) scale(${e})" fill="#F4DCA6" points="${S16}"/>`;
+    const brazosAbiertos = k === "milagrosa";
+    let tras = "", sobre = "", pies = "", cab = "";
+    const corona = (y) => `<path d="M51 ${y}l2-8 4 5 3-7 3 7 4-5 2 8z" fill="${G}" fill-opacity=".9" stroke="${G}" stroke-width="1" stroke-linejoin="round"/>`;
+    if (k === "guadalupe") { let r = ""; for (let i = 0; i < 44; i++) { const a = (i / 44) * Math.PI * 2, rx = 52, ry = 92, l = i % 2 ? 7 : 12; r += `M${(60 + rx * Math.cos(a)).toFixed(1)} ${(104 + ry * Math.sin(a)).toFixed(1)}L${(60 + (rx + l) * Math.cos(a)).toFixed(1)} ${(104 + (ry + l) * Math.sin(a)).toFixed(1)}`; } tras = `<path d="${r}" stroke="${G}" stroke-opacity=".55" stroke-width="1.2" stroke-linecap="round"/>`; pies = `<path d="M36 194c8 10 40 10 48 0-8 5-40 5-48 0z" fill="${G}" fill-opacity=".85"/>`; sobre = st(40, 120, .32) + st(44, 152, .3) + st(80, 120, .32) + st(76, 152, .3) + st(38, 90, .28) + st(82, 90, .28); }
+    else if (k === "fatima") { cab = corona(16); sobre = st(60, 178, .45); }
+    else if (k === "lourdes") { sobre = `<path d="M48 112c8 3 16 3 24 0M58 112c-2 22-4 40-6 58M62 112c2 22 4 40 6 58" stroke="#9EC9E8" stroke-width="1.6" stroke-linecap="round"/><path d="M57 98c-5 14-6 28-4 40" stroke="${G}" stroke-width="1" stroke-dasharray="1 3" stroke-linecap="round"/>`; tras = `<circle cx="60" cy="40" r="26" stroke="${G}" stroke-opacity=".4"/>`; }
+    else if (k === "carmen") { cab = corona(16); sobre = `<rect x="66" y="98" width="10" height="13" rx="1" fill="#3B2A22" stroke="${G}"/>${st(71, 104.5, .35)}`; }
+    else if (k === "pilar") { pies = `<path d="M38 196h44M42 196v18M78 196v18M36 214h48M50 200v12M60 200v12M70 200v12" stroke="${G}" stroke-width="1.4"/>`; cab = corona(16); }
+    else if (k === "dolores") { sobre = `<path d="M60 112c-6-6-14-1-9 6l9 8 9-8c5-7-3-12-9-6z" fill="#A8434F" stroke="${G}"/><path d="M44 104l28 26" stroke="${G}" stroke-width="1.4" stroke-linecap="round"/>`; }
+    else if (k === "auxiliadora") { cab = corona(16); sobre = `<path d="M80 92v66" stroke="${G}" stroke-width="1.6" stroke-linecap="round"/>${st(80, 89, .45)}`; }
+    else if (k === "milagrosa") { pies = `<path d="M30 196a30 12 0 0 1 60 0" fill="${G}" fill-opacity=".25" stroke="${G}"/>`; let r = ""; for (let i = 0; i < 5; i++) r += `M${30 + i * 3} ${118 + i * 7}l-10 ${14 + i}M${90 - i * 3} ${118 + i * 7}l10 ${14 + i}`; sobre = `<path d="${r}" stroke="${G}" stroke-opacity=".7" stroke-linecap="round"/>`; let e = ""; for (let i = 0; i < 12; i++) { const a = Math.PI + (i / 11) * Math.PI; e += st(60 + 30 * Math.cos(a), 40 + 30 * Math.sin(a), .26); } tras = e; }
+    else { cab = corona(16); tras = `<circle cx="60" cy="40" r="26" stroke="${G}" stroke-opacity=".4"/>`; }
+    if (k === "fatima" || k === "pilar" || k === "carmen" || k === "auxiliadora") tras += `<circle cx="60" cy="40" r="28" stroke="${G}" stroke-opacity=".35"/>`;
+    const manos = brazosAbiertos ? `<path d="M50 84c-6 10-14 22-20 34M70 84c6 10 14 22 20 34" stroke="${G}" stroke-width="1.4" stroke-linecap="round"/>` : `<path d="M60 84l-5 17c3 3 7 3 10 0z" fill="${G}" fill-opacity=".9"/>`;
+    return `<svg class="fig" viewBox="0 0 120 ${k === "pilar" ? 218 : 206}" fill="none" aria-hidden="true">${tras}
+      <path d="M60 14C47 14 39 25 38 38c-1 12-4 22-9 36-8 26-12 66-14 122h90c-2-56-6-96-14-122-5-14-8-24-9-36C81 25 73 14 60 14z" fill="#13505A" stroke="${G}" stroke-width="1.4" stroke-linejoin="round"/>
+      <path d="M50 64c-4 30-6 80-6 132h32c0-52-2-102-6-132z" fill="#1E6872" stroke="${G}" stroke-opacity=".5"/>
+      <path d="M50 64C40 84 32 132 30 196M70 64c10 20 18 68 20 132" stroke="${G}" stroke-opacity=".55"/>
+      <path d="M60 24c-9 0-13 9-12 18 1 10 6 16 12 16s11-6 12-16c1-9-3-18-12-18z" fill="#0C3B41" stroke="${G}" stroke-opacity=".7"/>
+      ${manos}${sobre}${pies}${cab}</svg>`;
+  }
   const ARCO = `<svg class="nt" viewBox="0 0 346 173" aria-hidden="true"><defs><path id="arco" d="M21.3 173A151.7 151.7 0 0 1 324.7 173"/></defs><text><textPath href="#arco" startOffset="50%" text-anchor="middle">AVE · MARIA · GRATIA · PLENA</textPath></text><g fill="#E6C27A">${sp(16.5, 160, 0.5)}${sp(329.5, 160, 0.5)}</g></svg>`;
 
   /* ---------- estado guardado en este dispositivo ---------- */
@@ -300,7 +324,7 @@
       const ob = paso3 === 2;
       return `<section class="v d in"${ob ? ' style="padding-bottom:120px"' : ""}>${sky()}${hd([ob ? "advs" : vuelve], ob ? "Paso 3 de 3" : "Tu Virgen")}
         ${mis().length > 1 ? `<div class="chips z">${mis().map((x) => `<button class="chip${x.k === a.k ? " on" : ""}" data-a="verv" data-k="${x.k}">${x.c}</button>`).join("")}</div>` : ""}
-        <div class="nicho z"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em">${EMA[a.k]}</span><p class="ru">${a.p}</p><h2>${a.c}</h2><p class="ins">${a.l}</p><p class="fie">${ff ? `Su fiesta es el ${a.f[0]} de ${MESES[a.f[1] - 1]}. ${ff === 1 ? "Es mañana." : "Faltan " + ff + " días."}` : "Hoy es su fiesta."}</p></div></div>
+        <div class="nicho z"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb">${figura(a.k)}<p class="ru">${a.p}</p><h2>${a.c}</h2><p class="ins">${a.l}</p><p class="fie">${ff ? `Su fiesta es el ${a.f[0]} de ${MESES[a.f[1] - 1]}. ${ff === 1 ? "Es mañana." : "Faltan " + ff + " días."}` : "Hoy es su fiesta."}</p></div></div>
         <p class="tit z">${a.k === delDia().k ? "Mensaje del día" : "Su mensaje"}</p><div class="z c">${cita(f)}<p class="note" style="margin-top:8px">${f[2]}</p></div>
         <p class="tit z">Su historia</p>${a.h.map((x) => `<p class="his z">${x}</p>`).join("")}${a.fx ? `<p class="note z" style="margin-top:12px">${a.fx}</p>` : ""}
         <p class="tit z">Oración</p>${a.o[0] === "Oración" ? "" : `<p class="ru z c">${a.o[0]}</p>`}<p class="pr z c" style="font-size:20px;line-height:30px">${a.o[1]}</p>
