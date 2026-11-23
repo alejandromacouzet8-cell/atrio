@@ -24,7 +24,7 @@ function fakeSupabase() {
     from: (t) => t === 'progreso' ? { upsert: (row) => { nubeRows[row.user_id] = JSON.parse(JSON.stringify(row)); return Promise.resolve({ error: null }); }, select: () => ({ eq: (_c, v) => ({ maybeSingle: () => Promise.resolve({ data: nubeRows[v] ? { datos: nubeRows[v].datos } : null }) }) }) } : ({ insert: (row) => { if (t !== "velas") throw new Error("tabla"); velas.push(row); return Promise.resolve({ error: null }); }, select: () => ({ eq: (_c, v) => ({ limit: () => Promise.resolve({ data: velas.filter((x) => x.dia === v) }) }) }) })
   }; } };
 }
-const mkWin = (q) => { const w = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?demo=1&fecha=2026-12-03" + q, pretendToBeVisual: true }); w.window.scrollTo = () => {}; w.window.supabase = fakeSupabase(); w.window.addEventListener("error", (e) => errs.push(e.message)); w.window.eval(sc); return w; };
+const mkWin = (q) => { const w = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?demo=1&google=1&fecha=2026-12-03" + q, pretendToBeVisual: true }); w.window.scrollTo = () => {}; w.window.supabase = fakeSupabase(); w.window.addEventListener("error", (e) => errs.push(e.message)); w.window.eval(sc); return w; };
 const click = (d, sel) => { const el = d.window.document.querySelector(sel); if (!el) throw new Error("no encuentro " + sel + " | " + d.window.document.querySelector("#app").textContent.slice(0, 160)); el.dispatchEvent(new d.window.MouseEvent("click", { bubbles: true })); };
 const txt = (d) => d.window.document.querySelector("#app").textContent; const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 (async () => {
@@ -37,6 +37,7 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   if (!txt(b).includes("21/73") || b.window.document.querySelector('[data-a="sig"]')) throw new Error("no sincroniza: " + txt(b).slice(0, 200));
   while (a.window.document.querySelector('[data-a="sig"]')) click(a, '[data-a="sig"]'); await wait(60);
   if (!txt(a).includes("Tu veladora ya") || !txt(b).includes("Tu veladora ya")) throw new Error("cierre: " + txt(b).slice(0, 200));
+  if (!txt(a).includes("No la pierdas") || !a.window.document.querySelector('.gua [data-a="login"]')) throw new Error("al terminar no ofrece guardar: " + txt(a).slice(-300));
   if (velas.length !== 2 || velas[0].dia !== "2026-12-03" || velas[0].estado !== 22) throw new Error("velas guardadas: " + JSON.stringify(velas));
   // un tercer teléfono abre el mapa después: ve las veladoras del día aunque los otros se hayan ido
   const c = mkWin("&v=mapa"); await wait(60); const t = txt(c);
@@ -53,10 +54,23 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   // cuenta de Google: guarda el avance en la nube y lo recupera en otro teléfono
   click(a, '[data-a="go"][data-v="hoy"]'); click(a, '[data-a="go"][data-v="yo"]'); if (!txt(a).includes("Guardar mi avance con Google")) throw new Error("sin botón de Google"); click(a, '[data-a="login"]'); await wait(1500);
   if (!txt(a).includes("Tu avance está guardado") || !nubeRows.u1 || !nubeRows.u1.datos.d["2026-12-03"].r) throw new Error("nube: " + JSON.stringify(nubeRows).slice(0, 200) + txt(a).slice(0, 200));
-  const e = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-04", pretendToBeVisual: true }); e.window.scrollTo = () => {}; const fs2 = fakeSupabase(); e.window.supabase = fs2; e.window.eval(sc); await wait(30);
-  click(e, '[data-a="go"][data-v="nom"]'); e.window.document.getElementById("fn").value = "Lucía"; click(e, '[data-a="nom"]'); click(e, '[data-a="est"]'); click(e, '[data-a="advt"][data-k="lourdes"]'); click(e, '[data-a="advok"]'); click(e, '[data-a="entra"]'); click(e, '[data-a="go"][data-v="yo"]'); click(e, '[data-a="login"]'); await wait(1500);
+  const e = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-04&google=1", pretendToBeVisual: true }); e.window.scrollTo = () => {}; const fs2 = fakeSupabase(); e.window.supabase = fs2; e.window.eval(sc); await wait(30);
+  if (!txt(e).includes("Ya tengo cuenta")) throw new Error("bienvenida sin «Ya tengo cuenta»");
+  click(e, '[data-a="empieza"]'); e.window.document.getElementById("fn").value = "Lucía"; click(e, '[data-a="nom"]'); click(e, '[data-a="est"]'); click(e, '[data-a="advt"][data-k="lourdes"]'); click(e, '[data-a="advok"]'); click(e, '[data-a="sac"][data-k="b"]'); click(e, '.pie [data-a="camok"]');
+  if (!txt(e).includes("Guardar con Google") || !txt(e).includes("Ahora no")) throw new Error("resumen sin guardar con Google: " + txt(e).slice(-300));
+  click(e, '[data-a="login"]'); await wait(1500);
+  if (!txt(e).includes("Tu avance se guarda en tu cuenta")) throw new Error("resumen después de entrar: " + txt(e).slice(-300));
+  click(e, '[data-a="entra"]'); if (txt(e).includes("vive solo en este teléfono")) throw new Error("sigue pidiendo guardar con sesión"); click(e, '[data-a="go"][data-v="yo"]');
   if (!/1\s*rosario rezado/.test(txt(e).replace(/\s+/g, " ")) && !txt(e).includes("1rosario rezado")) throw new Error("no recupera el avance en otro teléfono: " + txt(e).slice(0, 300));
   if (!txt(e).includes("Lourdes") || nubeRows.u1.datos.vs[0] !== "lourdes") throw new Error("la advocación no viaja con la cuenta: " + JSON.stringify(nubeRows.u1.datos).slice(0, 120));
+  if (!nubeRows.u1.datos.sac || !nubeRows.u1.datos.sac.b) throw new Error("el camino no viaja con la cuenta");
+  // teléfono nuevo: «Ya tengo cuenta» en la bienvenida recupera todo y salta los pasos
+  const f = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-05&google=1", pretendToBeVisual: true }); f.window.scrollTo = () => {}; f.window.supabase = fakeSupabase(); f.window.eval(sc); await wait(30);
+  click(f, '[data-a="login"]'); await wait(1500);
+  if (!txt(f).includes("Lucía") || !txt(f).includes("Mensaje del día") || !txt(f).includes("Lourdes")) throw new Error("«Ya tengo cuenta» no recupera: " + txt(f).slice(0, 300));
+  // sin la bandera, nadie ve botones de Google
+  const g = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?demo=1&fecha=2026-12-06&v=yo", pretendToBeVisual: true }); g.window.scrollTo = () => {}; g.window.supabase = fakeSupabase(); g.window.eval(sc); await wait(30);
+  if (g.window.document.querySelector('[data-a="login"]')) throw new Error("ofrece Google con el acceso cerrado");
   if (viola.length) throw new Error("rebasó el límite de presencia del servidor: " + viola.join(", "));
   if (errs.length) throw new Error("errores: " + errs.join(" | "));
   console.log("presencia por cliente:", JSON.stringify(Object.values(tracks)), "| mensajes de la cuenta:", enviados);

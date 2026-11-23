@@ -21,7 +21,8 @@ CABEZA = f'''
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-title" content="Atrio">''' if SITIO else ""
-r = lambda n: open("src/" + n, encoding="utf-8").read().replace("__SB_URL__", SBU).replace("__SB_KEY__", SBK)
+GAB = sys.argv[5] if len(sys.argv) > 5 else "0"  # "1" abre el acceso con Google a todos
+r = lambda n: open("src/" + n, encoding="utf-8").read().replace("__SB_URL__", SBU).replace("__SB_KEY__", SBK).replace("__G__", GAB)
 html = f'''<!DOCTYPE html>
 <html lang="es">
 <head>

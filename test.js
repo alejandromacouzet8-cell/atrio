@@ -15,21 +15,28 @@ const txt = (dom) => dom.window.document.querySelector("#app").textContent;
 // 1. onboarding
 let d = open("https://atrio.test/?fecha=2026-11-23");
 if (!txt(d).includes("que soy tu madre")) throw new Error("no abre la bienvenida");
-click(d, '[data-a="go"][data-v="nom"]');
+if (d.window.document.querySelector('[data-a="login"]')) throw new Error("ofrece Google sin servidor");
+click(d, '[data-a="empieza"]');
 click(d, '[data-a="nom"]'); // vacío: se queda
-if (!txt(d).includes("Cómo te llamas")) throw new Error("avanzó sin nombre");
+if (!txt(d).includes("Cómo te llamas") || !txt(d).includes("Paso 1 de 5")) throw new Error("avanzó sin nombre");
 d.window.document.getElementById("fn").value = "Lucía <b>";
 click(d, '[data-a="nom"]');
+if (!txt(d).includes("Paso 2 de 5")) throw new Error("paso 2");
 d.window.document.getElementById("fe").value = "22";
 click(d, '[data-a="est"]');
-if (!txt(d).includes("A qué Virgen le rezas") || !txt(d).includes("Paso 3 de 3") || d.window.document.querySelectorAll('[data-a="advt"]').length !== 12) throw new Error("paso 3: " + txt(d).slice(0, 160));
+if (!txt(d).includes("A qué Virgen le rezas") || !txt(d).includes("Paso 3 de 5") || d.window.document.querySelectorAll('[data-a="advt"]').length !== 12) throw new Error("paso 3: " + txt(d).slice(0, 160));
 if (!d.window.document.querySelector('[data-a="advok"]').disabled) throw new Error("deja seguir sin elegir");
 click(d, '[data-a="advt"][data-k="fatima"]'); click(d, '[data-a="advt"][data-k="lourdes"]'); click(d, '[data-a="advt"][data-k="lourdes"]');
 if (!txt(d).includes("Listo, elegí 1")) throw new Error("conteo de selección: " + txt(d).slice(-80));
 click(d, '[data-a="advok"]');
-// al elegirla se abre su página, todavía dentro de la bienvenida
-if (!txt(d).includes("Cova da Iria") || !txt(d).includes("Paso 3 de 3") || !txt(d).includes("Cada día te llega su mensaje") || d.window.document.querySelector(".tabs")) throw new Error("no muestra a la Virgen elegida: " + txt(d).slice(0, 200));
-click(d, '[data-a="advsel"]'); if (!txt(d).includes("Paso 3 de 3") || !d.window.document.querySelector('.ni.on[data-k="fatima"]')) throw new Error("cambiar elección sale de la bienvenida"); click(d, '[data-a="advok"]');
+// paso 4: tu camino (sacramentos), se puede saltar
+if (!txt(d).includes("Tu camino de fe") || !txt(d).includes("Paso 4 de 5") || d.window.document.querySelectorAll('[data-a="sac"]').length !== 5 || !txt(d).includes("Saltar este paso")) throw new Error("paso 4: " + txt(d).slice(0, 200));
+click(d, '[data-a="sac"][data-k="b"]'); click(d, '[data-a="sac"][data-k="c"]'); click(d, '[data-a="sac"][data-k="m"]'); click(d, '[data-a="sac"][data-k="m"]');
+if ((txt(d).match(/Recibido/g) || []).length !== 2 || d.window.document.querySelectorAll(".cam li.enc").length !== 2) throw new Error("sacramentos marcados: " + txt(d).slice(0, 300));
+click(d, '.pie [data-a="camok"]');
+// paso 5: resumen
+{ const x = txt(d); for (const m of ["Tu atrio está listo", "Paso 5 de 5", "Lucía <b>", "Quintana Roo", "Fátima", "Bautismo", "Primera Comunión", "Entrar a Atrio"]) if (!x.includes(m)) throw new Error("resumen sin «" + m + "»: " + x.slice(0, 300)); if (x.includes("Matrimonio") || x.includes("Google") || d.window.document.querySelector(".tabs")) throw new Error("resumen con de más: " + x.slice(0, 300)); if (d.window.document.querySelector("h2").innerHTML.includes("<b>")) throw new Error("nombre sin escapar en el resumen"); }
+click(d, '.hd [data-a="go"]'); if (!txt(d).includes("Paso 4 de 5")) throw new Error("regresar del resumen"); click(d, '.pie [data-a="camok"]');
 click(d, '[data-a="entra"]');
 let t = txt(d);
 if (!t.includes("Mensaje del día") || !t.includes("Nuestra Señora de Fátima") || !t.includes("Ver su historia y su oración")) throw new Error("hoy sin la Virgen elegida: " + t.slice(0, 300));
@@ -77,6 +84,9 @@ click(d, '[data-a="cerrar"]');
 click(d, '[data-a="go"][data-v="mapa"]'); if (!txt(d).includes("Tu veladora está encendida")) throw new Error("mapa");
 if (d.window.document.querySelectorAll("svg path").length < 2) throw new Error("mapa sin trazo");
 click(d, '[data-a="go"][data-v="yo"]'); if (!txt(d).includes("rosario rezado")) throw new Error("yo");
+if (!txt(d).includes("Mi camino") || !txt(d).includes("Bautismo, Primera Comunión")) throw new Error("yo sin camino: " + txt(d).slice(-400));
+click(d, '[data-a="go"][data-v="cam"]'); if (txt(d).includes("Paso 4") || txt(d).includes("Saltar")) throw new Error("camino fuera de la bienvenida"); click(d, '[data-a="sac"][data-k="f"]'); click(d, '[data-a="camok"]'); if (!txt(d).includes("Bautismo, Primera Comunión, Confirmación")) throw new Error("no guarda el camino");
+click(d, '[data-a="go"][data-v="nom"]'); if (!txt(d).includes("Tus datos")) throw new Error("editar datos"); click(d, '[data-a="nom"]'); click(d, '[data-a="est"]'); if (!txt(d).includes("Mi camino")) throw new Error("editar datos no regresa a Yo");
 click(d, '[data-a="go"][data-v="hoy"]'); click(d, '[data-a="go"][data-v="nov"]');
 if (d.window.document.querySelectorAll('[data-a="novd"]').length !== 9) throw new Error("novena sin 9 días");
 click(d, '[data-a="novd"][data-n="6"]'); if (!txt(d).includes("que soy tu madre")) throw new Error("día 6");
