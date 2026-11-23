@@ -70,13 +70,8 @@
       <path d="M60 24c-9 0-13 9-12 18 1 10 6 16 12 16s11-6 12-16c1-9-3-18-12-18z" fill="#0C3B41" stroke="${G}" stroke-opacity=".7"/>
       ${manos}${sobre}${pies}${cab}</svg>`;
   }
-  const SACS = [["b", "Bautismo", "La puerta de la fe"], ["c", "Primera Comunión", "Jesús en la Eucaristía"], ["f", "Confirmación", "El don del Espíritu Santo"], ["m", "Matrimonio", "Dos que se vuelven uno"]];
-  const ES = {
-    b: em('<path d="M24 41c-8.3 0-14-5.5-14-13.5C10 18.6 16.4 11 24 11s14 7.6 14 16.5C38 35.5 32.3 41 24 41z"/><path d="M24 41V11M24 41L15.5 14M24 41l8.5-27M24 41L10.8 22M24 41l13.2-19" stroke-opacity=".7"/><path d="M24 2.5c1.3 1.8 2 3 2 4a2 2 0 0 1-4 0c0-1 .7-2.2 2-4z"/>'),
-    c: EM.luminosos,
-    f: em('<path d="M24 6c1.5 6.5 8.5 10 8.5 19a8.5 8.5 0 0 1-17 0c0-4.5 2.5-7.5 4.5-11 .8 2.5 1.8 3.8 3 4.5C22.8 15.5 22.8 10.5 24 6z"/><path d="M24 23c1.8 2.5 3 4 3 6a3 3 0 0 1-6 0c0-2 1.2-3.5 3-6z"/><path d="M16 42h16" stroke-opacity=".6"/>'),
-    m: em('<circle cx="18.5" cy="28" r="9.5"/><circle cx="29.5" cy="28" r="9.5"/>' + sp(24, 9.5, 0.5))
-  };
+  // Intenciones rápidas: un toque las agrega al cuadro de texto
+  const PIS = ["Por mi familia", "Por mis papás", "Por un enfermo", "Por la paz en México", "Por mí"];
   const LOGO = em('<path d="M11 42V22a13 13 0 0 1 26 0v20M6 42h36"/>' + sp(24, 25, 0.95));
   const ARCO = `<svg class="nt" viewBox="0 0 346 173" aria-hidden="true"><defs><path id="arco" d="M21.3 173A151.7 151.7 0 0 1 324.7 173"/></defs><text><textPath href="#arco" startOffset="50%" text-anchor="middle">AVE · MARIA · GRATIA · PLENA</textPath></text><g fill="#E6C27A">${sp(16.5, 160, 0.5)}${sp(329.5, 160, 0.5)}</g></svg>`;
 
@@ -88,9 +83,9 @@
   if (Q.get("google")) { S.g = 1; try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} }
   let U = null, tNube = 0, lista = 0;
   const save = () => { try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} clearTimeout(tNube); tNube = setTimeout(nube, 1200); };
-  if (Q.get("demo")) { S.n = S.n || "Lucía"; if (S.e < 0) S.e = 22; if (Q.get("adv")) S.vs = Q.get("adv").split(","); if (Q.get("sac")) { S.sac = {}; Q.get("sac").split(",").forEach((k) => { S.sac[k] = 1; }); } }
+  if (Q.get("demo")) { S.n = S.n || "Lucía"; if (S.e < 0) S.e = 22; if (Q.get("adv")) S.vs = Q.get("adv").split(","); if (Q.get("pi") !== null) S.pi = Q.get("pi"); }
   if (!Array.isArray(S.vs)) S.vs = S.v ? [S.v] : [];
-  if (!S.sac || typeof S.sac !== "object") S.sac = {};
+  if (typeof S.pi !== "string") S.pi = "";
   const conG = () => SB_URL.indexOf("http") === 0 && (G_AB === "1" || S.g === 1);
   // A quien no tiene cuenta se le invita a guardar. Mientras el servidor confirma la sesión se usa la pista
   // de si este teléfono ya entró antes: así el aviso no aparece ni desaparece de golpe al abrir.
@@ -239,7 +234,7 @@
     if (!SB || !U) return;
     try { SB.from("progreso").select("datos").eq("user_id", U.id).maybeSingle().then((r) => {
       const R = (r && r.data && r.data.datos) || null;
-      if (R) { const d = Object.assign({}, R.d || {}); Object.keys(S.d).forEach((k) => { d[k] = Object.assign({}, d[k] || {}, S.d[k]); }); const nv = Object.assign({}, R.nov || {}); Object.keys(S.nov).forEach((y) => { nv[y] = Object.assign({}, nv[y] || {}, S.nov[y]); }); S.d = d; S.nov = nv; if (!S.n && R.n) S.n = R.n; if (!S.vs.length && (R.vs || R.v)) S.vs = R.vs || [R.v]; if (S.e < 0 && R.e >= 0) S.e = R.e; S.sac = Object.assign({}, R.sac || {}, S.sac || {}); }
+      if (R) { const d = Object.assign({}, R.d || {}); Object.keys(S.d).forEach((k) => { d[k] = Object.assign({}, d[k] || {}, S.d[k]); }); const nv = Object.assign({}, R.nov || {}); Object.keys(S.nov).forEach((y) => { nv[y] = Object.assign({}, nv[y] || {}, S.nov[y]); }); S.d = d; S.nov = nv; if (!S.n && R.n) S.n = R.n; if (!S.vs.length && (R.vs || R.v)) S.vs = R.vs || [R.v]; if (S.e < 0 && R.e >= 0) S.e = R.e; if (!S.pi && R.pi) S.pi = R.pi; }
       // quien ya tenía avance en su cuenta y abre un teléfono nuevo se salta la bienvenida
       const g = deG, vuelta = !!(S.n && S.e >= 0 && view === "bien"); deG = 0;
       if (vuelta) { ob = 0; delete S.ob; }
@@ -371,14 +366,15 @@
         <p class="tit z">Su historia</p>${a.h.map((x) => `<p class="his z">${x}</p>`).join("")}${a.fx ? `<p class="note z" style="margin-top:12px">${a.fx}</p>` : ""}
         <p class="tit z">Oración</p>${a.o[0] === "Oración" ? "" : `<p class="ru z c">${a.o[0]}</p>`}<p class="pr z c" style="font-size:20px;line-height:30px">${a.o[1]}</p>
         <div class="z" style="padding-top:28px"><button class="btn go" data-a="ros">Rezar el rosario de hoy</button><button class="lk" data-a="advsel" style="display:block;margin:4px auto 0">Elegir mis Vírgenes</button></div></section>`; },
-    cam: () => `<section class="v d n in">${sky()}${hd([ob ? "advs" : "yo"], ob ? "Paso 4 de 5" : "Tu camino")}<h1 style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">Tu camino de fe</h1><p class="sub">Toca los sacramentos que ya recibiste.<br>Solo tú lo ves.</p>
-      <ol class="tl cam">${SACS.map(([k, n, t], i) => { const on = !!S.sac[k], une = on && SACS[i + 1] && S.sac[SACS[i + 1][0]]; return `<li${on ? ` class="enc${une ? " une" : ""}"` : ""}><span class="nd">${on ? star(16, "#E6C27A") : starO(16, "rgba(244,220,166,.6)")}</span><button class="it${on ? " now" : ""}" data-a="sac" data-k="${k}" aria-pressed="${on}"><span class="md${on ? " on" : ""}">${ES[k]}</span><span class="g"><b>${n}</b><span class="ru" style="display:block">${on ? "Recibido" : t}</span></span>${on ? `<span class="pal2">${I.ok}</span>` : ""}</button></li>`; }).join("")}</ol>
-      <div style="padding-top:26px"><button class="btn go" data-a="camok">${ob ? "Continuar" : "Listo"}</button>${ob ? `<button class="lk" data-a="camok" style="display:block;margin:4px auto 0">Saltar este paso</button>` : ""}</div></section>`,
-    atrio: () => { const vs = mis(), sa = SACS.filter(([k]) => S.sac[k]), g = pideG();
-      return `<section class="v d n in" style="padding-bottom:${g ? 176 : 128}px">${sky()}${hd(["cam"], "Paso 5 de 5")}
+    pid: () => `<section class="v d n in">${sky()}${hd([ob ? "advs" : "yo"], ob ? "Paso 4 de 5" : "Tu intención")}<h1 style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿Por quién vas a rezar?</h1><p class="sub">Cada rosario se ofrece por alguien. Escríbelo y te lo recordamos cada vez que reces. Solo tú lo ves.</p>
+      <label class="ru" for="fi" style="display:block;margin-top:22px;font-size:15px">Tu intención</label><textarea class="fld ta" id="fi" rows="3" maxlength="140" placeholder="Por mi mamá, por mi abuelo que está enfermo…">${esc(S.pi)}</textarea>
+      <div class="chips">${PIS.map((t, i) => `<button class="chip" data-a="pich" data-k="${i}">${t}</button>`).join("")}</div>
+      <div style="padding-top:26px"><button class="btn go" data-a="piok">${ob ? "Continuar" : "Guardar"}</button>${ob ? `<button class="lk" data-a="pisk" style="display:block;margin:4px auto 0">Saltar este paso</button>` : ""}</div></section>`,
+    atrio: () => { const vs = mis(), g = pideG();
+      return `<section class="v d n in" style="padding-bottom:${g ? 176 : 128}px">${sky()}${hd(["pid"], "Paso 5 de 5")}
         <div class="nicho"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em">${LOGO}</span><p class="ru">Tu atrio está listo</p><h2>${esc(S.n)}</h2><p class="ins">${esc(estado(S.e))}</p></div></div>
         <p class="tit">${vs.length > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="meds">${vs.map((a) => `<span class="med"><span class="md">${EMA[a.k]}</span><small>${a.c}</small></span>`).join("")}</div>
-        ${sa.length ? `<p class="tit">Tu camino</p><div class="meds">${sa.map(([k, n]) => `<span class="med"><span class="md on">${ES[k]}</span><small>${n}</small></span>`).join("")}</div>` : ""}
+        ${S.pi ? `<p class="tit">Tu intención</p><p class="ci c pin">«${esc(S.pi)}»</p>` : ""}
         <p class="sub c" style="margin-top:24px">${g ? "Guárdalo con tu cuenta de Google para no perderlo si cambias de teléfono." : `Hoy se rezan los ${MIS[MIS_DIA[now().getDay()]].n.toLowerCase()}.${U ? " Tu avance se guarda en tu cuenta." : ""}`}</p>
         <div class="pie">${g ? `<button class="btn go" data-a="login">Guardar con Google</button><button class="lk" data-a="entra" style="display:block;margin:4px auto 0">Ahora no</button>` : `<button class="btn go" data-a="entra">Entrar a Atrio</button>`}</div></section>`; },
     hoy: () => {
@@ -417,11 +413,11 @@
       // La barra de abajo queda fija: «Amén» siempre está en el mismo lugar y el pulgar lo encuentra sin mirar
       const pie = `<div class="rpie">${ros.sala ? `<p class="note c">En vivo: ${peersS.length} en la sala</p>` : ""}${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<div class="rb"><button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" ? "Continuar" : "Amén"}</button></div>`}</div>`;
       if (st.t === "mis") return `<section class="v d ro mi${cl}">${sky()}${cab}<div class="rt z"><p class="c" style="margin-top:12px;font-size:14px;font-weight:600;color:var(--txt2)">${ORD[st.m]} misterio</p><h1 class="c" style="font-size:28px;line-height:34px">${mm[0]}</h1><p class="ru c" style="margin-top:6px;font-size:16px">${mm[1]}</p></div><div class="ring z">${ring(ros.i)}</div><div class="rt z"><p class="pr c" style="font-size:21px;line-height:29px">${mm[2]}</p></div>${pie}</section>`;
-      return `<section class="v d ro${cl}">${sky()}${cab}<p class="rl z">${mm ? ORD[st.m] + " misterio: " + mm[0] : st.t === "salve" ? "Para terminar" : "Para empezar"}</p>
+      return `<section class="v d ro${cl}">${sky()}${cab}<p class="rl z">${mm ? ORD[st.m] + " misterio: " + mm[0] : S.pi ? `<span><small>Tu intención</small><em>«${esc(S.pi)}»</em></span>` : st.t === "salve" ? "Para terminar" : "Para empezar"}</p>
         <div class="ring z">${ring(ros.i)}<div><b>${o.n}</b><span>${st.of ? st.k + " de " + st.of : "&nbsp;"}</span></div></div>
         <div class="rt z"><p class="pr"><i>V/.</i> ${o.v}</p><p class="pr rr"><i>R/.</i> ${o.r}</p>${st.x ? `<p class="ex">${o.x}</p>` : ""}</div>${pie}</section>`;
     },
-    listo: () => { const lit = encendidos(), n = vivos().length, ra = racha(), hito = total() <= 1 ? 1 : [3, 7, 14, 30, 60, 100, 200, 365].includes(ra) ? 2 : 0; return `<section class="v d in">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p><div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
+    listo: () => { const lit = encendidos(), n = vivos().length, ra = racha(), hito = total() <= 1 ? 1 : [3, 7, 14, 30, 60, 100, 200, 365].includes(ra) ? 2 : 0; return `<section class="v d in">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p>${S.pi ? `<p class="pin c z">Lo ofreciste «${esc(S.pi)}»</p>` : ""}<div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
       <div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>
       ${n > 1 ? `<p class="note z" style="margin-top:12px">Ahora mismo hay ${n} personas con Atrio abierto.</p>` : ""}
       ${pideG() && hito ? `<div class="gua z"><p class="ru">${hito === 1 ? "No la pierdas" : "No los pierdas"}</p><p class="sub" style="margin:2px 0 12px">${hito === 1 ? "Tu veladora y tu racha viven solo en este teléfono. Guárdalas con tu cuenta de Google." : `Tus ${ra} días seguidos viven solo en este teléfono. Guárdalos con tu cuenta de Google.`}</p><button class="btn go" data-a="login">Guardar con Google</button></div><button class="btn gh z" data-a="go" data-v="hoy" style="margin-top:10px">Volver a hoy</button>` : `<button class="btn go mt z" data-a="go" data-v="hoy">Volver a hoy</button>`}<button class="lk c z" data-a="copiar" style="margin-top:4px">Copiar invitación para mi familia</button></section>`; },
@@ -446,7 +442,7 @@
       return `<section class="v d n tb in">${sky()}<div class="hd" style="align-items:flex-start"><div><p class="ru">Tu bitácora</p><h1>${esc(S.n)}</h1></div><span aria-hidden="true" style="flex:none;margin-top:8px;width:44px;height:44px;border-radius:22px;background:var(--teal);color:var(--card);font-family:var(--se);font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center">${esc(S.n.slice(0, 1).toUpperCase())}</span></div>
       <div class="st"><div><b>${racha()}</b><span>${racha() === 1 ? "día seguido" : "días seguidos"}</span></div><div><b>${total()}</b><span>${total() === 1 ? "rosario rezado" : "rosarios rezados"}</span></div></div>
       <div class="card" style="margin-top:12px;padding:12px 12px 14px"><p class="ru" style="margin:0 6px 6px;font-size:16px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)} de ${y}</p><div class="cal">${c}</div></div>
-      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="go" data-v="cam"><span class="g"><b>Mi camino</b><small>${SACS.filter(([k]) => S.sac[k]).map((x) => x[1]).join(", ") || "Los sacramentos que has recibido"}</small></span>${I.go}</button><label class="row"><span class="g"><b>Vibración al rezar</b><small>Un toque en cada cuenta, más fuerte en cada misterio</small></span><span class="sw"><input type="checkbox" id="fv"${S.vib !== 0 ? " checked" : ""}><span></span></span></label><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
+      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="go" data-v="pid"><span class="g"><b>Por quién rezo</b><small>${S.pi ? esc(S.pi) : "Escribe tu intención"}</small></span>${I.go}</button><label class="row"><span class="g"><b>Vibración al rezar</b><small>Un toque en cada cuenta, más fuerte en cada misterio</small></span><span class="sw"><input type="checkbox" id="fv"${S.vib !== 0 ? " checked" : ""}><span></span></span></label><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
       ${U ? `<div class="card" style="margin-top:12px"><div class="row" style="cursor:default"><span class="g"><b>Tu avance está guardado</b><small>${esc(U.email || "Cuenta de Google")}</small></span><span class="ok">Listo</span></div><button class="row" data-a="logout"><span class="g"><b>Cerrar sesión</b></span>${I.go}</button></div>` : !conG() ? `<p class="note" style="margin-top:12px">Tu avance se guarda solo en este dispositivo.</p>` : pideG() ? `<button class="btn te" data-a="login" style="margin-top:12px">Guardar con Google</button><p class="note" style="margin-top:8px">Sin cuenta, tu avance vive solo en este teléfono.</p>` : ""}${tabs("yo")}</section>`; },
     sala: () => {
       const cab = sky() + hd(["hoy"], "Rosario en familia");
@@ -475,7 +471,7 @@
     // la paloma trae el mensaje la primera vez que se abre Hoy cada día
     if (view === "hoy" && S.n && S.pd !== key(now())) { palT = Date.now(); S.pd = key(now()); save(); }
     // hacia adentro la vista entra por la derecha; al regresar, por la izquierda; las pestañas solo suben
-    dirN = b ? "bk" : /^(nom|est|advs|adv|cam|nov|novd|ang|vir|vird|sala)$/.test(view) ? "fw" : "";
+    dirN = b ? "bk" : /^(nom|est|advs|adv|pid|nov|novd|ang|vir|vird|sala)$/.test(view) ? "fw" : "";
     render(); dirN = ""; try { window.scrollTo(0, 0); } catch (_) {} }
   function render(quieto) { despierta(view === "ros"); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); const x = app.querySelector(".in"); if (x) { if (quieto === 1) x.classList.remove("in"); else if (dirN) x.classList.add(dirN); } }
   // tras redibujar una lista de opciones, el foco vuelve al botón que se tocó (teclado y lectores de pantalla)
@@ -486,11 +482,12 @@
     nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; if (ob) S.ob = 1; save(); go("est"); },
     empieza: () => { ob = 1; go("nom"); },
     est: () => { S.e = parseInt(document.getElementById("fe").value, 10); save(); presLobby(); if (ob) { sel = S.vs.slice(); go("advs"); } else go("yo"); },
-    sac: (d) => { if (!SACS.some((x) => x[0] === d.k)) return; if (S.sac[d.k]) delete S.sac[d.k]; else S.sac[d.k] = 1; save(); render(1); foco("sac", d.k); },
-    camok: () => go(ob ? "atrio" : "yo"),
+    pich: (d) => { const f = document.getElementById("fi"), t = PIS[+d.k]; if (!f || !t) return; const v = f.value.trim(); if (v.toLowerCase().includes(t.toLowerCase())) return; f.value = (v ? v.replace(/[.,;]$/, "") + ", " + t.charAt(0).toLowerCase() + t.slice(1) : t).slice(0, 140); vibra(1); },
+    piok: () => { const f = document.getElementById("fi"); S.pi = ((f && f.value) || "").replace(/\s+/g, " ").trim().slice(0, 140); save(); vibra(1); go(ob ? "atrio" : "yo"); },
+    pisk: () => go("atrio"),
     advt: (d) => { if (!ADV.some((x) => x.k === d.k)) return; sel = sel.includes(d.k) ? sel.filter((k) => k !== d.k) : sel.concat(d.k); render(1); foco("advt", d.k); },
     advsel: () => { sel = S.vs.slice(); go("advs"); },
-    advok: () => { if (!sel.length) return; S.vs = ADV.filter((x) => sel.includes(x.k)).map((x) => x.k); S.v = S.vs[0]; save(); va = ""; go(ob ? "cam" : "adv"); },
+    advok: () => { if (!sel.length) return; S.vs = ADV.filter((x) => sel.includes(x.k)).map((x) => x.k); S.v = S.vs[0]; save(); va = ""; go(ob ? "pid" : "adv"); },
     verv: (d) => { va = d.k; go("adv"); },
     entra: () => { ob = 0; delete S.ob; save(); go("hoy"); },
     ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0 }; ros.p = pasos(); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
@@ -521,7 +518,7 @@
   if (Q.get("paloma")) S.pd = "";
   const errG = /[?&#]error(_code|_description)?=/.test(location.search + location.hash);
   let h0 = Q.get("v") || (errG ? "" : location.hash.slice(1));
-  if (S.ob && S.n && !Q.get("demo")) { ob = 1; h0 = S.e < 0 ? "est" : S.vs.length ? "cam" : "advs"; }
+  if (S.ob && S.n && !Q.get("demo")) { ob = 1; h0 = S.e < 0 ? "est" : S.vs.length ? "pid" : "advs"; }
   if (h0 === "ros" && S.n) A.ros({}); else if (h0 === "novd" && S.n) { nd = +(Q.get("n") || 6); go("novd"); } else go(V[h0] ? h0 : "hoy");
   if (errG) { try { history.replaceState(null, "", location.pathname); } catch (_) {} setTimeout(() => aviso("No se pudo entrar con Google. Intenta de nuevo."), 400); }
   if (Q.get("demo") && Q.get("t")) setTimeout(() => aviso(Q.get("t")), 30);

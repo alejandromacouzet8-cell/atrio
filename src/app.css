@@ -288,3 +288,12 @@ li.ya .nd svg{animation:brota .5s cubic-bezier(.3,1.3,.5,1)}
 @keyframes recibe{0%{box-shadow:0 0 0 0 rgba(244,220,166,0)}22%{box-shadow:0 0 0 2px rgba(244,220,166,.5),0 0 36px rgba(244,220,166,.38)}100%{box-shadow:0 0 0 0 rgba(244,220,166,0),0 0 0 rgba(244,220,166,0)}}
 
 @media (prefers-reduced-motion:reduce){.tw,.pu,.bell,.toast,.in>*,.in .tab.on svg,.in .dk .tab.on:before,.ro .rt,.ro .rl,.ro .ring>div,.ro .cur,.ro .ring:before,.ya .pal,.ya .pal2,.ya .md,li.ya .nd svg,.fra.trae .ci,.fra.trae small,.fra.trae .fv,.fra.trae:after{animation:none!important}.dov{display:none}}
+
+/* ---------- intención ---------- */
+.ta{height:auto;min-height:118px;padding:14px 18px;font-size:21px;line-height:29px;font-weight:500;resize:none;display:block}
+.fld::placeholder{color:rgba(246,239,233,.38);font-weight:400}
+.pin{font-family:var(--se);font-style:italic;font-size:19px;line-height:26px;color:var(--oroc);text-wrap:balance}
+p.pin.z{margin-top:10px}
+.rl span{display:block}
+.rl small{display:block;font-size:13px;line-height:18px;color:var(--txt2)}
+.rl em{display:block;font-family:var(--se);font-weight:500;font-size:18px;line-height:24px;color:var(--oroc);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
