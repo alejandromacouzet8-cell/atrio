@@ -170,15 +170,20 @@ h1.xl{font-size:44px;line-height:46px;letter-spacing:-.6px}
 .advg .ni{min-height:120px;padding:20px 4px 10px;border-bottom:1px solid rgba(230,194,122,.34)}
 .advg .ni.on{border-bottom-color:var(--oro)}
 .advg .ni b{display:flex;align-items:center;justify-content:center;min-height:36px;text-align:center;text-wrap:balance}
-.fra{display:flex;align-items:flex-start;gap:14px;width:100%;margin-top:18px;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
-.fra .md{margin-top:3px}
-.fra .g{flex:1;min-width:0}
-.fra .ru{display:block;font-size:15px;line-height:20px}
+.fra{display:block;width:100%;margin-top:16px;padding:14px 14px 12px 16px;border-radius:18px;border:1px solid rgba(230,194,122,.5);background:linear-gradient(rgba(29,98,106,.55),rgba(18,71,77,.35));color:inherit;text-align:left;cursor:pointer}
+.fh{display:flex;align-items:center;gap:12px}
+.fh .g{flex:1;min-width:0}
+.fh .ru{display:block;font-size:15px;line-height:20px}
+.fh b{display:block;font-family:var(--se);font-weight:600;font-size:20px;line-height:24px;text-wrap:balance}
+.fl{flex:none;color:var(--oro);display:flex}
 .ci{display:block;margin-top:4px;font-family:var(--se);font-weight:500;font-size:21px;line-height:28px;text-wrap:pretty}
+.fra .ci{margin-top:12px;font-size:19px;line-height:26px}
 .fra small{display:block;margin-top:6px;font-size:13px;line-height:18px;color:var(--txt2)}
-.fra:focus-visible{outline:2px solid var(--oroc);outline-offset:4px;border-radius:8px}
+.fv{display:block;margin-top:10px;padding-top:10px;border-top:1px solid rgba(244,220,166,.2);font-size:14px;line-height:20px;font-weight:600;color:var(--oroc)}
+.fra:focus-visible{outline:2px solid var(--oroc);outline-offset:3px}
 .his{margin-top:12px;font-size:16px;line-height:25px;color:#DCE6E4}
 .tit+.his{margin-top:0}
 .fie{margin-top:10px;font-size:14px;line-height:20px;color:var(--txt2);text-wrap:balance}
 .ins{text-wrap:balance}
 .nb h2{text-wrap:balance}
+.pie{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;padding:28px 22px calc(16px + env(safe-area-inset-bottom));background:linear-gradient(rgba(11,50,55,0),#0B3237 42%);z-index:5}
