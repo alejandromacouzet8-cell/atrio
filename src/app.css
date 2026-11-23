@@ -317,3 +317,28 @@ p.pin.z{margin-top:10px}
 .vzi{flex:none;width:30px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center;color:var(--oro);border:1px solid rgba(230,194,122,.4)}
 .vzi svg{width:16px;height:16px}
 @media (prefers-reduced-motion:reduce){.vzb.on svg{animation:none}}
+
+/* ---------- participantes, como en una videollamada ---------- */
+.ppl{display:flex;gap:10px;overflow-x:auto;margin:6px -22px 0;padding:4px 22px 2px;scrollbar-width:none;justify-content:safe center}
+.ppl::-webkit-scrollbar{display:none}
+.pp{flex:none;width:58px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.cara{position:relative;width:52px;height:52px;border-radius:50%;background:#1D5058;border:1.5px solid rgba(244,220,166,.28);display:flex;align-items:center;justify-content:center;transition:box-shadow .15s,border-color .15s}
+.cara b{font-family:var(--se);font-weight:600;font-size:22px;color:var(--oroc)}
+.cara video{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;background:#0B3237}
+.me .cara video{transform:scaleX(-1)}
+.pp.vz .cara{border-color:rgba(230,194,122,.7)}
+.pp.habla .cara{border-color:var(--oroc);box-shadow:0 0 0 3px rgba(244,220,166,.55),0 0 22px rgba(244,220,166,.45)}
+.mm{position:absolute;right:-3px;bottom:-3px;width:22px;height:22px;border-radius:11px;background:var(--rosad);color:#fff;display:flex;align-items:center;justify-content:center;border:2px solid var(--manto)}
+.mm svg{width:13px;height:13px}
+.pp small{max-width:62px;font-size:12px;line-height:15px;font-weight:600;color:var(--txt2);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp small em{display:block;font-style:normal;font-weight:500;font-size:11px;color:var(--oro)}
+.ppl.gr{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 8px;margin:4px 0 0;padding:16px 10px;overflow:visible;border:1px solid rgba(230,194,122,.28);border-radius:20px;background:rgba(246,239,233,.035)}
+.ppl.gr .pp{width:auto}
+.ppl.gr .cara{width:76px;height:76px}
+.ppl.gr .cara b{font-size:30px}
+.ppl.gr small{max-width:100px;font-size:14px;line-height:18px}
+.ro.sl .ring{height:clamp(128px,calc(100vh - 590px),236px);height:clamp(128px,calc(100dvh - 560px),236px)}
+.vzb.ic2{flex:none;width:50px;padding:0}
+.vzb.ch.ic2,.vzr.ch .ic2{width:36px;min-height:36px}
+.vzr.ch .vzb{min-height:36px;padding:0 12px;border-radius:18px;font-size:14px}
+.vzr.ch .ic2{padding:0}
