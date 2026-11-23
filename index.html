@@ -321,6 +321,26 @@ p.pin.z{margin-top:10px}
 .rl span{display:block}
 .rl small{display:block;font-size:13px;line-height:18px;color:var(--txt2)}
 .rl em{display:block;font-family:var(--se);font-weight:500;font-size:18px;line-height:24px;color:var(--oroc);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* ---------- voz en la sala ---------- */
+.vzc{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.vzc .note{margin:0;text-align:center}
+.vzr{display:flex;gap:10px}
+.vzb{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 18px;border-radius:25px;border:1.5px solid rgba(230,194,122,.55);background:rgba(246,239,233,.04);color:var(--oroc);font-weight:700;font-size:16px;cursor:pointer}
+.vzr .vzb:last-child:not(.on){flex:none;color:var(--txt2);border-color:rgba(246,239,233,.25)}
+.vzb.on{background:var(--oro);border-color:var(--oro);color:var(--manto)}
+.vzb.on:not(.mu) svg{animation:latido 1.6s ease-in-out infinite}
+.vzb.mu{background:none;border-color:rgba(242,181,172,.7);color:var(--rosa)}
+@keyframes latido{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+.vzb:focus-visible{outline:2px solid var(--oroc);outline-offset:3px}
+.vzb:active{transform:scale(.96)}
+.vzb.ch{flex:none;min-height:36px;padding:0 12px;border-radius:18px;font-size:14px}
+.vzr.ch{flex:none}
+.vzl{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 0 10px}
+.vzl .note{margin:0}
+.vzi{flex:none;width:30px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center;color:var(--oro);border:1px solid rgba(230,194,122,.4)}
+.vzi svg{width:16px;height:16px}
+@media (prefers-reduced-motion:reduce){.vzb.on svg{animation:none}}
 </style>
 </head>
 <body>
@@ -511,6 +531,8 @@ const ADV = [
     ok: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.4l2.6 2.6L11 4.4"/></svg>',
     st: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.6 2.5h2.8v5.6H19v2.8h-5.6v10.6h-2.8V10.9H5V8.1h5.6z"/></svg>',
     pin: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10.5" r="2.4"/></svg>',
+    mic: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>',
+    mute: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 9V6a3 3 0 0 1 5.8-1.1M15 10v1a3 3 0 0 1-4.6 2.5M5.5 11a6.5 6.5 0 0 0 10.6 5M18.4 12.6c.1-.5.1-1 .1-1.6M12 17.5V21M4 4l16 16"/></svg>',
     yo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.9-4 3.9-6 7.5-6s6.6 2 7.5 6"/></svg>'
   };
 
@@ -694,7 +716,7 @@ const ADV = [
     const me = Math.random().toString(36).slice(2, 12), RAPIDO = { on: 1, i: 1, set: 1, fin: 1 };
     let marcas = [];
     const mk = (name) => {
-      let ch = null, st = {}, subs = [], lento = {}, rapido = {}, deOtros = {}, ok = false, fuera = false, ultimo = "", llaves = "", tT = 0, tR = 0;
+      let ch = null, st = {}, subs = [], rtc = [], lento = {}, rapido = {}, deOtros = {}, ok = false, fuera = false, ultimo = "", llaves = "", tT = 0, tR = 0;
       const fire = () => { const peers = Object.keys(st).map((k) => { const m = st[k] || []; return { peer: k, isMe: k === me, kind: "viewer", presence: Object.assign({}, m[m.length - 1] || {}, k === me ? rapido : deOtros[k] || {}) }; }); subs.forEach((f) => { try { f({ peers }); } catch (_) {} }); };
       const di = () => { if (ok && !fuera && lento.lead) try { ch.send({ type: "broadcast", event: "st", payload: { k: me, s: rapido } }); } catch (_) {} };
       const track = () => {
@@ -708,10 +730,12 @@ const ADV = [
         if (fuera) return; ok = false;
         const c = ch = cli.channel(name, { config: { presence: { key: me } } });
         c.on("presence", { event: "sync" }, () => { if (c !== ch) return; st = c.presenceState(); Object.keys(deOtros).forEach((k) => { if (!st[k]) delete deOtros[k]; }); const l = Object.keys(st).sort().join(); if (l !== llaves) { llaves = l; di(); } fire(); });
+        // voz: los teléfonos se presentan por aquí y luego hablan directo entre ellos
+        c.on("broadcast", { event: "rtc" }, (m) => { const q = m && m.payload; if (c === ch && q && q.de && q.de !== me && (!q.para || q.para === me)) rtc.forEach((f) => { try { f(q); } catch (_) {} }); });
         c.on("broadcast", { event: "st" }, (m) => { const q = m && m.payload; if (c === ch && q && q.k && q.k !== me) { deOtros[q.k] = q.s || {}; fire(); } });
         c.subscribe((x) => {
           if (c !== ch || fuera) return;
-          if (x === "SUBSCRIBED") { ok = true; ultimo = ""; track(); di(); }
+          if (x === "SUBSCRIBED") { ok = true; ultimo = ""; track(); di(); rtc.forEach((f) => { try { f({ t: "_listo" }); } catch (_) {} }); }
           else { ok = false; clearTimeout(tR); tR = setTimeout(() => { if (c === ch && !ok && !fuera) { try { cli.removeChannel(c); } catch (_) {} abre(); } }, 6000); }
         });
       };
@@ -720,6 +744,9 @@ const ADV = [
       return {
         presence: (q) => { let l = 0, r = 0; Object.keys(q).forEach((k) => { const T = RAPIDO[k] ? rapido : lento, v = q[k]; if (v === null || v === undefined) { if (k in T) { delete T[k]; RAPIDO[k] ? r++ : l++; } } else if (T[k] !== v) { T[k] = v; RAPIDO[k] ? r++ : l++; } }); if (l) track(); if (r) { di(); fire(); } return Promise.resolve(); },
         onPeers: (fn) => { subs.push(fn); fire(); return () => {}; },
+        yo: me,
+        senal: (fn) => { rtc.push(fn); },
+        manda: (q) => { if (ok && !fuera) try { ch.send({ type: "broadcast", event: "rtc", payload: Object.assign({ de: me }, q) }); } catch (_) {} },
         leave: () => { fuera = true; clearTimeout(tT); clearTimeout(tR); clearInterval(tB); try { cli.removeChannel(ch); } catch (_) {} return Promise.resolve(); }
       };
     };
@@ -774,6 +801,58 @@ const ADV = [
     } catch (_) {}
   }
   conecta(0);
+  /* ---------- voz en la sala: cada teléfono habla directo con los demás (WebRTC) ---------- */
+  let VZ = null;
+  const ICE = { iceServers: [{ urls: ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302"] }] };
+  const hayVoz = () => !!(sala && sala.manda && window.RTCPeerConnection && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  const conVoz = () => peersS.filter((p) => p.presence && p.presence.v).length;
+  const oidos = () => (VZ ? Object.keys(VZ.pcs).filter((k) => VZ.pcs[k].connectionState === "connected").length : 0);
+  function cajaVoz() { let b = document.getElementById("voces"); if (!b) { b = document.createElement("div"); b.id = "voces"; b.style.display = "none"; document.body.appendChild(b); } return b; }
+  const pinta = () => { if (view === "sala") render(1); else if (view === "ros") render(); };
+  function cuelga(id) { if (!VZ || !VZ.pcs[id]) return; try { VZ.pcs[id].close(); } catch (_) {} delete VZ.pcs[id]; delete VZ.cola[id]; const a = document.getElementById("vz-" + id); if (a) { a.srcObject = null; a.remove(); } pinta(); }
+  function par(id, ofrece) {
+    if (!VZ) return null; if (VZ.pcs[id]) return VZ.pcs[id];
+    const pc = new RTCPeerConnection(ICE); VZ.pcs[id] = pc; VZ.cola[id] = VZ.cola[id] || [];
+    VZ.st.getTracks().forEach((t) => pc.addTrack(t, VZ.st));
+    pc.onicecandidate = (e) => { if (e.candidate && sala) sala.manda({ para: id, t: "ice", d: e.candidate.toJSON ? e.candidate.toJSON() : e.candidate }); };
+    pc.ontrack = (e) => { let a = document.getElementById("vz-" + id); if (!a) { a = document.createElement("audio"); a.id = "vz-" + id; a.autoplay = true; a.setAttribute("playsinline", ""); cajaVoz().appendChild(a); } a.srcObject = e.streams[0] || new MediaStream([e.track]); try { const r = a.play(); if (r && r.catch) r.catch(() => {}); } catch (_) {} };
+    pc.onconnectionstatechange = () => { const s = pc.connectionState; if (s === "failed" || s === "closed") cuelga(id); else if (s === "connected") { vibra(1); pinta(); } };
+    if (ofrece) pc.createOffer().then((o) => pc.setLocalDescription(o)).then(() => { if (sala) sala.manda({ para: id, t: "offer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id));
+    return pc;
+  }
+  const vacia = (id) => { const pc = VZ && VZ.pcs[id]; if (!pc) return; (VZ.cola[id] || []).splice(0).forEach((c) => pc.addIceCandidate(c).catch(() => {})); };
+  function senal(q) {
+    if (!VZ || !sala) return;
+    const id = q.de;
+    if (q.t === "_listo") { sala.manda({ t: "hola" }); return; }
+    // el de identificador menor llama; el otro contesta. Así cada par se conecta una sola vez.
+    if (q.t === "hola") { if (!q.para) sala.manda({ para: id, t: "hola" }); if (sala.yo < id && !VZ.pcs[id]) par(id, true); return; }
+    if (q.t === "adios") { cuelga(id); return; }
+    if (q.t === "offer") { const pc = par(id, false); pc.setRemoteDescription(q.d).then(() => pc.createAnswer()).then((a) => pc.setLocalDescription(a)).then(() => { vacia(id); sala.manda({ para: id, t: "answer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id)); return; }
+    if (q.t === "answer") { const pc = VZ.pcs[id]; if (pc && pc.signalingState === "have-local-offer") pc.setRemoteDescription(q.d).then(() => vacia(id)).catch(() => cuelga(id)); return; }
+    if (q.t === "ice") { const pc = VZ.pcs[id]; if (!pc || !pc.remoteDescription) { (VZ.cola[id] = VZ.cola[id] || []).push(q.d); return; } pc.addIceCandidate(q.d).catch(() => {}); }
+  }
+  async function prendeVoz() {
+    if (VZ || !hayVoz()) return;
+    let st;
+    try { st = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }, video: false }); }
+    catch (_) { aviso("Para hablar, permite el micrófono para Atrio en tu navegador."); return; }
+    if (!sala) { st.getTracks().forEach((t) => t.stop()); return; }
+    VZ = { st, pcs: {}, cola: {}, mudo: 0 };
+    if (!sala.vz) { sala.vz = 1; sala.senal(senal); }
+    sala.presence({ v: 1 }).catch(() => {}); sala.manda({ t: "hola" }); vibra(2); despierta(true); pinta();
+  }
+  function apagaVoz(callado) {
+    if (!VZ) return;
+    if (sala) { sala.manda({ t: "adios" }); sala.presence({ v: null }).catch(() => {}); }
+    Object.keys(VZ.pcs).forEach((id) => { try { VZ.pcs[id].close(); } catch (_) {} });
+    VZ.st.getTracks().forEach((t) => t.stop()); VZ = null;
+    const b = document.getElementById("voces"); if (b) b.innerHTML = "";
+    despierta(view === "ros"); if (!callado) pinta();
+  }
+  // botones de voz, iguales en la sala y durante el rosario
+  const botVoz = (chico) => !hayVoz() ? "" : !VZ ? `<button class="vzb${chico ? " ch" : ""}" data-a="voz">${I.mic}<span>${chico ? "Hablar" : "Hablar con la familia"}</span></button>` : `<span class="vzr${chico ? " ch" : ""}"><button class="vzb on${VZ.mudo ? " mu" : ""}" data-a="mudo" aria-pressed="${!VZ.mudo}">${VZ.mudo ? I.mute : I.mic}<span>${VZ.mudo ? "Te silenciaste" : oidos() ? "Te escuchan" : "Conectando voz…"}</span></button>${chico ? "" : `<button class="vzb" data-a="cuelga">Colgar</button>`}</span>`;
+  if (Q.get("demo") || Q.get("prueba")) window.atrioVoz = () => (VZ ? { mudo: VZ.mudo, pcs: Object.keys(VZ.pcs).map((k) => VZ.pcs[k].connectionState), audios: document.querySelectorAll("#voces audio").length } : null);
   const presSala = () => { if (sala) sala.presence({ n: S.n.slice(0, 24), e: S.e, lead: lead ? 1 : 0, on: ros && ros.sala ? 1 : 0, i: ros ? ros.i : 0, set: ros ? ros.set : "", fin: null }).catch(() => {}); };
   const guia = () => peersS.filter((p) => p.presence && p.presence.lead).sort((a, b) => (a.peer < b.peer ? -1 : 1))[0];
   async function entrar(code, crea) {
@@ -782,6 +861,7 @@ const ADV = [
       codigo = code; lead = !!crea; sala = await RM.join("s-" + code.toLowerCase());
       sala.onPeers((c) => {
         peersS = c.peers || [];
+        if (VZ) Object.keys(VZ.pcs).forEach((id) => { if (!peersS.some((p) => p.peer === id)) cuelga(id); });
         const g = guia();
         if (!lead && g && !g.isMe && g.presence.fin && ros && ros.sala) { fin(); return; }
         if (!lead && g && !g.isMe && g.presence.on) {
@@ -794,7 +874,7 @@ const ADV = [
       presSala(); render();
     } catch (_) { sala = null; render(); aviso("No se pudo abrir la sala. Intenta otra vez."); }
   }
-  function salir() { try { if (sala) sala.leave(); } catch (_) {} sala = null; peersS = []; lead = false; codigo = ""; }
+  function salir() { apagaVoz(1); try { if (sala) sala.leave(); } catch (_) {} sala = null; peersS = []; lead = false; codigo = ""; }
 
   /* ---------- piezas visuales ---------- */
   const sky = () => '<div class="sky">' + [[20, 5, 10, 0], [55, 8, 8, 1.4], [86, 4, 10, 2.6], [1.5, 430, 9, 0.8], [96.5, 300, 9, 3.3], [96, 610, 8, 2], [1.5, 700, 8, 1.1]].map(([x, y, s, d]) => star(s, "#F4DCA6", `class="tw" style="left:${x}%;top:${y}px;animation-delay:${d}s"`)).join("") + "</div>";
@@ -908,7 +988,7 @@ const ADV = [
       const st = ros.p[ros.i], M = MIS[ros.set], o = ORA[st.t], mm = st.m != null ? M.m[st.m] : null, g = guia(), sigo = ros.sala && !lead, cl = (ros.sala ? " sl" : "") + (ros.an ? " " + ros.an : "");
       const cab = `<div class="hd z"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}</p><span class="ic r" style="font-size:13px;color:var(--txt2)">${ros.i + 1}/${ros.p.length}</span></div>`;
       // La barra de abajo queda fija: «Amén» siempre está en el mismo lugar y el pulgar lo encuentra sin mirar
-      const pie = `<div class="rpie">${ros.sala ? `<p class="note c">En vivo: ${peersS.length} en la sala</p>` : ""}${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<div class="rb"><button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" ? "Continuar" : "Amén"}</button></div>`}</div>`;
+      const pie = `<div class="rpie">${ros.sala ? `<div class="vzl"><p class="note">En vivo: ${peersS.length} en la sala</p>${botVoz(1)}</div>` : ""}${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<div class="rb"><button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" ? "Continuar" : "Amén"}</button></div>`}</div>`;
       if (st.t === "mis") return `<section class="v d ro mi${cl}">${sky()}${cab}<div class="rt z"><p class="c" style="margin-top:12px;font-size:14px;font-weight:600;color:var(--txt2)">${ORD[st.m]} misterio</p><h1 class="c" style="font-size:28px;line-height:34px">${mm[0]}</h1><p class="ru c" style="margin-top:6px;font-size:16px">${mm[1]}</p></div><div class="ring z">${ring(ros.i)}</div><div class="rt z"><p class="pr c" style="font-size:21px;line-height:29px">${mm[2]}</p></div>${pie}</section>`;
       return `<section class="v d ro${cl}">${sky()}${cab}<p class="rl z">${mm ? ORD[st.m] + " misterio: " + mm[0] : S.pi ? `<span><small>Tu intención</small><em>«${esc(S.pi)}»</em></span>` : st.t === "salve" ? "Para terminar" : "Para empezar"}</p>
         <div class="ring z">${ring(ros.i)}<div><b>${o.n}</b><span>${st.of ? st.k + " de " + st.of : "&nbsp;"}</span></div></div>
@@ -952,7 +1032,8 @@ const ADV = [
       const g = guia(), set = MIS_DIA[now().getDay()];
       return `<section class="v d in">${cab}<p class="c z" style="margin-top:14px;font-size:14px;font-weight:600;color:var(--txt2)">Código de la sala</p><p class="code c z">${esc(codigo)}</p>
         <p class="ru z" style="margin:18px 0 6px;font-size:16px">${peersS.length === 1 ? "Estás tú. Comparte el código." : peersS.length + " conectados"}</p>
-        <div class="card z">${peersS.map((p) => `<div class="row" style="cursor:default"><span class="av">${esc(((p.presence || {}).n || "?").slice(0, 1).toUpperCase())}</span><span class="g"><b>${esc((p.presence || {}).n || "Alguien")}${p.isMe ? " (tú)" : ""}</b><small>${esc(estado((p.presence || {}).e))}${(p.presence || {}).lead ? ", dirige" : ""}</small></span></div>`).join("")}</div>
+        <div class="card z">${peersS.map((p) => `<div class="row" style="cursor:default"><span class="av">${esc(((p.presence || {}).n || "?").slice(0, 1).toUpperCase())}</span><span class="g"><b>${esc((p.presence || {}).n || "Alguien")}${p.isMe ? " (tú)" : ""}</b><small>${esc(estado((p.presence || {}).e))}${(p.presence || {}).lead ? ", dirige" : ""}</small></span>${(p.presence || {}).v ? `<span class="vzi" aria-label="Con voz">${I.mic}</span>` : ""}</div>`).join("")}</div>
+        ${hayVoz() ? `<div class="vzc z">${botVoz()}<p class="note">${VZ ? (conVoz() > 1 ? `${conVoz()} con voz. Usa audífonos para que no haya eco.` : "Eres el primero con voz. Cuando otro toque Hablar, se van a escuchar.") : conVoz() ? `${conVoz() === 1 ? "1 persona habla" : conVoz() + " personas hablan"} en la sala. Toca para escucharlos y hablar.` : "Se escuchan entre quienes toquen Hablar. Mejor con audífonos."}</p></div>` : ""}
         ${lead ? `<button class="btn go mt z" data-a="rosala">Empezar: ${MIS[set].n.toLowerCase()}</button>` : `<p class="note c mt z">${g ? "Esperando a que " + esc(g.presence.n || "quien dirige") + " empiece." : "Esperando a quien dirige."}</p>`}
         <button class="lk c z" data-a="salir" style="margin-top:4px">Salir de la sala</button></section>`;
     }
@@ -970,7 +1051,7 @@ const ADV = [
     // hacia adentro la vista entra por la derecha; al regresar, por la izquierda; las pestañas solo suben
     dirN = b ? "bk" : /^(nom|est|advs|adv|pid|nov|novd|ang|vir|vird|sala)$/.test(view) ? "fw" : "";
     render(); dirN = ""; try { window.scrollTo(0, 0); } catch (_) {} }
-  function render(quieto) { despierta(view === "ros"); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); const x = app.querySelector(".in"); if (x) { if (quieto === 1) x.classList.remove("in"); else if (dirN) x.classList.add(dirN); } }
+  function render(quieto) { despierta(view === "ros" || !!VZ); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); const x = app.querySelector(".in"); if (x) { if (quieto === 1) x.classList.remove("in"); else if (dirN) x.classList.add(dirN); } }
   // tras redibujar una lista de opciones, el foco vuelve al botón que se tocó (teclado y lectores de pantalla)
   // y si quedó elegido, su palomita brota y el teléfono da un toque
   const foco = (a, k) => { try { const b = app.querySelector(`[data-a="${a}"][data-k="${k}"]`); if (!b) return; b.focus({ preventScroll: true }); if (b.classList.contains("on") || b.classList.contains("now")) { b.classList.add("ya"); const li = b.closest("li"); if (li) li.classList.add("ya"); } vibra(1); } catch (_) {} };
@@ -1001,6 +1082,9 @@ const ADV = [
     crear: () => { const L = "ABCDEFGHJKLMNPQRSTUVWXYZ"; let c = ""; for (let i = 0; i < 3; i++) c += L[Math.floor(Math.random() * L.length)]; c += Math.floor(10 + Math.random() * 90); entrar(c, true); },
     unir: () => { const c = (document.getElementById("fc").value || "").trim().toUpperCase().replace(/[^A-Z0-9]/g, ""); if (c.length < 4) { document.getElementById("fc").focus(); return; } entrar(c, false); },
     salir: () => { salir(); go("hoy"); },
+    voz: () => { prendeVoz(); },
+    cuelga: () => { apagaVoz(); },
+    mudo: () => { if (!VZ) return; VZ.mudo = VZ.mudo ? 0 : 1; VZ.st.getAudioTracks().forEach((t) => { t.enabled = !VZ.mudo; }); vibra(1); if (sala) sala.presence({ v: VZ.mudo ? 2 : 1 }).catch(() => {}); pinta(); },
     login: () => { if (!SB) { aviso("Conectando. Intenta de nuevo en un momento."); return; } if (/FBAN|FBAV|FB_IAB|Instagram|TikTok|musical_ly|Snapchat|Line\//i.test(navigator.userAgent)) { aviso("Para entrar con Google, abre Atrio en Safari o Chrome."); return; } if (view === "atrio") { ob = 0; delete S.ob; save(); } try { SB.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } }).then((r) => { if (r && r.error) aviso("No se pudo abrir Google. Intenta otra vez."); }, () => aviso("No se pudo abrir Google. Intenta otra vez.")); } catch (_) {} },
     logout: () => { if (SB) try { SB.auth.signOut().then(() => { U = null; render(1); }, () => {}); } catch (_) {} }
   };
