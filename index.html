@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0B3237">
+<title>Atrio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap">
+<style>
+:root{--manto:#0B3237;--m2:#143A3E;--sel:#284540;--oro:#E6C27A;--oroc:#F4DCA6;--rosa:#F2B5AC;--rosad:#A8434F;--cant:#F4EDE8;--card:#FFFDFB;--line:#E5D9D0;--ink:#0E3438;--ink2:#4A6266;--txt:#F6EFE9;--txt2:#B9C7C5;--teal:#14555A;--se:'Ibarra Real Nova',Georgia,'Times New Roman',serif}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#071F23}
+body{font-family:'Hanken Grotesk',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input,select{font-family:inherit}
+#app{position:relative;max-width:430px;margin:0 auto;min-height:100vh;min-height:100dvh;overflow:hidden}
+.v{position:relative;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:22px 22px 24px}
+.d{background:radial-gradient(120% 55% at 50% 0%,#17525A 0%,#0B3237 70%);color:var(--txt)}
+.l{background:var(--cant);color:var(--ink)}
+.tb{padding-bottom:96px}
+p{margin:0}
+.ru{font-family:var(--se);font-style:italic;font-weight:500;font-size:17px;line-height:22px;color:var(--rosa)}
+.l .ru{color:var(--rosad)}
+h1,h2{font-family:var(--se);font-weight:600;letter-spacing:-.2px;margin:2px 0 0;text-wrap:balance}
+h1{font-size:32px;line-height:38px}
+h2{font-size:25px;line-height:30px}
+.sub{font-size:15px;line-height:22px;margin-top:6px;color:var(--txt2)}
+.l .sub{color:var(--ink2)}
+.c{text-align:center}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;padding:0 20px;border:0;border-radius:28px;font-weight:700;font-size:17px;cursor:pointer;text-decoration:none}
+.go{background:var(--oro);color:var(--manto);box-shadow:0 10px 26px rgba(230,194,122,.2),inset 0 1px 0 rgba(255,255,255,.45)}
+.go.se{font-family:var(--se);font-size:22px}
+.te{background:var(--teal);color:var(--card);box-shadow:0 8px 20px rgba(20,85,90,.22),inset 0 1px 0 rgba(255,255,255,.16)}
+.gh{background:none;border:1.5px solid rgba(246,239,233,.32);color:var(--txt);min-height:48px;font-weight:600;font-size:16px}
+.l .gh{border-color:var(--teal);color:var(--teal)}
+.sm{min-height:46px;font-size:16px}
+.lk{background:none;border:0;padding:0;min-height:44px;font-weight:600;font-size:15px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;color:inherit}
+.btn:focus-visible,.lk:focus-visible,.ic:focus-visible,.row:focus-visible,.tab:focus-visible{outline:2px solid var(--oroc);outline-offset:3px}
+.l .btn:focus-visible,.l .row:focus-visible,.l .tab:focus-visible{outline-color:var(--teal)}
+.hd{display:flex;align-items:center;justify-content:space-between;min-height:44px;gap:8px}
+.ic{flex:none;width:44px;height:44px;display:flex;align-items:center;border:0;background:none;color:inherit;padding:0;cursor:pointer}
+.ic.r{justify-content:flex-end}
+.mt{margin-top:auto}
+.card{border-radius:20px;border:1px solid var(--line);background:var(--card);overflow:hidden}
+.d .card{border-color:rgba(246,239,233,.16);background:var(--m2)}
+.row{display:flex;align-items:center;gap:12px;width:100%;min-height:62px;padding:10px 14px 10px 18px;border:0;background:none;color:inherit;text-align:left;cursor:pointer;font-size:16px}
+.row+.row{border-top:1px solid var(--line)}
+.d .row+.row{border-top-color:rgba(246,239,233,.14)}
+.row b{display:block;font-weight:600;line-height:22px}
+.row small{display:block;font-size:14px;line-height:20px;color:var(--ink2)}
+.d .row small{color:var(--txt2)}
+.row .g{flex:1;min-width:0}
+.fld{width:100%;height:64px;padding:0 20px;border-radius:16px;border:1.5px solid var(--oro);background:#21403E;color:var(--txt);font-family:var(--se);font-size:26px;font-weight:600}
+select.fld{font-size:22px;appearance:none;-webkit-appearance:none}
+.fld:focus-visible{outline:2px solid var(--oroc);outline-offset:3px}
+.lab{display:block;margin:28px 0 8px;font-size:14px;font-weight:600;color:var(--txt2)}
+.tl{position:relative;list-style:none;margin:16px 0 0;padding:0 0 0 30px;display:flex;flex-direction:column;gap:10px}
+.tl:before{content:"";position:absolute;left:9px;top:24px;bottom:60px;width:1px;background:#D3C5BA}
+.tl li{position:relative}
+.nd{position:absolute;left:-30px;top:14px;width:20px;height:20px;border-radius:10px;background:var(--cant);display:flex;align-items:center;justify-content:center}
+.it{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px 12px 16px;border-radius:18px;border:1px solid var(--line);background:var(--card);color:var(--ink);text-align:left;cursor:pointer}
+.it.now{border:1.5px solid var(--teal)}
+.it .ru{font-size:15px;line-height:20px}
+.it b{display:block;margin-top:2px;font-family:var(--se);font-weight:600;font-size:21px;line-height:26px}
+.it .g{flex:1;min-width:0}
+.hero{position:relative;padding:14px 16px 16px;border-radius:20px;overflow:hidden;background:radial-gradient(130% 90% at 85% 0%,#1D626A 0%,#0B3237 72%);color:var(--txt)}
+.hero .ru{color:var(--rosa);font-size:15px;line-height:20px}
+.hero .sub{color:var(--txt2);margin-top:4px}
+.ok{color:#2E7D5B;font-weight:700;font-size:14px}
+.tabs{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:430px;display:flex;padding:8px 8px calc(10px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line);z-index:5}
+.tabs.dk{background:#0A2C31;border-top-color:rgba(246,239,233,.14)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:52px;justify-content:center;border:0;background:none;font-size:12px;font-weight:600;color:#5E7477;cursor:pointer}
+.tab.on{color:var(--teal);font-weight:700}
+.dk .tab{color:#A3B6B5}
+.dk .tab.on{color:var(--oro)}
+.pr{font-family:var(--se);font-size:19px;line-height:27px;margin-top:10px}
+.pr i{color:var(--rosa);font-style:italic}
+.pr.rr{color:var(--oroc);font-weight:500}
+.ex{font-family:var(--se);font-style:italic;font-size:16px;line-height:23px;color:var(--txt2);margin-top:10px}
+.ring{position:relative;align-self:center;width:260px;height:262px;margin-top:8px}
+.ring svg{position:absolute;left:0;top:0}
+.ring div{position:absolute;left:0;top:84px;width:260px;text-align:center}
+.ring b{display:block;font-family:var(--se);font-weight:600;font-size:25px;line-height:30px}
+.ring span{font-size:14px;color:var(--oroc)}
+.sky{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:hidden}
+.sky svg{position:absolute}
+@keyframes brillo{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+.tw{animation:brillo 4.2s ease-in-out infinite}
+@keyframes pulso{0%{transform:scale(1);opacity:.9}70%,100%{transform:scale(2.3);opacity:0}}
+.pu{animation:pulso 2.6s ease-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes tanido{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+.bell{transform-origin:50% 14%;animation:tanido 2.2s ease-in-out infinite}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.in{animation:entra .35s ease-out}
+@media (prefers-reduced-motion:reduce){.tw,.pu,.bell,.in{animation:none}}
+.z{position:relative;z-index:1}
+.days{list-style:none;display:flex;justify-content:space-between;margin:0;padding:0}
+.days li{width:30px;height:30px;border-radius:15px;border:1px solid rgba(246,239,233,.28);color:#A3B6B5;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.days .dn{background:var(--oro);border-color:var(--oro);color:var(--manto);font-weight:700}
+.days .cu{border:1.5px solid var(--oro);background:var(--sel);color:var(--oroc);font-weight:700;box-shadow:0 0 0 4px rgba(230,194,122,.18)}
+.sw{position:relative;flex:none;width:52px;height:32px}
+.sw input{position:absolute;left:0;top:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.sw span{display:block;width:52px;height:32px;border-radius:16px;background:rgba(246,239,233,.24);transition:background .2s}
+.sw span:after{content:"";position:absolute;left:3px;top:3px;width:26px;height:26px;border-radius:13px;background:var(--txt);transition:transform .2s}
+.sw input:checked+span{background:var(--oro)}
+.sw input:checked+span:after{transform:translateX(20px);background:var(--manto)}
+.sw input:focus-visible+span{outline:2px solid var(--oroc);outline-offset:2px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;font-size:15px;line-height:40px;font-weight:500}
+.cal .w{font-size:13px;line-height:20px;font-weight:700;color:var(--ink2)}
+.cal i{display:inline-block;width:34px;height:34px;line-height:34px;border-radius:17px;font-style:normal;font-weight:700}
+.cal .hoy{background:var(--teal);color:var(--card)}
+.cal .rez{background:var(--oro);color:var(--manto)}
+.cal .fi{background:var(--rosad);color:var(--card)}
+.st{display:flex;gap:10px;margin-top:14px}
+.st div{flex:1;padding:12px 14px;border-radius:18px;border:1px solid var(--line);background:var(--card)}
+.st b{display:block;font-family:var(--se);font-size:30px;line-height:34px;font-weight:600}
+.st span{font-size:14px;color:var(--ink2)}
+.av{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:14px;border:2px solid var(--manto);background:var(--oroc);color:var(--manto);font-size:12px;font-weight:700;margin-left:-7px}
+.av:first-child{margin-left:0}
+.code{font-family:var(--se);font-size:40px;font-weight:600;letter-spacing:6px;color:var(--oroc)}
+.note{font-size:14px;line-height:20px;color:#A3B6B5}
+.l .note{color:var(--ink2)}
+.toast{position:fixed;left:50%;bottom:108px;transform:translateX(-50%);padding:10px 16px;border-radius:20px;background:var(--manto);color:var(--txt);font-size:14px;font-weight:600;z-index:9;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.mapa-full{flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;min-height:300px;margin-top:8px}
+.mapa-full .halo{position:absolute;left:50%;top:50%;width:150%;aspect-ratio:1;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(230,194,122,.16),rgba(230,194,122,0));pointer-events:none}
+
+.cuenta{position:absolute;left:26px;bottom:4%;display:flex;align-items:flex-end;gap:10px;max-width:52%}
+.cuenta .num{font-family:var(--se);font-weight:600;font-size:56px;line-height:50px;color:var(--oroc)}
+.cuenta p:last-child{font-size:14px;line-height:19px;color:#B9C7C5;padding-bottom:4px}
+
+.n{--ink:#F6EFE9;--ink2:#B9C7C5;--card:#103C42;--line:rgba(244,220,166,.2);--teal:#E6C27A;--cant:#0B3237}
+.n>:not(.sky):not(.tabs):not(.toast){position:relative;z-index:1}
+.n .card,.n .it,.n .st div{background:rgba(246,239,233,.05);border-color:rgba(244,220,166,.2)}
+.n .it.now{border-color:var(--oro);background:rgba(230,194,122,.08)}
+.n .ok{color:#8FD9B4}
+.n .nd{background:none}
+.n .tl:before{display:none}
+.n .tl li:not(:last-child):after{content:"";position:absolute;left:-21px;top:40px;bottom:-20px;width:1px;background:rgba(230,194,122,.32)}
+.n .hero{box-shadow:inset 0 0 0 1px rgba(230,194,122,.42)}
+.n .cal .hoy{background:none;box-shadow:inset 0 0 0 1.5px var(--oro);color:var(--oroc)}
+.n .cal .fi{color:#fff}
+h1.xl{font-size:44px;line-height:46px;letter-spacing:-.6px}
+.row b{font-family:var(--se);font-size:20px;line-height:24px}
+.tabs.dk{background:rgba(8,36,41,.9);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top-color:rgba(244,220,166,.16)}
+.tab{position:relative}
+.dk .tab.on:before{content:"";position:absolute;top:-9px;left:50%;width:22px;height:2px;margin-left:-11px;border-radius:1px;background:var(--oro)}
+.tit{display:flex;align-items:center;gap:14px;margin:28px 0 14px;font-family:var(--se);font-weight:600;font-size:12.5px;line-height:16px;letter-spacing:.22em;text-transform:uppercase;color:var(--oro);white-space:nowrap}
+.tit:before,.tit:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(230,194,122,0),rgba(230,194,122,.6))}
+.tit:after{background:linear-gradient(90deg,rgba(230,194,122,.6),rgba(230,194,122,0))}
+.em{display:block;color:var(--oro)}
+.em svg{display:block;width:100%;height:100%}
+.nicho{position:relative;margin:18px 0 8px;border:1px solid rgba(230,194,122,.75);border-bottom:0;border-radius:9999px 9999px 0 0;background:#0A2B30;box-shadow:0 30px 44px -26px rgba(0,0,0,.6)}
+.nicho .n1,.nicho .n2{position:absolute;border:1px solid rgba(230,194,122,.3);border-bottom:0;border-radius:9999px 9999px 0 0;pointer-events:none}
+.nicho .n1{left:4px;right:4px;top:4px;bottom:0}
+.nicho .n2{left:29px;right:29px;top:29px;bottom:0;border-color:rgba(230,194,122,.6);background:radial-gradient(100% 62% at 50% 22%,#1E646C 0%,#11464C 52%,#0C353A 100%)}
+.nicho:after{content:"";position:absolute;left:-12px;right:-12px;bottom:-1px;height:1px;background:rgba(230,194,122,.85)}
+.nicho:before{content:"";position:absolute;left:10px;right:10px;bottom:-7px;height:1px;background:rgba(230,194,122,.35)}
+.nt{position:absolute;left:0;top:0;width:100%;pointer-events:none}
+.nt text{font-family:var(--se);font-weight:600;font-size:12px;letter-spacing:.34em;fill:var(--oro)}
+.nb{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:46px 44px 10px}
+.nb .em{width:52px;height:52px}
+.nb .ru{margin-top:8px}
+.nb h2{font-size:36px;line-height:42px;margin:0}
+.ins{margin-top:6px;font-family:var(--se);font-weight:600;font-size:12.5px;line-height:18px;letter-spacing:.2em;text-transform:uppercase;color:var(--oroc)}
+.nb .btn{margin-top:16px}
+.nb .lk{margin-top:2px;color:var(--txt)}
+.ret{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;border-bottom:1px solid rgba(230,194,122,.6)}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;padding:22px 2px 12px;border:1px solid rgba(230,194,122,.34);border-bottom:0;border-radius:9999px 9999px 0 0;background:rgba(246,239,233,.035);color:var(--txt);cursor:pointer}
+.ni .em{width:32px;height:32px;margin-bottom:6px;color:var(--oroc);opacity:.85}
+.ni .em svg{stroke-width:1.7px}
+.ni b{font-family:var(--se);font-weight:600;font-size:14.5px;line-height:18px;letter-spacing:-.1px}
+.ni small{font-size:11.5px;line-height:15px;color:var(--txt2)}
+.ni.on{border-color:var(--oro);background:linear-gradient(#1D626A,#12474D)}
+.ni.on .em{color:var(--oro);opacity:1}
+.ni.on small{font-family:var(--se);font-style:italic;font-size:14px;color:var(--rosa)}
+.ni:focus-visible{outline:2px solid var(--oroc);outline-offset:3px}
+.md{flex:none;width:44px;height:44px;border-radius:22px;border:1px solid rgba(230,194,122,.45);display:flex;align-items:center;justify-content:center;color:var(--oro)}
+.md svg{width:26px;height:26px;stroke-width:1.9px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const MX={"w":390,"h":240,"o":"M24.0 12.2L27.2 12.0L30.3 11.7L33.5 11.4L36.7 11.2L39.8 10.9L43.0 10.7L46.2 10.4L49.3 10.1L50.6 10.0L49.9 11.8L54.6 14.3L59.8 16.1L65.0 17.9L70.3 19.7L75.5 21.5L80.7 23.2L86.0 25.0L91.2 26.8L95.1 26.8L99.0 26.8L102.9 26.8L106.9 26.8L110.8 26.8L114.7 26.8L118.5 26.8L122.4 26.7L122.4 25.4L122.5 24.0L122.5 22.7L122.5 21.3L124.9 21.3L127.3 21.4L129.8 21.4L132.2 21.4L134.6 21.4L137.0 21.4L139.5 21.4L141.9 21.4L143.1 22.5L144.1 24.2L145.3 25.3L146.6 25.9L149.0 27.8L152.2 31.0L154.9 33.1L156.9 34.1L158.2 35.0L159.8 37.4L161.5 41.2L161.5 42.9L162.1 44.6L163.4 46.7L164.6 48.0L166.6 49.1L167.8 50.2L169.1 51.0L170.6 51.4L172.7 52.4L175.3 54.1L177.2 54.9L179.0 54.4L179.8 53.3L181.2 52.3L181.4 51.1L181.9 49.5L183.0 47.1L184.3 45.8L185.8 45.6L187.3 44.4L189.3 44.9L191.2 45.3L193.8 45.5L195.3 45.4L196.5 45.6L197.9 45.9L198.8 47.2L201.7 49.3L202.9 51.1L204.8 52.7L205.9 54.1L206.1 55.2L207.1 57.1L208.7 59.6L209.5 60.9L209.9 63.0L210.7 64.1L211.9 64.9L213.1 66.4L214.4 68.6L215.8 70.3L217.6 71.4L218.6 72.5L218.8 74.3L218.7 75.6L219.3 77.0L219.1 78.4L220.9 80.5L221.6 82.0L222.3 84.3L223.0 85.8L224.0 86.3L225.6 86.6L226.8 87.0L227.6 87.8L228.6 88.3L229.9 88.4L231.1 88.9L232.2 89.8L234.3 90.4L237.4 90.6L239.8 91.4L241.4 92.5L242.5 92.2L244.7 91.6L244.5 94.1L243.8 96.2L241.6 100.4L240.6 103.1L238.9 110.6L238.3 115.6L238.2 117.9L237.8 123.7L238.0 128.1L237.2 130.1L236.8 132.0L236.9 133.3L237.6 136.1L237.8 138.2L239.8 141.8L240.9 143.1L242.3 144.1L242.6 146.3L241.8 148.3L241.6 146.0L242.0 144.7L239.7 142.4L237.9 139.2L239.2 144.3L240.0 145.4L240.7 146.4L242.3 150.3L244.1 154.0L244.9 156.2L249.5 161.4L252.2 165.3L253.2 168.9L253.8 170.0L254.1 171.6L255.9 173.3L256.5 174.5L257.5 175.1L258.3 177.0L259.8 178.1L258.1 177.6L259.3 178.7L261.4 179.5L260.4 178.6L262.1 179.1L266.3 179.4L268.2 180.9L270.6 181.6L271.8 183.6L273.4 185.7L275.1 185.8L277.3 185.5L280.8 184.2L282.0 183.5L284.3 182.6L287.9 182.5L289.0 182.7L291.7 182.2L293.0 181.5L293.6 180.4L296.1 179.8L299.1 179.6L300.3 179.3L301.7 179.2L302.8 180.1L302.1 181.0L303.6 182.2L305.9 182.4L307.7 181.3L309.5 180.3L309.4 179.1L308.6 178.4L308.8 177.3L307.6 177.8L311.0 175.3L311.9 174.6L313.0 173.9L315.4 171.5L315.9 166.9L317.9 164.7L318.2 163.4L318.2 161.0L318.3 159.1L318.2 156.9L318.5 155.1L319.7 151.5L321.5 150.1L324.8 148.5L335.9 146.6L337.4 146.2L339.2 145.1L340.5 144.7L342.9 144.7L344.2 144.1L345.5 144.3L348.1 144.9L351.4 145.9L353.9 146.2L354.8 145.4L353.4 145.2L354.3 144.5L356.3 144.4L357.7 146.0L358.7 148.8L359.2 149.8L358.7 151.5L358.2 153.0L357.5 154.2L356.0 156.0L354.2 157.5L352.0 160.9L351.5 162.4L351.5 163.7L351.9 164.9L351.1 165.8L349.1 168.1L349.5 169.1L351.0 168.8L351.9 169.7L351.0 170.6L349.7 171.1L349.4 172.6L350.6 171.9L350.1 175.2L349.5 178.2L348.6 179.9L348.2 182.5L347.8 183.5L347.2 184.6L346.1 182.5L345.0 181.5L345.5 179.1L345.3 177.7L344.2 178.5L343.5 180.1L342.6 181.6L341.5 182.0L339.8 182.5L339.1 184.3L337.4 187.0L336.7 188.3L335.7 188.9L334.0 187.8L332.8 189.0L330.5 190.1L326.5 190.1L321.5 190.1L316.7 190.1L312.6 190.0L312.6 192.4L312.6 194.5L312.6 196.9L310.4 196.8L308.0 196.8L309.0 197.5L310.0 198.6L311.3 200.2L312.8 201.5L314.5 202.5L315.7 203.5L316.6 205.2L317.2 206.4L318.3 206.7L318.9 207.8L318.6 208.8L318.5 210.0L318.6 211.1L315.8 211.2L312.7 211.2L309.9 211.2L307.7 211.2L304.4 211.2L303.4 212.8L301.9 215.6L300.5 218.1L299.4 220.2L300.6 223.2L299.9 224.1L299.7 225.3L299.5 227.0L299.4 228.6L298.9 229.6L295.6 226.0L292.5 222.4L291.3 221.2L290.2 220.3L288.6 218.7L284.4 215.0L282.3 213.4L280.3 211.4L278.5 210.3L276.7 209.5L275.3 208.6L276.1 210.0L277.2 210.3L279.1 211.3L274.2 209.7L272.1 209.6L272.9 208.2L271.1 208.5L269.9 206.9L268.1 208.3L270.1 209.0L268.9 209.5L266.9 209.9L263.2 212.3L259.8 213.4L255.0 215.7L252.8 215.8L251.7 216.2L248.4 215.3L244.2 213.1L237.9 212.4L233.7 209.5L229.5 208.3L226.8 205.6L225.2 205.4L224.1 205.0L220.3 204.0L216.6 203.3L212.9 200.9L210.4 200.1L208.4 199.2L203.8 197.5L202.1 196.6L200.5 195.2L197.8 193.7L196.7 192.5L195.5 192.0L193.7 189.8L192.8 188.8L191.1 188.2L188.7 188.3L185.0 187.3L183.3 187.1L179.8 185.6L175.1 183.9L173.6 182.0L172.3 180.2L169.9 177.8L168.5 176.8L165.9 175.6L164.5 174.7L162.3 173.9L158.6 172.0L157.5 170.4L156.7 169.0L154.8 167.2L152.6 164.0L152.1 162.8L151.7 160.9L151.1 159.8L150.9 158.4L151.9 157.7L153.8 157.5L155.1 156.7L154.3 154.6L152.5 154.3L153.6 152.5L154.6 151.3L155.3 150.1L155.5 148.6L155.3 147.0L155.6 145.7L153.2 144.1L152.1 141.7L150.8 139.6L150.8 135.5L149.2 131.9L147.5 130.1L144.3 126.7L142.5 125.1L140.6 122.0L138.9 120.0L136.6 116.8L134.9 115.1L127.4 109.6L130.0 111.0L130.2 109.4L128.4 109.2L126.9 108.8L125.3 107.9L124.7 106.9L122.5 103.5L121.7 102.2L122.7 102.9L124.0 103.0L120.7 100.9L119.7 100.0L117.1 98.6L116.1 96.8L115.0 97.1L113.5 97.4L114.1 96.1L115.0 94.8L113.7 95.5L111.6 96.1L110.4 95.6L109.5 94.5L109.1 90.8L109.9 89.5L110.8 88.2L112.0 88.0L111.4 86.9L111.1 85.7L108.4 82.6L106.3 82.7L104.6 81.9L104.0 80.5L103.6 79.3L103.4 78.1L99.7 77.1L98.6 76.3L97.5 75.2L96.6 73.6L96.2 72.5L95.9 71.2L96.4 69.5L94.3 68.0L92.6 68.3L90.4 67.4L88.6 65.6L86.5 62.3L84.2 61.3L83.4 60.2L82.5 59.2L81.7 57.9L80.2 56.2L78.9 54.7L78.5 53.5L78.2 51.6L76.5 50.7L76.4 49.3L74.3 46.2L73.4 44.4L72.5 43.0L72.3 41.3L71.6 39.2L70.1 36.7L69.0 34.9L68.4 33.2L68.7 31.5L68.3 30.2L69.1 28.6L67.6 27.9L64.3 27.2L62.7 26.6L62.6 25.1L61.2 24.0L59.2 23.1L58.5 24.4L56.9 24.6L55.7 24.0L52.5 21.9L50.9 21.3L48.3 19.8L49.3 21.1L49.9 22.9L49.2 24.2L48.8 28.8L50.2 31.2L50.8 33.6L51.0 35.3L51.6 36.7L51.4 39.9L52.5 42.5L54.1 44.1L56.6 46.0L57.9 47.5L60.5 49.6L61.3 50.5L63.6 53.7L64.1 55.8L65.4 55.5L65.9 56.8L67.4 57.3L68.6 60.8L70.1 61.5L71.1 62.7L71.9 64.5L71.7 65.9L72.4 67.0L72.3 68.2L74.5 71.1L77.0 72.8L77.5 74.9L78.6 76.8L79.6 77.3L80.6 78.1L80.5 79.5L81.9 81.0L82.2 83.0L83.4 84.2L83.1 82.9L82.6 80.7L85.4 82.6L85.7 84.2L86.5 85.0L86.6 86.2L87.2 88.0L88.0 89.6L88.1 92.0L88.5 93.7L90.0 96.3L91.3 96.9L91.6 98.2L92.9 101.5L94.4 103.3L95.1 104.9L94.7 107.2L95.5 111.2L96.7 112.7L98.1 113.1L98.7 114.1L99.5 113.0L99.1 111.6L102.5 113.2L103.9 114.9L104.8 116.1L105.9 117.7L106.3 119.4L108.1 120.2L109.1 121.6L108.7 124.8L106.8 126.5L105.7 127.6L104.7 128.3L103.6 128.8L101.8 127.3L100.7 123.3L100.0 122.4L99.5 121.2L98.8 120.1L95.8 118.5L94.3 116.8L92.8 115.7L91.3 114.1L87.1 111.4L85.3 110.0L84.2 108.6L82.9 108.8L82.6 107.7L79.9 105.2L79.4 104.0L79.2 102.7L79.8 99.3L80.0 97.3L79.6 96.2L79.3 94.0L78.7 92.2L76.5 88.6L74.9 87.9L73.4 87.3L69.4 84.1L68.3 82.5L67.9 79.7L67.4 80.8L64.9 81.5L63.0 82.4L61.9 81.6L61.3 80.6L60.3 79.5L58.6 79.2L57.4 77.8L56.3 77.3L54.9 77.2L53.6 76.4L53.1 74.5L50.7 72.6L49.1 71.1L47.6 70.2L47.1 68.9L49.5 69.0L52.3 69.6L53.6 69.4L55.3 68.5L55.2 69.7L57.1 71.0L56.6 69.0L55.8 68.1L56.5 66.8L57.5 64.3L58.1 61.8L57.0 59.7L55.2 58.2L51.3 53.8L48.9 51.5L47.6 50.3L45.7 49.7L44.1 48.5L41.3 46.7L40.1 45.8L39.3 43.6L38.8 41.8L38.5 39.1L36.6 37.8L36.2 36.0L36.1 34.3L35.8 33.1L33.2 31.1L33.1 29.2L31.4 26.4L29.8 24.7L29.1 22.3L29.6 20.4L27.1 18.7L26.4 16.3L25.1 15.0L24.0 12.2ZM67.9 54.3L66.7 53.7L64.1 51.2L63.2 49.9L63.1 48.0L65.0 49.0L65.5 50.8L67.4 51.2L67.7 53.3ZM80.0 108.7L78.8 107.5L78.3 106.1L78.2 103.8L78.9 99.8L78.5 104.6L78.8 105.7L79.3 107.4L80.0 108.7Z","d":[260,155,324,155,388,155,452,155,516,155,580,155,356,211,420,211,484,211,548,211,612,211,676,211,740,211,324,266,388,266,452,266,644,266,708,266,772,266,836,266,900,266,1284,266,1348,266,1412,266,356,322,420,322,484,322,740,322,804,322,868,322,932,322,996,322,1060,322,1124,322,1188,322,1252,322,1316,322,1380,322,1444,322,1508,322,388,377,452,377,708,377,772,377,836,377,900,377,964,377,1028,377,1092,377,1156,377,1220,377,1284,377,1348,377,1412,377,1476,377,1540,377,420,433,484,433,740,433,804,433,868,433,932,433,996,433,1060,433,1124,433,1188,433,1252,433,1316,433,1380,433,1444,433,1508,433,1572,433,452,488,516,488,580,488,644,488,772,488,836,488,900,488,964,488,1028,488,1092,488,1156,488,1220,488,1284,488,1348,488,1412,488,1476,488,1540,488,1604,488,1860,488,1924,488,1988,488,548,543,612,543,804,543,868,543,932,543,996,543,1060,543,1124,543,1188,543,1252,543,1316,543,1380,543,1444,543,1508,543,1572,543,1636,543,1700,543,1828,543,1892,543,1956,543,2020,543,580,599,644,599,836,599,900,599,964,599,1028,599,1092,599,1156,599,1220,599,1284,599,1348,599,1412,599,1476,599,1540,599,1604,599,1668,599,1732,599,1796,599,1860,599,1924,599,1988,599,2052,599,612,654,676,654,932,654,996,654,1060,654,1124,654,1188,654,1252,654,1316,654,1380,654,1444,654,1508,654,1572,654,1636,654,1700,654,1764,654,1828,654,1892,654,1956,654,2020,654,2084,654,516,710,580,710,644,710,708,710,964,710,1028,710,1092,710,1156,710,1220,710,1284,710,1348,710,1412,710,1476,710,1540,710,1604,710,1668,710,1732,710,1796,710,1860,710,1924,710,1988,710,2052,710,2116,710,548,765,612,765,676,765,740,765,996,765,1060,765,1124,765,1188,765,1252,765,1316,765,1380,765,1444,765,1508,765,1572,765,1636,765,1700,765,1764,765,1828,765,1892,765,1956,765,2020,765,2084,765,2148,765,708,821,772,821,836,821,1092,821,1156,821,1220,821,1284,821,1348,821,1412,821,1476,821,1540,821,1604,821,1668,821,1732,821,1796,821,1860,821,1924,821,1988,821,2052,821,2116,821,2180,821,804,876,868,876,1124,876,1188,876,1252,876,1316,876,1380,876,1444,876,1508,876,1572,876,1636,876,1700,876,1764,876,1828,876,1892,876,1956,876,2020,876,2084,876,2148,876,2212,876,836,931,1156,931,1220,931,1284,931,1348,931,1412,931,1476,931,1540,931,1604,931,1668,931,1732,931,1796,931,1860,931,1924,931,1988,931,2052,931,2116,931,2180,931,2244,931,2308,931,2372,931,2436,931,804,987,868,987,1188,987,1252,987,1316,987,1380,987,1444,987,1508,987,1572,987,1636,987,1700,987,1764,987,1828,987,1892,987,1956,987,2020,987,2084,987,2148,987,2212,987,2276,987,2340,987,2404,987,836,1042,900,1042,964,1042,1284,1042,1348,1042,1412,1042,1476,1042,1540,1042,1604,1042,1668,1042,1732,1042,1796,1042,1860,1042,1924,1042,1988,1042,2052,1042,2116,1042,2180,1042,2244,1042,2308,1042,2372,1042,868,1098,932,1098,1316,1098,1380,1098,1444,1098,1508,1098,1572,1098,1636,1098,1700,1098,1764,1098,1828,1098,1892,1098,1956,1098,2020,1098,2084,1098,2148,1098,2212,1098,2276,1098,2340,1098,964,1153,1028,1153,1412,1153,1476,1153,1540,1153,1604,1153,1668,1153,1732,1153,1796,1153,1860,1153,1924,1153,1988,1153,2052,1153,2116,1153,2180,1153,2244,1153,2308,1153,2372,1153,996,1208,1060,1208,1444,1208,1508,1208,1572,1208,1636,1208,1700,1208,1764,1208,1828,1208,1892,1208,1956,1208,2020,1208,2084,1208,2148,1208,2212,1208,2276,1208,2340,1208,1028,1264,1476,1264,1540,1264,1604,1264,1668,1264,1732,1264,1796,1264,1860,1264,1924,1264,1988,1264,2052,1264,2116,1264,2180,1264,2244,1264,2308,1264,2372,1264,1508,1319,1572,1319,1636,1319,1700,1319,1764,1319,1828,1319,1892,1319,1956,1319,2020,1319,2084,1319,2148,1319,2212,1319,2276,1319,2340,1319,1540,1375,1604,1375,1668,1375,1732,1375,1796,1375,1860,1375,1924,1375,1988,1375,2052,1375,2116,1375,2180,1375,2244,1375,2308,1375,2372,1375,1572,1430,1636,1430,1700,1430,1764,1430,1828,1430,1892,1430,1956,1430,2020,1430,2084,1430,2148,1430,2212,1430,2276,1430,2340,1430,2404,1430,1604,1486,1668,1486,1732,1486,1796,1486,1860,1486,1924,1486,1988,1486,2052,1486,2116,1486,2180,1486,2244,1486,2308,1486,2372,1486,3268,1486,3332,1486,3396,1486,3460,1486,3524,1486,1572,1541,1636,1541,1700,1541,1764,1541,1828,1541,1892,1541,1956,1541,2020,1541,2084,1541,2148,1541,2212,1541,2276,1541,2340,1541,2404,1541,3236,1541,3300,1541,3364,1541,3428,1541,3492,1541,3556,1541,1540,1596,1604,1596,1668,1596,1732,1596,1796,1596,1860,1596,1924,1596,1988,1596,2052,1596,2116,1596,2180,1596,2244,1596,2308,1596,2372,1596,2436,1596,3204,1596,3268,1596,3332,1596,3396,1596,3460,1596,3524,1596,1572,1652,1636,1652,1700,1652,1764,1652,1828,1652,1892,1652,1956,1652,2020,1652,2084,1652,2148,1652,2212,1652,2276,1652,2340,1652,2404,1652,2468,1652,3236,1652,3300,1652,3364,1652,3428,1652,3492,1652,1604,1707,1668,1707,1732,1707,1796,1707,1860,1707,1924,1707,1988,1707,2052,1707,2116,1707,2180,1707,2244,1707,2308,1707,2372,1707,2436,1707,2500,1707,3204,1707,3268,1707,3332,1707,3396,1707,3460,1707,1700,1763,1764,1763,1828,1763,1892,1763,1956,1763,2020,1763,2084,1763,2148,1763,2212,1763,2276,1763,2340,1763,2404,1763,2468,1763,2532,1763,3108,1763,3172,1763,3236,1763,3300,1763,3364,1763,3428,1763,3492,1763,1796,1818,1860,1818,1924,1818,1988,1818,2052,1818,2116,1818,2180,1818,2244,1818,2308,1818,2372,1818,2436,1818,2500,1818,2564,1818,2628,1818,2692,1818,2948,1818,3012,1818,3076,1818,3140,1818,3204,1818,3268,1818,3332,1818,3396,1818,3460,1818,1892,1874,1956,1874,2020,1874,2084,1874,2148,1874,2212,1874,2276,1874,2340,1874,2404,1874,2468,1874,2532,1874,2596,1874,2660,1874,2724,1874,2788,1874,2852,1874,2916,1874,2980,1874,3044,1874,3108,1874,3172,1874,3236,1874,3300,1874,3364,1874,1988,1929,2052,1929,2116,1929,2180,1929,2244,1929,2308,1929,2372,1929,2436,1929,2500,1929,2564,1929,2628,1929,2692,1929,2756,1929,2820,1929,2884,1929,2948,1929,3012,1929,3076,1929,2084,1984,2148,1984,2212,1984,2276,1984,2340,1984,2404,1984,2468,1984,2532,1984,2596,1984,2660,1984,2724,1984,2788,1984,2852,1984,2916,1984,2980,1984,3044,1984,2244,2040,2308,2040,2372,2040,2436,2040,2500,2040,2564,2040,2628,2040,2692,2040,2756,2040,2820,2040,2884,2040,2948,2040,3012,2040,3076,2040,3140,2040,2340,2095,2404,2095,2468,2095,2532,2095,2596,2095,2660,2095,2724,2095,2788,2095,2852,2095,2916,2095,2980,2095,3044,2095,3108,2095,3172,2095,2500,2151,2884,2151,2948,2151,3012,2151,2916,2206,2980,2206],"e":[["Aguascalientes",187.9,141.0],["Baja California",42.6,11.2],["Baja California Sur",99.3,113.6],["Campeche",317.7,165.7],["Chiapas",289.1,202.9],["Chihuahua",146.1,59.4],["Ciudad de México",222.7,170.6],["Coahuila",202.1,98.2],["Colima",172.1,172.9],["Durango",161.6,115.1],["Estado de México",216.9,172.3],["Guanajuato",199.2,151.3],["Guerrero",218.7,193.3],["Hidalgo",227.2,162.2],["Jalisco",176.2,155.6],["Michoacán",200.0,167.3],["Morelos",221.6,176.7],["Nayarit",159.0,145.5],["Nuevo León",209.7,95.1],["Oaxaca",249.4,199.1],["Puebla",233.0,175.3],["Querétaro",208.8,156.5],["Quintana Roo",358.3,149.7],["San Luis Potosí",202.3,137.7],["Sinaloa",131.6,105.7],["Sonora",92.1,54.1],["Tabasco",291.2,188.0],["Tamaulipas",222.6,118.5],["Tlaxcala",232.6,171.9],["Veracruz",247.3,169.2],["Yucatán",327.7,151.9],["Zacatecas",184.7,130.2]]};
+const ORA = {
+  cruz: { n: "Señal de la cruz", v: "Por la señal de la santa cruz, de nuestros enemigos líbranos, Señor, Dios nuestro.", r: "En el nombre del Padre, y del Hijo, y del Espíritu Santo. Amén." },
+  credo: { n: "Credo", v: "Creo en Dios, Padre todopoderoso, Creador del cielo y de la tierra. Creo en Jesucristo, su único Hijo, nuestro Señor, que fue concebido por obra y gracia del Espíritu Santo, nació de santa María Virgen, padeció bajo el poder de Poncio Pilato, fue crucificado, muerto y sepultado, descendió a los infiernos, al tercer día resucitó de entre los muertos, subió a los cielos y está sentado a la derecha de Dios, Padre todopoderoso.", r: "Creo en el Espíritu Santo, la santa Iglesia católica, la comunión de los santos, el perdón de los pecados, la resurrección de la carne y la vida eterna. Amén." },
+  pn: { n: "Padre nuestro", v: "Padre nuestro, que estás en el cielo, santificado sea tu Nombre; venga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo.", r: "Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación, y líbranos del mal. Amén." },
+  am: { n: "Ave María", v: "Dios te salve, María, llena eres de gracia, el Señor es contigo; bendita tú eres entre todas las mujeres, y bendito es el fruto de tu vientre, Jesús.", r: "Santa María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte. Amén." },
+  gl: { n: "Gloria", v: "Gloria al Padre, y al Hijo, y al Espíritu Santo.", r: "Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén.", x: "Oh Jesús mío, perdona nuestros pecados, líbranos del fuego del infierno, lleva al cielo a todas las almas, especialmente a las más necesitadas de tu misericordia." },
+  salve: { n: "Salve", v: "Dios te salve, Reina y Madre de misericordia, vida, dulzura y esperanza nuestra; Dios te salve. A ti llamamos los desterrados hijos de Eva; a ti suspiramos, gimiendo y llorando en este valle de lágrimas.", r: "Ea, pues, Señora, abogada nuestra, vuelve a nosotros esos tus ojos misericordiosos; y después de este destierro muéstranos a Jesús, fruto bendito de tu vientre. ¡Oh clementísima, oh piadosa, oh dulce Virgen María! Amén." }
+};
+
+const MIS = {
+  gozosos: { n: "Misterios gozosos", m: [
+    ["La Anunciación", "Lucas 1, 26-38", "María dice que sí sin entenderlo todo."],
+    ["La Visitación", "Lucas 1, 39-56", "María sale de prisa a servir a su prima Isabel."],
+    ["El Nacimiento de Jesús", "Lucas 2, 1-20", "Dios llega pequeño, en un pesebre."],
+    ["La Presentación en el templo", "Lucas 2, 22-38", "María y José entregan al Niño a Dios."],
+    ["El Niño perdido y hallado", "Lucas 2, 41-52", "Lo buscan tres días y lo encuentran en la casa de su Padre."]] },
+  luminosos: { n: "Misterios luminosos", m: [
+    ["El Bautismo en el Jordán", "Mateo 3, 13-17", "El Padre lo llama su Hijo amado."],
+    ["Las bodas de Caná", "Juan 2, 1-11", "María dice: hagan lo que él les diga."],
+    ["El anuncio del Reino", "Marcos 1, 14-15", "Jesús llama a cambiar el corazón."],
+    ["La Transfiguración", "Lucas 9, 28-36", "Por un momento se ve quién es Jesús."],
+    ["La institución de la Eucaristía", "Lucas 22, 14-20", "Jesús se queda en el pan y el vino."]] },
+  dolorosos: { n: "Misterios dolorosos", m: [
+    ["La oración en el huerto", "Lucas 22, 39-46", "Jesús tiene miedo y aun así dice: hágase tu voluntad."],
+    ["La flagelación", "Juan 19, 1", "Jesús carga en su cuerpo nuestro dolor."],
+    ["La coronación de espinas", "Mateo 27, 27-31", "Se burlan del Rey, y él calla."],
+    ["Jesús con la cruz a cuestas", "Juan 19, 16-17", "Cae y se vuelve a levantar."],
+    ["La crucifixión y muerte", "Lucas 23, 33-46", "Jesús perdona y entrega su espíritu."]] },
+  gloriosos: { n: "Misterios gloriosos", m: [
+    ["La Resurrección", "Mateo 28, 1-10", "El sepulcro está vacío. No tengan miedo."],
+    ["La Ascensión", "Hechos 1, 6-11", "Jesús sube al Padre y promete volver."],
+    ["La venida del Espíritu Santo", "Hechos 2, 1-13", "El miedo de los apóstoles se vuelve fuego."],
+    ["La Asunción de María", "Lucas 1, 48-49", "Dios lleva a María al cielo en cuerpo y alma."],
+    ["La coronación de María", "Apocalipsis 12, 1", "María es Reina y sigue siendo madre."]] }
+};
+const MIS_DIA = ["gloriosos", "gozosos", "dolorosos", "gloriosos", "luminosos", "dolorosos", "gozosos"];
+const ORD = ["Primer", "Segundo", "Tercer", "Cuarto", "Quinto"];
+
+const NOV = [
+  ["La voz en el cerro", "Un sábado de madrugada de diciembre de 1531, Juan Diego camina hacia la doctrina. Al pasar junto al cerro del Tepeyac oye un canto como de muchos pájaros. Luego, una voz lo llama por su nombre, con cariño: Juanito, Juan Dieguito.", "Pídele a la Virgen oír hoy cómo te llama Dios por tu nombre."],
+  ["La casita sagrada", "La Señora le dice quién es: la siempre Virgen santa María, Madre del verdadero Dios. Le pide una casita sagrada en ese llano, para mostrar ahí su amor, su compasión y su ayuda a todos los que la busquen.", "Pídele hacer de tu casa un lugar donde ella quepa."],
+  ["El obispo no le cree", "Juan Diego lleva el mensaje al obispo fray Juan de Zumárraga. Lo escuchan, pero no le creen. Regresa triste al cerro y le pide a la Virgen que mande a alguien importante. Ella le responde que tiene muchos mensajeros, y que lo quiere a él.", "Pídele confianza cuando sientes que no eres suficiente."],
+  ["La señal que piden", "Juan Diego vuelve con el obispo. Esta vez le hacen muchas preguntas y le piden una señal para creer. La Virgen lo recibe otra vez con paciencia y le promete dársela al día siguiente.", "Pídele paciencia para lo que todavía no ves."],
+  ["El tío enfermo", "Su tío Juan Bernardino cae gravemente enfermo. Juan Diego ya no vuelve al cerro. El martes 12 sale de madrugada a buscar un sacerdote y rodea el Tepeyac por otro camino, para que la Señora no lo detenga.", "Pon en sus manos a un enfermo que quieres."],
+  ["¿No estoy yo aquí?", "Ella le sale al encuentro en el otro camino. Juan Diego se disculpa, apenado. La Virgen le dice que no se aflija por la enfermedad ni por ninguna otra cosa, y le pregunta: ¿No estoy yo aquí, que soy tu madre? Su tío ya está sano.", "Deja en su regazo lo que más te preocupa."],
+  ["Las rosas en diciembre", "La Virgen le pide subir a la cumbre del cerro, donde solo hay piedras, espinas y hielo. Juan Diego encuentra rosas de Castilla, frescas y llenas de rocío. Las corta, y ella misma las acomoda en su tilma.", "Pídele ver las flores que Dios pone donde no las esperas."],
+  ["La tilma se abre", "Juan Diego espera mucho tiempo antes de entrar con el obispo. Cuando abre su tilma, las rosas caen al suelo y sobre la tela aparece la imagen de la Virgen. El obispo cae de rodillas.", "Dale gracias por lo que ya te concedió."],
+  ["Su nombre y su casa", "Juan Bernardino cuenta que la Señora lo curó y le dijo cómo quiere ser llamada: santa María de Guadalupe. El obispo levanta la primera ermita en el Tepeyac. Casi quinientos años después, sigue recibiendo a sus hijos.", "Preséntale a tu familia y a México."]
+];
+
+const ANG = [
+  ["El ángel del Señor anunció a María.", "Y concibió por obra y gracia del Espíritu Santo."],
+  ["He aquí la esclava del Señor.", "Hágase en mí según tu palabra."],
+  ["Y el Verbo se hizo carne.", "Y habitó entre nosotros."],
+  ["Ruega por nosotros, santa Madre de Dios.", "Para que seamos dignos de alcanzar las promesas de nuestro Señor Jesucristo."]
+];
+const ANG_ORA = "Te suplicamos, Señor, que derrames tu gracia en nuestras almas, para que los que por el anuncio del ángel hemos conocido la encarnación de tu Hijo Jesucristo, por su pasión y su cruz seamos llevados a la gloria de su resurrección. Amén.";
+const DIAS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const VIR = [
+  ["Bajo tu amparo", "La más antigua, del siglo III", "Bajo tu amparo nos acogemos, santa Madre de Dios; no desprecies las súplicas que te dirigimos en nuestras necesidades; antes bien, líbranos de todo peligro, oh Virgen gloriosa y bendita. Amén."],
+  ["Acordaos", "Para pedirle con toda confianza", "Acordaos, oh piadosísima Virgen María, que jamás se ha oído decir que ninguno de los que han acudido a vuestra protección, implorando vuestra asistencia y reclamando vuestro socorro, haya sido desamparado. Animado por esta confianza, a Vos también acudo, oh Madre, Virgen de las vírgenes; y gimiendo bajo el peso de mis pecados me atrevo a comparecer ante vuestra presencia soberana. Oh Madre de Dios, no desechéis mis súplicas; antes bien, escuchadlas y acogedlas benignamente. Amén."],
+  ["Bendita sea tu pureza", "Para ofrecerle el día", "Bendita sea tu pureza y eternamente lo sea, pues todo un Dios se recrea en tan graciosa belleza. A ti, celestial princesa, Virgen sagrada María, te ofrezco en este día alma, vida y corazón. Mírame con compasión, no me dejes, Madre mía. Amén."],
+  ["Oh Señora mía", "Consagración de cada mañana", "Oh Señora mía, oh Madre mía, yo me ofrezco enteramente a ti; y en prueba de mi filial afecto te consagro en este día mis ojos, mis oídos, mi lengua, mi corazón; en una palabra, todo mi ser. Ya que soy todo tuyo, oh Madre de bondad, guárdame y defiéndeme como cosa y posesión tuya. Amén."],
+  ["Salve", "Para cerrar el día", ORA.salve.v + " " + ORA.salve.r],
+  ["Regina Coeli", "En Pascua, en lugar del Ángelus", "Reina del cielo, alégrate, aleluya. Porque el Señor, a quien has merecido llevar, aleluya, ha resucitado según su palabra, aleluya. Ruega al Señor por nosotros, aleluya."]
+];
+(function () {
+  const app = document.getElementById("app");
+  const Q = new URLSearchParams(location.search);
+  const S16 = "8,1 9.23,5.03 12.95,3.05 10.97,6.77 15,8 10.97,9.23 12.95,12.95 9.23,10.97 8,15 6.77,10.97 3.05,12.95 5.03,9.23 1,8 5.03,6.77 3.05,3.05 6.77,5.03";
+  const star = (s, fill, extra) => `<svg width="${s}" height="${s}" viewBox="0 0 16 16" aria-hidden="true" ${extra || ""}><polygon fill="${fill}" points="${S16}"/></svg>`;
+  const starO = (s, c) => `<svg width="${s}" height="${s}" viewBox="0 0 16 16" aria-hidden="true"><polygon fill="none" stroke="${c}" stroke-linejoin="round" points="${S16}"/></svg>`;
+  const esc = (t) => String(t == null ? "" : t).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const I = {
+    back: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5l-7 7 7 7"/></svg>',
+    x: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+    go: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l5 5-5 5"/></svg>',
+    bell: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17c1.6-1.6 2-3.4 2-6a5 5 0 0 1 10 0c0 2.6.4 4.4 2 6z"/><path d="M10 20a2.1 2.1 0 0 0 4 0"/></svg>',
+    sun: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5V5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg>',
+    st: `<svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round" aria-hidden="true"><polygon points="${S16}"/></svg>`,
+    pin: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10.5" r="2.4"/></svg>',
+    yo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.9-4 3.9-6 7.5-6s6.6 2 7.5 6"/></svg>'
+  };
+
+  /* ---------- emblemas (línea fina, como grabado) ---------- */
+  const em = (d) => `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+  const sp = (x, y, k) => `<polygon transform="translate(${x - 8 * k} ${y - 8 * k}) scale(${k})" fill="currentColor" stroke="none" points="${S16}"/>`;
+  const EM = {
+    gozosos: em('<path d="M24 5c3.6 5.6 4.6 13 0 22.5-4.6-9.5-3.6-16.9 0-22.5z"/><path d="M22 28.5c-1.5-6-6-10.5-12.5-9.5-.6 4.6 2 8.6 6.5 9.5M26 28.5c1.5-6 6-10.5 12.5-9.5.6 4.6-2 8.6-6.5 9.5"/><path d="M15.5 30.5h17M24 31v12.5M24 37c-2.6 0-5 1.2-6.5 3.5M24 37c2.6 0 5 1.2 6.5 3.5"/>'),
+    luminosos: em('<circle cx="24" cy="12.5" r="6"/><path d="M24 9.8v5.4M21.3 12.5h5.4M24 2.5V4M34 12.5h1.5M12.5 12.5H14M31 5.5l1.1-1.1M17 5.5l-1.1-1.1"/><path d="M15.5 22.5h17c0 6.3-3.6 10.2-8.5 10.2s-8.5-3.9-8.5-10.2z"/><path d="M24 32.7V40M17.5 44c.8-2.6 3.3-4 6.5-4s5.7 1.4 6.5 4z"/>'),
+    dolorosos: em('<path d="M24 4v40M13 17h22"/><circle cx="24" cy="17" r="7"/><path d="M30.1 20.5l2.6 1.5M27.5 23.1l1.5 2.6M20.5 23.1L19 25.7M17.9 20.5l-2.6 1.5M17.9 13.5l-2.6-1.5M20.5 10.9L19 8.3M27.5 10.9L29 8.3M30.1 13.5l2.6-1.5"/>'),
+    gloriosos: em('<path d="M11 36L8.5 19l8.5 7 7-12 7 12 8.5-7L37 36z"/><path d="M11 40.5h26M24 4.5V14M21 8h6"/><circle cx="8.5" cy="16.6" r="1.7"/><circle cx="39.5" cy="16.6" r="1.7"/><path d="M17 31.5h0M24 31.5h0M31 31.5h0" stroke-width="2.6"/>'),
+    virgen: em('<path d="M11 40V13l13 17 13-17v27"/><path d="M15 40l9-28 9 28M18.9 28.5h10.2"/>' + sp(24, 5, 0.5)),
+    angelus: em('<path d="M24 9c-6 0-9.5 4.6-9.5 11.5V29l-4 6.5h27l-4-6.5v-8.5C33.5 13.6 30 9 24 9zM24 5v4M20.5 35.5v1a3.5 3.5 0 0 0 7 0v-1"/><path d="M6.5 17c-1 2.6-1 5.4 0 8M41.5 17c1 2.6 1 5.4 0 8" stroke-opacity=".6"/>'),
+    novena: em('<path d="M19.77 18.18A6.2 6.2 0 1 1 28.23 18.18A6.2 6.2 0 1 1 30.85 26.22A6.2 6.2 0 1 1 24 31.2A6.2 6.2 0 1 1 17.15 26.22A6.2 6.2 0 1 1 19.77 18.18z"/><circle cx="24" cy="24" r="3"/>')
+  };
+
+  /* ---------- estado guardado en este dispositivo ---------- */
+  let S = { n: "", e: -1, d: {}, nov: {}, ang: 1 };
+  try { const r = localStorage.getItem("atrio1"); if (r) S = Object.assign(S, JSON.parse(r)); } catch (_) {}
+  let U = null, tNube = 0;
+  const save = () => { try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} clearTimeout(tNube); tNube = setTimeout(nube, 1200); };
+  if (Q.get("demo")) { S.n = S.n || "Lucía"; if (S.e < 0) S.e = 22; }
+
+  /* ---------- fechas y tiempo litúrgico ---------- */
+  const FAKE = Q.get("fecha");
+  const now = () => (FAKE ? new Date(FAKE + "T" + (Q.get("hora") || "10:00") + ":00") : new Date());
+  const key = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  const dia = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const add = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const hoy = () => S.d[key(now())] || {};
+  const marca = (k) => { const h = key(now()); S.d[h] = Object.assign(S.d[h] || {}, { [k]: 1 }); save(); presLobby(); };
+  function pascua(y) { const a = y % 19, b = Math.floor(y / 100), c = y % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), mo = Math.floor((h + l - 7 * m + 114) / 31), da = ((h + l - 7 * m + 114) % 31) + 1; return new Date(y, mo - 1, da); }
+  function adviento(y) { const w = new Date(y, 11, 25).getDay(); return new Date(y, 11, 25 - (w === 0 ? 7 : w) - 21); }
+  const FIESTAS = { "1-1": "Santa María, Madre de Dios", "3-19": "San José", "8-15": "La Asunción de María", "10-28": "San Judas Tadeo", "11-1": "Todos los Santos", "11-2": "Fieles difuntos", "12-8": "La Inmaculada Concepción", "12-9": "San Juan Diego", "12-12": "Nuestra Señora de Guadalupe", "12-25": "Navidad" };
+  function tiempo(d) {
+    const y = d.getFullYear(), t = dia(d), ad = adviento(y), p = pascua(y);
+    let r;
+    if (t >= ad && t < new Date(y, 11, 25)) r = [["Primera", "Segunda", "Tercera", "Cuarta"][Math.min(3, Math.floor((t - ad) / 6048e5))] + " semana de Adviento", "#6B4C93"];
+    else if (t >= new Date(y, 11, 25) || t <= new Date(y, 0, 12)) r = ["Tiempo de Navidad", "#C8962E"];
+    else if (t >= add(p, -46) && t < p) r = [t >= add(p, -7) ? "Semana Santa" : "Cuaresma", "#6B4C93"];
+    else if (t >= p && t <= add(p, 49)) r = ["Tiempo de Pascua", "#C8962E"];
+    else r = ["Tiempo ordinario", "#2E7D5B"];
+    const f = FIESTAS[(d.getMonth() + 1) + "-" + d.getDate()];
+    return { t: r[0] + (f ? ". " + f : ""), c: r[1] };
+  }
+  function nov() {
+    const t = dia(now()), y = t.getFullYear(), a = new Date(y, 11, 3), b = new Date(y, 11, 11);
+    if (t < a) return { f: Math.round((a - t) / 864e5) };
+    if (t <= b) return { n: t.getDate() - 2 };
+    if (t.getMonth() === 11 && t.getDate() === 12) return { fiesta: 1 };
+    return { f: Math.round((new Date(y + 1, 11, 3) - t) / 864e5) };
+  }
+  const novHechos = () => S.nov[now().getFullYear()] || {};
+  function racha() { let n = 0, d = dia(now()); if (!(S.d[key(d)] || {}).r) d = add(d, -1); while ((S.d[key(d)] || {}).r) { n++; d = add(d, -1); } return n; }
+  const total = () => Object.keys(S.d).filter((k) => S.d[k].r).length;
+  const estado = (i) => (i === 99 ? "Fuera de México" : (MX.e[i] || [""])[0]);
+
+  /* ---------- campana ---------- */
+  let AC = null;
+  function bell(n) {
+    try {
+      AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+      if (AC.state === "suspended") AC.resume();
+      const t0 = AC.currentTime + 0.05;
+      for (let j = 0; j < (n || 3); j++) {
+        const t = t0 + j * 1.7;
+        [[1, 0.5], [2, 0.32], [2.4, 0.2], [3, 0.14], [4.2, 0.08], [5.4, 0.05]].forEach(([m, g], i) => {
+          const o = AC.createOscillator(), ga = AC.createGain();
+          o.type = "sine"; o.frequency.value = 196 * m;
+          ga.gain.setValueAtTime(0.0001, t); ga.gain.exponentialRampToValueAtTime(g * 0.5, t + 0.012); ga.gain.exponentialRampToValueAtTime(0.0001, t + 3.4 - i * 0.35);
+          o.connect(ga); ga.connect(AC.destination); o.start(t); o.stop(t + 3.6);
+        });
+      }
+    } catch (_) {}
+  }
+  let sono = "";
+  setInterval(() => { const d = now(); if (S.ang && S.n && d.getHours() === 12 && d.getMinutes() < 10 && sono !== key(d) && !hoy().a && view !== "ros") { sono = key(d); bell(3); go("ang"); } }, 20000);
+
+  /* ---------- sala y mapa en vivo (solo cuando la plataforma lo permite) ---------- */
+  const SB_URL = "https://dzvbmibnrsdubwoqolgk.supabase.co", SB_KEY = "sb_publishable_5_GfPgfqO5o_3Ex_nUsZyw_zkstzjBE";
+  let RM = null, peersL = [], sala = null, peersS = [], lead = false, codigo = "", SB = null, velasHoy = null;
+  function sbRoom(cli) {
+    const me = Math.random().toString(36).slice(2, 12);
+    const mk = (name) => {
+      let st = {}, subs = [], mine = {}, ok = false;
+      const ch = cli.channel(name, { config: { presence: { key: me } } });
+      const fire = () => { const peers = Object.keys(st).map((k) => ({ peer: k, isMe: k === me, kind: "viewer", presence: (st[k] && st[k][0]) || {} })); subs.forEach((f) => { try { f({ peers }); } catch (_) {} }); };
+      ch.on("presence", { event: "sync" }, () => { st = ch.presenceState(); fire(); });
+      ch.subscribe((x) => { if (x === "SUBSCRIBED") { ok = true; ch.track(mine); } });
+      return {
+        presence: (p) => { Object.keys(p).forEach((k) => { if (p[k] === null) delete mine[k]; else mine[k] = p[k]; }); if (ok) ch.track(mine); return Promise.resolve(); },
+        onPeers: (fn) => { subs.push(fn); fire(); return () => {}; },
+        leave: () => { try { cli.removeChannel(ch); } catch (_) {} return Promise.resolve(); },
+        join: (n) => Promise.resolve(mk(n))
+      };
+    };
+    return mk("atrio-lobby");
+  }
+  function nube() { if (!SB || !U) return; try { SB.from("progreso").upsert({ user_id: U.id, datos: S, actualizado: new Date().toISOString() }).then(() => {}, () => {}); } catch (_) {} }
+  function sincroniza() {
+    if (!SB || !U) return;
+    try { SB.from("progreso").select("datos").eq("user_id", U.id).maybeSingle().then((r) => {
+      const R = (r && r.data && r.data.datos) || null;
+      if (R) { const d = Object.assign({}, R.d || {}); Object.keys(S.d).forEach((k) => { d[k] = Object.assign({}, d[k] || {}, S.d[k]); }); const nv = Object.assign({}, R.nov || {}); Object.keys(S.nov).forEach((y) => { nv[y] = Object.assign({}, nv[y] || {}, S.nov[y]); }); S.d = d; S.nov = nv; if (!S.n && R.n) S.n = R.n; if (S.e < 0 && R.e >= 0) S.e = R.e; }
+      try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} nube(); render();
+    }, () => {}); } catch (_) {}
+  }
+  function cargaVelas() {
+    if (!SB) return;
+    try { SB.from("velas").select("estado").eq("dia", key(now())).limit(5000).then((r) => { if (r && r.data) { const c = {}; r.data.forEach((x) => { c[x.estado] = (c[x.estado] || 0) + 1; }); velasHoy = c; if (view === "mapa" || view === "listo") render(); } }, () => {}); } catch (_) {}
+  }
+  function enciende() {
+    if (!SB || hoy().v || !MX.e[S.e]) return;
+    const h = key(now()); S.d[h] = Object.assign(S.d[h] || {}, { v: 1 }); save();
+    try { SB.from("velas").insert({ dia: h, estado: S.e }).then(() => cargaVelas(), () => {}); } catch (_) {}
+  }
+  function conectaSB() {
+    if (SB_URL.indexOf("http") !== 0 || RM) return;
+    const init = () => { try { SB = window.supabase.createClient(SB_URL, SB_KEY); RM = sbRoom(SB);
+      try { SB.auth.getSession().then((r) => { U = (r && r.data && r.data.session && r.data.session.user) || null; if (U) sincroniza(); }, () => {}); SB.auth.onAuthStateChange((_e, ses) => { const u = (ses && ses.user) || null, cambia = (u && u.id) !== (U && U.id); U = u; if (U && cambia) sincroniza(); else if (cambia) render(); }); } catch (_) {} RM.onPeers((c) => { peersL = c.peers || []; if (view === "mapa" || view === "listo" || (view === "sala" && !sala)) render(); }); presLobby(); cargaVelas(); if (hoy().r) enciende(); if (view === "sala") render(); } catch (_) { RM = null; SB = null; } };
+    if (window.supabase && window.supabase.createClient) return init();
+    const sc = document.createElement("script"); sc.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"; sc.onload = init; document.head.appendChild(sc);
+  }
+  const presLobby = () => { if (RM) RM.presence({ e: S.e, r: hoy().r ? 1 : 0 }).catch(() => {}); };
+  function conecta(n) {
+    if (RM) return;
+    try {
+      if (window.claude && window.claude.use) window.claude.use("room").then((r) => {
+        if (!r || RM) return; RM = r;
+        r.onPeers((c) => { peersL = c.peers || []; if (view === "mapa" || view === "listo" || (view === "sala" && !sala)) render(); }, () => { RM = null; peersL = []; });
+        presLobby(); if (view === "sala") render();
+      }).catch(() => {});
+      else if (n < 3 && SB_URL.indexOf("http") !== 0) setTimeout(() => conecta(n + 1), 700);
+      else if (!window.claude) setTimeout(conectaSB, 0);
+    } catch (_) {}
+  }
+  conecta(0);
+  const presSala = () => { if (sala) sala.presence({ n: S.n.slice(0, 24), e: S.e, lead: lead ? 1 : 0, on: ros && ros.sala ? 1 : 0, i: ros ? ros.i : 0, set: ros ? ros.set : "", fin: null }).catch(() => {}); };
+  const guia = () => peersS.filter((p) => p.presence && p.presence.lead).sort((a, b) => (a.peer < b.peer ? -1 : 1))[0];
+  async function entrar(code, crea) {
+    if (!RM) return;
+    try {
+      codigo = code; lead = !!crea; sala = await RM.join("s-" + code.toLowerCase());
+      sala.onPeers((c) => {
+        peersS = c.peers || [];
+        const g = guia();
+        if (!lead && g && !g.isMe && g.presence.fin && ros && ros.sala) { fin(); return; }
+        if (!lead && g && !g.isMe && g.presence.on) {
+          if (!ros || !ros.sala || ros.set !== g.presence.set) { ros = { set: MIS[g.presence.set] ? g.presence.set : MIS_DIA[now().getDay()], i: 0, sala: 1 }; ros.p = pasos(); view = "ros"; }
+          const i = Math.max(0, Math.min(ros.p.length - 1, g.presence.i | 0));
+          if (i !== ros.i || view !== "ros") { ros.i = i; view = "ros"; }
+          render();
+        } else if (view === "sala") render();
+      }, () => { sala = null; peersS = []; if (view === "sala") render(); });
+      presSala(); render();
+    } catch (_) { sala = null; aviso("No se pudo abrir la sala. Intenta otra vez."); }
+  }
+  function salir() { try { if (sala) sala.leave(); } catch (_) {} sala = null; peersS = []; lead = false; codigo = ""; }
+
+  /* ---------- piezas visuales ---------- */
+  const sky = () => '<div class="sky">' + [[20, 5, 10, 0], [55, 8, 8, 1.4], [86, 4, 10, 2.6], [1.5, 430, 9, 0.8], [96.5, 300, 9, 3.3], [96, 610, 8, 2], [1.5, 700, 8, 1.1]].map(([x, y, s, d]) => star(s, "#F4DCA6", `class="tw" style="left:${x}%;top:${y}px;animation-delay:${d}s"`)).join("") + "</div>";
+  function portal() {
+    let r = "";
+    for (let i = 0; i < 61; i++) { const a = Math.PI + (Math.PI * i) / 60, r1 = 104, r2 = r1 + (i % 2 ? 40 : 24); r += `<line x1="${(150 + r1 * Math.cos(a)).toFixed(1)}" y1="${(132 + r1 * Math.sin(a)).toFixed(1)}" x2="${(150 + r2 * Math.cos(a)).toFixed(1)}" y2="${(132 + r2 * Math.sin(a)).toFixed(1)}"/>`; }
+    const st = [[112, 96, 0.8], [150, 70, 0.55], [186, 100, 0.7], [128, 140, 0.5], [170, 150, 0.85], [104, 180, 0.55], [148, 196, 0.7], [192, 186, 0.5], [160, 112, 0.4], [122, 214, 0.45]].map(([x, y, s]) => `<polygon transform="translate(${x - 8 * s} ${y - 8 * s}) scale(${s})" fill="#F4DCA6" points="${S16}"/>`).join("");
+    return `<svg viewBox="0 0 300 250" width="300" height="250" aria-hidden="true" style="align-self:center"><g stroke="#E6C27A" stroke-opacity=".5" stroke-width="1" stroke-linecap="round">${r}</g><path d="M75 236V107a75 75 0 0 1 150 0v129z" fill="#125158" stroke="#E6C27A" stroke-width="1.5"/><path d="M83 236V107a67 67 0 0 1 134 0v129" fill="none" stroke="#E6C27A" stroke-opacity=".4"/>${st}<path d="M50 236h200" stroke="#E6C27A" stroke-width="2"/><path d="M78 244h144" stroke="#E6C27A" stroke-opacity=".45"/></svg>`;
+  }
+  let dotsPath = "";
+  function mapa(lit, mine, full, extra) {
+    const VX = full ? 20 : 0, VY = full ? 4 : 0, VW = full ? 344 : MX.w, VH = full ? 230 : MX.h;
+    if (!dotsPath) { const d = MX.d; for (let i = 0; i < d.length; i += 2) dotsPath += `M${d[i] / 10} ${d[i + 1] / 10}h0`; }
+    let g = "";
+    Object.keys(lit).forEach((k) => { const e = MX.e[k]; if (!e) return; const n = lit[k], R = Math.min(30, 13 + n * 3); g += `<circle cx="${e[1]}" cy="${e[2]}" r="${R}" fill="url(#gl)"/><polygon transform="translate(${e[1] - 6} ${e[2] - 6}) scale(.75)" fill="#F4DCA6" points="${S16}"/>`; });
+    const m = MX.e[mine];
+    if (m) g += `<circle cx="${m[1]}" cy="${m[2]}" r="24" fill="url(#gl)"/><circle cx="${m[1]}" cy="${m[2]}" r="11" fill="none" stroke="#FBE9BE" stroke-width="1"/><polygon transform="translate(${m[1] - 8} ${m[2] - 8})" fill="#FFF3D0" points="${S16}"/>`;
+    const pu = m ? `<span class="pu" style="position:absolute;left:${((m[1] - VX) / VW * 100).toFixed(2)}%;top:${((m[2] - VY) / VH * 100).toFixed(2)}%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:1.2px solid #FBE9BE"></span>` : "";
+    return `<div style="position:relative;${full ? "margin:0 -16px" : "margin:6px -22px 0"}"><svg viewBox="${VX} ${VY} ${VW} ${VH}" role="img" aria-label="Mapa de México con veladoras encendidas" style="display:block;width:100%"><defs><radialGradient id="gl"><stop offset="0" stop-color="#FBE9BE" stop-opacity=".85"/><stop offset=".4" stop-color="#F0CF8A" stop-opacity=".32"/><stop offset="1" stop-color="#E6C27A" stop-opacity="0"/></radialGradient></defs><path d="${MX.o}" fill="#134A50" fill-opacity=".55" stroke="#E6C27A" stroke-opacity=".38" stroke-width=".7" stroke-linejoin="round"/><path d="${dotsPath}" stroke="#8FB3B2" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"/>${g}</svg>${pu}${extra || ""}</div>`;
+  }
+  function pasos() {
+    const p = [{ t: "cruz", b: "x" }, { t: "credo", b: "x" }, { t: "pn", b: "p0" }, { t: "am", k: 1, of: 3, b: "p1" }, { t: "am", k: 2, of: 3, b: "p2" }, { t: "am", k: 3, of: 3, b: "p3" }, { t: "gl", b: "p3" }];
+    for (let m = 0; m < 5; m++) { p.push({ t: "mis", m, b: "L" + m }); p.push({ t: "pn", m, b: "L" + m }); for (let k = 1; k <= 10; k++) p.push({ t: "am", m, k, of: 10, b: "s" + m + "_" + k }); p.push({ t: "gl", m, x: 1, b: "s" + m + "_10" }); }
+    p.push({ t: "salve", b: "M" }); return p;
+  }
+  function ring(i) {
+    const P = ros.p, done = {}, cur = P[i].b; for (let j = 0; j < i; j++) done[P[j].b] = 1;
+    const cx = 130, cy = 108, R = 98, st = 360 / 56; let s = "";
+    const bead = (id, x, y, r) => { const c = id === cur, d = done[id]; s += (c ? `<circle class="pu" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r + 3}" fill="none" stroke="#F4DCA6" stroke-width="1.2"/>` : "") + `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${c ? r + 1.2 : r}" fill="${c ? "#FFF3D0" : d ? "#E6C27A" : "none"}" stroke="${d || c ? "none" : "rgba(244,220,166,.55)"}" stroke-width="1"/>`; };
+    for (let m = 0; m < 5; m++) for (let k = 0; k <= 10; k++) { const a = ((90 + (m * 11 + k + 1) * st) * Math.PI) / 180; bead(k === 0 ? "L" + m : "s" + m + "_" + k, cx + R * Math.cos(a), cy + R * Math.sin(a), k === 0 ? 4.6 : 3); }
+    const mc = cur === "M";
+    s += `<polygon transform="translate(${cx - 8} ${cy + R - 8})" fill="${mc || i > 0 ? "#F4DCA6" : "none"}" stroke="rgba(244,220,166,.7)" stroke-width=".8" points="${S16}"/>` + (mc ? `<circle class="pu" cx="${cx}" cy="${cy + R}" r="11" fill="none" stroke="#F4DCA6" stroke-width="1.2"/>` : "");
+    bead("p3", cx, cy + R + 14, 3); bead("p2", cx, cy + R + 23, 3); bead("p1", cx, cy + R + 32, 3); bead("p0", cx, cy + R + 42, 4.2);
+    const xc = cur === "x" ? "#FFF3D0" : "#E6C27A";
+    s += `<path d="M${cx} ${cy + R + 48}v13M${cx - 4.5} ${cy + R + 52}h9" stroke="${xc}" stroke-width="1.6" stroke-linecap="round"/>`;
+    return `<svg width="260" height="262" viewBox="0 0 260 270" aria-hidden="true">${s}</svg>`;
+  }
+  const tabs = (on, dk) => `<nav class="tabs dk" aria-label="Secciones">` + [["hoy", "Hoy", I.sun], ["rezar", "Rezar", I.st], ["mapa", "Mapa", I.pin], ["yo", "Yo", I.yo]].map(([v, t, ic]) => `<button class="tab${on === v ? " on" : ""}" data-a="go" data-v="${v}"${on === v ? ' aria-current="page"' : ""}>${ic}${t}</button>`).join("") + "</nav>";
+  const hd = (back, title, right) => `<div class="hd z"><button class="ic" data-a="go" data-v="${back[0]}" aria-label="${back[1] === "x" ? "Cerrar" : "Regresar"}">${back[1] === "x" ? I.x : I.back}</button><p class="ru">${title}</p>${right || '<span class="ic"></span>'}</div>`;
+  const vivos = () => peersL.filter((p) => p.kind !== "agent");
+  function encendidos() { if (velasHoy) return Object.assign({}, velasHoy); const lit = {}; vivos().forEach((p) => { const pr = p.presence || {}; if (pr.r && !p.isMe && MX.e[pr.e]) lit[pr.e] = (lit[pr.e] || 0) + 1; }); return lit; }
+
+  /* ---------- pantallas ---------- */
+  let view = "hoy", ros = null, nd = 1, vn = 0, msg = "";
+  const V = {
+    bien: () => `<section class="v d in">${sky()}<div class="hd z" style="justify-content:flex-start;gap:10px"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M6.5 24.5V13a7.5 7.5 0 0 1 15 0v11.5M3.5 24.5h21" stroke="#E6C27A" stroke-width="1.6" stroke-linecap="round"/><polygon transform="translate(8 8.2) scale(.75)" fill="#E6C27A" points="${S16}"/></svg><b style="font-family:var(--se);font-size:26px;font-weight:600">Atrio</b></div>${portal()}
+      <p class="z" style="margin-top:14px;font-family:var(--se);font-style:italic;font-weight:500;font-size:33px;line-height:39px">¿No estoy yo aquí,<br>que soy tu madre?</p><p class="ru z" style="margin-top:8px;font-size:16px">Santa María de Guadalupe a san Juan Diego, 1531</p>
+      <p class="sub z" style="margin-top:14px;font-size:16px;line-height:24px">Reza el rosario, la novena y el Ángelus, solo o con tu familia. No importa cuánto tiempo pasó.</p>
+      <div class="mt z" style="padding-top:24px"><button class="btn go" data-a="go" data-v="nom">Empezar</button></div></section>`,
+    nom: () => `<section class="v d in">${sky()}${hd([S.e >= 0 ? "yo" : "bien"], "Paso 1 de 2")}<h1 class="z" style="margin-top:30px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
+      <label class="lab z" for="fn">Tu nombre</label><input class="fld z" id="fn" type="text" autocomplete="given-name" maxlength="24" value="${esc(S.n)}">
+      <button class="btn go mt z" data-a="nom">Continuar</button></section>`,
+    est: () => `<section class="v d in">${sky()}${hd(["nom"], "Paso 2 de 2")}<h1 class="z" style="margin-top:30px;font-size:34px;line-height:40px">¿Desde dónde rezas?</h1><p class="sub z">Ahí se enciende tu veladora en el mapa.</p>
+      <label class="lab z" for="fe">Tu estado</label><select class="fld z" id="fe">${MX.e.map((e, i) => `<option value="${i}"${i === (S.e < 0 ? 6 : S.e) ? " selected" : ""}>${e[0]}</option>`).join("")}<option value="99"${S.e === 99 ? " selected" : ""}>Fuera de México</option></select>
+      <p class="note z" style="margin-top:12px">Tu nombre y tu avance se guardan solo en este dispositivo.</p>
+      <button class="btn go mt z" data-a="est">Entrar a Atrio</button></section>`,
+    hoy: () => {
+      const d = now(), h = d.getHours(), tp = tiempo(d), set = MIS_DIA[d.getDay()], nv = nov(), hh = hoy(), rc = racha();
+      const nvTxt = nv.n ? `Día ${nv.n} de 9` : nv.fiesta ? "Hoy es su fiesta" : nv.f === 1 ? "Empieza mañana" : `Empieza el 3 de diciembre, faltan ${nv.f} días`;
+      const item = (cls, on, a, ru, t, right) => `<li><span class="nd">${on ? star(16, "#C8962E") : starO(16, "rgba(244,220,166,.6)")}</span><button class="it ${cls}" ${a}><span class="g"><span class="ru" style="display:block">${ru}</span><b>${t}</b></span>${right}</button></li>`;
+      return `<section class="v d n tb in">${sky()}<div class="hd"><p class="ru">${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}</p>
+        <button class="btn" data-a="go" data-v="yo" aria-label="Tu racha: ${rc} ${rc === 1 ? "día" : "días"}" style="width:auto;flex:none;white-space:nowrap;min-height:44px;padding:0 14px;gap:6px;border:1px solid var(--line);background:rgba(246,239,233,.06);color:var(--oroc);font-size:14px"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="#C8962E" d="M8 1.5c.4 2.2 3.5 3.7 3.5 7.2a3.5 3.5 0 0 1-7 0c0-1.3.6-2.3 1.4-3.1.2 1 .8 1.6 1.3 1.7C7 5.5 7.3 3.3 8 1.5z"/></svg>${rc} ${rc === 1 ? "día" : "días"}</button></div><h1>${h < 12 ? "Buenos días" : h < 19 ? "Buenas tardes" : "Buenas noches"}, ${esc(S.n)}</h1>
+        <p style="margin-top:8px;display:flex;align-items:center;gap:8px;font-size:14px;line-height:20px;color:var(--ink2)"><span style="flex:none;width:10px;height:10px;border-radius:5px;background:${tp.c};box-shadow:0 0 0 1.5px rgba(246,239,233,.5)"></span>${tp.t}</p>
+        <ol class="tl">
+        ${item(hh.r ? "" : "now", !hh.r, 'data-a="ros"', hh.r ? "Ya lo rezaste hoy" : "Hoy, " + MIS[set].n.toLowerCase(), "Santo rosario", hh.r ? '<span class="ok">Hecho</span>' : `<span style="color:var(--teal)">${I.go}</span>`)}
+        ${item("", false, 'data-a="go" data-v="ang"', hh.a ? "Ya lo rezaste hoy" : "A las 12:00, con campana", "Ángelus", hh.a ? '<span class="ok">Hecho</span>' : `<span style="color:var(--teal)">${I.bell}</span>`)}
+        ${item("", false, 'data-a="go" data-v="nov"', nvTxt, "Novena de Guadalupe", `<span style="color:var(--ink2)">${I.go}</span>`)}
+        <li><span class="nd">${starO(16, "rgba(244,220,166,.6)")}</span><div class="hero"><p class="ru">Cada quien desde donde está</p><h2>Rosario en familia</h2><p class="sub">Abre una sala, comparte el código y recen el mismo rosario al mismo tiempo.</p><button class="btn go sm" data-a="go" data-v="sala" style="margin-top:12px">Abrir la sala</button></div></li>
+        </ol>${tabs("hoy")}</section>`;
+    },
+    rezar: () => {
+      const d = now(), set = MIS_DIA[d.getDay()], hh = hoy(), nv = nov();
+      const dias = { gozosos: ["Lun y sáb", "lunes y sábado"], luminosos: ["Jueves", "jueves"], dolorosos: ["Mar y vie", "martes y viernes"], gloriosos: ["Mié y dom", "miércoles y domingo"] };
+      const ni = (k) => `<button class="ni${k === set ? " on" : ""}" data-a="ros" data-set="${k}" aria-label="${MIS[k].n}, ${dias[k][1]}${k === set ? ", los de hoy" : ""}"><span class="em">${EM[k]}</span><b>${MIS[k].n.replace("Misterios ", "").replace(/^./, (c) => c.toUpperCase())}</b><small>${k === set ? "Hoy" : dias[k][0]}</small></button>`;
+      const row = (at, e, t, sm) => `<button class="row" ${at}><span class="md">${EM[e]}</span><span class="g"><b>${t}</b><small>${sm}</small></span>${I.go}</button>`;
+      const nvTxt = nv.n ? `Hoy es el día ${nv.n} de 9` : nv.fiesta ? "Hoy es su fiesta" : nv.f === 1 ? "Empieza mañana" : "Empieza el 3 de diciembre";
+      return `<section class="v d n tb in">${sky()}<h1 class="xl">Rezar</h1><p class="sub">Todo va guiado, cuenta por cuenta.</p>
+        <div class="nicho"><i class="n1"></i><i class="n2"></i><svg class="nt" viewBox="0 0 346 173" aria-hidden="true"><defs><path id="arco" d="M21.3 173A151.7 151.7 0 0 1 324.7 173"/></defs><text><textPath href="#arco" startOffset="50%" text-anchor="middle">AVE · MARIA · GRATIA · PLENA</textPath></text><g fill="#E6C27A">${sp(16.5, 160, 0.5)}${sp(329.5, 160, 0.5)}</g></svg>
+          <div class="nb"><span class="em">${EM[set]}</span><p class="ru">${hh.r ? "Ya lo rezaste hoy" : "Hoy, " + DIAS[d.getDay()].toLowerCase()}</p><h2>Santo rosario</h2><p class="ins">${MIS[set].n}</p>
+          <button class="btn go" data-a="ros">${hh.r ? "Rezarlo otra vez" : "Empezar a rezar"}</button><button class="lk" data-a="go" data-v="sala">Rezarlo en familia</button></div></div>
+        <p class="tit">Los cuatro misterios</p><div class="ret">${ni("gozosos")}${ni("luminosos")}${ni("dolorosos")}${ni("gloriosos")}</div>
+        <p class="tit">Devociones</p><div class="card">${row('data-a="go" data-v="vir"', "virgen", "Devociones a la Virgen", "Bajo tu amparo, Acordaos y más")}${row('data-a="go" data-v="ang"', "angelus", "Ángelus", hh.a ? "Ya lo rezaste hoy" : "A mediodía, con campana")}${row('data-a="go" data-v="nov"', "novena", "Novena de Guadalupe", nvTxt)}</div>${tabs("rezar")}</section>`;
+    },
+    ros: () => {
+      const st = ros.p[ros.i], M = MIS[ros.set], o = ORA[st.t], mm = st.m != null ? M.m[st.m] : null, g = guia(), sigo = ros.sala && !lead;
+      const cab = `<div class="hd z"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}</p><span class="ic r" style="font-size:13px;color:var(--txt2)">${ros.i + 1}/${ros.p.length}</span></div>`;
+      const pie = (sigo ? `<p class="note c z mt" style="margin-bottom:6px">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<button class="btn go se mt z" data-a="sig">${st.t === "mis" ? "Continuar" : "Amén"}</button>`) + (ros.i > 0 && !sigo ? `<button class="lk c z" data-a="ant" style="margin-top:4px;color:var(--txt2)">Regresar una cuenta</button>` : "") + (ros.sala ? `<p class="note c z" style="margin-top:4px">En vivo: ${peersS.length} en la sala</p>` : "");
+      if (st.t === "mis") return `<section class="v d">${sky()}${cab}<p class="c z" style="margin-top:12px;font-size:14px;font-weight:600;color:var(--txt2)">${ORD[st.m]} misterio</p><h1 class="c z" style="font-size:28px;line-height:34px">${mm[0]}</h1><p class="ru c z" style="margin-top:6px;font-size:16px">${mm[1]}</p><div class="ring z">${ring(ros.i)}</div><p class="pr c z" style="font-size:21px;line-height:29px">${mm[2]}</p>${pie}</section>`;
+      return `<section class="v d">${sky()}${cab}<p class="c z" style="margin-top:8px;font-size:14px;font-weight:600;color:var(--txt2);min-height:20px">${mm ? ORD[st.m] + " misterio: " + mm[0] : st.t === "salve" ? "Para terminar" : "Para empezar"}</p>
+        <div class="ring z">${ring(ros.i)}<div><b>${o.n}</b><span>${st.of ? st.k + " de " + st.of : "&nbsp;"}</span></div></div>
+        <p class="pr z"><i>V/.</i> ${o.v}</p><p class="pr rr z"><i>R/.</i> ${o.r}</p>${st.x ? `<p class="ex z">${o.x}</p>` : ""}${pie}</section>`;
+    },
+    listo: () => { const lit = encendidos(), n = vivos().length; return `<section class="v d in">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p><div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
+      <div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>
+      ${n > 1 ? `<p class="note z" style="margin-top:12px">Ahora mismo hay ${n} personas con Atrio abierto.</p>` : ""}
+      <button class="btn go mt z" data-a="go" data-v="hoy">Volver a hoy</button>${SB && !U ? `<button class="lk c z" data-a="login" style="margin-top:4px">Guardar mi avance con Google</button>` : `<button class="lk c z" data-a="copiar" style="margin-top:4px">Copiar invitación para mi familia</button>`}</section>`; },
+    mapa: () => { const lit = encendidos(), n = vivos().length, r = hoy().r, c = Object.keys(lit).length + (r && MX.e[S.e] && !lit[S.e] ? 1 : 0); return `<section class="v d tb in">${sky()}<p class="ru z">México en oración</p><h1 class="z">${r ? "Tu veladora está encendida" : "Enciende tu estado"}</h1><p class="sub z">${r ? esc(estado(S.e)) + " brilla hoy por tu rosario." : "Cada rosario terminado enciende una veladora en " + esc(estado(S.e)) + "."}</p>
+      <div class="z mapa-full"><div class="halo"></div>${mapa(lit, r ? S.e : -1, 1, `<div class="cuenta"><p class="num">${c}</p><p>${c === 1 ? "estado encendido" : "estados encendidos"} ${velasHoy ? "hoy" : "ahora"}${n > 1 ? `<br>${n} personas rezando con Atrio` : ""}</p></div>`)}</div>
+      <p class="note z" style="margin-top:4px">${velasHoy ? "Cada veladora es un rosario terminado hoy en ese estado." : RM ? "El mapa muestra a quienes tienen Atrio abierto en este momento." : "En esta versión el mapa muestra tu veladora."}</p>
+      ${r ? "" : `<button class="btn go z" style="margin-top:14px" data-a="ros">Rezar el rosario de hoy</button>`}${tabs("mapa", 1)}</section>`; },
+    nov: () => { const nv = nov(), he = novHechos(); return `<section class="v d in">${sky()}${hd(["hoy"], "Del 3 al 11 de diciembre")}<h1 class="z" style="margin-top:10px">Novena de Guadalupe</h1><p class="sub z">${nv.n ? `Hoy es el día ${nv.n} de 9.` : nv.fiesta ? "Hoy es 12 de diciembre, su fiesta." : `Empieza el 3 de diciembre. ${nv.f === 1 ? "Falta un día" : "Faltan " + nv.f + " días"}; mientras, puedes leer cada día.`}</p>
+      <div class="card z" style="margin-top:14px">${NOV.map((x, i) => `<button class="row" data-a="novd" data-n="${i + 1}"><span style="flex:none;width:30px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;${he[i + 1] ? "background:var(--oro);color:var(--manto)" : nv.n === i + 1 ? "border:1.5px solid var(--oro);color:var(--oroc)" : "border:1px solid rgba(246,239,233,.28);color:#A3B6B5"}">${i + 1}</span><span class="g"><b>${x[0]}</b></span>${I.go}</button>`).join("")}</div></section>`; },
+    novd: () => { const x = NOV[nd - 1], he = novHechos(); return `<section class="v d in">${sky()}${hd(["nov"], `Novena, día ${nd} de 9`)}<h1 class="z" style="margin-top:14px;font-size:34px;line-height:40px">${x[0]}</h1><p class="pr z" style="margin-top:16px;font-size:20px;line-height:29px">${x[1]}</p><p class="ru z" style="margin-top:22px">Para hoy</p><p class="z" style="margin-top:4px;font-size:17px;line-height:25px">${x[2]}</p>
+      <button class="btn go mt z" data-a="ros" data-nov="${nd}">Rezar el rosario de este día</button><button class="btn gh z" data-a="novok" style="margin-top:8px">${he[nd] ? "Día rezado" : "Ya lo recé por mi cuenta"}</button></section>`; },
+    ang: () => `<section class="v d in">${sky()}${hd(["hoy", "x"], "Mediodía")}<svg class="bell z" width="120" height="112" viewBox="0 0 160 150" aria-hidden="true" style="align-self:center"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C99A45"/><stop offset=".38" stop-color="#F6E0AC"/><stop offset="1" stop-color="#D2A552"/></linearGradient></defs><path d="M72 36V30a8 8 0 0 1 16 0v6" fill="none" stroke="#E6C27A" stroke-width="3" stroke-linecap="round"/><path d="M66 36C58 40 55 52 55 64C55 82 49 95 36 104L124 104C111 95 105 82 105 64C105 52 102 40 94 36C89 33 71 33 66 36Z" fill="url(#bg)"/><path d="M43 98C60 102 100 102 117 98" fill="none" stroke="#9A7227" stroke-opacity=".55" stroke-width="1.4"/><path d="M80 104v6" stroke="#B88A3A" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="116" r="6.5" fill="#D9AE5C"/></svg>
+      <h1 class="c z">El Ángelus</h1><div class="z" style="margin-top:6px">${ANG.map((a, i) => `<p class="pr" style="font-size:17px;line-height:24px;margin-top:${i ? 10 : 6}px"><i>V/.</i> ${a[0]}</p><p class="pr rr" style="font-size:17px;line-height:24px;margin-top:0"><i>R/.</i> ${a[1]}${i < 3 ? " <i>Ave María.</i>" : ""}</p>`).join("")}<p class="pr" style="font-size:16px;line-height:23px;margin-top:12px"><i>Oremos.</i> ${ANG_ORA}</p></div>
+      <label class="card z" style="margin-top:14px;display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 16px 8px 18px;cursor:pointer"><span style="flex:1;font-size:15px;line-height:21px;font-weight:600">Tocar la campana a las 12:00 si tengo Atrio abierto</span><span class="sw"><input type="checkbox" id="fa"${S.ang ? " checked" : ""}><span></span></span></label>
+      <div class="z mt" style="display:flex;gap:10px;margin-top:14px"><button class="btn gh" data-a="bell" style="flex:1;min-height:56px">Oír la campana</button><button class="btn go se" data-a="angok" style="flex:1">Amén</button></div></section>`,
+    vir: () => `<section class="v d in">${sky()}${hd(["rezar"], "Devociones a la Virgen")}<h1 class="z" style="margin-top:10px">Con María</h1><p class="sub z">Las oraciones de siempre a la Virgen, completas y a la mano.</p>
+      <div class="card z" style="margin-top:14px"><button class="row" data-a="ros"><span class="g"><b>Santo rosario</b><small>${MIS[MIS_DIA[now().getDay()]].n}, cuenta por cuenta</small></span>${I.go}</button><button class="row" data-a="go" data-v="ang"><span class="g"><b>Ángelus</b><small>A mediodía, con campana</small></span>${I.go}</button><button class="row" data-a="go" data-v="nov"><span class="g"><b>Novena de Guadalupe</b><small>Del 3 al 11 de diciembre</small></span>${I.go}</button></div>
+      <p class="ru z" style="margin:16px 0 6px;font-size:16px">Oraciones</p><div class="card z">${VIR.map((x, i) => `<button class="row" data-a="vird" data-n="${i}"><span class="g"><b>${x[0]}</b><small>${x[1]}</small></span>${I.go}</button>`).join("")}</div></section>`,
+    vird: () => { const x = VIR[vn] || VIR[0]; return `<section class="v d in">${sky()}${hd(["vir"], "Devociones a la Virgen")}<h1 class="z" style="margin-top:14px;font-size:34px;line-height:40px">${x[0]}</h1><p class="ru z" style="margin-top:6px;font-size:16px">${x[1]}</p><p class="pr z" style="margin-top:18px;font-size:20px;line-height:30px">${x[2]}</p><div class="mt z" style="padding-top:24px"><button class="btn go se" data-a="go" data-v="vir">Amén</button></div></section>`; },
+    yo: () => { const d = now(), y = d.getFullYear(), m = d.getMonth(), f = new Date(y, m, 1).getDay(), n = new Date(y, m + 1, 0).getDate(); let c = "DLMMJVS".split("").map((x) => `<span class="w">${x}</span>`).join("") + "<span></span>".repeat(f);
+      for (let i = 1; i <= n; i++) { const k = key(new Date(y, m, i)), cl = i === d.getDate() ? "hoy" : (S.d[k] || {}).r ? "rez" : m === 11 && (i === 12 || i === 25) ? "fi" : ""; c += `<span>${cl ? `<i class="${cl}">${i}</i>` : i}</span>`; }
+      return `<section class="v d n tb in">${sky()}<div class="hd" style="align-items:flex-start"><div><p class="ru">Tu bitácora</p><h1>${esc(S.n)}</h1></div><span aria-hidden="true" style="flex:none;margin-top:8px;width:44px;height:44px;border-radius:22px;background:var(--teal);color:var(--card);font-family:var(--se);font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center">${esc(S.n.slice(0, 1).toUpperCase())}</span></div>
+      <div class="st"><div><b>${racha()}</b><span>${racha() === 1 ? "día seguido" : "días seguidos"}</span></div><div><b>${total()}</b><span>${total() === 1 ? "rosario rezado" : "rosarios rezados"}</span></div></div>
+      <div class="card" style="margin-top:12px;padding:12px 12px 14px"><p class="ru" style="margin:0 6px 6px;font-size:16px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)} de ${y}</p><div class="cal">${c}</div></div>
+      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
+      ${SB ? (U ? `<div class="card" style="margin-top:12px"><div class="row" style="cursor:default"><span class="g"><b>Tu avance está guardado</b><small>${esc(U.email || "Cuenta de Google")}</small></span><span class="ok">Listo</span></div><button class="row" data-a="logout"><span class="g"><b>Cerrar sesión</b></span>${I.go}</button></div>` : `<button class="btn te" data-a="login" style="margin-top:12px">Guardar mi avance con Google</button><p class="note" style="margin-top:8px">Sin cuenta, tu avance vive solo en este teléfono.</p>`) : `<p class="note" style="margin-top:12px">Tu avance se guarda solo en este dispositivo.</p>`}${tabs("yo")}</section>`; },
+    sala: () => {
+      const cab = sky() + hd(["hoy"], "Rosario en familia");
+      if (!RM) return `<section class="v d in">${cab}<h1 class="z" style="margin-top:14px">Cada quien desde donde está</h1><p class="sub z" style="font-size:16px;line-height:24px">La sala en vivo todavía no está disponible desde este enlace. Mientras llega, pónganse de acuerdo en una hora y recen el mismo rosario cada quien en su teléfono.</p>
+        <div class="card z" style="margin-top:18px;padding:16px 18px"><p class="ru">Hoy tocan</p><p style="font-family:var(--se);font-size:24px;line-height:30px;font-weight:600">${MIS[MIS_DIA[now().getDay()]].n}</p></div>
+        <button class="btn go mt z" data-a="copiar">Copiar invitación para WhatsApp</button><button class="btn gh z" data-a="ros" style="margin-top:8px">Rezar ahora</button></section>`;
+      if (!sala) return `<section class="v d in">${cab}<h1 class="z" style="margin-top:14px">Cada quien desde donde está</h1><p class="sub z">Abre una sala y comparte el código. Quien la abre dirige; los demás siguen la misma cuenta.</p>
+        <button class="btn go z" data-a="crear" style="margin-top:22px">Abrir una sala</button>
+        <label class="lab z" for="fc">Tengo un código</label><input class="fld z" id="fc" type="text" autocapitalize="characters" maxlength="5" placeholder="LUZ37" style="letter-spacing:6px;text-transform:uppercase"><button class="btn gh z" data-a="unir" style="margin-top:10px">Entrar a la sala</button></section>`;
+      const g = guia(), set = MIS_DIA[now().getDay()];
+      return `<section class="v d in">${cab}<p class="c z" style="margin-top:14px;font-size:14px;font-weight:600;color:var(--txt2)">Código de la sala</p><p class="code c z">${esc(codigo)}</p>
+        <p class="ru z" style="margin:18px 0 6px;font-size:16px">${peersS.length === 1 ? "Estás tú. Comparte el código." : peersS.length + " conectados"}</p>
+        <div class="card z">${peersS.map((p) => `<div class="row" style="cursor:default"><span class="av">${esc(((p.presence || {}).n || "?").slice(0, 1).toUpperCase())}</span><span class="g"><b>${esc((p.presence || {}).n || "Alguien")}${p.isMe ? " (tú)" : ""}</b><small>${esc(estado((p.presence || {}).e))}${(p.presence || {}).lead ? ", dirige" : ""}</small></span></div>`).join("")}</div>
+        ${lead ? `<button class="btn go mt z" data-a="rosala">Empezar: ${MIS[set].n.toLowerCase()}</button>` : `<p class="note c mt z">${g ? "Esperando a que " + esc(g.presence.n || "quien dirige") + " empiece." : "Esperando a quien dirige."}</p>`}
+        <button class="lk c z" data-a="salir" style="margin-top:4px">Salir de la sala</button></section>`;
+    }
+  };
+
+  /* ---------- acciones ---------- */
+  function aviso(t) { msg = t; render(); setTimeout(() => { msg = ""; const x = document.querySelector(".toast"); if (x) x.remove(); }, 2600); }
+  function fin() { const s = ros; ros = null; marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {}); go("listo"); }
+  function go(v) { view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est)$/.test(view)) view = "bien"; try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {} render(); try { window.scrollTo(0, 0); } catch (_) {} }
+  function render() { app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); }
+  const A = {
+    go: (d) => go(d.v),
+    nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; save(); go("est"); },
+    est: () => { S.e = parseInt(document.getElementById("fe").value, 10); save(); presLobby(); go("hoy"); },
+    ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0 }; ros.p = pasos(); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); go("ros"); },
+    rosala: () => { ros = { set: MIS_DIA[now().getDay()], i: 0, sala: 1 }; ros.p = pasos(); presSala(); go("ros"); },
+    sig: () => { if (!ros) return; if (ros.i >= ros.p.length - 1) return fin(); ros.i++; presSala(); render(); try { window.scrollTo(0, 0); } catch (_) {} },
+    ant: () => { if (ros && ros.i > 0) { ros.i--; presSala(); render(); } },
+    cerrar: () => { const s = ros && ros.sala; ros = null; if (s) presSala(); go(s ? "sala" : "hoy"); },
+    novd: (d) => { nd = +d.n; go("novd"); },
+    vird: (d) => { vn = +d.n; go("vird"); },
+    novok: () => { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [nd]: 1 }); save(); go("nov"); },
+    bell: () => bell(3),
+    angok: () => { marca("a"); go("hoy"); },
+    copiar: () => { const t = "Te invito a rezar el rosario conmigo en Atrio. Hoy tocan los " + MIS[MIS_DIA[now().getDay()]].n.toLowerCase() + "."; try { navigator.clipboard.writeText(t).then(() => aviso("Mensaje copiado. Pégalo en WhatsApp con el enlace."), () => aviso(t)); } catch (_) { aviso(t); } },
+    crear: () => { const L = "ABCDEFGHJKLMNPQRSTUVWXYZ"; let c = ""; for (let i = 0; i < 3; i++) c += L[Math.floor(Math.random() * L.length)]; c += Math.floor(10 + Math.random() * 90); entrar(c, true); },
+    unir: () => { const c = (document.getElementById("fc").value || "").trim().toUpperCase().replace(/[^A-Z0-9]/g, ""); if (c.length < 4) { document.getElementById("fc").focus(); return; } entrar(c, false); },
+    salir: () => { salir(); go("hoy"); },
+    login: () => { if (!SB) return; try { SB.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } }).then((r) => { if (r && r.error) aviso("No se pudo abrir Google. Intenta otra vez."); }, () => aviso("No se pudo abrir Google. Intenta otra vez.")); } catch (_) {} },
+    logout: () => { if (SB) try { SB.auth.signOut().then(() => { U = null; render(); }, () => {}); } catch (_) {} }
+  };
+  document.addEventListener("click", (e) => { const t = e.target.closest ? e.target.closest("[data-a]") : null; if (t && A[t.dataset.a]) A[t.dataset.a](t.dataset); });
+  document.addEventListener("change", (e) => { if (e.target && e.target.id === "fa") { S.ang = e.target.checked ? 1 : 0; save(); if (S.ang) bell(1); } });
+  document.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target && e.target.id === "fn") A.nom(); });
+  window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (/^(hoy|rezar|mapa|yo)$/.test(h) && h !== view && view !== "ros") go(h); });
+  const h0 = Q.get("v") || location.hash.slice(1);
+  if (h0 === "ros" && S.n) A.ros({}); else if (h0 === "novd" && S.n) { nd = +(Q.get("n") || 6); go("novd"); } else go(V[h0] ? h0 : "hoy");
+})();
+</script>
+</body>
+</html>
