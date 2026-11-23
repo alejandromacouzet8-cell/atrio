@@ -8,3 +8,5 @@ Reza el rosario, la novena de Guadalupe y el Ángelus, solo o en familia.
 - `node test.js` y `node test_sb.js` corren las pruebas (necesitan `jsdom`).
 
 El acceso con Google está cerrado al público mientras la app de Google siga en modo de prueba: solo aparece si se abre la liga con `?google=1`. Para abrirlo a todos, armar con un quinto argumento `1`.
+
+Para volver a ver la paloma que trae el mensaje del día (sale una vez al día), abrir la liga con `?paloma=1`.
