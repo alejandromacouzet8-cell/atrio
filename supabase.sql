@@ -36,4 +36,7 @@ language sql stable
 set search_path = ''
 as $$ select v.estado, count(*)::integer from public.velas v where v.dia = d group by v.estado $$;
 grant execute on function public.velas_del_dia(date) to anon, authenticated;
+-- Nadie cambia ni borra veladoras ni avances desde la app
+revoke update, delete, truncate on public.velas from anon, authenticated;
+revoke delete, truncate on public.progreso from authenticated;
 select 'listo' as atrio;

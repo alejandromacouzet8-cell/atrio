@@ -1,0 +1,110 @@
+// Prueba funcional: recorre onboarding, rosario completo, novena y Ángelus sin navegador.
+const { JSDOM } = require("jsdom");
+const fs = require("fs");
+const html = fs.readFileSync("index.html", "utf8");
+const errs = [];
+function open(url) {
+  const dom = new JSDOM(html, { runScripts: "dangerously", url, pretendToBeVisual: true });
+  dom.window.addEventListener("error", (e) => errs.push(e.message));
+  dom.window.scrollTo = () => {};
+  return dom;
+}
+const click = (dom, sel) => { const el = dom.window.document.querySelector(sel); if (!el) throw new Error("no encuentro " + sel + " en vista: " + dom.window.document.querySelector("h1,h2")?.textContent); el.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true })); };
+const txt = (dom) => dom.window.document.querySelector("#app").textContent;
+
+// 1. onboarding
+let d = open("https://atrio.test/?fecha=2026-11-23");
+if (!txt(d).includes("que soy tu madre")) throw new Error("no abre la bienvenida");
+click(d, '[data-a="go"][data-v="nom"]');
+click(d, '[data-a="nom"]'); // vacío: se queda
+if (!txt(d).includes("Cómo te llamas")) throw new Error("avanzó sin nombre");
+d.window.document.getElementById("fn").value = "Lucía <b>";
+click(d, '[data-a="nom"]');
+d.window.document.getElementById("fe").value = "22";
+click(d, '[data-a="est"]');
+if (!txt(d).includes("A qué Virgen le rezas") || !txt(d).includes("Paso 3 de 3") || d.window.document.querySelectorAll('[data-a="adv"]').length !== 12) throw new Error("paso 3: " + txt(d).slice(0, 160));
+click(d, '[data-a="adv"][data-k="fatima"]');
+let t = txt(d);
+if (!t.includes("Con Nuestra Señora de Fátima")) throw new Error("hoy sin advocación: " + t.slice(0, 300));
+if (!t.includes("Buenos días, Lucía <b>")) throw new Error("saludo: " + t.slice(0, 80));
+if (!t.includes("Lunes 23 de noviembre")) throw new Error("fecha mal");
+if (!t.includes("Tiempo ordinario")) throw new Error("tiempo litúrgico mal: " + t.slice(0, 200));
+if (!t.includes("misterios gozosos")) throw new Error("misterios del lunes mal");
+if (!t.includes("faltan 10 días")) throw new Error("cuenta de la novena mal: " + t);
+if (d.window.document.querySelector("#app b")) { /* ok: hay <b> propios */ }
+if (d.window.document.querySelector("h1").innerHTML.includes("<b>")) throw new Error("nombre sin escapar");
+
+// 1b. advocación: página, fiesta, oración y cambio
+click(d, '.fra'); t = txt(d);
+for (const m of ["Cova da Iria", "Su fiesta es el 13 de mayo. Faltan 171 días.", "Oh Jesús mío, perdona nuestros pecados", "Francisco y Jacinta fueron canonizados en 2017"]) if (!t.includes(m)) throw new Error("advocación sin «" + m + "»: " + t.slice(0, 300));
+click(d, '[data-a="go"][data-v="advs"]'); if (d.window.document.querySelectorAll('[data-a="adv"]').length !== 12 || !d.window.document.querySelector('.ni.on[data-k="fatima"]') || txt(d).includes("Paso 3")) throw new Error("selector de advocación");
+click(d, '[data-a="adv"][data-k="carmen"]'); if (!txt(d).includes("Flor del Carmelo") || !txt(d).includes("16 de julio")) throw new Error("no cambia a Carmen: " + txt(d).slice(0, 200));
+click(d, '.hd [data-a="go"]'); if (!txt(d).includes("Con Nuestra Señora del Carmen") || !txt(d).includes("Buenos días")) throw new Error("no regresa a hoy con la nueva advocación: " + txt(d).slice(0, 200));
+{ const x = open("https://atrio.test/?demo=1&fecha=2026-12-12&v=adv"), tx = txt(x); if (!tx.includes("Hoy es su fiesta.") || !tx.includes("«¿No estoy yo aquí, que soy tu madre?»")) throw new Error("día de fiesta: " + tx.slice(0, 300));
+  const vistas = new Set(); for (let k = 13; k <= 28; k++) { const y = open("https://atrio.test/?demo=1&fecha=2026-11-" + k), q = y.window.document.querySelector(".fra .ci"); if (!q) throw new Error("hoy sin frase el día " + k); vistas.add(q.textContent); }
+  if (vistas.size !== 8) throw new Error("la frase del día no rota bien: " + vistas.size); }
+
+// 2. rosario completo
+click(d, '[data-a="ros"]');
+let n = 0, seen = new Set();
+while (d.window.document.querySelector('[data-a="sig"]')) { seen.add(d.window.document.querySelector(".ring b")?.textContent || "misterio"); click(d, '[data-a="sig"]'); if (++n > 200) throw new Error("rosario sin fin"); }
+if (n !== 73) throw new Error("pasos del rosario: " + n);
+t = txt(d);
+if (!t.includes("Tu veladora ya") || !t.includes("Quintana Roo")) throw new Error("no llega al cierre: " + t.slice(0, 120));
+if (!t.includes("1día seguido") && !t.includes("día seguido")) throw new Error("racha mal");
+console.log("rosario: 73 pasos, oraciones vistas:", [...seen].join(", "));
+click(d, '[data-a="go"][data-v="hoy"]');
+if (!txt(d).includes("Ya lo rezaste hoy")) throw new Error("hoy no marca el rosario");
+// regresar una cuenta
+click(d, '[data-a="go"][data-v="rezar"]'); click(d, '[data-a="ros"][data-set="dolorosos"]'); click(d, '[data-a="sig"]'); click(d, '[data-a="ant"]');
+if (!txt(d).includes("Misterios dolorosos") || !txt(d).includes("1/73")) throw new Error("regresar cuenta mal");
+click(d, '[data-a="cerrar"]');
+
+// 3. mapa, yo, novena, ángelus, sala
+click(d, '[data-a="go"][data-v="mapa"]'); if (!txt(d).includes("Tu veladora está encendida")) throw new Error("mapa");
+if (d.window.document.querySelectorAll("svg path").length < 2) throw new Error("mapa sin trazo");
+click(d, '[data-a="go"][data-v="yo"]'); if (!txt(d).includes("rosario rezado")) throw new Error("yo");
+click(d, '[data-a="go"][data-v="hoy"]'); click(d, '[data-a="go"][data-v="nov"]');
+if (d.window.document.querySelectorAll('[data-a="novd"]').length !== 9) throw new Error("novena sin 9 días");
+click(d, '[data-a="novd"][data-n="6"]'); if (!txt(d).includes("que soy tu madre")) throw new Error("día 6");
+click(d, '[data-a="novok"]');
+click(d, '[data-a="go"][data-v="hoy"]'); click(d, '[data-a="go"][data-v="ang"]');
+if (!txt(d).includes("El ángel del Señor anunció a María")) throw new Error("ángelus");
+click(d, '[data-a="bell"]'); click(d, '[data-a="angok"]');
+click(d, '[data-a="go"][data-v="rezar"]'); click(d, '[data-a="go"][data-v="vir"]'); if (d.window.document.querySelectorAll('[data-a="vird"]').length !== 6) throw new Error("devociones"); click(d, '[data-a="vird"][data-n="1"]'); if (!txt(d).includes("Acordaos, oh piadosísima")) throw new Error("acordaos"); click(d, '[data-a="go"][data-v="vir"]'); click(d, '[data-a="go"][data-v="rezar"]'); click(d, '[data-a="go"][data-v="hoy"]');
+click(d, '[data-a="go"][data-v="sala"]'); if (!txt(d).includes("todavía no está disponible")) throw new Error("sala sin plataforma");
+click(d, '[data-a="copiar"]');
+
+// 4. fechas: novena y adviento
+for (const [f, must] of [["2026-12-03", ["Día 1 de 9", "Primera semana de Adviento", "luminosos"]], ["2026-12-11", ["Día 9 de 9", "Segunda semana de Adviento"]], ["2026-12-12", ["Hoy es su fiesta", "Nuestra Señora de Guadalupe"]], ["2026-12-25", ["Tiempo de Navidad. Navidad"]], ["2027-02-10", ["Cuaresma"]], ["2027-03-28", ["Tiempo de Pascua"]], ["2026-11-29", ["Primera semana de Adviento", "gloriosos"]]]) {
+  const x = open("https://atrio.test/?demo=1&fecha=" + f), tx = txt(x);
+  for (const m of must) if (!tx.includes(m)) throw new Error(f + " sin «" + m + "»: " + tx.slice(0, 160));
+}
+// 5. sala con plataforma simulada (dos pestañas)
+function fakeRoom() {
+  const rooms = {};
+  const mk = (name, me) => { const R = rooms[name] = rooms[name] || { peers: {}, subs: [] }; const fire = () => R.subs.forEach((s) => s.fn({ peers: Object.keys(R.peers).map((k) => ({ peer: k, isMe: k === s.me, kind: "viewer", presence: R.peers[k] })) }));
+    return { presence: (p) => { R.peers[me] = Object.assign({}, R.peers[me], p); fire(); return Promise.resolve(); }, onPeers: (fn) => { R.subs.push({ fn, me }); fire(); return () => {}; }, leave: () => { delete R.peers[me]; fire(); return Promise.resolve(); }, join: (n) => Promise.resolve(mk(n, me)) }; };
+  return mk;
+}
+(async () => {
+  const mk = fakeRoom();
+  const a = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?demo=1&fecha=2026-11-26", pretendToBeVisual: true });
+  const b = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?demo=1&fecha=2026-11-26", pretendToBeVisual: true });
+  for (const [w, id] of [[a, "pa"], [b, "pb"]]) { w.window.scrollTo = () => {}; w.window.claude = { use: () => Promise.resolve(mk("lobby", id)) }; w.window.addEventListener("error", (e) => errs.push(e.message)); const sc = html.match(/<script>([\s\S]*)<\/script>/)[1]; w.window.eval(sc); }
+  await new Promise((r) => setTimeout(r, 30));
+  click(a, '[data-a="go"][data-v="sala"]'); click(a, '[data-a="crear"]'); await new Promise((r) => setTimeout(r, 30));
+  const code = a.window.document.querySelector(".code").textContent;
+  click(b, '[data-a="go"][data-v="sala"]'); b.window.document.getElementById("fc").value = code.toLowerCase(); click(b, '[data-a="unir"]'); await new Promise((r) => setTimeout(r, 30));
+  if (!txt(a).includes("2 conectados") || !txt(b).includes("Esperando a que Lucía empiece")) throw new Error("sala: " + txt(a).slice(0, 200) + " || " + txt(b).slice(0, 200));
+  click(a, '[data-a="rosala"]'); await new Promise((r) => setTimeout(r, 30));
+  for (let i = 0; i < 12; i++) click(a, '[data-a="sig"]');
+  await new Promise((r) => setTimeout(r, 30));
+  if (!txt(b).includes("13/73") || !txt(b).includes("dirige. Tú respondes") || b.window.document.querySelector('[data-a="sig"]')) throw new Error("seguidor no sincroniza: " + txt(b).slice(0, 200));
+  while (a.window.document.querySelector('[data-a="sig"]')) click(a, '[data-a="sig"]');
+  await new Promise((r) => setTimeout(r, 30));
+  if (!txt(b).includes("Tu veladora ya")) throw new Error("seguidor no termina: " + txt(b).slice(0, 200));
+  console.log("sala: código", code, "| dos pestañas sincronizadas hasta el final");
+  if (errs.length) throw new Error("errores de página: " + errs.join(" | "));
+  console.log("TODO OK"); process.exit(0);
+})().catch((e) => { console.error("FALLA:", e.message); process.exit(1); });

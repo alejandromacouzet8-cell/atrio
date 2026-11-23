@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0B3237">
 <title>Atrio</title>
+<meta name="description" content="Reza el rosario, la novena de Guadalupe y el Ángelus, a solas o con tu familia, cada quien desde donde está.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Atrio">
+<meta property="og:title" content="Atrio: reza el rosario en familia">
+<meta property="og:description" content="El rosario, la novena de Guadalupe y el Ángelus, a solas o con tu familia, cada quien desde donde está.">
+<meta property="og:url" content="https://alejandromacouzet8-cell.github.io/atrio/">
+<meta property="og:image" content="https://alejandromacouzet8-cell.github.io/atrio/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Atrio">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap">
 <style>
@@ -176,6 +190,22 @@ h1.xl{font-size:44px;line-height:46px;letter-spacing:-.6px}
 .ni:focus-visible{outline:2px solid var(--oroc);outline-offset:3px}
 .md{flex:none;width:44px;height:44px;border-radius:22px;border:1px solid rgba(230,194,122,.45);display:flex;align-items:center;justify-content:center;color:var(--oro)}
 .md svg{width:26px;height:26px;stroke-width:1.9px}
+.advg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 8px;margin-top:20px}
+.advg .ni{min-height:120px;padding:20px 4px 10px;border-bottom:1px solid rgba(230,194,122,.34)}
+.advg .ni.on{border-bottom-color:var(--oro)}
+.advg .ni b{display:flex;align-items:center;justify-content:center;min-height:36px;text-align:center;text-wrap:balance}
+.fra{display:flex;align-items:flex-start;gap:14px;width:100%;margin-top:18px;padding:0;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
+.fra .md{margin-top:3px}
+.fra .g{flex:1;min-width:0}
+.fra .ru{display:block;font-size:15px;line-height:20px}
+.ci{display:block;margin-top:4px;font-family:var(--se);font-weight:500;font-size:21px;line-height:28px;text-wrap:pretty}
+.fra small{display:block;margin-top:6px;font-size:13px;line-height:18px;color:var(--txt2)}
+.fra:focus-visible{outline:2px solid var(--oroc);outline-offset:4px;border-radius:8px}
+.his{margin-top:12px;font-size:16px;line-height:25px;color:#DCE6E4}
+.tit+.his{margin-top:0}
+.fie{margin-top:10px;font-size:14px;line-height:20px;color:var(--txt2);text-wrap:balance}
+.ins{text-wrap:balance}
+.nb h2{text-wrap:balance}
 </style>
 </head>
 <body>
@@ -249,6 +279,107 @@ const VIR = [
   ["Salve", "Para cerrar el día", ORA.salve.v + " " + ORA.salve.r],
   ["Regina Coeli", "En Pascua, en lugar del Ángelus", "Reina del cielo, alégrate, aleluya. Porque el Señor, a quien has merecido llevar, aleluya, ha resucitado según su palabra, aleluya. Ruega al Señor por nosotros, aleluya."]
 ];
+
+/* ---------- advocaciones de la Virgen ----------
+   Cada frase lleva su tipo: "c" es una cita (se muestra entre comillas) y "i" una invitación escrita para Atrio. */
+const MARIA = [
+  ["c", "He aquí la esclava del Señor; hágase en mí según tu palabra.", "María, en la Anunciación (Lucas 1, 38)"],
+  ["c", "Mi alma engrandece al Señor, y mi espíritu se alegra en Dios, mi Salvador.", "María, en el Magníficat (Lucas 1, 46-47)"],
+  ["c", "Hagan lo que él les diga.", "María, en las bodas de Caná (Juan 2, 5)"],
+  ["c", "El Todopoderoso ha hecho en mí cosas grandes; su nombre es santo.", "María, en el Magníficat (Lucas 1, 49)"]
+];
+const ADV = [
+  { k: "guadalupe", p: "Nuestra Señora de", c: "Guadalupe", f: [12, 12], l: "Tepeyac, 1531",
+    h: ["Del 9 al 12 de diciembre de 1531, diez años después de la caída de Tenochtitlan, la Virgen se apareció en el cerro del Tepeyac a san Juan Diego, un indígena de Cuautitlán. Le habló en náhuatl y le pidió una casa donde escuchar y consolar a su pueblo.",
+      "El obispo, fray Juan de Zumárraga, pidió una señal. Juan Diego cortó rosas en pleno invierno, las llevó en su tilma y, al abrirla, apareció en ella la imagen que hoy se venera en la Basílica.",
+      "Es patrona de México y de toda América. San Juan Diego fue canonizado en 2002."],
+    o: ["Oración", "Santa María de Guadalupe, Madre del verdadero Dios por quien se vive: tú que pediste una casa para escuchar nuestro llanto, mira hoy a mi familia y a mi tierra. Ponnos bajo tu sombra y llévanos a tu Hijo. Amén."],
+    fr: [["c", "¿No estoy yo aquí, que soy tu madre?", "A san Juan Diego, en el Nican Mopohua"],
+      ["c", "¿No estás bajo mi sombra? ¿No soy yo tu salud?", "A san Juan Diego, en el Nican Mopohua"],
+      ["c", "No se turbe tu corazón.", "A san Juan Diego, en el Nican Mopohua"],
+      ["c", "Oye y ten entendido, hijo mío el más pequeño, que es nada lo que te asusta y aflige.", "A san Juan Diego, en el Nican Mopohua"]] },
+  { k: "fatima", p: "Nuestra Señora de", c: "Fátima", f: [13, 5], l: "Cova da Iria, Portugal, 1917",
+    h: ["Entre el 13 de mayo y el 13 de octubre de 1917, en plena Primera Guerra Mundial, la Virgen se apareció seis veces en Cova da Iria a tres niños pastores: Lucía, Francisco y Jacinta.",
+      "Les pidió rezar el rosario todos los días por la paz, ofrecer sacrificios por los pecadores y confiar en su Inmaculado Corazón. En la última aparición, decenas de miles de personas presenciaron el llamado milagro del sol.",
+      "El obispo de Leiria declaró dignas de fe las apariciones en 1930. Francisco y Jacinta fueron canonizados en 2017."],
+    o: ["La oración que pidió rezar después de cada misterio", ORA.gl.x],
+    fr: [["c", "Mi Inmaculado Corazón será tu refugio y el camino que te conducirá a Dios.", "A Lucía, 13 de junio de 1917"],
+      ["i", "En sus seis apariciones pidió lo mismo: el rosario de cada día, por la paz.", "Fátima, 1917"],
+      ["i", "Los tres pastorcitos ofrecían cada día algo pequeño por los demás. ¿Qué puedes ofrecer tú hoy?", "Fátima, 1917"]] },
+  { k: "lourdes", p: "Nuestra Señora de", c: "Lourdes", f: [11, 2], l: "Lourdes, Francia, 1858",
+    h: ["El 11 de febrero de 1858, Bernardita Soubirous, una niña pobre de 14 años, vio a una Señora vestida de blanco en la gruta de Massabielle. Fueron dieciocho apariciones, hasta el 16 de julio.",
+      "La Señora pidió oración y penitencia por los pecadores, y le señaló un manantial que no ha dejado de brotar. El 25 de marzo dijo su nombre: «Yo soy la Inmaculada Concepción», cuatro años después de que la Iglesia proclamara ese dogma.",
+      "El obispo de Tarbes reconoció las apariciones en 1862. Su fiesta es también la Jornada Mundial del Enfermo."],
+    o: ["Oración", "Virgen de Lourdes, salud de los enfermos: tú que elegiste a una niña pobre y enfermiza, acompaña hoy a quienes sufren en el cuerpo o en el alma, y a quienes los cuidan. Enséñanos a rezar con la sencillez de Bernardita. Amén."],
+    fr: [["c", "Yo soy la Inmaculada Concepción.", "A santa Bernardita, 25 de marzo de 1858"],
+      ["c", "No te prometo hacerte feliz en este mundo, sino en el otro.", "A santa Bernardita, 18 de febrero de 1858"],
+      ["c", "Ruega a Dios por los pecadores.", "A santa Bernardita, 24 de febrero de 1858"],
+      ["c", "Ve a beber a la fuente y a lavarte en ella.", "A santa Bernardita, 25 de febrero de 1858"]] },
+  { k: "carmen", p: "Nuestra Señora del", c: "Carmen", f: [16, 7], l: "Monte Carmelo, Tierra Santa",
+    h: ["Su nombre viene del monte Carmelo, en Tierra Santa. Ahí, a fines del siglo XII, un grupo de ermitaños levantó una capilla a María y dio origen a la Orden del Carmen.",
+      "Según la tradición, el 16 de julio de 1251 la Virgen entregó el escapulario a san Simón Stock como signo de su protección. Quien lo lleva se compromete a vivir como hijo suyo.",
+      "La llaman Estrella del mar: es patrona de pescadores y marineros, que cada 16 de julio la sacan en procesión sobre el agua."],
+    o: ["Flos Carmeli, antiguo himno carmelita", "Flor del Carmelo, viña florida, esplendor del cielo, Virgen y Madre singular. Madre apacible, que no conoció varón: sé propicia a tus carmelitas, Estrella del mar."],
+    fr: [["c", "Flor del Carmelo, viña florida, esplendor del cielo.", "Flos Carmeli, antiguo himno carmelita"],
+      ["i", "Quien lleva su escapulario se compromete a vivir como hijo suyo. Hoy, un gesto que lo demuestre.", "Tradición del Carmen"],
+      ["i", "Los pescadores la llaman Estrella del mar. Pídele rumbo para lo que hoy no ves claro.", "Tradición del Carmen"]] },
+  { k: "pilar", p: "Nuestra Señora del", c: "Pilar", f: [12, 10], l: "Zaragoza, España",
+    h: ["Una tradición muy antigua cuenta que, hacia el año 40, María, que todavía vivía en Jerusalén, se apareció al apóstol Santiago a orillas del Ebro para animarlo cuando su misión parecía fracasar.",
+      "Le dejó una columna, el pilar, como señal de una fe que no se cae. Sobre ella se levantó en Zaragoza el que se tiene por el primer templo dedicado a María.",
+      "Su fiesta, el 12 de octubre, coincide con la llegada de Colón a América en 1492. Por eso es patrona de la Hispanidad."],
+    o: ["Jaculatoria tradicional de Zaragoza", "Bendita y alabada sea la hora en que María Santísima vino en carne mortal a Zaragoza. Por siempre sea bendita y alabada."],
+    fr: [["c", "Bendita y alabada sea la hora en que María Santísima vino en carne mortal a Zaragoza.", "Jaculatoria tradicional de Zaragoza"],
+      ["i", "Vino a animar a un apóstol cansado. ¿A quién puedes animar tú hoy?", "Tradición del Pilar"],
+      ["i", "Un pilar no se mueve. Mantente firme hoy en lo que prometiste.", "Tradición del Pilar"]] },
+  { k: "sanjuan", p: "Nuestra Señora de", c: "San Juan de los Lagos", f: [2, 2], l: "Los Altos de Jalisco", fx: "El 2 de febrero es su gran peregrinación. Se le festeja también el 15 de agosto y el 8 de diciembre.",
+    h: ["Es una imagen pequeña de la Inmaculada, hecha de pasta de caña de maíz en Michoacán. Los misioneros franciscanos la llevaron en el siglo XVI a un poblado de los Altos de Jalisco, donde pasó décadas casi olvidada.",
+      "En 1623, una niña de una familia de cirqueros murió al caer sobre unas dagas durante una acrobacia. Una anciana indígena puso la imagen sobre su pecho y la niña volvió a la vida. Desde entonces no han dejado de llegar peregrinos.",
+      "Su santuario es el segundo más visitado de México, después del Tepeyac. San Juan Pablo II la visitó en 1990."],
+    o: ["Oración", "Virgen de San Juan, madre de los que caminan: recibe el cansancio de quienes hoy van hacia ti con una promesa. Devuélvenos la vida ahí donde la dábamos por perdida. Amén."],
+    fr: [["i", "Una mujer sencilla puso su imagen sobre una niña y pidió con fe. Pide hoy así, sin rodeos.", "San Juan de los Lagos, 1623"],
+      ["i", "Cada año, miles caminan días enteros para llegar a verla. Camina hoy un tramo por alguien que lo necesita.", "Peregrinos de San Juan"]] },
+  { k: "zapopan", p: "Nuestra Señora de", c: "Zapopan", f: [12, 10], l: "Zapopan, Jalisco", fx: "El 12 de octubre es su Romería. Su fiesta litúrgica es el 18 de diciembre.",
+    h: ["Es una imagen de 34 centímetros, hecha de pasta de caña de maíz en Michoacán. El franciscano fray Antonio de Segovia la llevó consigo en sus misiones y en 1541 la entregó al pueblo de Zapopan.",
+      "La llaman la Pacificadora, porque con ella llegó la paz a la región, y la Generala, título que recibió en 1821. Guadalajara la invoca desde hace siglos contra tormentas y epidemias.",
+      "Cada 12 de octubre regresa de la catedral de Guadalajara a su basílica entre millones de fieles y miles de danzantes. La Romería es Patrimonio Cultural Inmaterial de la Humanidad desde 2018."],
+    o: ["Oración", "Virgen de Zapopan, que cada año sales a recorrer las calles de tu pueblo: entra también en mi casa. Trae paz donde hay pleito y cuídanos en toda tormenta. Amén."],
+    fr: [["i", "Cada año visita su ciudad templo por templo. Visita hoy a alguien que esté solo.", "Romería de Zapopan"],
+      ["i", "La llaman Pacificadora. ¿Con quién te toca hacer las paces?", "Tradición de Zapopan"]] },
+  { k: "juquila", p: "Nuestra Señora de", c: "Juquila", f: [8, 12], l: "Santa Catarina Juquila, Oaxaca",
+    h: ["Es una imagen de la Inmaculada de apenas treinta centímetros. Acompañó en sus misiones al dominico fray Jordán de Santa Catalina, que en el siglo XVI la regaló a su ayudante indígena, vecino de Amialtepec, en la sierra de Oaxaca.",
+      "Según la tradición, en 1633 un incendio arrasó el pueblo y la capilla de palma donde se le rezaba, y la imagen salió intacta. Tiempo después fue llevada al santuario de Juquila, donde la llaman Consuelo de los afligidos.",
+      "Cada 8 de diciembre llegan a verla peregrinos de todo México, muchos a pie o en bicicleta."],
+    o: ["Oración", "Virgen de Juquila, consuelo de los afligidos: tú conoces lo que vengo cargando en el camino. Recíbelo y enséñame a confiar. Amén."],
+    fr: [["i", "La llaman Consuelo de los afligidos. Cuéntale hoy, con tus palabras, lo que te aflige.", "Santuario de Juquila"],
+      ["i", "Sus peregrinos hacen el camino a pie. Ofrece hoy un cansancio por alguien que quieres.", "Peregrinos de Juquila"]] },
+  { k: "socorro", p: "Nuestra Señora del", c: "Perpetuo Socorro", f: [27, 6], l: "Roma",
+    h: ["Es un icono oriental pintado sobre madera, venerado en Roma desde fines del siglo XV. Muestra al Niño Jesús que, asustado al ver a dos ángeles con los instrumentos de la Pasión, corre a los brazos de su Madre. En la prisa se le suelta una sandalia.",
+      "En 1866 el papa Pío IX lo confió a los misioneros redentoristas con un encargo: darla a conocer en todo el mundo. Hoy es una de las imágenes de María más queridas."],
+    o: ["Oración", "Madre del Perpetuo Socorro: como el Niño corrió a tus brazos, corro yo a ti con lo que hoy me asusta. Tómame de la mano y no me sueltes. Amén."],
+    fr: [["c", "Madre del Perpetuo Socorro, ruega por nosotros.", "Jaculatoria tradicional"],
+      ["i", "En el icono, el Niño corre a sus brazos con una sandalia suelta. Corre hoy tú también, con lo que te asusta.", "Icono del Perpetuo Socorro"]] },
+  { k: "milagrosa", p: "Nuestra Señora de la", c: "Medalla Milagrosa", f: [27, 11], l: "París, 1830",
+    h: ["En 1830, en la capilla de las Hijas de la Caridad de la rue du Bac, en París, la Virgen se apareció a una novicia, santa Catalina Labouré. El 27 de noviembre le mostró el diseño de una medalla y le pidió mandarla acuñar.",
+      "Las primeras se repartieron en 1832, durante una epidemia de cólera. Fueron tantas las gracias que la gente empezó a llamarla «milagrosa».",
+      "Lleva grabada una de las oraciones más breves y más repetidas del mundo."],
+    o: ["La oración grabada en la medalla", "Oh María, sin pecado concebida, ruega por nosotros que recurrimos a ti."],
+    fr: [["c", "Oh María, sin pecado concebida, ruega por nosotros que recurrimos a ti.", "Inscripción de la Medalla Milagrosa, 1830"],
+      ["c", "Venid al pie de este altar.", "A santa Catalina Labouré, julio de 1830"],
+      ["i", "Pidió que la medalla se llevara con confianza. Pide hoy con confianza una sola cosa.", "Rue du Bac, París, 1830"]] },
+  { k: "auxiliadora", p: "María", c: "Auxiliadora", f: [24, 5], l: "Turín, Italia",
+    h: ["«Auxilio de los cristianos» es uno de los títulos más antiguos de María. El papa Pío VII fijó su fiesta el 24 de mayo, en acción de gracias por haber vuelto a Roma ese día de 1814, después de cinco años prisionero de Napoleón.",
+      "San Juan Bosco la tomó por madre y maestra de su obra con los jóvenes más pobres, y le levantó en Turín una basílica consagrada en 1868. Con los salesianos, su devoción llegó a toda América."],
+    o: ["Jaculatoria que repetía san Juan Bosco", "María, auxilio de los cristianos, ruega por nosotros."],
+    fr: [["c", "María, auxilio de los cristianos, ruega por nosotros.", "Jaculatoria que repetía san Juan Bosco"],
+      ["c", "Confía en María Auxiliadora y verás lo que son los milagros.", "San Juan Bosco"]] },
+  { k: "dolores", p: "Nuestra Señora de los", c: "Dolores", f: [15, 9], l: "Al pie de la cruz",
+    h: ["No recuerda una aparición, sino un momento del Evangelio: María de pie junto a la cruz de su Hijo. La Iglesia la celebra el 15 de septiembre, un día después de la Exaltación de la Santa Cruz.",
+      "La tradición cuenta siete dolores, desde la profecía de Simeón hasta la sepultura de Jesús. En México se le dedica además el viernes anterior al Domingo de Ramos, el Viernes de Dolores, con altares en las casas.",
+      "Es la Virgen de quien acompaña a alguien que sufre. No huyó: se quedó."],
+    o: ["Stabat Mater, en versión de Lope de Vega", "La Madre piadosa estaba junto a la cruz y lloraba mientras el Hijo pendía; cuya alma, triste y llorosa, traspasada y dolorosa, fiero cuchillo tenía."],
+    fr: [["c", "La Madre piadosa estaba junto a la cruz y lloraba mientras el Hijo pendía.", "Stabat Mater, versión de Lope de Vega"],
+      ["i", "No huyó: se quedó de pie junto a la cruz. Quédate hoy junto a alguien que sufre.", "Evangelio según san Juan 19, 25"]] }
+];
 (function () {
   const app = document.getElementById("app");
   const Q = new URLSearchParams(location.search);
@@ -280,12 +411,30 @@ const VIR = [
     novena: em('<path d="M19.77 18.18A6.2 6.2 0 1 1 28.23 18.18A6.2 6.2 0 1 1 30.85 26.22A6.2 6.2 0 1 1 24 31.2A6.2 6.2 0 1 1 17.15 26.22A6.2 6.2 0 1 1 19.77 18.18z"/><circle cx="24" cy="24" r="3"/>')
   };
 
+  const rayos = (rx, ry, n) => { let r = ""; for (let i = 0; i < n; i++) { const a = (2 * Math.PI * i) / n, c = Math.cos(a), q = Math.sin(a), l = i % 2 ? 2 : 3.6; r += `M${(24 + (rx + 1.6) * c).toFixed(1)} ${(24 + (ry + 1.6) * q).toFixed(1)}L${(24 + (rx + 1.6 + l) * c).toFixed(1)} ${(24 + (ry + 1.6 + l) * q).toFixed(1)}`; } return r; };
+  const doce = () => { let r = ""; for (let i = 0; i < 12; i++) { const a = ((i * 30 + 15) * Math.PI) / 180; r += `<circle cx="${(24 + 11.4 * Math.cos(a)).toFixed(1)}" cy="${(26 + 14.9 * Math.sin(a)).toFixed(1)}" r=".75" fill="currentColor" stroke="none"/>`; } return r; };
+  const EMA = {
+    guadalupe: em(`<path d="M24 9.5c5.8 4.2 8 9 8 14.5s-2.2 10.3-8 14.5c-5.8-4.2-8-9-8-14.5s2.2-10.3 8-14.5z"/><path d="${rayos(8, 14.5, 22)}" stroke-width="1.1"/>` + sp(24, 24, 0.6)),
+    fatima: em('<path d="M14.5 27C10.9 27 8 24.4 8 21.1c0-2.8 2-5.1 4.8-5.7C13.4 11.2 16.7 8 20.8 8c1.2 0 2.3.3 3.2.8.9-.5 2-.8 3.2-.8 4.1 0 7.4 3.2 8 7.4 2.8.6 4.8 2.9 4.8 5.7 0 3.3-2.9 5.9-6.5 5.9z"/><path d="M24 27v15.5M18.5 42.5h11M24 34.5l-4.2-4.2M24 31.5l3.6-3.6"/>' + sp(24, 3.6, 0.36)),
+    lourdes: em('<path d="M24 5.5c5.6 4.6 8.5 10.2 8.5 16.5v7.5h-17V22c0-6.3 2.9-11.9 8.5-16.5z"/><path d="M11 35c2.2-1.8 4.3-1.8 6.5 0s4.3 1.8 6.5 0 4.3-1.8 6.5 0 4.3 1.8 6.5 0M14.5 40c1.6-1.5 3.2-1.5 4.75 0s3.2 1.5 4.75 0 3.2-1.5 4.75 0 3.2 1.5 4.75 0M18.5 44.5c1.8-1.4 3.7-1.4 5.5 0s3.7 1.4 5.5 0" stroke-opacity=".8"/>' + sp(24, 19.5, 0.62)),
+    carmen: em('<path d="M16.5 23C15.5 16 13.5 10 10.5 4.5M31.5 23c1-7 3-13 6-18.5"/><rect x="13.5" y="23" width="21" height="19.5" rx="2"/><rect x="16.5" y="26" width="15" height="13.5" rx="1" stroke-opacity=".45"/>' + sp(24, 32.75, 0.6)),
+    pilar: em('<path d="M19 12.5L18 6l3.6 2.8L24 5l2.4 3.8L30 6l-1 6.5z"/><path d="M17 16h14M20.5 16v21M27.5 16v21M17 37h14M14.5 41.5h19M17 37v4.5M31 37v4.5"/><path d="M24 19.5v14" stroke-opacity=".5"/>'),
+    sanjuan: em('<path d="M10.5 22c1.6 8.4 6.9 13 13.5 13s11.9-4.6 13.5-13c-2.9 5.2-7.6 8-13.5 8s-10.6-2.8-13.5-8z"/><path d="M12.5 42c1.9-1.7 3.8-1.7 5.75 0s3.8 1.7 5.75 0 3.8-1.7 5.75 0 3.8 1.7 5.75 0" stroke-opacity=".7"/>' + sp(24, 14.5, 0.95) + sp(11.5, 12, 0.36) + sp(36.5, 12, 0.36)),
+    zapopan: em('<path d="M19 9.5L18 4l3.6 2.4L24 3l2.4 3.4L30 4l-1 5.5z"/><circle cx="24" cy="18" r="5.5"/><circle cx="24" cy="18" r="1.8"/><path d="M24 23.5V44M24 37h5.5M24 41.5h4"/>'),
+    juquila: em('<path d="M24 4c1 6.5 10 10.5 10 21a10 10 0 0 1-20 0c0-3.6 1.6-6.4 3.9-8.6.5 2.8 2 4.6 3.6 4.9C20.6 16 21.5 9.5 24 4z"/><path d="M15 43.5h18" stroke-opacity=".7"/>' + sp(24, 28.5, 0.55)),
+    socorro: em('<rect x="13" y="5" width="22" height="38" rx="2"/><rect x="16.5" y="8.5" width="15" height="31" rx="1" stroke-opacity=".5"/><path d="M24 27.5v8M21 30.5h6"/>' + sp(24, 17.5, 0.8)),
+    milagrosa: em('<circle cx="24" cy="4.2" r="2"/><ellipse cx="24" cy="26" rx="14.5" ry="18"/><path d="M17.5 34V24l6.5 6.5 6.5-6.5v10M16.5 21.5h15M24 21.5v-7M21.2 17.5h5.6"/>' + doce()),
+    auxiliadora: em('<path d="M24 5l13 4.5v11c0 9.4-5.2 16.6-13 21.5-7.8-4.9-13-12.1-13-21.5v-11z"/>' + sp(24, 21.5, 0.95)),
+    dolores: em('<path d="M24 41C14 33.5 8.5 27.6 8.5 21.2c0-4.3 3.3-7.7 7.5-7.7 3.2 0 6 1.9 8 5 2-3.1 4.8-5 8-5 4.2 0 7.5 3.4 7.5 7.7C39.5 27.6 34 33.5 24 41z"/><path d="M11.5 7.5L37 38M17.3 9.8l-4.6 3.8"/><circle cx="10.6" cy="6.4" r="1.2"/>')
+  };
+  const ARCO = `<svg class="nt" viewBox="0 0 346 173" aria-hidden="true"><defs><path id="arco" d="M21.3 173A151.7 151.7 0 0 1 324.7 173"/></defs><text><textPath href="#arco" startOffset="50%" text-anchor="middle">AVE · MARIA · GRATIA · PLENA</textPath></text><g fill="#E6C27A">${sp(16.5, 160, 0.5)}${sp(329.5, 160, 0.5)}</g></svg>`;
+
   /* ---------- estado guardado en este dispositivo ---------- */
   let S = { n: "", e: -1, d: {}, nov: {}, ang: 1 };
   try { const r = localStorage.getItem("atrio1"); if (r) S = Object.assign(S, JSON.parse(r)); } catch (_) {}
   let U = null, tNube = 0;
   const save = () => { try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} clearTimeout(tNube); tNube = setTimeout(nube, 1200); };
-  if (Q.get("demo")) { S.n = S.n || "Lucía"; if (S.e < 0) S.e = 22; }
+  if (Q.get("demo")) { S.n = S.n || "Lucía"; if (S.e < 0) S.e = 22; if (Q.get("adv")) S.v = Q.get("adv"); }
 
   /* ---------- fechas y tiempo litúrgico ---------- */
   const FAKE = Q.get("fecha");
@@ -320,6 +469,16 @@ const VIR = [
   function racha() { let n = 0, d = dia(now()); if (!(S.d[key(d)] || {}).r) d = add(d, -1); while ((S.d[key(d)] || {}).r) { n++; d = add(d, -1); } return n; }
   const total = () => Object.keys(S.d).filter((k) => S.d[k].r).length;
   const estado = (i) => (i === 99 ? "Fuera de México" : (MX.e[i] || [""])[0]);
+  const adv = () => ADV.find((x) => x.k === S.v) || ADV[0];
+  const advN = (a) => a.p + " " + a.c;
+  function fiesta(a) { const t = dia(now()); let d = new Date(t.getFullYear(), a.f[1] - 1, a.f[0]); if (d < t) d = new Date(t.getFullYear() + 1, a.f[1] - 1, a.f[0]); return Math.round((d - t) / 864e5); }
+  function frase(a) {
+    if (!fiesta(a)) return a.fr[0];
+    const todas = []; for (let i = 0; i < Math.max(a.fr.length, MARIA.length); i++) { if (a.fr[i]) todas.push(a.fr[i]); if (MARIA[i]) todas.push(MARIA[i]); }
+    const t = dia(now()); return todas[Math.floor((t.getTime() - t.getTimezoneOffset() * 6e4) / 864e5) % todas.length];
+  }
+  const cita = (f) => `<span class="ci">${f[0] === "c" ? "«" + f[1] + "»" : f[1]}</span>`;
+  const deHoy = (extra) => { const a = adv(), f = frase(a); return `<button class="fra${extra || ""}" data-a="go" data-v="adv"><span class="md">${EMA[a.k]}</span><span class="g"><span class="ru">${fiesta(a) ? "Con " + advN(a) : "Hoy es la fiesta de " + advN(a)}</span>${cita(f)}<small>${f[2]}</small></span></button>`; };
 
   /* ---------- campana ---------- */
   let AC = null;
@@ -395,7 +554,7 @@ const VIR = [
     if (!SB || !U) return;
     try { SB.from("progreso").select("datos").eq("user_id", U.id).maybeSingle().then((r) => {
       const R = (r && r.data && r.data.datos) || null;
-      if (R) { const d = Object.assign({}, R.d || {}); Object.keys(S.d).forEach((k) => { d[k] = Object.assign({}, d[k] || {}, S.d[k]); }); const nv = Object.assign({}, R.nov || {}); Object.keys(S.nov).forEach((y) => { nv[y] = Object.assign({}, nv[y] || {}, S.nov[y]); }); S.d = d; S.nov = nv; if (!S.n && R.n) S.n = R.n; if (S.e < 0 && R.e >= 0) S.e = R.e; }
+      if (R) { const d = Object.assign({}, R.d || {}); Object.keys(S.d).forEach((k) => { d[k] = Object.assign({}, d[k] || {}, S.d[k]); }); const nv = Object.assign({}, R.nov || {}); Object.keys(S.nov).forEach((y) => { nv[y] = Object.assign({}, nv[y] || {}, S.nov[y]); }); S.d = d; S.nov = nv; if (!S.n && R.n) S.n = R.n; if (!S.v && R.v) S.v = R.v; if (S.e < 0 && R.e >= 0) S.e = R.e; }
       try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} nube(); render();
     }, () => {}); } catch (_) {}
   }
@@ -412,7 +571,7 @@ const VIR = [
   }
   function conectaSB() {
     if (SB_URL.indexOf("http") !== 0 || RM) return;
-    const init = () => { try { SB = window.supabase.createClient(SB_URL, SB_KEY); RM = sbRoom(SB);
+    const init = () => { try { SB = window.supabase.createClient(SB_URL, SB_KEY, { auth: { flowType: "pkce" } }); RM = sbRoom(SB);
       try { SB.auth.getSession().then((r) => { U = (r && r.data && r.data.session && r.data.session.user) || null; if (U) sincroniza(); }, () => {}); SB.auth.onAuthStateChange((_e, ses) => { const u = (ses && ses.user) || null, cambia = (u && u.id) !== (U && U.id); U = u; if (U && cambia) sincroniza(); else if (cambia) render(); }); } catch (_) {} RM.onPeers((c) => { peersL = c.peers || []; if (view === "mapa" || view === "listo" || (view === "sala" && !sala)) render(); }); presLobby(); cargaVelas(); if (hoy().r) enciende(); if (view === "sala") render(); } catch (_) { RM = null; SB = null; } };
     if (window.supabase && window.supabase.createClient) return init();
     const sc = document.createElement("script"); sc.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"; sc.onload = init; document.head.appendChild(sc);
@@ -495,7 +654,7 @@ const VIR = [
   function encendidos() { if (velasHoy) return Object.assign({}, velasHoy); const lit = {}; vivos().forEach((p) => { const pr = p.presence || {}; if (pr.r && !p.isMe && MX.e[pr.e]) lit[pr.e] = (lit[pr.e] || 0) + 1; }); return lit; }
 
   /* ---------- pantallas ---------- */
-  let view = "hoy", ros = null, nd = 1, vn = 0, msg = "";
+  let view = "hoy", ros = null, nd = 1, vn = 0, msg = "", paso3 = 0, vuelve = "hoy";
   const V = {
     bien: () => `<section class="v d in">${sky()}<div class="hd z" style="justify-content:flex-start;gap:10px"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M6.5 24.5V13a7.5 7.5 0 0 1 15 0v11.5M3.5 24.5h21" stroke="#E6C27A" stroke-width="1.6" stroke-linecap="round"/><polygon transform="translate(8 8.2) scale(.75)" fill="#E6C27A" points="${S16}"/></svg><b style="font-family:var(--se);font-size:26px;font-weight:600">Atrio</b></div>${portal()}
       <p class="z" style="margin-top:14px;font-family:var(--se);font-style:italic;font-weight:500;font-size:33px;line-height:39px">¿No estoy yo aquí,<br>que soy tu madre?</p><p class="ru z" style="margin-top:8px;font-size:16px">Santa María de Guadalupe a san Juan Diego, 1531</p>
@@ -508,6 +667,16 @@ const VIR = [
       <label class="lab z" for="fe">Tu estado</label><select class="fld z" id="fe">${MX.e.map((e, i) => `<option value="${i}"${i === (S.e < 0 ? 6 : S.e) ? " selected" : ""}>${e[0]}</option>`).join("")}<option value="99"${S.e === 99 ? " selected" : ""}>Fuera de México</option></select>
       <p class="note z" style="margin-top:12px">Tu nombre y tu avance se guardan solo en este dispositivo.</p>
       <button class="btn go mt z" data-a="est">Entrar a Atrio</button></section>`,
+    advs: () => `<section class="v d in">${sky()}${hd([paso3 ? "est" : "adv"], paso3 ? "Paso 3 de 3" : "Tu advocación")}<h1 class="z" style="margin-top:${paso3 ? 30 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Es la misma María, con el nombre que le dan en tu casa. Puedes cambiarla cuando quieras.</p>
+      <div class="advg z">${ADV.map((a) => `<button class="ni${a.k === S.v ? " on" : ""}" data-a="adv" data-k="${a.k}" aria-label="${advN(a)}"><span class="em">${EMA[a.k]}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`).join("")}</div>
+      <p class="note z" style="margin-top:18px">¿No está la tuya? Iremos sumando más advocaciones.</p></section>`,
+    adv: () => { const a = adv(), ff = fiesta(a), f = frase(a);
+      return `<section class="v d in">${sky()}${hd([vuelve], "Tu advocación")}
+        <div class="nicho z"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em">${EMA[a.k]}</span><p class="ru">${a.p}</p><h2>${a.c}</h2><p class="ins">${a.l}</p><p class="fie">${ff ? `Su fiesta es el ${a.f[0]} de ${MESES[a.f[1] - 1]}. ${ff === 1 ? "Es mañana." : "Faltan " + ff + " días."}` : "Hoy es su fiesta."}</p></div></div>
+        <p class="tit z">Para hoy</p><div class="z c">${cita(f)}<p class="note" style="margin-top:8px">${f[2]}</p></div>
+        <p class="tit z">Su historia</p>${a.h.map((x) => `<p class="his z">${x}</p>`).join("")}${a.fx ? `<p class="note z" style="margin-top:12px">${a.fx}</p>` : ""}
+        <p class="tit z">Oración</p>${a.o[0] === "Oración" ? "" : `<p class="ru z c">${a.o[0]}</p>`}<p class="pr z c" style="font-size:20px;line-height:30px">${a.o[1]}</p>
+        <div class="z" style="padding-top:28px"><button class="btn go" data-a="ros">Rezar el rosario de hoy</button><button class="lk" data-a="go" data-v="advs" style="display:block;margin:4px auto 0">Cambiar de advocación</button></div></section>`; },
     hoy: () => {
       const d = now(), h = d.getHours(), tp = tiempo(d), set = MIS_DIA[d.getDay()], nv = nov(), hh = hoy(), rc = racha();
       const nvTxt = nv.n ? `Día ${nv.n} de 9` : nv.fiesta ? "Hoy es su fiesta" : nv.f === 1 ? "Empieza mañana" : `Empieza el 3 de diciembre, faltan ${nv.f} días`;
@@ -515,6 +684,7 @@ const VIR = [
       return `<section class="v d n tb in">${sky()}<div class="hd"><p class="ru">${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}</p>
         <button class="btn" data-a="go" data-v="yo" aria-label="Tu racha: ${rc} ${rc === 1 ? "día" : "días"}" style="width:auto;flex:none;white-space:nowrap;min-height:44px;padding:0 14px;gap:6px;border:1px solid var(--line);background:rgba(246,239,233,.06);color:var(--oroc);font-size:14px"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="#C8962E" d="M8 1.5c.4 2.2 3.5 3.7 3.5 7.2a3.5 3.5 0 0 1-7 0c0-1.3.6-2.3 1.4-3.1.2 1 .8 1.6 1.3 1.7C7 5.5 7.3 3.3 8 1.5z"/></svg>${rc} ${rc === 1 ? "día" : "días"}</button></div><h1>${h < 12 ? "Buenos días" : h < 19 ? "Buenas tardes" : "Buenas noches"}, ${esc(S.n)}</h1>
         <p style="margin-top:8px;display:flex;align-items:center;gap:8px;font-size:14px;line-height:20px;color:var(--ink2)"><span style="flex:none;width:10px;height:10px;border-radius:5px;background:${tp.c};box-shadow:0 0 0 1.5px rgba(246,239,233,.5)"></span>${tp.t}</p>
+        ${deHoy()}
         <ol class="tl">
         ${item(hh.r ? "" : "now", !hh.r, 'data-a="ros"', hh.r ? "Ya lo rezaste hoy" : "Hoy, " + MIS[set].n.toLowerCase(), "Santo rosario", hh.r ? '<span class="ok">Hecho</span>' : `<span style="color:var(--teal)">${I.go}</span>`)}
         ${item("", false, 'data-a="go" data-v="ang"', hh.a ? "Ya lo rezaste hoy" : "A las 12:00, con campana", "Ángelus", hh.a ? '<span class="ok">Hecho</span>' : `<span style="color:var(--teal)">${I.bell}</span>`)}
@@ -529,11 +699,11 @@ const VIR = [
       const row = (at, e, t, sm) => `<button class="row" ${at}><span class="md">${EM[e]}</span><span class="g"><b>${t}</b><small>${sm}</small></span>${I.go}</button>`;
       const nvTxt = nv.n ? `Hoy es el día ${nv.n} de 9` : nv.fiesta ? "Hoy es su fiesta" : nv.f === 1 ? "Empieza mañana" : "Empieza el 3 de diciembre";
       return `<section class="v d n tb in">${sky()}<h1 class="xl">Rezar</h1><p class="sub">Todo va guiado, cuenta por cuenta.</p>
-        <div class="nicho"><i class="n1"></i><i class="n2"></i><svg class="nt" viewBox="0 0 346 173" aria-hidden="true"><defs><path id="arco" d="M21.3 173A151.7 151.7 0 0 1 324.7 173"/></defs><text><textPath href="#arco" startOffset="50%" text-anchor="middle">AVE · MARIA · GRATIA · PLENA</textPath></text><g fill="#E6C27A">${sp(16.5, 160, 0.5)}${sp(329.5, 160, 0.5)}</g></svg>
+        <div class="nicho"><i class="n1"></i><i class="n2"></i>${ARCO}
           <div class="nb"><span class="em">${EM[set]}</span><p class="ru">${hh.r ? "Ya lo rezaste hoy" : "Hoy, " + DIAS[d.getDay()].toLowerCase()}</p><h2>Santo rosario</h2><p class="ins">${MIS[set].n}</p>
           <button class="btn go" data-a="ros">${hh.r ? "Rezarlo otra vez" : "Empezar a rezar"}</button><button class="lk" data-a="go" data-v="sala">Rezarlo en familia</button></div></div>
         <p class="tit">Los cuatro misterios</p><div class="ret">${ni("gozosos")}${ni("luminosos")}${ni("dolorosos")}${ni("gloriosos")}</div>
-        <p class="tit">Devociones</p><div class="card">${row('data-a="go" data-v="vir"', "virgen", "Devociones a la Virgen", "Bajo tu amparo, Acordaos y más")}${row('data-a="go" data-v="ang"', "angelus", "Ángelus", hh.a ? "Ya lo rezaste hoy" : "A mediodía, con campana")}${row('data-a="go" data-v="nov"', "novena", "Novena de Guadalupe", nvTxt)}</div>${tabs("rezar")}</section>`;
+        <p class="tit">Devociones</p><div class="card">${row('data-a="go" data-v="vir"', "virgen", "Devociones a la Virgen", `${adv().c}, Bajo tu amparo y más`)}${row('data-a="go" data-v="ang"', "angelus", "Ángelus", hh.a ? "Ya lo rezaste hoy" : "A mediodía, con campana")}${row('data-a="go" data-v="nov"', "novena", "Novena de Guadalupe", nvTxt)}</div>${tabs("rezar")}</section>`;
     },
     ros: () => {
       const st = ros.p[ros.i], M = MIS[ros.set], o = ORA[st.t], mm = st.m != null ? M.m[st.m] : null, g = guia(), sigo = ros.sala && !lead;
@@ -560,7 +730,7 @@ const VIR = [
       <h1 class="c z">El Ángelus</h1><div class="z" style="margin-top:6px">${ANG.map((a, i) => `<p class="pr" style="font-size:17px;line-height:24px;margin-top:${i ? 10 : 6}px"><i>V/.</i> ${a[0]}</p><p class="pr rr" style="font-size:17px;line-height:24px;margin-top:0"><i>R/.</i> ${a[1]}${i < 3 ? " <i>Ave María.</i>" : ""}</p>`).join("")}<p class="pr" style="font-size:16px;line-height:23px;margin-top:12px"><i>Oremos.</i> ${ANG_ORA}</p></div>
       <label class="card z" style="margin-top:14px;display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 16px 8px 18px;cursor:pointer"><span style="flex:1;font-size:15px;line-height:21px;font-weight:600">Tocar la campana a las 12:00 si tengo Atrio abierto</span><span class="sw"><input type="checkbox" id="fa"${S.ang ? " checked" : ""}><span></span></span></label>
       <div class="z mt" style="display:flex;gap:10px;margin-top:14px"><button class="btn gh" data-a="bell" style="flex:1;min-height:56px">Oír la campana</button><button class="btn go se" data-a="angok" style="flex:1">Amén</button></div></section>`,
-    vir: () => `<section class="v d in">${sky()}${hd(["rezar"], "Devociones a la Virgen")}<h1 class="z" style="margin-top:10px">Con María</h1><p class="sub z">Las oraciones de siempre a la Virgen, completas y a la mano.</p>
+    vir: () => `<section class="v d in">${sky()}${hd(["rezar"], "Devociones a la Virgen")}<h1 class="z" style="margin-top:10px">Con María</h1><p class="sub z">Las oraciones de siempre a la Virgen, completas y a la mano.</p>${deHoy(" z")}
       <div class="card z" style="margin-top:14px"><button class="row" data-a="ros"><span class="g"><b>Santo rosario</b><small>${MIS[MIS_DIA[now().getDay()]].n}, cuenta por cuenta</small></span>${I.go}</button><button class="row" data-a="go" data-v="ang"><span class="g"><b>Ángelus</b><small>A mediodía, con campana</small></span>${I.go}</button><button class="row" data-a="go" data-v="nov"><span class="g"><b>Novena de Guadalupe</b><small>Del 3 al 11 de diciembre</small></span>${I.go}</button></div>
       <p class="ru z" style="margin:16px 0 6px;font-size:16px">Oraciones</p><div class="card z">${VIR.map((x, i) => `<button class="row" data-a="vird" data-n="${i}"><span class="g"><b>${x[0]}</b><small>${x[1]}</small></span>${I.go}</button>`).join("")}</div></section>`,
     vird: () => { const x = VIR[vn] || VIR[0]; return `<section class="v d in">${sky()}${hd(["vir"], "Devociones a la Virgen")}<h1 class="z" style="margin-top:14px;font-size:34px;line-height:40px">${x[0]}</h1><p class="ru z" style="margin-top:6px;font-size:16px">${x[1]}</p><p class="pr z" style="margin-top:18px;font-size:20px;line-height:30px">${x[2]}</p><div class="mt z" style="padding-top:24px"><button class="btn go se" data-a="go" data-v="vir">Amén</button></div></section>`; },
@@ -569,7 +739,7 @@ const VIR = [
       return `<section class="v d n tb in">${sky()}<div class="hd" style="align-items:flex-start"><div><p class="ru">Tu bitácora</p><h1>${esc(S.n)}</h1></div><span aria-hidden="true" style="flex:none;margin-top:8px;width:44px;height:44px;border-radius:22px;background:var(--teal);color:var(--card);font-family:var(--se);font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center">${esc(S.n.slice(0, 1).toUpperCase())}</span></div>
       <div class="st"><div><b>${racha()}</b><span>${racha() === 1 ? "día seguido" : "días seguidos"}</span></div><div><b>${total()}</b><span>${total() === 1 ? "rosario rezado" : "rosarios rezados"}</span></div></div>
       <div class="card" style="margin-top:12px;padding:12px 12px 14px"><p class="ru" style="margin:0 6px 6px;font-size:16px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)} de ${y}</p><div class="cal">${c}</div></div>
-      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
+      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="go" data-v="adv"><span class="g"><b>Mi advocación</b><small>${advN(adv())}</small></span>${I.go}</button><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
       ${SB ? (U ? `<div class="card" style="margin-top:12px"><div class="row" style="cursor:default"><span class="g"><b>Tu avance está guardado</b><small>${esc(U.email || "Cuenta de Google")}</small></span><span class="ok">Listo</span></div><button class="row" data-a="logout"><span class="g"><b>Cerrar sesión</b></span>${I.go}</button></div>` : `<button class="btn te" data-a="login" style="margin-top:12px">Guardar mi avance con Google</button><p class="note" style="margin-top:8px">Sin cuenta, tu avance vive solo en este teléfono.</p>`) : `<p class="note" style="margin-top:12px">Tu avance se guarda solo en este dispositivo.</p>`}${tabs("yo")}</section>`; },
     sala: () => {
       const cab = sky() + hd(["hoy"], "Rosario en familia");
@@ -591,12 +761,13 @@ const VIR = [
   /* ---------- acciones ---------- */
   function aviso(t) { msg = t; render(); setTimeout(() => { msg = ""; const x = document.querySelector(".toast"); if (x) x.remove(); }, 2600); }
   function fin() { const s = ros; ros = null; marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {}); go("listo"); }
-  function go(v) { view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est)$/.test(view)) view = "bien"; try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {} render(); try { window.scrollTo(0, 0); } catch (_) {} }
+  function go(v) { if (v === "adv" && /^(hoy|vir|yo)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est)$/.test(view)) view = "bien"; try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {} render(); try { window.scrollTo(0, 0); } catch (_) {} }
   function render() { despierta(view === "ros"); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); }
   const A = {
     go: (d) => go(d.v),
     nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; save(); go("est"); },
-    est: () => { S.e = parseInt(document.getElementById("fe").value, 10); save(); presLobby(); go("hoy"); },
+    est: () => { S.e = parseInt(document.getElementById("fe").value, 10); save(); presLobby(); if (S.v) go("hoy"); else { paso3 = 1; go("advs"); } },
+    adv: (d) => { S.v = ADV.some((x) => x.k === d.k) ? d.k : ADV[0].k; save(); if (paso3) { paso3 = 0; go("hoy"); } else go("adv"); },
     ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0 }; ros.p = pasos(); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); go("ros"); },
     rosala: () => { ros = { set: MIS_DIA[now().getDay()], i: 0, sala: 1 }; ros.p = pasos(); presSala(); go("ros"); },
     sig: () => { if (!ros) return; if (ros.i >= ros.p.length - 1) return fin(); ros.i++; presSala(); render(); try { window.scrollTo(0, 0); } catch (_) {} },
@@ -611,7 +782,7 @@ const VIR = [
     crear: () => { const L = "ABCDEFGHJKLMNPQRSTUVWXYZ"; let c = ""; for (let i = 0; i < 3; i++) c += L[Math.floor(Math.random() * L.length)]; c += Math.floor(10 + Math.random() * 90); entrar(c, true); },
     unir: () => { const c = (document.getElementById("fc").value || "").trim().toUpperCase().replace(/[^A-Z0-9]/g, ""); if (c.length < 4) { document.getElementById("fc").focus(); return; } entrar(c, false); },
     salir: () => { salir(); go("hoy"); },
-    login: () => { if (!SB) return; try { SB.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } }).then((r) => { if (r && r.error) aviso("No se pudo abrir Google. Intenta otra vez."); }, () => aviso("No se pudo abrir Google. Intenta otra vez.")); } catch (_) {} },
+    login: () => { if (!SB) return; if (/FBAN|FBAV|FB_IAB|Instagram|TikTok|musical_ly|Snapchat|Line\//i.test(navigator.userAgent)) { aviso("Para entrar con Google, abre Atrio en Safari o Chrome."); return; } try { SB.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } }).then((r) => { if (r && r.error) aviso("No se pudo abrir Google. Intenta otra vez."); }, () => aviso("No se pudo abrir Google. Intenta otra vez.")); } catch (_) {} },
     logout: () => { if (SB) try { SB.auth.signOut().then(() => { U = null; render(); }, () => {}); } catch (_) {} }
   };
   document.addEventListener("click", (e) => { const t = e.target.closest ? e.target.closest("[data-a]") : null; if (t && A[t.dataset.a]) A[t.dataset.a](t.dataset); });
