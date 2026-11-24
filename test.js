@@ -22,7 +22,9 @@ if (!txt(d).includes("Cómo te llamas") || !txt(d).includes("Paso 1 de 5")) thro
 d.window.document.getElementById("fn").value = "Lucía <b>";
 click(d, '[data-a="nom"]');
 if (!txt(d).includes("Paso 2 de 5")) throw new Error("paso 2");
-d.window.document.getElementById("fe").value = "22";
+if (!d.window.document.querySelector('[data-a="est"]').disabled || d.window.document.querySelector(".es.on")) throw new Error("estado preseleccionado");
+{ const f = d.window.document.getElementById("fb"); f.value = "quintana"; f.dispatchEvent(new d.window.Event("input", { bubbles: true })); const vis = [...d.window.document.querySelectorAll("#esl .es")].filter((b) => !b.hidden).map((b) => b.textContent); if (vis.length !== 1 || !vis[0].includes("Quintana Roo")) throw new Error("buscador de estado: " + vis); }
+click(d, '#esl [data-a="esc"][data-k="22"]'); if (!txt(d).includes("Continuar: Quintana Roo")) throw new Error("no marca el estado");
 click(d, '[data-a="est"]');
 // si cierra la app a media bienvenida, al volver retoma el paso que le faltaba
 { const g = open("https://atrio.test/?fecha=2026-11-23", d.window.localStorage.getItem("atrio1")); if (!txt(g).includes("Paso 3 de 5") || !txt(g).includes("A qué Virgen le rezas")) throw new Error("no retoma la bienvenida: " + txt(g).slice(0, 160)); }

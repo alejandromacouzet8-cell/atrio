@@ -376,6 +376,21 @@ p.pin.z{margin-top:10px}
 .vzb.ch.ic2,.vzr.ch .ic2{width:36px;min-height:36px}
 .vzr.ch .vzb{min-height:36px;padding:0 12px;border-radius:18px;font-size:14px}
 .vzr.ch .ic2{padding:0}
+
+/* ---------- elegir estado ---------- */
+.bus{margin-top:20px;height:52px;font-size:17px;font-family:var(--sa);padding:0 18px}
+.esl{margin-top:12px;border:1px solid rgba(246,239,233,.14);border-radius:18px;overflow:hidden}
+.es{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:54px;padding:0 18px;border:0;border-bottom:1px solid rgba(246,239,233,.09);background:none;color:var(--txt);font-family:var(--se);font-size:19px;font-weight:500;text-align:left;cursor:pointer}
+.es:last-of-type{border-bottom:0}
+.es .pal{opacity:0;transform:scale(.6);transition:opacity .15s,transform .2s}
+.es.on{background:rgba(230,194,122,.14);color:var(--oroc)}
+.es.on .pal{opacity:1;transform:none}
+.es:active{background:rgba(246,239,233,.07)}
+.es:focus-visible{outline:2px solid var(--oroc);outline-offset:-2px}
+.es.sug{margin-top:8px;border:1.5px solid rgba(230,194,122,.6);border-radius:16px;background:rgba(230,194,122,.08);font-size:21px}
+.es.sug.on{border-color:var(--oro)}
+.es .pal{position:static;flex:none}
+.es[hidden],#esn[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -1009,10 +1024,13 @@ const ADV = [
     nom: () => `<section class="v d in">${sky()}${hd([ob ? "bien" : "yo"], ob ? "Paso 1 de 5" : "Tus datos")}<h1 class="z" style="margin-top:30px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
       <label class="lab z" for="fn">Tu nombre</label><input class="fld z" id="fn" type="text" autocomplete="given-name" maxlength="24" value="${esc(S.n)}">
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`,
-    est: () => `<section class="v d in">${sky()}${hd(["nom"], ob ? "Paso 2 de 5" : "Tus datos")}<h1 class="z" style="margin-top:30px;font-size:34px;line-height:40px">¿Desde dónde rezas?</h1><p class="sub z">Ahí se enciende tu veladora en el mapa.</p>
-      <label class="lab z" for="fe">Tu estado</label><select class="fld z" id="fe">${MX.e.map((e, i) => `<option value="${i}"${i === (S.e < 0 ? 6 : S.e) ? " selected" : ""}>${e[0]}</option>`).join("")}<option value="99"${S.e === 99 ? " selected" : ""}>Fuera de México</option></select>
-      <p class="note z" style="margin-top:12px">Puedes cambiarlo cuando quieras.</p>
-      <button class="btn go mt z" data-a="est">${ob ? "Continuar" : "Guardar"}</button></section>`,
+    est: () => { if (estSel < 0 && S.e >= 0) estSel = S.e; const su = sugEst(), L = MX.e.map((e, i) => [i, e[0]]).concat([[99, "Fuera de México"]]);
+      const fila = (i, n, cl) => `<button class="es${cl || ""}${estSel === i ? " on" : ""}" data-a="esc" data-k="${i}" data-n="${esc(sinAc(n))}" aria-pressed="${estSel === i}"><span>${n}</span><i class="pal">${I.ok}</i></button>`;
+      return `<section class="v d n in" style="padding-bottom:120px">${sky()}${hd(["nom"], ob ? "Paso 2 de 5" : "Tus datos")}<h1 class="z" style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿Desde dónde rezas?</h1><p class="sub z">Toca tu estado. Ahí se enciende tu veladora en el mapa.</p>
+      ${su !== null ? `<p class="tit z" style="margin-top:20px">Parece que estás en</p>${fila(su, estado(su), " sug")}` : ""}
+      <input class="fld bus z" id="fb" type="search" placeholder="Busca tu estado" autocomplete="off" aria-label="Busca tu estado">
+      <div class="esl z" id="esl">${L.map(([i, n]) => fila(i, n)).join("")}<p class="note c" id="esn" hidden>No encontramos ese estado.</p></div>
+      <div class="pie"><button class="btn go" data-a="est"${estSel < 0 ? " disabled" : ""}>${estSel < 0 ? "Elige tu estado" : `${ob ? "Continuar" : "Guardar"}: ${estado(estSel)}`}</button></div></section>`; },
     advs: () => { const n = sel.length; return `<section class="v d in" style="padding-bottom:120px">${sky()}${hd([ob ? "est" : "adv"], ob ? "Paso 3 de 5" : "Tus Vírgenes")}<h1 class="z" style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Elige una o varias. Es la misma María, con el nombre que le dan en tu casa.</p>
       <div class="advg z">${ADV.map((a) => { const on = sel.includes(a.k); return `<button class="ni${on ? " on" : ""}" data-a="advt" data-k="${a.k}" aria-pressed="${on}" aria-label="${advN(a)}">${on ? `<span class="pal">${I.ok}</span>` : ""}<span class="em">${EMA[a.k]}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`; }).join("")}</div>
       <p class="note z" style="margin-top:18px">¿No está la tuya? Iremos sumando más advocaciones.</p>
@@ -1127,7 +1145,12 @@ const ADV = [
   let tMsg = 0;
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
   function fin() { const s = ros; ros = null; vibra(3); marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {}); go("listo"); }
-  let dirN = "";
+  let dirN = "", estSel = -1;
+  const sinAc = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  // sugerencia por la zona horaria del teléfono (solo las que señalan un estado con claridad)
+  const sugEst = () => { let z = ""; try { z = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (_) {} if (Q.get("tz")) z = Q.get("tz");
+    const M = { "America/Cancun": 22, "America/Merida": 30, "America/Monterrey": 18, "America/Tijuana": 1, "America/Hermosillo": 25, "America/Chihuahua": 5, "America/Ciudad_Juarez": 5, "America/Ojinaga": 5, "America/Matamoros": 27, "America/Bahia_Banderas": 17, "America/Mazatlan": 24 };
+    if (M[z] !== undefined) return M[z]; if (z && !/^America\/(Mexico_City|Monterrey|Merida|Cancun|Matamoros|Chihuahua|Ojinaga|Ciudad_Juarez|Hermosillo|Mazatlan|Bahia_Banderas|Tijuana)$/.test(z) && !/^(UTC|Etc\/)/.test(z)) return 99; return null; };
   function go(v, b) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|est)$/.test(view)) { ob = 1; view = "est"; } try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
     // la paloma trae el mensaje la primera vez que se abre Hoy cada día
     if (view === "hoy" && S.n && S.pd !== key(now())) { palT = Date.now(); S.pd = key(now()); save(); }
@@ -1142,7 +1165,8 @@ const ADV = [
     go: (d) => go(d.v, d.b),
     nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; if (ob) S.ob = 1; save(); go("est"); },
     empieza: () => { ob = 1; go("nom"); },
-    est: () => { S.e = parseInt(document.getElementById("fe").value, 10); save(); presLobby(); if (ob) { sel = S.vs.slice(); go("advs"); } else go("yo"); },
+    esc: (d) => { estSel = +d.k; vibra(1); render(1); foco("esc", d.k); },
+    est: () => { if (estSel < 0) return; S.e = estSel; save(); presLobby(); if (ob) { sel = S.vs.slice(); go("advs"); } else go("yo"); },
     pich: (d) => { const f = document.getElementById("fi"), t = PIS[+d.k]; if (!f || !t) return; const v = f.value.trim(); if (v.toLowerCase().includes(t.toLowerCase())) return; f.value = (v ? v.replace(/[.,;]$/, "") + ", " + t.charAt(0).toLowerCase() + t.slice(1) : t).slice(0, 140); vibra(1); },
     piok: () => { const f = document.getElementById("fi"); S.pi = ((f && f.value) || "").replace(/\s+/g, " ").trim().slice(0, 140); save(); vibra(1); go(ob ? "atrio" : "yo"); },
     pisk: () => go("atrio"),
@@ -1174,6 +1198,7 @@ const ADV = [
   };
   let tSig = 0;
   document.addEventListener("click", (e) => { const t = e.target.closest ? e.target.closest("[data-a]") : null; if (!t || !A[t.dataset.a] || t.disabled) return; if (t.dataset.a === "sig" && e.isTrusted) { const n = Date.now(); if (n - tSig < 240) return; tSig = n; } A[t.dataset.a](t.dataset); });
+  document.addEventListener("input", (e) => { if (!e.target || e.target.id !== "fb") return; const q = sinAc(e.target.value.trim()); let n = 0; app.querySelectorAll("#esl .es").forEach((b) => { const ok = !q || b.dataset.n.includes(q); b.hidden = !ok; if (ok) n++; }); const x = document.getElementById("esn"); if (x) x.hidden = n > 0; });
   document.addEventListener("change", (e) => { if (e.target && e.target.id === "fa") { S.ang = e.target.checked ? 1 : 0; save(); if (S.ang) bell(1); } if (e.target && e.target.id === "fv") { S.vib = e.target.checked ? 1 : 0; save(); vibra(2); } });
   // en iPhone los botones solo muestran su estado presionado si alguien escucha el toque
   document.addEventListener("touchstart", () => {}, { passive: true });
