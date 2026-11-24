@@ -777,6 +777,43 @@ div.jyt{cursor:default}
 .v.fin5>.meds{animation:none}
 .v.fin5>.pie{animation:bvf .8s ease 2.2s both}
 @media (prefers-reduced-motion:reduce){.v.bienv>*,.v.fin5>*{animation:none!important}}
+/* ---------- las Vírgenes, dibujadas ---------- */
+.vfig{display:flex;justify-content:center;flex:none}
+.vir{display:block;overflow:visible;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35))}
+.advg{gap:12px 10px}
+.advg .ni{min-height:168px;padding:14px 4px 10px;background:radial-gradient(80% 50% at 50% 30%,rgba(244,220,166,.1),rgba(244,220,166,0) 70%),rgba(246,239,233,.03);transition:transform .25s,border-color .25s,box-shadow .25s}
+.advg .ni .vfig{margin-bottom:6px;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.advg .ni.on{box-shadow:0 0 0 1px var(--oro),0 16px 30px -14px rgba(244,220,166,.45),inset 0 30px 40px -20px rgba(244,220,166,.25)}
+.advg .ni.on .vfig{transform:translateY(-2px) scale(1.06)}
+.advg .ni:active{transform:scale(.97)}
+.vmed{width:86px}
+.vmed .vfig{margin-bottom:2px}
+.vbig{margin:0 auto 6px}
+.vrow{width:40px;margin-right:4px}
+.vrow .vir{filter:none}
+/* ---------- Hoy compacto: «Empezar a rezar» siempre a la vista ---------- */
+.hg{font-size:29px;line-height:34px}
+.rh{margin-top:12px}
+.rhv{width:31%;margin:18px auto 2px}
+.rht h2{font-size:28px;line-height:32px}
+.rhgo{margin-top:14px;min-height:62px;font-size:22px}
+/* ---------- la guía: clara, grande, para todas las edades ---------- */
+.tu-h{border-radius:24px;box-shadow:0 0 0 3px var(--oroc),0 0 26px 6px rgba(244,220,166,.45),0 0 0 9999px rgba(3,18,21,.82)}
+.tu-p{position:absolute;inset:-3px;border-radius:24px;border:2px solid var(--oroc);animation:tup 1.8s ease-out infinite}
+@keyframes tup{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1.12)}}
+.tu-b{top:0;padding:18px 20px 12px;border-radius:24px;width:min(360px,calc(100vw - 28px));text-align:left}
+.tu-b.ab:before,.tu-b.ar:after{content:"";position:absolute;left:50%;width:18px;height:18px;margin-left:-9px;background:#FBEFCF;transform:rotate(45deg)}
+.tu-b.ab:before{top:-8px;border-radius:4px 0 0 0;background:#FFF8E6}
+.tu-b.ar:after{bottom:-8px;border-radius:0 0 4px 0;background:#F6E3B4}
+.tu-d{display:flex;gap:6px;margin-bottom:10px}
+.tu-d i{width:8px;height:8px;border-radius:4px;background:rgba(22,64,68,.22);transition:width .3s}
+.tu-d i.ok{background:#C99A45}
+.tu-d i.on{width:22px;background:var(--manto)}
+.tu-b b{font-size:26px;line-height:30px}
+.tu-b>p{margin-top:6px;font-size:18px!important;line-height:25px!important;color:#22403F!important}
+.tu-n{margin-top:14px;min-height:54px;font-size:18px;background:var(--manto)!important;color:var(--oroc)!important;box-shadow:none!important}
+.tu-x{display:block;margin:6px auto 0;color:#3E5A5D;font-size:15px}
+@media (prefers-reduced-motion:reduce){.tu-p{animation:none}}
 </style>
 </head>
 <body>
@@ -1643,6 +1680,86 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   const vivos = () => peersL.filter((p) => p.kind !== "agent");
   function encendidos() { if (velasHoy) return Object.assign({}, velasHoy); const lit = {}; vivos().forEach((p) => { const pr = p.presence || {}; if (pr.r && !p.isMe && MX.e[pr.e]) lit[pr.e] = (lit[pr.e] || 0) + 1; }); return lit; }
 
+  /* Las Vírgenes, dibujadas: cada una con su manto, su vestido y lo que la distingue,
+     dentro de su nicho de luz. Iconografía tradicional, trazada aquí. */
+  const VIRG = (() => {
+    const T = {
+      guadalupe: { m: ["#2E8C86", "#17524F"], d: ["#E7A796", "#B9614F"], sk: "#C9946A", h: "#3A2418", est: 1, ray: "man", luna: 1, ang: 1, inc: 1 },
+      fatima: { m: ["#FFFFFF", "#D8DCD8"], d: ["#FFFFFF", "#E1E4E0"], sk: "#F2D9BC", cor: 1, ro: 1, en: 1, borde: "#E3C06A", nube: 1 },
+      lourdes: { m: ["#FFFFFF", "#DCE2E2"], d: ["#FFFFFF", "#E4E8E6"], sk: "#F2D9BC", faja: "#7FAEE6", ro: 1, gruta: 1, rosas: 1, ojos: 1 },
+      carmen: { m: ["#F6EFDF", "#D9CDB2"], d: ["#7A5434", "#4F3520"], sk: "#F0D4B2", cor: 1, nino: 1, esc: 1 },
+      pilar: { m: ["#E8F0F6", "#A9BCCB"], d: ["#E8F0F6", "#B7C6D2"], sk: "#E9C9A6", cor: 1, nino: 1, col: 1, chica: 1 },
+      sanjuan: { m: ["#4E83C8", "#24508C"], d: ["#FFFFFF", "#DDE3EA"], sk: "#D8AE86", cor: 1, tri: 1, luna: 1, rayc: 1 },
+      zapopan: { m: ["#3F74BC", "#1F477F"], d: ["#F4E3EA", "#D7B6C3"], sk: "#C9946A", cor: 1, tri: 1, banda: 1, rayc: 1 },
+      juquila: { m: ["#FFFFFF", "#E2E2DE"], d: ["#FFFFFF", "#E2E2DE"], sk: "#D3A27C", h: "#1E140E", cor: 1, tri: 1, encaje: 1, luna: 1, rayc: 1, pelo: 1 },
+      socorro: { m: ["#2B4C86", "#16294E"], d: ["#B23A34", "#7C211D"], sk: "#D9B087", icono: 1, nino: 1, estf: 1 },
+      milagrosa: { m: ["#6E9FE0", "#3C67A8"], d: ["#FFFFFF", "#DDE2E6"], sk: "#F2D9BC", est: 2, manos: 1, mundo: 1 },
+      auxiliadora: { m: ["#4C7FCB", "#27508F"], d: ["#E7A3A0", "#B5615D"], sk: "#F0D4B2", cor: 2, nino: 1, cetro: 1 },
+      dolores: { m: ["#3A2D52", "#1C152B"], d: ["#5C3C6E", "#35223F"], sk: "#EED2B4", velo: 1, cor7: 1, llora: 1 }
+    };
+    const f = (n) => Math.round(n * 10) / 10;
+    return (k, sz) => {
+      const t = T[k] || T.guadalupe, id = "vg" + k, w = sz || 64;
+      const g = `<defs><linearGradient id="${id}m" x1="0" x2="1"><stop offset="0" stop-color="${t.m[1]}"/><stop offset=".45" stop-color="${t.m[0]}"/><stop offset="1" stop-color="${t.m[1]}"/></linearGradient>
+        <linearGradient id="${id}d" x1="0" x2="1"><stop offset="0" stop-color="${t.d[1]}"/><stop offset=".5" stop-color="${t.d[0]}"/><stop offset="1" stop-color="${t.d[1]}"/></linearGradient>
+        <radialGradient id="${id}h" cx=".5" cy=".42" r=".55"><stop offset="0" stop-color="#FFF3CF" stop-opacity=".95"/><stop offset=".45" stop-color="#F4D58E" stop-opacity=".35"/><stop offset="1" stop-color="#F4D58E" stop-opacity="0"/></radialGradient>
+        <linearGradient id="${id}o" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF4CC"/><stop offset=".45" stop-color="#E5BF66"/><stop offset="1" stop-color="#A97A24"/></linearGradient></defs>`;
+      let bg = "", fig = "", top = "";
+      // fondo: el nicho de luz y lo propio de cada advocación
+      if (t.icono) bg += `<rect x="6" y="4" width="48" height="74" rx="3" fill="url(#${id}o)"/><rect x="8.5" y="6.5" width="43" height="69" rx="2" fill="none" stroke="#7A5716" stroke-opacity=".5" stroke-width=".6"/>`;
+      else bg += `<ellipse cx="30" cy="40" rx="27" ry="36" fill="url(#${id}h)"/>`;
+      if (t.ray === "man") { let r = ""; for (let i = 0; i < 36; i++) { const a = (i / 36) * Math.PI * 2, l = i % 2 ? 0.86 : 1; r += `M${f(30 + 13 * Math.cos(a))} ${f(43 + 25 * Math.sin(a))}L${f(30 + 18 * l * Math.cos(a))} ${f(43 + 33 * l * Math.sin(a))}`; } bg += `<path d="${r}" stroke="#F3D484" stroke-width="1.4" stroke-linecap="round" opacity=".95"/>`; }
+      if (t.rayc) { let r = ""; for (let i = 0; i < 20; i++) { const a = Math.PI + (i / 19) * Math.PI; r += `M${f(30 + 9 * Math.cos(a))} ${f(23 + 9 * Math.sin(a))}L${f(30 + 15 * Math.cos(a))} ${f(23 + 15 * Math.sin(a))}`; } bg += `<path d="${r}" stroke="#F3D484" stroke-width="1" stroke-linecap="round"/>`; }
+      if (t.gruta) bg += `<path d="M2 78V34Q4 6 30 5Q56 6 58 34V78H50V38Q48 16 30 15Q12 16 10 38V78Z" fill="#7F8C8A" opacity=".55"/><path d="M10 38Q12 16 30 15Q48 16 50 38" fill="none" stroke="#C9D2CF" stroke-opacity=".5" stroke-width=".8"/>`;
+      if (t.col) bg += `<rect x="23" y="50" width="14" height="28" fill="#C7A06A"/><rect x="21" y="48" width="18" height="3.4" rx="1" fill="#E8D1A4"/><rect x="21" y="75" width="18" height="3" fill="#E8D1A4"/><path d="M26 52V75M30 52V75M34 52V75" stroke="#9C7745" stroke-width=".6"/>`;
+      if (t.nube) bg += `<g fill="#6F9A6B"><circle cx="20" cy="74" r="6"/><circle cx="30" cy="72" r="7.5"/><circle cx="40" cy="74" r="6"/></g><path d="M14 78Q30 70 46 78" fill="#FFFFFF" opacity=".85"/>`;
+      // la figura: manto, vestido, rostro
+      const S = t.chica ? 0.62 : t.tri ? 0.94 : 1, oy = t.chica ? 4 : t.tri ? 3 : 0;
+      if (t.tri) {
+        fig += `<path d="M30 15C25 15 23 19 22.5 23L10 72H50L37.5 23C37 19 35 15 30 15Z" fill="url(#${id}m)" stroke="#000" stroke-opacity=".18" stroke-width=".6"/>`;
+        fig += `<path d="M30 25C27.5 25 26.4 28 26 31L20 72H40L34 31C33.6 28 32.5 25 30 25Z" fill="url(#${id}d)"/>`;
+        if (t.encaje) { let e = ""; for (let y = 40; y < 72; y += 5) for (let x = 0; x < 5; x++) e += `<circle cx="${f(24 - (y - 40) * 0.16 + x * (3 + (y - 40) * 0.064))}" cy="${y}" r=".75"/>`; fig += `<g fill="#C9B98A" opacity=".8">${e}</g><path d="M10 72H50" stroke="#E3C06A" stroke-width="1.4"/>`; }
+        else fig += `<path d="M10 72H50" stroke="#E3C06A" stroke-width="1.4"/><g fill="#F3D484">${[18, 24, 30, 36, 42].map((x) => `<circle cx="${x}" cy="66" r=".9"/>`).join("")}</g>`;
+        if (t.banda) fig += `<path d="M22 46L38 52" stroke="#C83A3A" stroke-width="2.4"/><path d="M22 46L38 52" stroke="#F3D484" stroke-width=".6"/>`;
+        if (t.pelo) fig += `<path d="M26.4 19Q25 30 23.6 40M33.6 19Q35 30 36.4 40" stroke="${t.h}" stroke-width="2.2" stroke-linecap="round" fill="none"/>`;
+      } else {
+        fig += `<path d="M30 13C24.6 13 22 17.6 21.4 22.6 18.6 32 15.6 52 13.4 76H46.6C44.4 52 41.4 32 38.6 22.6 38 17.6 35.4 13 30 13Z" fill="url(#${id}m)" stroke="#000" stroke-opacity=".2" stroke-width=".6"/>`;
+        fig += `<path d="M30 24C27 24 25.6 27 25.2 30.6 24 42 22.6 58 21.8 76H38.2C37.4 58 36 42 34.8 30.6 34.4 27 33 24 30 24Z" fill="url(#${id}d)"/>`;
+        fig += `<path d="M21.6 24Q19 50 16 76M38.4 24Q41 50 44 76" fill="none" stroke="${t.borde || "#E3C06A"}" stroke-width=".9" opacity=".9"/>`;
+        if (t.faja) fig += `<path d="M25.6 38Q30 40 34.4 38" stroke="${t.faja}" stroke-width="2.2" fill="none"/><path d="M29 39.5L27.4 56M31 39.5L32.4 56" stroke="${t.faja}" stroke-width="1.4"/>`;
+        if (t.esc) fig += `<rect x="27.6" y="30" width="4.8" height="6" rx=".6" fill="#5A3A22" stroke="#E3C06A" stroke-width=".4"/>`;
+        if (t.velo) fig += `<path d="M24.6 17.4Q30 13.8 35.4 17.4L36 25H24Z" fill="#F4F1EA"/>`;
+      }
+      // rostro y manos
+      const hy = t.tri ? 21 : 19.8;
+      if (t.h && !t.tri) fig += `<path d="M26.4 19Q26 23 25.6 26M33.6 19Q34 23 34.4 26" stroke="${t.h}" stroke-width="1.4" fill="none"/>`;
+      fig += `<ellipse cx="30" cy="${hy}" rx="3.5" ry="4.3" fill="${t.sk}"/><ellipse cx="29" cy="${hy - 1.4}" rx="1.2" ry="1.6" fill="#fff" opacity=".22"/>`;
+      if (t.inc) fig += `<path d="M27.6 ${hy - 4.6}Q30 ${hy - 6.4} 33 ${hy - 4}" fill="none" stroke="${t.m[1]}" stroke-width="2"/>`;
+      fig += `<g stroke="#5A3A22" stroke-opacity=".55" stroke-width=".45" stroke-linecap="round"><path d="M28.4 ${hy - 0.2}h1M30.8 ${hy - 0.2}h1"/></g>`;
+      if (t.llora) fig += `<path d="M28.6 ${hy + 0.8}v1.6M31.4 ${hy + 0.8}v1.6" stroke="#BFE3F2" stroke-width=".6"/>`;
+      if (!t.tri && !t.manos && !t.nino) fig += `<path d="M28.4 38.6L30 33.4 31.6 38.6Z" fill="${t.sk}" stroke="#B48A5E" stroke-opacity=".5" stroke-width=".3"/>`;
+      if (t.manos) { fig += `<g fill="${t.sk}"><ellipse cx="22.6" cy="42" rx="1.5" ry="2"/><ellipse cx="37.4" cy="42" rx="1.5" ry="2"/></g>`; let r = ""; for (let i = 0; i < 7; i++) { r += `M${f(22.6 - 1 - i * 0.7)} 44L${f(16 - i * 1.4)} 70M${f(37.4 + 1 + i * 0.7)} 44L${f(44 + i * 1.4)} 70`; } fig += `<path d="${r}" stroke="#FFE9A8" stroke-width=".7" opacity=".9"/>`; }
+      if (t.icono) fig = `<circle cx="30" cy="${hy}" r="6.6" fill="#F3D484" stroke="#A97A24" stroke-width=".4"/><circle cx="35.4" cy="31.8" r="4.4" fill="#F3D484" stroke="#A97A24" stroke-width=".4"/>` + fig;
+      if (t.nino) { const cx = t.tri ? 34 : 35.4, cy = t.tri ? 34 : 34; fig += `<path d="M${cx - 3.6} ${cy + 1}Q${cx} ${cy - 2} ${cx + 3.6} ${cy + 1}L${cx + 3} ${cy + 9}H${cx - 3}Z" fill="${k === "socorro" ? "#2F6B4E" : "#FFF6E6"}" stroke="#000" stroke-opacity=".15" stroke-width=".4"/><circle cx="${cx}" cy="${cy - 2.2}" r="2.5" fill="${t.sk}"/><circle cx="${cx}" cy="${cy - 2.2}" r="3.6" fill="none" stroke="#F3D484" stroke-width=".7"/>`; }
+      if (t.ro) { let r = ""; for (let i = 0; i < 9; i++) r += `<circle cx="${f(30 + 2.2 * Math.sin(i * 0.5))}" cy="${f(37 + i * 1.6)}" r=".55"/>`; fig += `<g fill="#F8F1DA">${r}</g><path d="M30 51.6v2.4M29 52.6h2" stroke="#E3C06A" stroke-width=".6"/>`; }
+      if (t.cetro) fig += `<path d="M22.4 30L20 48" stroke="url(#${id}o)" stroke-width="1.2" stroke-linecap="round"/><circle cx="22.6" cy="29" r="1.3" fill="#F3D484"/>`;
+      if (t.cor7) { fig += `<path d="M30 33.6C28.4 31.4 25.8 32.6 26.6 35 27.2 36.8 30 38.6 30 38.6S32.8 36.8 33.4 35C34.2 32.6 31.6 31.4 30 33.6Z" fill="#C8283A"/>`; let s = ""; for (let i = 0; i < 7; i++) { const a = Math.PI * (0.15 + (i / 6) * 0.7); s += `M${f(30 + 1.6 * Math.cos(a))} ${f(35.6 - 1.6 * Math.sin(a))}L${f(30 + 6 * Math.cos(a))} ${f(35.6 - 6 * Math.sin(a))}`; } fig += `<path d="${s}" stroke="#E4E8EC" stroke-width=".55"/>`; }
+      if (t.estf) fig += `<polygon points="30,${f(hy - 7.4)} 30.6,${f(hy - 6)} 32,${f(hy - 6)} 30.9,${f(hy - 5.1)} 31.3,${f(hy - 3.8)} 30,${f(hy - 4.6)} 28.7,${f(hy - 3.8)} 29.1,${f(hy - 5.1)} 28,${f(hy - 6)} 29.4,${f(hy - 6)}" fill="#F3D484"/>`;
+      if (t.est) { let s = ""; const n = 12; for (let i = 0; i < n; i++) { const a = t.est === 2 ? Math.PI * (1.08 + (i / (n - 1)) * 0.84) : null; const x = t.est === 2 ? 30 + 9.6 * Math.cos(a) : 17 + (i % 4) * 8.6 + (Math.floor(i / 4) % 2) * 3, y = t.est === 2 ? hy + 9.6 * Math.sin(a) : 34 + Math.floor(i / 4) * 12 + (i % 2) * 2; s += `<circle cx="${f(x)}" cy="${f(y)}" r="${t.est === 2 ? 0.8 : 0.75}"/>`; } fig += `<g fill="#F6D980">${s}</g>`; }
+      // corona, aureola, luna, ángel, mundo
+      if (t.cor) top += `<path d="M26.4 ${hy - 4.6}L26 ${hy - 8.6}L27.8 ${hy - 6.6}L30 ${hy - 9.6}L32.2 ${hy - 6.6}L34 ${hy - 8.6}L33.6 ${hy - 4.6}Z" fill="url(#${id}o)" stroke="#7A5716" stroke-width=".35"/>`;
+      if (t.cor === 2) top += `<circle cx="30" cy="${hy - 10.4}" r=".9" fill="#F3D484"/>`;
+      if (!t.icono && !t.rayc && !t.est) top += `<circle cx="30" cy="${hy - 0.6}" r="${t.cor ? 8.4 : 6.8}" fill="none" stroke="#F3D484" stroke-width=".7" opacity=".85"/>`;
+
+      let pie = "";
+      if (t.luna) pie += `<path d="M${t.tri ? 14 : 17} 72Q30 82 ${t.tri ? 46 : 43} 72Q30 77 ${t.tri ? 14 : 17} 72Z" fill="${k === "guadalupe" ? "#26201C" : "#D9DEE3"}"/>`;
+      if (t.ang) pie += `<g><path d="M18 76Q24 70 30 74Q36 70 42 76" fill="none" stroke="#C9524A" stroke-width="1.6"/><path d="M18 76Q24 70 30 74Q36 70 42 76" fill="none" stroke="#2E7C6A" stroke-width=".7" transform="translate(0 1.5)"/><circle cx="30" cy="76.4" r="2" fill="#C9946A"/></g>`;
+      if (t.mundo) pie += `<path d="M14 78Q30 64 46 78Z" fill="#6E8FB8"/><path d="M16 76Q24 70 32 74Q38 76 44 72" stroke="#4E8A4A" stroke-width="1.4" fill="none"/>`;
+      if (t.rosas) pie += `<g fill="#F2C84B"><circle cx="24.6" cy="76.4" r="1.4"/><circle cx="35.4" cy="76.4" r="1.4"/></g>`;
+      const body = (S !== 1 ? `<g transform="translate(${f(30 - 30 * S)} ${oy}) scale(${S})">${fig}${top}</g>` : fig + top);
+      return `<svg class="vir" viewBox="0 0 60 82" width="${w}" height="${f(w * 82 / 60)}" aria-hidden="true">${g}${bg}${body}${pie}</svg>`;
+    };
+  })();
   /* ---------- bienvenida: el camino de cinco cuentas y la veladora ---------- */
   // el avance del onboarding es una pequeña decena de oro: cada paso enciende una cuenta
   const obHd = (n, back) => `<div class="hd z obh"><button class="ic" data-a="go" data-v="${back}" data-b="1" aria-label="Regresar">${I.back}</button><div class="obr"><span class="sr">Paso ${n} de 5</span><i class="obc" aria-hidden="true"></i>${[1, 2, 3, 4, 5].map((k) => `<b class="${k < n ? "ok" : k === n ? "on" : ""}"></b>`).join("")}<svg class="obx" width="12" height="16" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 1v14M1.5 5h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><span class="ic"></span></div>`;
@@ -1687,13 +1804,13 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       <input class="fld bus z" id="fb" type="search" placeholder="Busca tu estado" autocomplete="off" aria-label="Busca tu estado">
       <div class="esl z" id="esl">${L.map(([i, n]) => `<button class="es${S.e === i ? " on" : ""}" data-a="esc" data-k="${i}" data-n="${esc(sinAc(n))}"><span>${n}</span>${S.e === i ? `<i class="pal">${I.ok}</i>` : I.go}</button>`).join("")}<p class="note c" id="esn" hidden>No encontramos ese estado.</p></div></section>`; },
     advs: () => { const n = sel.length; return `<section class="v d in" style="padding-bottom:120px">${sky()}${ob ? obHd(3, "est") : hd(["adv"], "Tus Vírgenes")}<h1 class="z" style="margin-top:${ob ? 18 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Elige una o varias. Es la misma María, con el nombre que le dan en tu casa.</p>
-      <div class="advg z">${ADV.map((a) => { const on = sel.includes(a.k); return `<button class="ni${on ? " on" : ""}" data-a="advt" data-k="${a.k}" aria-pressed="${on}" aria-label="${advN(a)}">${on ? `<span class="pal">${I.ok}</span>` : ""}<span class="em">${EMA[a.k]}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`; }).join("")}</div>
+      <div class="advg z">${ADV.map((a) => { const on = sel.includes(a.k); return `<button class="ni${on ? " on" : ""}" data-a="advt" data-k="${a.k}" aria-pressed="${on}" aria-label="${advN(a)}">${on ? `<span class="pal">${I.ok}</span>` : ""}<span class="vfig">${VIRG(a.k, 60)}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`; }).join("")}</div>
       <p class="note z" style="margin-top:18px">¿No está la tuya? Iremos sumando más advocaciones.</p>
       <div class="pie"><button class="btn go" data-a="advok"${n ? "" : " disabled"}>${n ? (n === 1 ? "Listo, elegí 1" : "Listo, elegí " + n) : "Elige al menos una"}</button></div></section>`; },
     adv: () => { const a = adv(), ff = fiesta(a), f = frase(a);
       return `<section class="v d in">${sky()}${hd([vuelve], "Tu Virgen")}
         ${mis().length > 1 ? `<div class="chips z">${mis().map((x) => `<button class="chip${x.k === a.k ? " on" : ""}" data-a="verv" data-k="${x.k}">${x.c}</button>`).join("")}</div>` : ""}
-        <div class="nicho z"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em">${EMA[a.k]}</span><p class="ru">${a.p}</p><h2>${a.c}</h2><p class="ins">${a.l}</p><p class="fie">${ff ? `Su fiesta es el ${a.f[0]} de ${MESES[a.f[1] - 1]}. ${ff === 1 ? "Es mañana." : "Faltan " + ff + " días."}` : "Hoy es su fiesta."}</p></div></div>
+        <div class="nicho z"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="vfig vbig">${VIRG(a.k, 96)}</span><p class="ru">${a.p}</p><h2>${a.c}</h2><p class="ins">${a.l}</p><p class="fie">${ff ? `Su fiesta es el ${a.f[0]} de ${MESES[a.f[1] - 1]}. ${ff === 1 ? "Es mañana." : "Faltan " + ff + " días."}` : "Hoy es su fiesta."}</p></div></div>
         <p class="tit z">${a.k === delDia().k ? "Mensaje del día" : "Su mensaje"}</p><div class="z c">${cita(f)}<p class="note" style="margin-top:8px">${f[2]}</p></div>
         <p class="tit z">Su historia</p>${a.h.map((x) => `<p class="his z">${x}</p>`).join("")}${a.fx ? `<p class="note z" style="margin-top:12px">${a.fx}</p>` : ""}
         <p class="tit z">Oración</p>${a.o[0] === "Oración" ? "" : `<p class="ru z c">${a.o[0]}</p>`}<p class="pr z c" style="font-size:20px;line-height:30px">${a.o[1]}</p>
@@ -1764,7 +1881,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       return `<section class="v d n in fin5" style="padding-bottom:128px">${sky()}${obHd(5, "pid")}
         <div class="f5 z"><div class="f5r"></div><div class="nicho f5n"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em f5e">${LOGO}</span><p class="ru">Tu atrio está listo</p><h2>${esc(S.n)}</h2><p class="ins">${esc(estado(S.e))}</p></div><span class="f5p f5pl"></span><span class="f5p f5pr"></span></div></div>
         <p class="f5b z">Que ${a0 ? (a0.k === "guadalupe" ? "la Virgen de Guadalupe" : esc(a0.p + " " + a0.c)) : "la Virgen"} te cubra con su manto.</p>
-        <p class="tit z">${nv > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="meds z">${vs.map((a, k) => `<span class="med" style="animation-delay:${(1.5 + k * 0.12).toFixed(2)}s"><span class="md">${EMA[a.k]}</span><small>${a.c}</small></span>`).join("")}</div>
+        <p class="tit z">${nv > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="meds z">${vs.map((a, k) => `<span class="med vmed" style="animation-delay:${(1.5 + k * 0.12).toFixed(2)}s"><span class="vfig">${VIRG(a.k, 52)}</span><small>${a.c}</small></span>`).join("")}</div>
         ${S.pi ? `<p class="tit z">Tu intención</p><p class="ci c pin z">«${esc(S.pi)}»</p>` : ""}
         <p class="sub c z" style="margin-top:22px">Hoy se rezan los ${MIS[MIS_DIA[now().getDay()]].n.toLowerCase()}.${U ? " Tu avance se guarda en tu cuenta." : ""}</p>
         <div class="pie"><button class="btn go bvgo" data-a="entra">Entrar a mi atrio</button></div></section>`; },
@@ -1804,7 +1921,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
           <div class="nb"><span class="em">${EM[set]}</span><p class="ru">${hh.r ? "Ya lo rezaste hoy" : "Hoy, " + DIAS[d.getDay()].toLowerCase()}</p><h2>Santo rosario</h2><p class="ins">${MIS[set].n}</p>
           <button class="btn go" data-a="ros">${hh.r ? "Rezarlo otra vez" : "Empezar a rezar"}</button><button class="lk" data-a="go" data-v="sala">Rezarlo en familia</button></div></div>
         <p class="tit">Los cuatro misterios</p><div class="ret">${ni("gozosos")}${ni("luminosos")}${ni("dolorosos")}${ni("gloriosos")}</div>
-        <p class="tit">${mis().length > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="card">${mis().map((x) => `<button class="row" data-a="verv" data-k="${x.k}"><span class="md">${EMA[x.k]}</span><span class="g"><b>${advN(x)}</b><small>${x.k === delDia().k ? "Hoy te trae el mensaje del día" : "Su historia y su oración"}</small></span>${I.go}</button>`).join("")}<button class="row" data-a="advsel"><span class="g"><b style="font-size:16px">Elegir mis Vírgenes</b></span>${I.go}</button></div>
+        <p class="tit">${mis().length > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="card">${mis().map((x) => `<button class="row" data-a="verv" data-k="${x.k}"><span class="vfig vrow">${VIRG(x.k, 34)}</span><span class="g"><b>${advN(x)}</b><small>${x.k === delDia().k ? "Hoy te trae el mensaje del día" : "Su historia y su oración"}</small></span>${I.go}</button>`).join("")}<button class="row" data-a="advsel"><span class="g"><b style="font-size:16px">Elegir mis Vírgenes</b></span>${I.go}</button></div>
         <p class="tit">Devociones</p><div class="card">${row('data-a="go" data-v="vir"', "virgen", "Devociones a la Virgen", "Bajo tu amparo, Acordaos y más")}${row('data-a="go" data-v="ang"', "angelus", "Ángelus", hh.a ? "Ya lo rezaste hoy" : "A mediodía, con campana")}${row('data-a="go" data-v="nov"', "novena", "Novena de Guadalupe", nvTxt)}</div>${tabs("rezar")}</section>`;
     },
     /* El rosario tiene dos vistas. «Oración»: el texto completo, con el aro de luz arriba (o un acercamiento al colgante
@@ -1896,7 +2013,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   /* Recorrido de la primera vez: cinco globos que señalan lo importante de Hoy */
   let tourI = -1;
   const TOUR = [
-    ['.rhgo, .rhb', "El rosario de hoy", "Toca el rosario o «Empezar a rezar» y te guiamos cuenta por cuenta. Cada cuenta que reces se enciende."],
+    ['.rhgo, .rhb', "Empieza aquí", "Toca este botón y rezas el rosario de hoy. Te guiamos cuenta por cuenta: solo lees y tocas «Amén»."],
     ['.tj[data-a="jnew"], .tj[data-a="jabre"]', "Rosario juntos", "Invita a tu pareja o familia: cada quien reza su misterio a su hora y entre todos lo completan."],
     ['.tj[data-a="luzn"]', "Manda una luz", "Reza un Ave María por alguien y avísale por WhatsApp con una paloma."],
     ['.tj[data-v="sala"]', "Rosario en familia", "Abre una sala y recen al mismo tiempo, con voz y cámara, cada quien desde su casa."],
@@ -1912,8 +2029,14 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     try { el.scrollIntoView({ block: "center", behavior: "instant" }); } catch (_) { try { el.scrollIntoView(); } catch (_) {} }
     const r0 = el.getBoundingClientRect(), H = window.innerHeight, alto = r0.height > H * 0.45, r = { left: r0.left, width: r0.width, top: Math.max(8, r0.top), bottom: Math.min(H - 8, r0.bottom) }; r.height = r.bottom - r.top;
     const abajo = alto ? false : r.top + r.height / 2 < H / 2, quedan = TOUR.slice(n + 1).filter((q) => app.querySelector(q[0])).length;
-    app.insertAdjacentHTML("beforeend", `<div id="tour" role="dialog" aria-label="${t}"><div class="tu-h" style="left:${r.left - 6}px;top:${r.top - 6}px;width:${r.width + 12}px;height:${r.height + 12}px"></div>
-      <div class="tu-b ${abajo ? "ab" : "ar"}" style="${alto ? "bottom:96px" : abajo ? `top:${r.bottom + 16}px` : `bottom:${H - r.top + 16}px`}"><p class="ru">${n + 1} de ${n + 1 + quedan}</p><b>${t}</b><p>${d}</p><div class="tu-f"><button class="lk" data-a="tourx">Saltar</button><button class="btn go sm" data-a="tourn">${quedan ? "Siguiente" : "Empezar"}</button></div></div></div>`);
+    const tot = n + 1 + quedan, pts = Array.from({ length: tot }, (_, k) => `<i class="${k === n ? "on" : k < n ? "ok" : ""}"></i>`).join("");
+    app.insertAdjacentHTML("beforeend", `<div id="tour" role="dialog" aria-label="${t}"><div class="tu-h" style="left:${r.left - 8}px;top:${r.top - 8}px;width:${r.width + 16}px;height:${r.height + 16}px"><span class="tu-p"></span></div>
+      <div class="tu-b"><div class="tu-d" aria-label="Paso ${n + 1} de ${tot}">${pts}</div><b>${t}</b><p>${d}</p><button class="btn go tu-n" data-a="tourn">${quedan ? "Siguiente" : "Listo, a rezar"}</button><button class="lk tu-x" data-a="tourx">Saltar la guía</button></div></div>`);
+    // la burbuja nunca se sale de la pantalla: va junto al botón, arriba o abajo según quepa
+    const b = app.querySelector("#tour .tu-b"), bh = b.offsetHeight, m = 14, arriba = r.top - 8 - m - bh, abajo2 = r.bottom + 8 + m;
+    let y = alto ? H - bh - 96 : abajo2 + bh <= H - 12 && (arriba < 12 || r.top + r.height / 2 < H / 2) ? abajo2 : arriba >= 12 ? arriba : Math.max(12, H - bh - 12);
+    b.style.top = Math.round(y) + "px"; b.classList.add(y > r.top ? "ab" : "ar");
+
   }
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
   function finJt(s) {
