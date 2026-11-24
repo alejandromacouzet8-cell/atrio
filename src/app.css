@@ -553,3 +553,15 @@ div.jyt{cursor:default}
 .mn.me video{transform:scaleX(-1)}
 .mn.vz .cara{border-color:rgba(230,194,122,.75)}
 .mn.habla .cara{border-color:var(--oroc);box-shadow:0 0 0 3px rgba(244,220,166,.55),0 0 18px rgba(244,220,166,.5)}
+/* ---------- consejo de una sola vez sobre el botón de vista ---------- */
+.rpie .tip{position:absolute;right:16px;bottom:calc(100% - 14px);width:min(290px,calc(100% - 32px));padding:16px 16px 12px 18px;border-radius:18px;background:linear-gradient(180deg,#FFF8E6,#F6E3B4);color:var(--manto);box-shadow:0 18px 40px -12px rgba(0,0,0,.55);animation:tipin .42s cubic-bezier(.2,.8,.2,1) .35s backwards}
+.rpie .tip:after{content:"";position:absolute;right:26px;bottom:-8px;width:16px;height:16px;background:#F6E3B4;transform:rotate(45deg);border-radius:0 0 4px 0}
+.tip p{font-size:16px;line-height:22px}
+.tip b{font-family:var(--se);font-size:19px;font-weight:700;display:block;margin-bottom:2px}
+.tip .tip2{margin-top:6px;font-size:14px;line-height:19px;color:#3E5A5D}
+.tipok{display:block;margin:10px 0 0 auto;min-height:40px;padding:0 18px;border:0;border-radius:20px;background:var(--manto);color:var(--oroc);font-weight:700;font-size:15px;cursor:pointer}
+.ra.vt.tipon{border-color:var(--oroc);box-shadow:0 0 0 0 rgba(244,220,166,.6);animation:tipl 1.8s ease-out infinite}
+@keyframes tipin{from{opacity:0;transform:translateY(10px) scale(.96)}}
+@keyframes tipl{0%{box-shadow:0 0 0 0 rgba(244,220,166,.55)}70%,100%{box-shadow:0 0 0 14px rgba(244,220,166,0)}}
+.jy{overflow:visible}
+@media (prefers-reduced-motion:reduce){.rpie .tip,.ra.vt.tipon{animation:none}}
