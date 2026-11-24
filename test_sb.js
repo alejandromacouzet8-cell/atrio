@@ -40,7 +40,7 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   click(b, '[data-a="go"][data-v="sala"]'); b.window.document.getElementById("fc").value = code; click(b, '[data-a="unir"]'); await wait(40);
   if (!txt(a).includes("2 conectados") || !txt(b).includes("Esperando a que Lucía empiece")) throw new Error("presencia: " + txt(a).slice(0, 220) + " || " + txt(b).slice(0, 220));
   click(a, '[data-a="rosala"]'); await wait(40); for (let i = 0; i < 20; i++) click(a, '[data-a="sig"]'); await wait(40);
-  if (!txt(b).includes("21 de 73") || b.window.document.querySelector('[data-a="sig"]')) throw new Error("no sincroniza: " + txt(b).slice(0, 200));
+  if (!txt(b).includes("21 de 80") || b.window.document.querySelector('[data-a="sig"]')) throw new Error("no sincroniza: " + txt(b).slice(0, 200));
   while (a.window.document.querySelector('[data-a="sig"]')) click(a, '[data-a="sig"]'); await wait(60);
   if (!txt(a).includes("Tu veladora ya") || !txt(b).includes("Tu veladora ya")) throw new Error("cierre: " + txt(b).slice(0, 200));
   if (!txt(a).includes("No la pierdas") || !a.window.document.querySelector('.gua [data-a="login"]')) throw new Error("al terminar no ofrece guardar: " + txt(a).slice(-300));
@@ -55,8 +55,8 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   click(a2, '[data-a="go"][data-v="sala"]'); click(a2, '[data-a="crear"]'); await wait(40); const code2 = a2.window.document.querySelector(".code").textContent;
   click(a2, '[data-a="rosala"]'); await wait(20); for (let i = 0; i < 10; i++) click(a2, '[data-a="sig"]'); await wait(40);
   click(b2, '[data-a="go"][data-v="sala"]'); b2.window.document.getElementById("fc").value = code2; click(b2, '[data-a="unir"]'); await wait(80);
-  if (!txt(b2).includes("11 de 73")) throw new Error("quien entra tarde no alcanza la cuenta: " + txt(b2).slice(0, 200));
-  click(a2, '[data-a="sig"]'); await wait(40); if (!txt(b2).includes("12 de 73")) throw new Error("no sigue después de entrar tarde: " + txt(b2).slice(0, 120));
+  if (!txt(b2).includes("11 de 80")) throw new Error("quien entra tarde no alcanza la cuenta: " + txt(b2).slice(0, 200));
+  click(a2, '[data-a="sig"]'); await wait(40); if (!txt(b2).includes("12 de 80")) throw new Error("no sigue después de entrar tarde: " + txt(b2).slice(0, 120));
   // cuenta de Google: guarda el avance en la nube y lo recupera en otro teléfono
   click(a, '[data-a="go"][data-v="hoy"]'); click(a, '[data-a="go"][data-v="yo"]'); if (!txt(a).includes("Guardar con Google")) throw new Error("sin botón de Google"); click(a, '[data-a="login"]'); click(a, '[data-a="gg"]'); await wait(1500);
   click(a, '[data-a="go"][data-v="yo"]'); if (!txt(a).includes("Tu avance está guardado") || !nubeRows.u1 || !nubeRows.u1.datos.d["2026-12-03"].r) throw new Error("nube: " + JSON.stringify(nubeRows).slice(0, 200) + txt(a).slice(0, 200));
