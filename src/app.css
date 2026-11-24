@@ -414,3 +414,35 @@ p.pin.z{margin-top:10px}
 .btn.gw{display:flex;align-items:center;justify-content:center;gap:10px;background:#F6EFE9;color:#1F1F1F;border:0}
 .btn.gw span{font-weight:700}
 .fld.cod{font-family:var(--sa);font-size:30px;letter-spacing:.35em;text-align:center;font-variant-numeric:tabular-nums}
+
+/* ---------- rosario juntos ---------- */
+.jex{margin:18px 0 0;padding:0;list-style:none;counter-reset:j}
+.jex li{position:relative;padding:0 0 12px 38px;font-size:16px;line-height:23px;color:var(--txt2);counter-increment:j}
+.jex li:before{content:counter(j);position:absolute;left:0;top:-1px;width:26px;height:26px;border-radius:13px;border:1px solid rgba(230,194,122,.5);color:var(--oroc);font-family:var(--se);font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center}
+.jex b{color:var(--txt);font-weight:600}
+.jp{display:flex;align-items:center;gap:12px;margin-top:20px}
+.jpb{flex:1;height:8px;border-radius:4px;background:rgba(246,239,233,.1);overflow:hidden}
+.jpb i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#C8962E,#F4DCA6);transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.jp p{flex:none;font-family:var(--se);font-weight:600;font-size:18px;color:var(--oroc)}
+.jok{margin-top:16px;padding:18px;border-radius:20px;border:1px solid rgba(230,194,122,.55);background:rgba(230,194,122,.1);text-align:center}
+.jok .em{display:inline-flex;color:var(--oro)}
+.jl{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.jm{display:flex;align-items:center;gap:12px;padding:12px 12px 12px 14px;border-radius:18px;border:1px solid rgba(246,239,233,.14);background:rgba(246,239,233,.03)}
+.jm.ok{border-color:rgba(230,194,122,.45);background:rgba(230,194,122,.08)}
+.jb{flex:none;width:42px;height:42px;border-radius:21px;border:1.5px solid rgba(244,220,166,.35);display:flex;align-items:center;justify-content:center;font-family:var(--se);font-weight:600;font-size:19px;color:var(--txt2)}
+.jb i{font-style:normal}
+.jm.ok .jb{background:var(--oro);border-color:var(--oro);color:var(--manto)}
+.jm .g{flex:1;min-width:0}
+.jm .g .ru{display:block;font-size:13.5px;line-height:18px}
+.jm .g b{display:block;font-family:var(--se);font-weight:600;font-size:18px;line-height:23px;color:var(--txt)}
+.jm .g small{display:block;margin-top:2px;font-size:13px;line-height:17px;color:var(--oroc)}
+.btn.sm.jr{flex:none;width:auto;min-height:40px;padding:0 16px;font-size:15px;margin:0}
+.jra{margin-top:16px;text-align:center;font-size:15px;color:var(--txt2)}
+.jra b{font-family:var(--se);font-size:24px;color:var(--oroc);margin-right:4px}
+.jbt{display:flex;gap:10px;margin-top:18px}
+.jbt .vzb{flex:1}
+.jmini{flex:none;display:flex;gap:4px}
+.jmini i{width:9px;height:9px;border-radius:5px;border:1px solid rgba(244,220,166,.55)}
+.jmini i.on{background:var(--oro);border-color:var(--oro)}
+.jok .em{width:56px;height:56px;margin:0 auto 6px}
+.jok .em svg{width:56px;height:56px}
