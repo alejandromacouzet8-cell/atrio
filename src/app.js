@@ -89,7 +89,7 @@
   if (Q.get("google")) { S.g = 1; try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} }
   let U = null, tNube = 0, lista = 0;
   const save = () => { try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} clearTimeout(tNube); tNube = setTimeout(nube, 1200); };
-  if (Q.get("demo")) { S.n = S.n || "Lucía"; if (S.e < 0) S.e = 22; if (Q.get("adv")) S.vs = Q.get("adv").split(","); if (Q.get("pi") !== null) S.pi = Q.get("pi"); }
+  if (Q.get("demo")) { S.n = S.n || "Lucía"; if (S.e < 0) S.e = 22; if (Q.get("adv")) S.vs = Q.get("adv").split(","); if (Q.get("pi") !== null) S.pi = Q.get("pi"); if (Q.get("fr")) S.fr = Q.get("fr"); }
   if (!Array.isArray(S.vs)) S.vs = S.v ? [S.v] : [];
   if (typeof S.pi !== "string") S.pi = "";
   const conG = () => SB_URL.indexOf("http") === 0 && (G_AB === "1" || S.g === 1);
@@ -181,7 +181,7 @@
     } catch (_) {}
   }
   // un toque por cuenta, dos al cerrar la decena (Gloria) y tres al llegar a un misterio nuevo o a la Salve
-  const vibraPaso = () => { const t = ros && ros.p[ros.i] ? ros.p[ros.i].t : ""; vibra(t === "mis" || t === "salve" ? 3 : t === "gl" ? 2 : 1); };
+  const vibraPaso = () => { const t = ros && ros.p[ros.i] ? ros.p[ros.i].t : ""; vibra(t === "mis" || t === "salve" || t === "salvemx" ? 3 : t === "gl" ? 2 : 1); };
   let sono = "", tic = 0, WL = null;
   function despierta(on) {
     try {
@@ -445,7 +445,7 @@
   function volMu() { if (!MU) return; const v = VZ ? 0.6 : 1.8; try { MU.out.gain.cancelScheduledValues(MU.ac.currentTime); MU.out.gain.setTargetAtTime(v, MU.ac.currentTime, 0.8); } catch (_) {} }
   if (Q.get("demo") || Q.get("prueba")) window.atrioMu = () => { if (!MU) return null; if (!MU.an) { MU.an = MU.ac.createAnalyser(); MU.out.connect(MU.an); } const b = new Float32Array(2048); MU.an.getFloatTimeDomainData(b); let q = 0; for (const v of b) q += v * v; return { st: MU.ac.state, rms: Math.sqrt(q / b.length) }; };
   const botMu = () => `<button class="ic r mu${S.mu ? " on" : ""}" data-a="mu" aria-label="${S.mu ? "Apagar la música" : "Poner música de fondo"}" aria-pressed="${!!S.mu}">${S.mu ? I.nota : I.notano}</button>`;
-  const presSala = () => { if (sala) sala.presence({ n: S.n.slice(0, 24), e: S.e, lead: lead ? 1 : 0, on: ros && ros.sala ? 1 : 0, i: ros ? ros.i : 0, set: ros ? ros.set : "", fin: null }).catch(() => {}); };
+  const presSala = () => { if (sala) sala.presence({ n: S.n.slice(0, 24), e: S.e, lead: lead ? 1 : 0, on: ros && ros.sala ? 1 : 0, i: ros ? ros.i : 0, set: ros ? ros.set : "", f: ros ? ros.f : "", fin: null }).catch(() => {}); };
   const guia = () => peersS.filter((p) => p.presence && p.presence.lead).sort((a, b) => (a.peer < b.peer ? -1 : 1))[0];
   async function entrar(code, crea) {
     if (!RM) return;
@@ -457,7 +457,8 @@
         const g = guia();
         if (!lead && g && !g.isMe && g.presence.fin && ros && ros.sala) { fin(); return; }
         if (!lead && g && !g.isMe && g.presence.on) {
-          if (!ros || !ros.sala || ros.set !== g.presence.set) { ros = { set: MIS[g.presence.set] ? g.presence.set : MIS_DIA[now().getDay()], i: 0, sala: 1 }; ros.p = pasos(); view = "ros"; }
+          const gf = g.presence.f === "mx" ? "mx" : "un";
+          if (!ros || !ros.sala || ros.set !== g.presence.set || ros.f !== gf) { ros = { set: MIS[g.presence.set] ? g.presence.set : MIS_DIA[now().getDay()], i: 0, sala: 1, f: gf }; ros.p = pasos(gf); view = "ros"; }
           const i = Math.max(0, Math.min(ros.p.length - 1, g.presence.i | 0));
           if (i !== ros.i || view !== "ros") { ros.an = i < ros.i ? "at" : "sg"; ros.i = i; view = "ros"; vibraPaso(); }
           render(); ros.an = "";
@@ -487,23 +488,65 @@
     const pu = m ? `<span class="pu" style="position:absolute;left:${((m[1] - VX) / VW * 100).toFixed(2)}%;top:${((m[2] - VY) / VH * 100).toFixed(2)}%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:1.2px solid #FBE9BE"></span>` : "";
     return `<div style="position:relative;${full ? "margin:0 -16px" : "margin:6px -22px 0"}"><svg viewBox="${VX} ${VY} ${VW} ${VH}" role="img" aria-label="Mapa de México con veladoras encendidas" style="display:block;width:100%"><defs><radialGradient id="gl"><stop offset="0" stop-color="#FBE9BE" stop-opacity=".85"/><stop offset=".4" stop-color="#F0CF8A" stop-opacity=".32"/><stop offset="1" stop-color="#E6C27A" stop-opacity="0"/></radialGradient></defs><path d="${MX.o}" fill="#134A50" fill-opacity=".55" stroke="#E6C27A" stroke-opacity=".38" stroke-width=".7" stroke-linejoin="round"/><path d="${dotsPath}" stroke="#8FB3B2" stroke-opacity=".5" stroke-width="2" stroke-linecap="round"/>${g}</svg>${pu}${extra || ""}</div>`;
   }
-  function pasos() {
-    const p = [{ t: "cruz", b: "x" }, { t: "credo", b: "x" }, { t: "pn", b: "p0" }, { t: "am", k: 1, of: 3, b: "p1" }, { t: "am", k: 2, of: 3, b: "p2" }, { t: "am", k: 3, of: 3, b: "p3" }, { t: "gl", b: "p3" }];
-    for (let m = 0; m < 5; m++) { p.push({ t: "mis", m, b: "L" + m }); p.push({ t: "pn", m, b: "L" + m }); for (let k = 1; k <= 10; k++) p.push({ t: "am", m, k, of: 10, b: "s" + m + "_" + k }); p.push({ t: "gl", m, x: 1, b: "s" + m + "_10" }); }
-    p.push({ t: "salve", b: "M" }); return p;
+  // El rosario se reza de dos formas, las dos de la Iglesia (Rosarium Virginis Mariae, 37):
+  //  «mx», como en México: señal de la cruz y acto de contrición; tras cada Gloria, «María, Madre de gracia» y «Oh Jesús mío»;
+  //        al final, Padre nuestro, tres Ave Marías, Salve y letanías.
+  //  «un», con Credo al inicio: Credo, Padre nuestro y tres Ave Marías antes de los misterios; al final, la Salve.
+  // «b» es la cuenta que se enciende: la cruz (x), la medalla (M), las cuentas del colgante (p0 a p3) y las de cada misterio.
+  const forma = () => (S.fr === "mx" || S.fr === "un" ? S.fr : S.e === 99 ? "un" : "mx");
+  const decena = (p, m, mx) => { p.push({ t: "mis", m, b: "L" + m }); p.push({ t: "pn", m, b: "L" + m }); for (let k = 1; k <= 10; k++) p.push({ t: "am", m, k, of: 10, b: "s" + m + "_" + k }); p.push({ t: "gl", m, x: mx ? 2 : 1, lg: mx ? 1 : 0, b: "s" + m + "_10" }); };
+  const cierre = (p, mx, solo) => { if (mx) { if (!solo) { p.push({ t: "pn", b: "M", fin: 1, l: "Por las intenciones del Papa" }); [1, 2, 3].forEach((k) => p.push({ t: "am" + k, k, of: 3, b: "p" + (4 - k), fin: 1, lg: 1 })); } p.push({ t: "salvemx", b: "p0", fin: 1, lg: 2 }); if (!solo) for (let k = 1; k <= LET.length; k++) p.push({ t: "let", k, of: LET.length, b: "x", fin: 1 }); } else { p.push({ t: "salve", b: "M", fin: 1, lg: 1 }); if (!solo) p.push({ t: "fin", b: "M", fin: 1 }); } };
+  function pasos(f) {
+    const mx = f === "mx", p = mx
+      ? [{ t: "cruz", b: "x" }, { t: "contri", b: "M", lg: 1 }, { t: "abre", b: "M" }]
+      : [{ t: "cruz", b: "x" }, { t: "credo", b: "x", lg: 1 }, { t: "pn", b: "p0" }, { t: "am", k: 1, of: 3, b: "p1" }, { t: "am", k: 2, of: 3, b: "p2" }, { t: "am", k: 3, of: 3, b: "p3" }, { t: "gl", b: "p3" }];
+    for (let m = 0; m < 5; m++) decena(p, m, mx);
+    cierre(p, mx); return p;
   }
+  /* El rosario como joya: perlas plateadas que se vuelven de oro y luz al rezarlas, medalla, crucifijo
+     y, detrás, un rosetón de cinco pétalos (uno por misterio) que se va llenando de color con cada decena. */
+  const TONO = { gozosos: ["#FCE6BA", "#F2A69C"], luminosos: ["#FFF7D2", "#9AD2E8"], dolorosos: ["#F0909C", "#9150A0"], gloriosos: ["#FFE694", "#6FA0E2"] };
   function ring(i) {
     const P = ros.p, done = {}, cur = P[i].b; for (let j = 0; j < i; j++) done[P[j].b] = 1;
     if (ros.jt) jtHechos(ros.jt.id).forEach((m) => { done["L" + m] = 1; for (let k = 1; k <= 10; k++) done["s" + m + "_" + k] = 1; });
-    const cx = 130, cy = 108, R = 98, st = 360 / 56; let s = "";
-    const bead = (id, x, y, r) => { const c = id === cur, d = done[id]; s += (c ? `<circle class="pu" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r + 3}" fill="none" stroke="#F4DCA6" stroke-width="1.2"/>` : "") + `<circle${c ? ' class="cur"' : ""} cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${c ? r + 1.2 : r}" fill="${c ? "#FFF3D0" : d ? "#E6C27A" : "none"}" stroke="${d || c ? "none" : "rgba(244,220,166,.55)"}" stroke-width="1"/>`; };
-    for (let m = 0; m < 5; m++) for (let k = 0; k <= 10; k++) { const a = ((90 + (m * 11 + k + 1) * st) * Math.PI) / 180; bead(k === 0 ? "L" + m : "s" + m + "_" + k, cx + R * Math.cos(a), cy + R * Math.sin(a), k === 0 ? 4.6 : 3); }
-    const mc = cur === "M";
-    s += `<polygon transform="translate(${cx - 8} ${cy + R - 8})" fill="${mc || i > 0 ? "#F4DCA6" : "none"}" stroke="rgba(244,220,166,.7)" stroke-width=".8" points="${S16}"/>` + (mc ? `<circle class="pu" cx="${cx}" cy="${cy + R}" r="11" fill="none" stroke="#F4DCA6" stroke-width="1.2"/>` : "");
-    bead("p3", cx, cy + R + 14, 3); bead("p2", cx, cy + R + 23, 3); bead("p1", cx, cy + R + 32, 3); bead("p0", cx, cy + R + 42, 4.2);
-    const xc = cur === "x" ? "#FFF3D0" : "#E6C27A";
-    s += `<path d="M${cx} ${cy + R + 48}v13M${cx - 4.5} ${cy + R + 52}h9" stroke="${xc}" stroke-width="1.6" stroke-linecap="round"/>`;
-    return `<svg width="260" height="262" viewBox="0 0 260 270" aria-hidden="true">${s}</svg>`;
+    const cx = 130, cy = 108, R = 98, st = 360 / 56, f = (n) => (Math.round(n * 10) / 10).toString(), ang = (n) => ((90 + n * st) * Math.PI) / 180, tn = TONO[ros.set] || TONO.gozosos;
+    let luz = "", cu = "", vit = "";
+    const bead = (id, x, y, r, oro) => { const c = id === cur, d = done[id], rr = c ? r + 1.3 : r;
+      if (c || d) luz += `<circle cx="${f(x)}" cy="${f(y)}" r="${f(rr * (c ? 3.7 : 2.8))}" fill="url(#rgl)"${c ? "" : ' opacity=".6"'}/>`;
+      cu += (c ? `<circle class="pu" cx="${f(x)}" cy="${f(y)}" r="${f(r + 3.6)}" fill="none" stroke="#FBE9BE" stroke-width="1.1"/>` : "") +
+        `<circle${c ? ' class="cur"' : ""} cx="${f(x)}" cy="${f(y)}" r="${f(rr)}" fill="url(#${c ? "rbc" : d ? (oro ? "rbd" : "rbo") : oro ? "rbg" : "rbf"})"/>` +
+        `<circle cx="${f(x - rr * 0.3)}" cy="${f(y - rr * 0.34)}" r="${f(rr * 0.25)}" fill="#fff" opacity="${c ? 0.95 : d ? 0.85 : 0.55}"/>` +
+        (c ? `<g transform="translate(${f(x + rr * 0.95)} ${f(y - rr * 1.05)}) scale(.44) translate(-8 -8)"><polygon class="gli" fill="#fff" points="${S16}"/></g>` : ""); };
+    // resplandor: cada cuenta tiene su rayo y lo enciende al rezarla; detrás avanza la luz del misterio
+    const pt = (r, a) => f(cx + r * Math.cos(a)) + " " + f(cy + r * Math.sin(a)), RI = 60, RO = 92.4; let ap = "", en = "";
+    const rayos = (n, on, largo) => { const a = ang(n), b = ang(n + 0.5), mb = (74 + RO) / 2, d = `M${pt(largo ? 61 : 67, a)}L${pt(RO, a)}M${pt(75, b)}Q${f(cx + mb * Math.cos(b) - 1.9 * Math.sin(b))} ${f(cy + mb * Math.sin(b) + 1.9 * Math.cos(b))} ${pt(RO, b)}`; if (on) en += d; else ap += d; };
+    for (let m = 0; m < 5; m++) { let n = 0; const pn = done["L" + m] || cur === "L" + m; rayos(m * 11 + 1, pn, 1);
+      for (let k = 1; k <= 10; k++) { const id = "s" + m + "_" + k, on = done[id] || id === cur; if (on) n = k; rayos(m * 11 + k + 1, on); }
+      if (pn || n) { const a0 = ang(m * 11 + 0.5), a1 = ang(m * 11 + n + 1.5); vit += `<path d="M${pt(RO + 1, a0)}A${RO + 1} ${RO + 1} 0 0 1 ${pt(RO + 1, a1)}L${pt(RI, a1)}A${RI} ${RI} 0 0 0 ${pt(RI, a0)}Z" fill="url(#rpt)"/>`; } }
+    vit += `<path d="${ap}" fill="none" stroke="#E6C27A" stroke-opacity=".3" stroke-width=".7" stroke-linecap="round"/>` + (en ? `<path d="${en}" fill="none" stroke="#FFF3D0" stroke-opacity=".34" stroke-width="2.6" stroke-linecap="round"/><path d="${en}" fill="none" stroke="#FFF1C9" stroke-width="1" stroke-linecap="round"/>` : "") +
+      `<circle cx="${cx}" cy="${cy}" r="${RI - 1.6}" fill="none" stroke="#E6C27A" stroke-opacity=".34" stroke-width=".7"/>`;
+    for (let m = 0; m < 5; m++) for (let k = 0; k <= 10; k++) { const a = ang(m * 11 + k + 1); bead(k === 0 ? "L" + m : "s" + m + "_" + k, cx + R * Math.cos(a), cy + R * Math.sin(a), k === 0 ? 4.9 : 3.4, k === 0); }
+    bead("p3", cx, cy + R + 15, 3.1); bead("p2", cx, cy + R + 22.8, 3.1); bead("p1", cx, cy + R + 30.6, 3.1); bead("p0", cx, cy + R + 39.6, 4.3, 1);
+    // medalla: une el collar con el colgante; se enciende al empezar
+    const mc = cur === "M", mon = mc || i > 0, my = cy + R + 1.5;
+    const med = (mc ? `<circle cx="${cx}" cy="${my}" r="22" fill="url(#rgl)"/><ellipse class="pu" cx="${cx}" cy="${my}" rx="11" ry="12.6" fill="none" stroke="#FBE9BE" stroke-width="1.1"/>` : "") +
+      `<g transform="translate(${cx} ${my})"${mon ? "" : ' opacity=".9"'}><ellipse rx="7.6" ry="9.2" fill="url(#${mon ? "rbd" : "rbg"})" stroke="#7E5C1B" stroke-width=".5"/><ellipse rx="5.7" ry="7.3" fill="none" stroke="#FFF6DA" stroke-opacity=".6" stroke-width=".5"/><polygon transform="translate(-3.7 -3.7) scale(.4625)" fill="${mon ? "#FFFBEA" : "#EAD9A8"}" points="${S16}"/></g>`;
+    // crucifijo
+    const xc = cur === "x", xy = cy + R + 45.6;
+    const cruz = (xc ? `<circle cx="${cx}" cy="${xy + 8}" r="21" fill="url(#rgl)"/><circle class="pu" cx="${cx}" cy="${xy + 8.5}" r="12.5" fill="none" stroke="#FBE9BE" stroke-width="1.1"/>` : "") +
+      `<g transform="translate(${cx} ${xy})"><path d="M0 0v17.6M-6 5.6h12" stroke="${xc ? "#FFF3D0" : "#C99A45"}" stroke-width="2.7" stroke-linecap="round"/><path d="M0 .4v16.8M-5.6 5.6h11.2" stroke="${xc ? "#FFFFFF" : "#F6E0AC"}" stroke-width="1.05" stroke-linecap="round"/><circle cy="5.6" r="1.35" fill="#FFF8E1"/></g>`;
+    return `<svg width="260" height="262" viewBox="0 0 260 270" aria-hidden="true"><defs>
+      <radialGradient id="rbf" cx=".34" cy=".3" r=".78"><stop offset="0" stop-color="#F6FBFA"/><stop offset=".42" stop-color="#B4CCCA"/><stop offset=".86" stop-color="#5F8486"/><stop offset="1" stop-color="#365C60"/></radialGradient>
+      <radialGradient id="rbo" cx=".34" cy=".3" r=".78"><stop offset="0" stop-color="#FFFDF2"/><stop offset=".4" stop-color="#FBE2A8"/><stop offset=".86" stop-color="#DDAA50"/><stop offset="1" stop-color="#A97722"/></radialGradient>
+      <radialGradient id="rbg" cx=".34" cy=".3" r=".78"><stop offset="0" stop-color="#F3E6BC"/><stop offset=".45" stop-color="#B99C58"/><stop offset="1" stop-color="#5E4C20"/></radialGradient>
+      <radialGradient id="rbd" cx=".34" cy=".3" r=".78"><stop offset="0" stop-color="#FFF9DE"/><stop offset=".4" stop-color="#F6D27A"/><stop offset=".86" stop-color="#CC9631"/><stop offset="1" stop-color="#93661A"/></radialGradient>
+      <radialGradient id="rbc" cx=".4" cy=".36" r=".75"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#FFF4D2"/><stop offset="1" stop-color="#F3CB78"/></radialGradient>
+      <radialGradient id="rgl"><stop offset="0" stop-color="#FFEFC4" stop-opacity=".62"/><stop offset=".45" stop-color="#F0CF8A" stop-opacity=".2"/><stop offset="1" stop-color="#E6C27A" stop-opacity="0"/></radialGradient>
+      <radialGradient id="rpt" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${RO + 1}"><stop offset=".63" stop-color="${tn[0]}" stop-opacity="0"/><stop offset=".8" stop-color="${tn[0]}" stop-opacity=".34"/><stop offset="1" stop-color="${tn[1]}" stop-opacity=".62"/></radialGradient>
+      <radialGradient id="rvl" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${RI}"><stop offset="0" stop-color="#113F45" stop-opacity=".55"/><stop offset=".7" stop-color="#0B3237" stop-opacity=".5"/><stop offset="1" stop-color="#082A2F" stop-opacity=".72"/></radialGradient></defs>
+      <circle cx="${cx}" cy="${cy}" r="${RI - 1.6}" fill="url(#rvl)"/><g class="vit">${vit}</g>
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#E6C27A" stroke-opacity=".42" stroke-width=".9"/><path d="M${cx} ${cy + R + 9}V${xy}" stroke="#E6C27A" stroke-opacity=".5" stroke-width=".9"/>
+      ${luz}${cu}${med}${cruz}</svg>`;
   }
   const tabs = (on, dk) => `<nav class="tabs dk" aria-label="Secciones">` + [["hoy", "Hoy", I.sun], ["rezar", "Rezar", I.st], ["mapa", "Mapa", I.pin], ["yo", "Yo", I.yo]].map(([v, t, ic]) => `<button class="tab${on === v ? " on" : ""}" data-a="go" data-v="${v}"${on === v ? ' aria-current="page"' : ""}>${ic}${t}</button>`).join("") + "</nav>";
   const hd = (back, title, right) => `<div class="hd z"><button class="ic" data-a="go" data-v="${back[0]}" data-b="1" aria-label="${back[1] === "x" ? "Cerrar" : "Regresar"}">${back[1] === "x" ? I.x : I.back}</button><p class="ru">${title}</p>${right || '<span class="ic"></span>'}</div>`;
@@ -587,6 +630,11 @@
         ${luzRe === 1 ? `<div class="card" style="margin-top:24px;padding:18px 18px 6px"><p class="ru">Ave María</p><p class="pr"><i>V/.</i> ${ORA.am.v}</p><p class="pr rr"><i>R/.</i> ${ORA.am.r}</p></div><button class="btn go" data-a="luzok" style="margin-top:18px">Amén</button>`
         : luzRe === 2 ? `<p class="sub c" style="margin-top:22px">Rezaste por ${esc(L.d)}. ¿Le avisas?</p><button class="btn go" data-a="luzdev" style="margin-top:16px">Avisarle a ${esc(L.d)}</button><button class="lk" data-a="go" data-v="${S.n ? "hoy" : "bien"}" style="display:block;margin:6px auto 0">${S.n ? "Ir a Atrio" : "Conocer Atrio"}</button>`
         : `<p class="sub c" style="margin-top:14px">Devuélvele el gesto: reza un Ave María por ${esc(L.d)}. Toma menos de un minuto.</p><button class="btn go" data-a="luzam" style="margin-top:22px">Rezar por ${esc(L.d)}</button><button class="lk" data-a="go" data-v="${S.n ? "hoy" : "bien"}" style="display:block;margin:6px auto 0">${S.n ? "Ir a Atrio" : "Qué es Atrio"}</button>`}</section>`; },
+    fr: () => { const f = forma(), op = (k, t, d) => `<button class="fo${f === k ? " on" : ""}" data-a="frk" data-k="${k}" aria-pressed="${f === k}"><span class="g"><b>${t}</b><small>${d}</small></span><i class="pal">${I.ok}</i></button>`;
+      return `<section class="v d n in">${sky()}${hd(["yo"], "El rosario")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">¿Cómo lo rezan en tu casa?</h1><p class="sub">Las dos formas son de la Iglesia. Elige la tuya; la puedes cambiar cuando quieras.</p>
+      ${op("mx", "Como en México", "Señal de la cruz y acto de contrición. En cada misterio: Padre nuestro, diez Ave Marías, Gloria, «María, Madre de gracia» y «Oh Jesús mío». Al final: Padre nuestro, tres Ave Marías, Salve y letanías.")}
+      ${op("un", "Con Credo al inicio", "Señal de la cruz, Credo, Padre nuestro y tres Ave Marías antes de los misterios. Al final, la Salve. Así se reza en muchos países.")}
+      <p class="note" style="margin-top:16px">Cuando rezan en una sala, todos siguen la forma de quien dirige.</p></section>`; },
     conf: () => { const k = S.cf, dd = k ? Math.max(0, Math.round((now() - new Date(k + "T12:00:00")) / 864e5)) : -1, f = k ? new Date(k + "T12:00:00") : null;
       const cuanto = dd < 0 ? "" : dd === 0 ? "Hoy" : dd === 1 ? "Ayer" : dd < 60 ? `Hace ${dd} días` : dd < 730 ? `Hace ${Math.round(dd / 30.4)} meses` : `Hace ${Math.floor(dd / 365)} años`;
       return `<section class="v d n in">${sky()}${hd(["yo"], "Confesión")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">Tu última confesión</h1><p class="sub">Solo tú lo ves. Se queda en este teléfono y no se guarda en tu cuenta.</p>
@@ -642,12 +690,15 @@
       const st = ros.p[ros.i], M = MIS[ros.set], o = ORA[st.t], mm = st.m != null ? M.m[st.m] : null, g = guia(), sigo = ros.sala && !lead, cl = (ros.sala ? " sl" : "") + (ros.an ? " " + ros.an : "");
       const cab = `<div class="hd z"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}<small class="cnt">${ros.i + 1} de ${ros.p.length}</small></p>${botMu()}</div>`;
       // La barra de abajo queda fija: «Amén» siempre está en el mismo lugar y el pulgar lo encuentra sin mirar
-      const pie = `<div class="rpie">${ros.sala ? `<div class="vzl"><p class="note">${peersS.length === 1 ? "Solo tú" : peersS.length + " rezando"}</p>${botVoz(1)}</div>` : ""}${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<div class="rb"><button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" ? "Continuar" : "Amén"}</button></div>`}</div>`;
+      const pie = `<div class="rpie">${ros.sala ? `<div class="vzl"><p class="note">${peersS.length === 1 ? "Solo tú" : peersS.length + " rezando"}</p>${botVoz(1)}</div>` : ""}${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<div class="rb"><button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" || (st.t === "let" && st.k < st.of) ? "Continuar" : "Amén"}</button></div>`}</div>`;
       const gente = "", orb = ros.sala ? orbita() : "";
-      if (st.t === "mis") return `<section class="v d ro mi${cl}">${sky()}${cab}${gente}<div class="rt z"><p class="c" style="margin-top:12px;font-size:14px;font-weight:600;color:var(--txt2)">${ORD[st.m]} misterio</p><h1 class="c" style="font-size:28px;line-height:34px">${mm[0]}</h1><p class="ru c" style="margin-top:6px;font-size:16px">${mm[1]}</p></div><div class="ring z">${ring(ros.i)}${orb}</div><div class="rt z"><p class="pr c" style="font-size:21px;line-height:29px">${mm[2]}</p></div>${pie}</section>`;
-      return `<section class="v d ro${cl}">${sky()}${cab}${gente}<p class="rl z">${mm ? ORD[st.m] + " misterio: " + mm[0] : (ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion) ? `<span><small>Su intención</small><em>«${esc(JT[ros.jt.id].intencion)}»</em></span>` : S.pi ? `<span><small>Tu intención</small><em>«${esc(S.pi)}»</em></span>` : st.t === "salve" ? "Para terminar" : "Para empezar"}</p>
-        <div class="ring z">${ring(ros.i)}${orb}<div><b>${o.n}</b><span>${st.of ? st.k + " de " + st.of : "&nbsp;"}</span></div></div>
-        <div class="rt z"><p class="pr"><i>V/.</i> ${o.v}</p><p class="pr rr"><i>R/.</i> ${o.r}</p>${st.x ? `<p class="ex">${o.x}</p>` : ""}</div>${pie}</section>`;
+      const bloques = (bl) => (bl || []).map(([k, t]) => (k === "v" ? `<p class="pr"><i>V/.</i> ${t}</p>` : k === "r" ? `<p class="pr rr"><i>R/.</i> ${t}</p>` : k === "t" ? `<p class="pr"><i>Todos.</i> ${t}</p>` : `<p class="ex">${t}</p>`)).join("");
+      if (st.t === "let") { const L = LET[st.k - 1], lista = (r, inv) => (inv ? `<p class="lr"><i>R/.</i> ${r}</p><ul class="li">${inv.map((x) => `<li>${x}</li>`).join("")}</ul>` : "");
+        return `<section class="v d ro lg lt${cl}">${sky()}${cab}${gente}<p class="rl z">Para terminar</p><div class="ring z">${ring(ros.i)}${orb}<div><b>Letanías</b><span>${st.k} de ${st.of}</span></div></div><div class="rt z">${lista(L.r, L.inv)}${lista(L.r2, L.inv2)}${bloques(L.bl)}</div>${pie}</section>`; }
+      if (st.t === "mis") return `<section class="v d ro mi${cl}">${sky()}${cab}${gente}<div class="rt z"><p class="c" style="margin-top:12px;font-size:14px;font-weight:600;color:var(--txt2)">${ORD[st.m]} misterio</p><h1 class="c" style="font-size:28px;line-height:34px">${mm[0]}</h1><p class="ru c" style="margin-top:6px;font-size:16px">${mm[1]}</p></div><div class="ring z">${ring(ros.i)}${orb}<div class="emc">${EM[ros.set] || ""}</div></div><div class="rt z"><p class="pr c" style="font-size:21px;line-height:29px">${mm[2]}</p></div>${pie}</section>`;
+      return `<section class="v d ro${st.lg ? " lg" : ""}${st.lg === 2 ? " xl" : ""}${cl}">${sky()}${cab}${gente}<p class="rl z">${mm ? ORD[st.m] + " misterio: " + mm[0] : st.l ? st.l : (ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion) ? `<span><small>Su intención</small><em>«${esc(JT[ros.jt.id].intencion)}»</em></span>` : S.pi ? `<span><small>Tu intención</small><em>«${esc(S.pi)}»</em></span>` : st.fin ? "Para terminar" : "Para empezar"}</p>
+        <div class="ring z">${ring(ros.i)}${orb}<div><b>${o.n}</b>${st.of ? `<span>${st.k} de ${st.of}</span>` : ""}</div></div>
+        <div class="rt z">${o.v ? `<p class="pr"><i>V/.</i> ${o.v}</p><p class="pr rr"><i>R/.</i> ${o.r}</p>` : ""}${bloques(o.bl)}${st.x === 2 ? bloques([["v", o.mg[0]], ["r", o.mg[1]], ["t", o.x]]) : st.x ? `<p class="ex">${o.x}</p>` : ""}</div>${pie}</section>`;
     },
     listo: () => { const lit = encendidos(), n = vivos().length, ra = racha(), hito = total() <= 1 ? 1 : [3, 7, 14, 30, 60, 100, 200, 365].includes(ra) ? 2 : 0; return `<section class="v d in">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p>${S.pi ? `<p class="pin c z">Lo ofreciste «${esc(S.pi)}»</p>` : ""}<div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
       <div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>
@@ -674,7 +725,7 @@
       return `<section class="v d n tb in">${sky()}<div class="hd" style="align-items:flex-start"><div><p class="ru">Tu bitácora</p><h1>${esc(S.n)}</h1></div><span aria-hidden="true" style="flex:none;margin-top:8px;width:44px;height:44px;border-radius:22px;background:var(--teal);color:var(--card);font-family:var(--se);font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center">${esc(S.n.slice(0, 1).toUpperCase())}</span></div>
       <div class="st"><div><b>${racha()}</b><span>${racha() === 1 ? "día seguido" : "días seguidos"}</span></div><div><b>${total()}</b><span>${total() === 1 ? "rosario rezado" : "rosarios rezados"}</span></div></div>
       <div class="card" style="margin-top:12px;padding:12px 12px 14px"><p class="ru" style="margin:0 6px 6px;font-size:16px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)} de ${y}</p><div class="cal">${c}</div></div>
-      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="go" data-v="pid"><span class="g"><b>Por quién rezo</b><small>${S.pi ? esc(S.pi) : "Escribe tu intención"}</small></span>${I.go}</button>${jtOk() ? `<button class="row" data-a="jnueva"><span class="g"><b>Rosario juntos</b><small>${S.jt.length ? "Crear otro con alguien más" : "Reza por misterios con tu pareja o familia"}</small></span>${I.go}</button>` : ""}<button class="row" data-a="go" data-v="conf"><span class="g"><b>Mi última confesión</b><small>${S.cf ? (() => { const n = Math.max(0, Math.round((now() - new Date(S.cf + "T12:00:00")) / 864e5)); return n === 0 ? "Hoy" : n === 1 ? "Ayer" : n < 60 ? "Hace " + n + " días" : "Hace " + Math.round(n / 30.4) + " meses"; })() : "Solo tú la ves"}</small></span>${I.go}</button><label class="row"><span class="g"><b>Música de fondo al rezar</b><small>Órgano suave, como en una capilla</small></span><span class="sw"><input type="checkbox" id="fmu"${S.mu ? " checked" : ""}><span></span></span></label><label class="row"><span class="g"><b>Vibración al rezar</b><small>Un toque en cada cuenta, más fuerte en cada misterio</small></span><span class="sw"><input type="checkbox" id="fv"${S.vib !== 0 ? " checked" : ""}><span></span></span></label><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
+      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="go" data-v="pid"><span class="g"><b>Por quién rezo</b><small>${S.pi ? esc(S.pi) : "Escribe tu intención"}</small></span>${I.go}</button>${jtOk() ? `<button class="row" data-a="jnueva"><span class="g"><b>Rosario juntos</b><small>${S.jt.length ? "Crear otro con alguien más" : "Reza por misterios con tu pareja o familia"}</small></span>${I.go}</button>` : ""}<button class="row" data-a="go" data-v="conf"><span class="g"><b>Mi última confesión</b><small>${S.cf ? (() => { const n = Math.max(0, Math.round((now() - new Date(S.cf + "T12:00:00")) / 864e5)); return n === 0 ? "Hoy" : n === 1 ? "Ayer" : n < 60 ? "Hace " + n + " días" : "Hace " + Math.round(n / 30.4) + " meses"; })() : "Solo tú la ves"}</small></span>${I.go}</button><button class="row" data-a="go" data-v="fr"><span class="g"><b>Cómo rezo el rosario</b><small>${forma() === "mx" ? "Como en México, con Salve y letanías" : "Con Credo al inicio"}</small></span>${I.go}</button><label class="row"><span class="g"><b>Música de fondo al rezar</b><small>Órgano suave, como en una capilla</small></span><span class="sw"><input type="checkbox" id="fmu"${S.mu ? " checked" : ""}><span></span></span></label><label class="row"><span class="g"><b>Vibración al rezar</b><small>Un toque en cada cuenta, más fuerte en cada misterio</small></span><span class="sw"><input type="checkbox" id="fv"${S.vib !== 0 ? " checked" : ""}><span></span></span></label><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
       ${U ? `<div class="card" style="margin-top:12px"><div class="row" style="cursor:default"><span class="g"><b>Tu avance está guardado</b><small>${esc(U.email || "Cuenta de Google")}</small></span><span class="ok">Listo</span></div><button class="row" data-a="logout"><span class="g"><b>Cerrar sesión</b></span>${I.go}</button></div>` : !conG() ? `<p class="note" style="margin-top:12px">Tu avance se guarda solo en este dispositivo.</p>` : pideG() ? `<button class="btn te" data-a="login" style="margin-top:12px">Guardar con Google</button><p class="note" style="margin-top:8px">Sin cuenta, tu avance vive solo en este teléfono.</p>` : ""}${tabs("yo")}</section>`; },
     sala: () => {
       const cab = sky() + hd(["hoy"], "Rosario en familia");
@@ -743,8 +794,8 @@
     advok: () => { if (!sel.length) return; S.vs = ADV.filter((x) => sel.includes(x.k)).map((x) => x.k); S.v = S.vs[0]; save(); va = ""; go(ob ? "pid" : "adv"); },
     verv: (d) => { va = d.k; go("adv"); },
     entra: () => { ob = 0; delete S.ob; save(); go("hoy"); },
-    ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0 }; ros.p = pasos(); if (S.mu) musica(true); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
-    rosala: () => { ros = { set: MIS_DIA[now().getDay()], i: 0, sala: 1 }; ros.p = pasos(); if (S.mu) musica(true); presSala(); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
+    ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0, f: forma() }; ros.p = pasos(ros.f); if (S.mu) musica(true); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
+    rosala: () => { ros = { set: MIS_DIA[now().getDay()], i: 0, sala: 1, f: forma() }; ros.p = pasos(ros.f); if (S.mu) musica(true); presSala(); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
     sig: () => { if (!ros) return; if (ros.i >= ros.p.length - 1) return fin(); ros.i++; vibraPaso(); presSala(); ros.an = "sg"; render(); ros.an = ""; try { window.scrollTo(0, 0); } catch (_) {} },
     ant: () => { if (ros && ros.i > 0) { ros.i--; vibra(1); presSala(); ros.an = "at"; render(); ros.an = ""; } },
     cerrar: () => { const s = ros && ros.sala; ros = null; musica(false); if (s) presSala(); go(s ? "sala" : "hoy"); },
@@ -760,6 +811,7 @@
     voz: () => { prendeVoz(); },
     cuelga: () => { apagaVoz(); },
     cam: () => { camara(); },
+    frk: (d) => { if (d.k !== "mx" && d.k !== "un") return; S.fr = d.k; save(); vibra(1); render(1); },
     cfhoy: () => { S.cf = key(now()); save(); vibra(2); render(1); aviso("Que Dios te bendiga."); },
     jnew: () => { if (!jtOk()) { aviso("Necesitas internet para rezar juntos."); return; } go(S.jt.length && !Q.get("nuevo") ? "jt" : "jnew"); },
     jnueva: () => go("jnew"),
@@ -776,8 +828,8 @@
     },
     jnom: () => { const f = document.getElementById("fn"), v = ((f && f.value) || "").replace(/\s+/g, " ").trim().slice(0, 24); if (!v) { if (f) f.focus(); return; } S.n = v; if (S.e < 0) S.ob = 1; save(); render(); },
     jtr: (d) => { if (!SB) return; const m = +d.k, h = jtHechos(jtA); if (h.includes(m)) return; const set = MIS_DIA[now().getDay()], ult = h.length === 4;
-      ros = { set, i: 0, jt: { id: jtA, m } };
-      ros.p = [{ t: "cruz", b: "x" }, { t: "mis", m, b: "L" + m }, { t: "pn", m, b: "L" + m }]; for (let k = 1; k <= 10; k++) ros.p.push({ t: "am", m, k, of: 10, b: "s" + m + "_" + k }); ros.p.push({ t: "gl", m, x: 1, b: "s" + m + "_10" }); if (ult) ros.p.push({ t: "salve", b: "M" });
+      const f = forma(); ros = { set, i: 0, jt: { id: jtA, m }, f };
+      ros.p = [{ t: "cruz", b: "x" }]; decena(ros.p, m, f === "mx"); if (ult) cierre(ros.p, f === "mx", 1);
       if (S.mu) musica(true); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
     jtv: () => { if (!RM) { aviso("La videollamada necesita internet."); return; } const c = "J" + jtA.replace(/-/g, "").slice(0, 5).toUpperCase(); if (!sala || codigo !== c) { if (sala) salir(); entrar(c, false); } go("sala"); },
     jtw: () => { const d = JT[jtA], n = d ? (d.cuentas || []).length : 0, f = 5 - n, j = S.jt.find((x) => x.id === jtA) || {};

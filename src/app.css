@@ -446,3 +446,40 @@ p.pin.z{margin-top:10px}
 .jmini i.on{background:var(--oro);border-color:var(--oro)}
 .jok .em{width:56px;height:56px;margin:0 auto 6px}
 .jok .em svg{width:56px;height:56px}
+/* ---------- rosario: pasos con mucho texto, letanías y forma de rezar ---------- */
+@supports (aspect-ratio:1){.ro.lg .ring{height:clamp(120px,calc(100vh - 590px),190px);height:clamp(120px,calc(100dvh - 560px),190px)}
+.ro.sl.lg .ring{height:clamp(120px,calc(100vh - 620px),180px);height:clamp(120px,calc(100dvh - 590px),180px)}}
+@supports (aspect-ratio:1){.ro.xl .ring,.ro.sl.xl .ring{height:clamp(84px,calc(100vh - 730px),112px);height:clamp(84px,calc(100dvh - 700px),112px)}}
+.ro.xl .pr{font-size:18px;line-height:25px;margin-top:8px}
+.lr{margin-top:10px;font-family:var(--se);font-size:17px;line-height:23px;font-weight:500;color:var(--oroc)}
+.lr i{color:var(--rosa);font-style:italic}
+.li{list-style:none;margin:4px 0 2px;padding:0}
+.li li{font-family:var(--se);font-size:19px;line-height:26px}
+.ro.lt .pr{margin-top:6px}
+.ro.lt .pr.rr+.pr{margin-top:10px}
+@media (max-height:700px){.li li{font-size:17.5px;line-height:23px}}
+.fo{display:flex;align-items:flex-start;gap:12px;width:100%;margin-top:14px;padding:16px 16px 16px 18px;border:1px solid rgba(246,239,233,.16);border-radius:18px;background:rgba(246,239,233,.05);color:var(--txt);text-align:left;cursor:pointer}
+.fo .g{flex:1;min-width:0}
+.fo b{display:block;font-family:var(--se);font-size:22px;line-height:27px;font-weight:600}
+.fo small{display:block;margin-top:6px;font-size:14.5px;line-height:21px;color:var(--txt2)}
+.fo .pal{position:static;flex:none;margin-top:2px;width:24px;height:24px;border-radius:12px;border:1.5px solid rgba(246,239,233,.3);background:none;color:transparent}
+.fo.on{border-color:var(--oro);background:rgba(230,194,122,.12)}
+.fo.on .pal{border-color:var(--oro);background:var(--oro);color:var(--manto)}
+.fo:active{background:rgba(246,239,233,.09)}
+.fo:focus-visible{outline:2px solid var(--oroc);outline-offset:2px}
+.ro.sl.lt .li li{font-size:18px;line-height:24.5px}
+/* ---------- el rosario como joya: resplandor, perlas y luz ---------- */
+.v.ro{background:radial-gradient(78% 30% at 50% -6%,rgba(244,220,166,.17),rgba(244,220,166,0) 72%),radial-gradient(52% 24% at -8% 56%,rgba(236,164,98,.11),rgba(236,164,98,0) 70%),radial-gradient(52% 24% at 108% 74%,rgba(236,164,98,.09),rgba(236,164,98,0) 70%),radial-gradient(120% 55% at 50% 0%,#17525A 0%,#0B3237 70%)}
+.ro .ring>div{top:40%;transform:translateY(-50%);padding:0 28%}
+.ro .ring>div>b{font-size:clamp(15px,9cqw,23.5px);line-height:1.14;text-wrap:balance}
+.ro.lg .ring>div>b{font-size:clamp(13.5px,9.4cqw,20px)}
+.ro .ring>div>b{text-shadow:0 0 14px rgba(8,40,45,.95),0 0 5px rgba(8,40,45,.9),0 1px 2px rgba(8,40,45,.9)}
+.ro .ring>div>span{display:block;margin-top:2px;text-shadow:0 0 8px rgba(8,40,45,.95)}
+.ro .ring>.emc{display:flex;justify-content:center;color:var(--oroc)}
+.ro .ring>.emc svg{position:static;width:25%;height:auto;opacity:.95;filter:drop-shadow(0 0 10px rgba(244,220,166,.35))}
+.ro .ring:before{left:14%;right:14%;top:8%;bottom:26%;background:radial-gradient(closest-side,rgba(244,220,166,.2),rgba(244,220,166,.06) 62%,rgba(244,220,166,0))}
+.gli{transform-box:fill-box;transform-origin:center;animation:gli 2.6s ease-in-out infinite}
+@keyframes gli{0%,100%{opacity:0;transform:scale(.2) rotate(0deg)}45%,55%{opacity:1;transform:scale(1) rotate(45deg)}}
+.rpie .btn.go{background:linear-gradient(180deg,#F9E7B6 0%,#E9C67D 48%,#D5A955 100%);box-shadow:0 14px 30px -10px rgba(230,194,122,.5),inset 0 0 0 1px rgba(255,246,220,.35),inset 0 1.5px 0 rgba(255,255,255,.65),inset 0 -2px 0 rgba(125,86,18,.22)}
+.rpie .btn.go:active{background:linear-gradient(180deg,#F1DCA4,#DDB869 48%,#C99C49)}
+@media (prefers-reduced-motion:reduce){.gli{animation:none;opacity:.9}}

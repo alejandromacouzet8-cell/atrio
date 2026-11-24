@@ -1,35 +1,65 @@
+/* Textos revisados contra fuentes oficiales (noviembre de 2026):
+   - Credo, Salve, Ángelus, Regina Caeli, Bajo tu amparo, nombres y días de los misterios y oración tras el rosario:
+     Compendio del Catecismo de la Iglesia Católica, apéndice «Oraciones comunes» (vatican.va).
+   - Letanías lauretanas: vatican.va/special/rosary, ya con las invocaciones añadidas en 2020.
+   - Orden «como en México», acto de contrición y Ave Marías finales: subsidios de la Arquidiócesis Primada de México
+     (Comisión de Liturgia) y de la Basílica de Guadalupe.
+   Rosarium Virginis Mariae 37 reconoce como igualmente legítimas las distintas formas de empezar y terminar el rosario.
+   Cada oración lleva «v» (quien dirige) y «r» (respuesta); «bl» son renglones extra: v, r, t (todos) o n (nota). */
+const AVE_V = "Llena eres de gracia, el Señor es contigo; bendita tú eres entre todas las mujeres, y bendito es el fruto de tu vientre, Jesús.";
+const AVE_R = "Santa María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte. Amén.";
+const RUEGA = [["v", "Ruega por nosotros, santa Madre de Dios."], ["r", "Para que seamos dignos de alcanzar las promesas de nuestro Señor Jesucristo. Amén."]];
 const ORA = {
   cruz: { n: "Señal de la cruz", v: "Por la señal de la santa cruz, de nuestros enemigos líbranos, Señor, Dios nuestro.", r: "En el nombre del Padre, y del Hijo, y del Espíritu Santo. Amén." },
-  credo: { n: "Credo", v: "Creo en Dios, Padre todopoderoso, Creador del cielo y de la tierra. Creo en Jesucristo, su único Hijo, nuestro Señor, que fue concebido por obra y gracia del Espíritu Santo, nació de santa María Virgen, padeció bajo el poder de Poncio Pilato, fue crucificado, muerto y sepultado, descendió a los infiernos, al tercer día resucitó de entre los muertos, subió a los cielos y está sentado a la derecha de Dios, Padre todopoderoso.", r: "Creo en el Espíritu Santo, la santa Iglesia católica, la comunión de los santos, el perdón de los pecados, la resurrección de la carne y la vida eterna. Amén." },
+  contri: { n: "Acto de contrición", bl: [["t", "Señor mío Jesucristo, Dios y hombre verdadero, me pesa de todo corazón haber pecado, porque he merecido el infierno y perdido el cielo, y sobre todo, porque te ofendí a ti, que eres bondad infinita, a quien amo sobre todas las cosas. Propongo firmemente, con tu gracia, enmendarme y alejarme de las ocasiones de pecar, confesarme y cumplir la penitencia. Confío me perdonarás por tu infinita misericordia. Amén."], ["n", "Si en tu casa rezan otro acto de contrición, reza el tuyo."]] },
+  abre: { n: "Invocación", bl: [["v", "Abre, Señor, mis labios."], ["r", "Y mi boca proclamará tu alabanza."], ["v", "Dios mío, ven en mi auxilio."], ["r", "Señor, date prisa en socorrerme."], ["v", "Gloria al Padre, y al Hijo, y al Espíritu Santo."], ["r", "Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén."]] },
+  credo: { n: "Credo", v: "Creo en Dios, Padre todopoderoso, Creador del cielo y de la tierra. Creo en Jesucristo, su único Hijo, nuestro Señor, que fue concebido por obra y gracia del Espíritu Santo, nació de santa María Virgen, padeció bajo el poder de Poncio Pilato, fue crucificado, muerto y sepultado, descendió a los infiernos, al tercer día resucitó de entre los muertos, subió a los cielos y está sentado a la derecha de Dios, Padre todopoderoso. Desde allí ha de venir a juzgar a vivos y muertos.", r: "Creo en el Espíritu Santo, la santa Iglesia católica, la comunión de los santos, el perdón de los pecados, la resurrección de la carne y la vida eterna. Amén." },
   pn: { n: "Padre nuestro", v: "Padre nuestro, que estás en el cielo, santificado sea tu Nombre; venga a nosotros tu reino; hágase tu voluntad en la tierra como en el cielo.", r: "Danos hoy nuestro pan de cada día; perdona nuestras ofensas, como también nosotros perdonamos a los que nos ofenden; no nos dejes caer en la tentación, y líbranos del mal. Amén." },
-  am: { n: "Ave María", v: "Dios te salve, María, llena eres de gracia, el Señor es contigo; bendita tú eres entre todas las mujeres, y bendito es el fruto de tu vientre, Jesús.", r: "Santa María, Madre de Dios, ruega por nosotros, pecadores, ahora y en la hora de nuestra muerte. Amén." },
-  gl: { n: "Gloria", v: "Gloria al Padre, y al Hijo, y al Espíritu Santo.", r: "Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén.", x: "Oh Jesús mío, perdona nuestros pecados, líbranos del fuego del infierno, lleva al cielo a todas las almas, especialmente a las más necesitadas de tu misericordia." },
-  salve: { n: "Salve", v: "Dios te salve, Reina y Madre de misericordia, vida, dulzura y esperanza nuestra; Dios te salve. A ti llamamos los desterrados hijos de Eva; a ti suspiramos, gimiendo y llorando en este valle de lágrimas.", r: "Ea, pues, Señora, abogada nuestra, vuelve a nosotros esos tus ojos misericordiosos; y después de este destierro muéstranos a Jesús, fruto bendito de tu vientre. ¡Oh clementísima, oh piadosa, oh dulce Virgen María! Amén." }
+  am: { n: "Ave María", v: "Dios te salve, María, llena eres de gracia, el Señor es contigo; bendita tú eres entre todas las mujeres, y bendito es el fruto de tu vientre, Jesús.", r: AVE_R },
+  // «mg» y «x» son las dos jaculatorias que siguen al Gloria en cada misterio
+  gl: { n: "Gloria", v: "Gloria al Padre, y al Hijo, y al Espíritu Santo.", r: "Como era en el principio, ahora y siempre, por los siglos de los siglos. Amén.", mg: ["María, Madre de gracia, Madre de misericordia.", "En la vida y en la muerte ampáranos, gran Señora."], x: "Oh Jesús mío, perdona nuestros pecados, líbranos del fuego del infierno, lleva al cielo a todas las almas, especialmente a las más necesitadas de tu misericordia." },
+  // las tres Ave Marías con que se cierra el rosario en México: por la fe, la esperanza y la caridad
+  am1: { n: "Ave María", v: "Dios te salve, María santísima, Hija de Dios Padre, Virgen purísima y castísima antes del parto; en tus manos encomendamos nuestra fe para que la ilumines. " + AVE_V, r: AVE_R },
+  am2: { n: "Ave María", v: "Dios te salve, María santísima, Madre de Dios Hijo, Virgen purísima y castísima en el parto; en tus manos encomendamos nuestra esperanza para que la alientes. " + AVE_V, r: AVE_R },
+  am3: { n: "Ave María", v: "Dios te salve, María santísima, Esposa de Dios Espíritu Santo, Virgen purísima y castísima después del parto; en tus manos encomendamos nuestra caridad para que la inflames. " + AVE_V, r: AVE_R },
+  salve: { n: "Salve", v: "Dios te salve, Reina y Madre de misericordia, vida, dulzura y esperanza nuestra; Dios te salve. A ti llamamos los desterrados hijos de Eva; a ti suspiramos, gimiendo y llorando en este valle de lágrimas.", r: "Ea, pues, Señora, abogada nuestra, vuelve a nosotros esos tus ojos misericordiosos; y después de este destierro muéstranos a Jesús, fruto bendito de tu vientre. ¡Oh clementísima, oh piadosa, oh dulce Virgen María!", bl: RUEGA },
+  salvemx: { n: "Salve", bl: [["v", "Dios te salve, María santísima, templo, trono y sagrario de la Santísima Trinidad, Virgen concebida sin la culpa del pecado original."], ["r", "Dios te salve, Reina y Madre de misericordia, vida, dulzura y esperanza nuestra; Dios te salve. A ti llamamos los desterrados hijos de Eva; a ti suspiramos, gimiendo y llorando en este valle de lágrimas. Ea, pues, Señora, abogada nuestra, vuelve a nosotros esos tus ojos misericordiosos; y después de este destierro muéstranos a Jesús, fruto bendito de tu vientre. ¡Oh clementísima, oh piadosa, oh dulce siempre Virgen María!"]].concat(RUEGA) },
+  fin: { n: "Oración final", bl: [["v", "Oremos. Oh Dios, cuyo Hijo por medio de su vida, muerte y resurrección, nos otorgó los premios de la vida eterna, te rogamos que venerando humildemente los misterios del Rosario de la Santísima Virgen María, imitemos lo que contienen y consigamos lo que nos prometen. Por Jesucristo, nuestro Señor."], ["r", "Amén."]] }
 };
+/* Letanías lauretanas, en siete pantallas. «inv» son invocaciones que se responden con «r». */
+const LET = [
+  { bl: [["v", "Señor, ten piedad."], ["r", "Señor, ten piedad."], ["v", "Cristo, ten piedad."], ["r", "Cristo, ten piedad."], ["v", "Señor, ten piedad."], ["r", "Señor, ten piedad."], ["v", "Cristo, óyenos."], ["r", "Cristo, óyenos."], ["v", "Cristo, escúchanos."], ["r", "Cristo, escúchanos."]] },
+  { r: "Ten piedad de nosotros.", inv: ["Dios, Padre celestial", "Dios, Hijo, Redentor del mundo", "Dios, Espíritu Santo", "Santísima Trinidad, un solo Dios"], r2: "Ruega por nosotros.", inv2: ["Santa María", "Santa Madre de Dios", "Santa Virgen de las vírgenes", "Madre de Cristo", "Madre de la Iglesia", "Madre de la misericordia", "Madre de la divina gracia", "Madre de la esperanza"] },
+  { r: "Ruega por nosotros.", inv: ["Madre purísima", "Madre castísima", "Madre siempre virgen", "Madre inmaculada", "Madre amable", "Madre admirable", "Madre del buen consejo", "Madre del Creador", "Madre del Salvador", "Virgen prudentísima", "Virgen digna de veneración", "Virgen digna de alabanza", "Virgen poderosa", "Virgen clemente", "Virgen fiel"] },
+  { r: "Ruega por nosotros.", inv: ["Espejo de justicia", "Trono de la sabiduría", "Causa de nuestra alegría", "Vaso espiritual", "Vaso digno de honor", "Vaso de insigne devoción", "Rosa mística", "Torre de David", "Torre de marfil", "Casa de oro", "Arca de la Alianza", "Puerta del cielo", "Estrella de la mañana"] },
+  { r: "Ruega por nosotros.", inv: ["Salud de los enfermos", "Refugio de los pecadores", "Consuelo de los migrantes", "Consoladora de los afligidos", "Auxilio de los cristianos", "Reina de los ángeles", "Reina de los patriarcas", "Reina de los profetas", "Reina de los apóstoles", "Reina de los mártires", "Reina de los confesores", "Reina de las vírgenes", "Reina de todos los santos", "Reina concebida sin pecado original", "Reina asunta a los cielos"] },
+  { r: "Ruega por nosotros.", inv: ["Reina del santísimo Rosario", "Reina de la familia", "Reina de la paz"], bl: [["v", "Cordero de Dios, que quitas el pecado del mundo."], ["r", "Perdónanos, Señor."], ["v", "Cordero de Dios, que quitas el pecado del mundo."], ["r", "Escúchanos, Señor."], ["v", "Cordero de Dios, que quitas el pecado del mundo."], ["r", "Ten misericordia de nosotros."]] },
+  { bl: [["v", "Ruega por nosotros, santa Madre de Dios."], ["r", "Para que seamos dignos de las promesas de Cristo."], ["v", "Oremos. Te rogamos nos concedas, Señor Dios nuestro, gozar de continua salud de alma y cuerpo, y por la gloriosa intercesión de la bienaventurada siempre Virgen María, vernos libres de las tristezas de la vida presente y disfrutar de las alegrías eternas. Por Cristo nuestro Señor."], ["r", "Amén."]] }
+];
 
 const MIS = {
   gozosos: { n: "Misterios gozosos", m: [
-    ["La Anunciación", "Lucas 1, 26-38", "María dice que sí sin entenderlo todo."],
+    ["La Anunciación", "Lucas 1, 26-38", "María responde: hágase en mí según tu palabra."],
     ["La Visitación", "Lucas 1, 39-56", "María sale de prisa a servir a su prima Isabel."],
     ["El Nacimiento de Jesús", "Lucas 2, 1-20", "Dios llega pequeño, en un pesebre."],
-    ["La Presentación en el templo", "Lucas 2, 22-38", "María y José entregan al Niño a Dios."],
-    ["El Niño perdido y hallado", "Lucas 2, 41-52", "Lo buscan tres días y lo encuentran en la casa de su Padre."]] },
+    ["La Presentación de Jesús en el templo", "Lucas 2, 22-38", "María y José presentan al Niño al Señor."],
+    ["El Niño Jesús perdido y hallado en el templo", "Lucas 2, 41-52", "Lo buscan tres días y lo encuentran en la casa de su Padre."]] },
   luminosos: { n: "Misterios luminosos", m: [
     ["El Bautismo en el Jordán", "Mateo 3, 13-17", "El Padre lo llama su Hijo amado."],
     ["Las bodas de Caná", "Juan 2, 1-11", "María dice: hagan lo que él les diga."],
-    ["El anuncio del Reino", "Marcos 1, 14-15", "Jesús llama a cambiar el corazón."],
-    ["La Transfiguración", "Lucas 9, 28-36", "Por un momento se ve quién es Jesús."],
-    ["La institución de la Eucaristía", "Lucas 22, 14-20", "Jesús se queda en el pan y el vino."]] },
+    ["El anuncio del Reino", "Marcos 1, 14-15", "Jesús anuncia: conviértanse y crean en el Evangelio."],
+    ["La Transfiguración", "Lucas 9, 28-36", "Su rostro resplandece, y el Padre dice: escúchenlo."],
+    ["La institución de la Eucaristía", "Lucas 22, 14-20", "Jesús nos da su Cuerpo y su Sangre."]] },
   dolorosos: { n: "Misterios dolorosos", m: [
-    ["La oración en el huerto", "Lucas 22, 39-46", "Jesús tiene miedo y aun así dice: hágase tu voluntad."],
-    ["La flagelación", "Juan 19, 1", "Jesús carga en su cuerpo nuestro dolor."],
+    ["La oración en el huerto", "Lucas 22, 39-46", "Lleno de angustia, Jesús reza: hágase tu voluntad."],
+    ["La flagelación", "Juan 19, 1", "Por sus llagas hemos sido curados."],
     ["La coronación de espinas", "Mateo 27, 27-31", "Se burlan del Rey, y él calla."],
-    ["Jesús con la cruz a cuestas", "Juan 19, 16-17", "Cae y se vuelve a levantar."],
+    ["Jesús con la cruz a cuestas", "Juan 19, 16-17", "Jesús carga su cruz hasta el Calvario."],
     ["La crucifixión y muerte", "Lucas 23, 33-46", "Jesús perdona y entrega su espíritu."]] },
   gloriosos: { n: "Misterios gloriosos", m: [
     ["La Resurrección", "Mateo 28, 1-10", "El sepulcro está vacío. No tengan miedo."],
-    ["La Ascensión", "Hechos 1, 6-11", "Jesús sube al Padre y promete volver."],
-    ["La venida del Espíritu Santo", "Hechos 2, 1-13", "El miedo de los apóstoles se vuelve fuego."],
+    ["La Ascensión", "Hechos 1, 6-11", "Jesús sube al cielo; un día volverá."],
+    ["La venida del Espíritu Santo", "Hechos 2, 1-13", "El Espíritu Santo llena de valor a los apóstoles."],
     ["La Asunción de María", "Lucas 1, 48-49", "Dios lleva a María al cielo en cuerpo y alma."],
     ["La coronación de María", "Apocalipsis 12, 1", "María es Reina y sigue siendo madre."]] }
 };
@@ -51,19 +81,19 @@ const NOV = [
 const ANG = [
   ["El ángel del Señor anunció a María.", "Y concibió por obra y gracia del Espíritu Santo."],
   ["He aquí la esclava del Señor.", "Hágase en mí según tu palabra."],
-  ["Y el Verbo se hizo carne.", "Y habitó entre nosotros."],
+  ["Y el Verbo de Dios se hizo carne.", "Y habitó entre nosotros."],
   ["Ruega por nosotros, santa Madre de Dios.", "Para que seamos dignos de alcanzar las promesas de nuestro Señor Jesucristo."]
 ];
-const ANG_ORA = "Te suplicamos, Señor, que derrames tu gracia en nuestras almas, para que los que por el anuncio del ángel hemos conocido la encarnación de tu Hijo Jesucristo, por su pasión y su cruz seamos llevados a la gloria de su resurrección. Amén.";
+const ANG_ORA = "Infunde, Señor, tu gracia en nuestras almas, para que los que hemos conocido, por el anuncio del ángel, la encarnación de tu Hijo Jesucristo, lleguemos por los méritos de su pasión y su cruz a la gloria de la resurrección. Por Jesucristo, nuestro Señor. Amén.";
 const DIAS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 const MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 const VIR = [
-  ["Bajo tu amparo", "La más antigua, del siglo III", "Bajo tu amparo nos acogemos, santa Madre de Dios; no desprecies las súplicas que te dirigimos en nuestras necesidades; antes bien, líbranos de todo peligro, oh Virgen gloriosa y bendita. Amén."],
+  ["Bajo tu amparo", "La más antigua, del siglo III", "Bajo tu amparo nos acogemos, santa Madre de Dios; no deseches las súplicas que te dirigimos en nuestras necesidades; antes bien, líbranos siempre de todo peligro, oh Virgen gloriosa y bendita. Amén."],
   ["Acordaos", "Para pedirle con toda confianza", "Acordaos, oh piadosísima Virgen María, que jamás se ha oído decir que ninguno de los que han acudido a vuestra protección, implorando vuestra asistencia y reclamando vuestro socorro, haya sido desamparado. Animado por esta confianza, a Vos también acudo, oh Madre, Virgen de las vírgenes; y gimiendo bajo el peso de mis pecados me atrevo a comparecer ante vuestra presencia soberana. Oh Madre de Dios, no desechéis mis súplicas; antes bien, escuchadlas y acogedlas benignamente. Amén."],
   ["Bendita sea tu pureza", "Para ofrecerle el día", "Bendita sea tu pureza y eternamente lo sea, pues todo un Dios se recrea en tan graciosa belleza. A ti, celestial princesa, Virgen sagrada María, te ofrezco en este día alma, vida y corazón. Mírame con compasión, no me dejes, Madre mía. Amén."],
   ["Oh Señora mía", "Consagración de cada mañana", "Oh Señora mía, oh Madre mía, yo me ofrezco enteramente a ti; y en prueba de mi filial afecto te consagro en este día mis ojos, mis oídos, mi lengua, mi corazón; en una palabra, todo mi ser. Ya que soy todo tuyo, oh Madre de bondad, guárdame y defiéndeme como cosa y posesión tuya. Amén."],
-  ["Salve", "Para cerrar el día", ORA.salve.v + " " + ORA.salve.r],
-  ["Regina Coeli", "En Pascua, en lugar del Ángelus", "Reina del cielo, alégrate, aleluya. Porque el Señor, a quien has merecido llevar, aleluya, ha resucitado según su palabra, aleluya. Ruega al Señor por nosotros, aleluya."]
+  ["Salve", "Para cerrar el día", ORA.salve.v + " " + ORA.salve.r + " Ruega por nosotros, santa Madre de Dios, para que seamos dignos de alcanzar las promesas de nuestro Señor Jesucristo. Amén."],
+  ["Regina Caeli", "En Pascua, en lugar del Ángelus", "Reina del cielo, alégrate, aleluya. Porque el Señor, a quien has merecido llevar, aleluya, ha resucitado según su palabra, aleluya. Ruega al Señor por nosotros, aleluya. Gózate y alégrate, Virgen María, aleluya. Porque verdaderamente ha resucitado el Señor, aleluya. Oremos. Oh Dios, que por la resurrección de tu Hijo, nuestro Señor Jesucristo, has llenado el mundo de alegría, concédenos, por intercesión de su Madre, la Virgen María, llegar a alcanzar los gozos eternos. Por nuestro Señor Jesucristo. Amén."]
 ];
 
 /* ---------- advocaciones de la Virgen ----------
