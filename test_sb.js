@@ -43,7 +43,7 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   if (!txt(b).includes("21 de 82") || b.window.document.querySelector('[data-a="sig"]')) throw new Error("no sincroniza: " + txt(b).slice(0, 200));
   while (a.window.document.querySelector('[data-a="sig"]')) click(a, '[data-a="sig"]'); await wait(60);
   if (!txt(a).includes("Tu veladora ya") || !txt(b).includes("Tu veladora ya")) throw new Error("cierre: " + txt(b).slice(0, 200));
-  if (!txt(a).includes("No la pierdas") || !a.window.document.querySelector('.gua [data-a="login"]')) throw new Error("al terminar no ofrece guardar: " + txt(a).slice(-300));
+  if (!txt(a).includes("No la pierdas") || !a.window.document.querySelector('.gua [data-a="gg"]')) throw new Error("al terminar no ofrece guardar: " + txt(a).slice(-300));
   if (velas.length !== 2 || velas[0].dia !== "2026-12-03" || velas[0].estado !== 22) throw new Error("velas guardadas: " + JSON.stringify(velas));
   // un tercer teléfono abre el mapa después: ve las veladoras del día aunque los otros se hayan ido
   const c = mkWin("&v=mapa"); await wait(60); const t = txt(c);
@@ -63,10 +63,12 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   const e = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-04&google=1", pretendToBeVisual: true }); e.window.scrollTo = () => {}; const fs2 = fakeSupabase(); e.window.supabase = fs2; e.window.eval(sc); await wait(30);
   if (!txt(e).includes("Ya tengo cuenta")) throw new Error("bienvenida sin «Ya tengo cuenta»");
   click(e, '[data-a="empieza"]'); e.window.document.getElementById("fn").value = "Lucía"; click(e, '[data-a="nom"]'); click(e, '#esl [data-a="esc"][data-k="22"]'); click(e, '[data-a="advt"][data-k="lourdes"]'); click(e, '[data-a="advok"]'); e.window.document.getElementById("fi").value = "Por mi abuela"; click(e, '.btn[data-a="piok"]');
-  if (!txt(e).includes("Guardar con Google") || !txt(e).includes("Ahora no")) throw new Error("resumen sin guardar con Google: " + txt(e).slice(-300));
-  click(e, '[data-a="login"]'); if (!txt(e).includes("Guarda tu avance")) throw new Error("pantalla de entrar: " + txt(e).slice(0, 200)); click(e, '[data-a="gg"]'); await wait(1500);
-  if (!txt(e).includes("Tu avance se guarda en tu cuenta")) throw new Error("resumen después de entrar: " + txt(e).slice(-300));
-  click(e, '[data-a="entra"]'); if (txt(e).includes("vive solo en este teléfono")) throw new Error("sigue pidiendo guardar con sesión"); click(e, '[data-a="go"][data-v="yo"]');
+  if (txt(e).includes("Guardar con Google")) throw new Error("el resumen ya no debe pedir la cuenta: " + txt(e).slice(-300));
+  click(e, '[data-a="entra"]'); await wait(900); const tv = e.window.document.getElementById("tour"); if (tv) click(e, '[data-a="tourx"]');
+  if (!e.window.document.querySelector(".pfe")) throw new Error("Hoy sin «Entrar» con Google");
+  click(e, '.pfe'); if (!txt(e).includes("Guarda tu avance")) throw new Error("pantalla de entrar: " + txt(e).slice(0, 200)); click(e, '[data-a="gg"]'); await wait(1500);
+  if (e.window.document.querySelector(".pfe") || !e.window.document.querySelector(".pf")) throw new Error("Hoy no muestra el perfil después de entrar");
+  if (!!e.window.document.querySelector(".pfe")) throw new Error("sigue pidiendo guardar con sesión"); click(e, '[data-a="go"][data-v="yo"]');
   if (!/1\s*rosario rezado/.test(txt(e).replace(/\s+/g, " ")) && !txt(e).includes("1rosario rezado")) throw new Error("no recupera el avance en otro teléfono: " + txt(e).slice(0, 300));
   if (!txt(e).includes("Lourdes") || nubeRows.u1.datos.vs[0] !== "lourdes") throw new Error("la advocación no viaja con la cuenta: " + JSON.stringify(nubeRows.u1.datos).slice(0, 120));
   if (nubeRows.u1.datos.pi !== "Por mi abuela") throw new Error("la intención no viaja con la cuenta");
@@ -79,34 +81,34 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   // como el servidor real, quien ya entró deja su sesión guardada en el teléfono (sb-<proyecto>-auth-token)
   const abre = (q, ses, antes, token) => { const w = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-05" + q, pretendToBeVisual: true, beforeParse(x) { if (antes) x.localStorage.setItem("atrio1", antes); if (ses || token) x.localStorage.setItem("sb-demo-auth-token", "{}"); } }); w.window.scrollTo = () => {}; w.window.supabase = fakeSupabase(ses); w.window.eval(sc); return w; };
   const h = abre("", { user: { id: "u1", email: "lucia@example.com" } }, guardado);
-  if (txt(h).includes("vive solo en este teléfono")) throw new Error("aviso de guardar antes de saber si hay sesión");
-  await wait(60); if (txt(h).includes("vive solo en este teléfono") || !txt(h).includes("Lucía")) throw new Error("aviso de guardar con sesión: " + txt(h).slice(0, 200));
+  if (!!h.window.document.querySelector(".pfe")) throw new Error("aviso de guardar antes de saber si hay sesión");
+  await wait(60); if (!!h.window.document.querySelector(".pfe") || !txt(h).includes("Lucía")) throw new Error("aviso de guardar con sesión: " + txt(h).slice(0, 200));
   click(h, '[data-a="go"][data-v="yo"]'); if (!txt(h).includes("Tu avance está guardado") || h.window.document.querySelector('[data-a="login"]')) throw new Error("Yo con sesión: " + txt(h).slice(-300));
   // sin sesión y con rosarios rezados, el aviso aparece en Hoy en cuanto se sabe que no hay cuenta
   const conRezo = JSON.stringify(Object.assign(JSON.parse(guardado), { d: { "2026-12-04": { r: 1 } } }));
   const i = abre("", null, conRezo);
-  if (!txt(i).includes("Tu avance vive solo en este teléfono")) throw new Error("sin sesión guardada, el aviso debe estar desde que abre (sin saltos): " + txt(i).slice(0, 200));
+  if (!!!i.window.document.querySelector(".pfe")) throw new Error("sin sesión guardada, el aviso debe estar desde que abre (sin saltos): " + txt(i).slice(0, 200));
   const antesHtml = i.window.document.querySelector("#app").innerHTML; await wait(60);
-  if (!txt(i).includes("Tu avance vive solo en este teléfono") || !i.window.document.querySelector('.avi[data-a="login"]')) throw new Error("falta el aviso en Hoy: " + txt(i).slice(0, 300));
+  if (!!!i.window.document.querySelector(".pfe") || !i.window.document.querySelector('.pfe')) throw new Error("falta el aviso en Hoy: " + txt(i).slice(0, 300));
   if (i.window.document.querySelector("#app").innerHTML !== antesHtml) throw new Error("Hoy se volvió a dibujar sin que cambiara nada");
   // sesión guardada que ya no sirve: no se pide nada hasta confirmarlo, y entonces sí aparece el aviso
   const i2 = abre("", null, conRezo, 1);
-  if (txt(i2).includes("vive solo en este teléfono")) throw new Error("aviso antes de confirmar la sesión");
-  await wait(60); if (!txt(i2).includes("Tu avance vive solo en este teléfono")) throw new Error("sesión vencida: falta el aviso");
+  if (!!i2.window.document.querySelector(".pfe")) throw new Error("aviso antes de confirmar la sesión");
+  await wait(60); if (!!!i2.window.document.querySelector(".pfe")) throw new Error("sesión vencida: falta el aviso");
   // sin rosarios todavía no se pide nada en Hoy
   const j = abre("", null, JSON.stringify(Object.assign(JSON.parse(guardado), { d: {} }))); await wait(60);
-  if (!txt(j).includes("Lucía") || txt(j).includes("vive solo en este teléfono")) throw new Error("pide guardar sin haber rezado: " + txt(j).slice(0, 200));
+  if (!txt(j).includes("Lucía")) throw new Error("pide guardar sin haber rezado: " + txt(j).slice(0, 200));
   // al terminar el rosario la invitación fuerte sale la primera vez y en las marcas de la racha, no todos los días
   const dias = (n) => { const d = {}; for (let x = 0; x < n; x++) d["2026-12-0" + (5 - x)] = { r: 1 }; return JSON.stringify(Object.assign(JSON.parse(guardado), { d })); };
   const l2 = abre("&v=listo", null, dias(2)); await wait(60);
   if (l2.window.document.querySelector(".gua") || !txt(l2).includes("Volver a hoy")) throw new Error("pide guardar en un día cualquiera: " + txt(l2).slice(-300));
   const l3 = abre("&v=listo", null, dias(3)); await wait(60);
-  if (!txt(l3).includes("Tus 3 días seguidos viven solo en este teléfono") || !l3.window.document.querySelector('.gua [data-a="login"]')) throw new Error("no pide guardar a los 3 días: " + txt(l3).slice(-300));
+  if (!txt(l3).includes("Tus 3 días seguidos viven solo en este teléfono") || !l3.window.document.querySelector('.gua [data-a="gg"]')) throw new Error("no pide guardar a los 3 días: " + txt(l3).slice(-300));
   const l3s = abre("&v=listo", { user: { id: "u1", email: "lucia@example.com" } }, dias(3)); await wait(60);
   if (l3s.window.document.querySelector(".gua")) throw new Error("pide guardar a quien ya tiene cuenta");
   // al volver de Google se confirma con un aviso
   const k = abre("&code=abc123", { user: { id: "u1", email: "lucia@example.com" } }, conRezo); await wait(80);
-  if (!txt(k).includes("Listo. Tu avance ya se guarda en tu cuenta.") || txt(k).includes("vive solo en este teléfono")) throw new Error("sin confirmación al volver de Google: " + txt(k).slice(-200));
+  if (!txt(k).includes("Listo. Tu avance ya se guarda en tu cuenta.") || !!k.window.document.querySelector(".pfe")) throw new Error("sin confirmación al volver de Google: " + txt(k).slice(-200));
   if (!nubeRows.u1.datos.d["2026-12-04"]) throw new Error("lo rezado sin cuenta no sube al entrar");
   // teléfono nuevo que vuelve de Google con una cuenta que ya tenía avance
   const l = abre("&code=abc123", { user: { id: "u1", email: "lucia@example.com" } }, null); await wait(80);

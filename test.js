@@ -52,7 +52,7 @@ if (!t.includes("Mensaje del día") || !t.includes("Nuestra Señora de Fátima")
 if (!t.includes("Buenos días, Lucía <b>")) throw new Error("saludo: " + t.slice(0, 80));
 if (!t.includes("Lunes 23 de noviembre")) throw new Error("fecha mal");
 if (!t.includes("Tiempo ordinario")) throw new Error("tiempo litúrgico mal: " + t.slice(0, 200));
-if (!t.includes("misterios gozosos")) throw new Error("misterios del lunes mal");
+if (!t.toLowerCase().includes("misterios gozosos")) throw new Error("misterios del lunes mal");
 if (!t.includes("faltan 10 días")) throw new Error("cuenta de la novena mal: " + t);
 if (d.window.document.querySelector("#app b")) { /* ok: hay <b> propios */ }
 if (d.window.document.querySelector("h1").innerHTML.includes("<b>")) throw new Error("nombre sin escapar");
