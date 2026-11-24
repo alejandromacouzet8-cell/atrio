@@ -457,13 +457,14 @@
     nom: () => `<section class="v d in">${sky()}${hd([ob ? "bien" : "yo"], ob ? "Paso 1 de 5" : "Tus datos")}<h1 class="z" style="margin-top:30px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
       <label class="lab z" for="fn">Tu nombre</label><input class="fld z" id="fn" type="text" autocomplete="given-name" maxlength="24" value="${esc(S.n)}">
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`,
-    est: () => { if (estSel < 0 && S.e >= 0) estSel = S.e; const su = sugEst(), L = MX.e.map((e, i) => [i, e[0]]).concat([[99, "Fuera de México"]]);
-      const fila = (i, n, cl) => `<button class="es${cl || ""}${estSel === i ? " on" : ""}" data-a="esc" data-k="${i}" data-n="${esc(sinAc(n))}" aria-pressed="${estSel === i}"><span>${n}</span><i class="pal">${I.ok}</i></button>`;
-      return `<section class="v d n in" style="padding-bottom:120px">${sky()}${hd(["nom"], ob ? "Paso 2 de 5" : "Tus datos")}<h1 class="z" style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿Desde dónde rezas?</h1><p class="sub z">Toca tu estado. Ahí se enciende tu veladora en el mapa.</p>
-      ${su !== null ? `<p class="tit z" style="margin-top:20px">Parece que estás en</p>${fila(su, estado(su), " sug")}` : ""}
+    est: () => { const su = sugEst(), L = MX.e.map((e, i) => [i, e[0]]).concat([[99, "Fuera de México"]]), cab = `${sky()}${hd(["nom"], ob ? "Paso 2 de 5" : "Tus datos")}<h1 class="z" style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿Desde dónde rezas?</h1>`;
+      // 1) una sola pregunta, si el teléfono sabe dónde está
+      if (su !== null && !estAbre && S.e < 0) return `<section class="v d n in">${cab}<p class="sub z">Ahí se enciende tu veladora en el mapa.</p>
+        <div class="esq z"><p class="ru">Parece que estás en</p><h2>${estado(su)}</h2><button class="btn go" data-a="esc" data-k="${su}">Sí, rezo desde aquí</button><button class="lk" data-a="esab" style="display:block;margin:6px auto 0">Estoy en otro estado</button></div></section>`;
+      // 2) la lista: un toque elige y avanza
+      return `<section class="v d n in">${cab}<p class="sub z">Toca tu estado. Ahí se enciende tu veladora en el mapa.</p>
       <input class="fld bus z" id="fb" type="search" placeholder="Busca tu estado" autocomplete="off" aria-label="Busca tu estado">
-      <div class="esl z" id="esl">${L.map(([i, n]) => fila(i, n)).join("")}<p class="note c" id="esn" hidden>No encontramos ese estado.</p></div>
-      <div class="pie"><button class="btn go" data-a="est"${estSel < 0 ? " disabled" : ""}>${estSel < 0 ? "Elige tu estado" : `${ob ? "Continuar" : "Guardar"}: ${estado(estSel)}`}</button></div></section>`; },
+      <div class="esl z" id="esl">${L.map(([i, n]) => `<button class="es${S.e === i ? " on" : ""}" data-a="esc" data-k="${i}" data-n="${esc(sinAc(n))}"><span>${n}</span>${S.e === i ? `<i class="pal">${I.ok}</i>` : I.go}</button>`).join("")}<p class="note c" id="esn" hidden>No encontramos ese estado.</p></div></section>`; },
     advs: () => { const n = sel.length; return `<section class="v d in" style="padding-bottom:120px">${sky()}${hd([ob ? "est" : "adv"], ob ? "Paso 3 de 5" : "Tus Vírgenes")}<h1 class="z" style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Elige una o varias. Es la misma María, con el nombre que le dan en tu casa.</p>
       <div class="advg z">${ADV.map((a) => { const on = sel.includes(a.k); return `<button class="ni${on ? " on" : ""}" data-a="advt" data-k="${a.k}" aria-pressed="${on}" aria-label="${advN(a)}">${on ? `<span class="pal">${I.ok}</span>` : ""}<span class="em">${EMA[a.k]}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`; }).join("")}</div>
       <p class="note z" style="margin-top:18px">¿No está la tuya? Iremos sumando más advocaciones.</p>
@@ -578,7 +579,7 @@
   let tMsg = 0;
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
   function fin() { const s = ros; ros = null; vibra(3); marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {}); go("listo"); }
-  let dirN = "", estSel = -1;
+  let dirN = "", estAbre = 0;
   const sinAc = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   // sugerencia por la zona horaria del teléfono (solo las que señalan un estado con claridad)
   const sugEst = () => { let z = ""; try { z = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (_) {} if (Q.get("tz")) z = Q.get("tz");
@@ -598,8 +599,9 @@
     go: (d) => go(d.v, d.b),
     nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; if (ob) S.ob = 1; save(); go("est"); },
     empieza: () => { ob = 1; go("nom"); },
-    esc: (d) => { estSel = +d.k; vibra(1); render(1); foco("esc", d.k); },
-    est: () => { if (estSel < 0) return; S.e = estSel; save(); presLobby(); if (ob) { sel = S.vs.slice(); go("advs"); } else go("yo"); },
+    esab: () => { estAbre = 1; render(1); },
+    esc: (d) => { const k = +d.k; if (!(k === 99 || MX.e[k])) return; const b = app.querySelector(`[data-a="esc"][data-k="${k}"]`); if (b) b.classList.add("on"); vibra(1); A.est({ k }); },
+    est: (d) => { if (!d || d.k == null) return; estAbre = 0; S.e = +d.k; save(); presLobby(); if (ob) { sel = S.vs.slice(); go("advs"); } else go("yo"); },
     pich: (d) => { const f = document.getElementById("fi"), t = PIS[+d.k]; if (!f || !t) return; const v = f.value.trim(); if (v.toLowerCase().includes(t.toLowerCase())) return; f.value = (v ? v.replace(/[.,;]$/, "") + ", " + t.charAt(0).toLowerCase() + t.slice(1) : t).slice(0, 140); vibra(1); },
     piok: () => { const f = document.getElementById("fi"); S.pi = ((f && f.value) || "").replace(/\s+/g, " ").trim().slice(0, 140); save(); vibra(1); go(ob ? "atrio" : "yo"); },
     pisk: () => go("atrio"),

@@ -367,3 +367,8 @@ p.pin.z{margin-top:10px}
 .es.sug.on{border-color:var(--oro)}
 .es .pal{position:static;flex:none}
 .es[hidden],#esn[hidden]{display:none}
+
+.esq{margin-top:28px;padding:26px 22px 18px;border:1px solid rgba(230,194,122,.4);border-radius:22px;background:rgba(246,239,233,.04);text-align:center}
+.esq h2{margin:4px 0 22px;font-family:var(--se);font-weight:600;font-size:34px;line-height:40px;color:var(--oroc)}
+.es svg{flex:none;opacity:.45}
+.es.on{background:rgba(230,194,122,.2)}
