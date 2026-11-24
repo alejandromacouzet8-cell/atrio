@@ -26,14 +26,15 @@ OTP = sys.argv[6] if len(sys.argv) > 6 else "0"  # "1" muestra entrar con códig
 r = lambda n: open("src/" + n, encoding="utf-8").read().replace("__SB_URL__", SBU).replace("__SB_KEY__", SBK).replace("__G__", GAB).replace("__OTP__", OTP)
 ERR = '// si algo falla en un teléfono, se ve el motivo en lugar de una pantalla vacía\nwindow.addEventListener("error", function (e) { var a = document.getElementById("app"); if (a && (!a.firstElementChild || a.firstElementChild.id === "carga")) a.innerHTML = \'<div style="padding:40px 24px;font:16px/1.5 system-ui,sans-serif;color:#F6EFE9"><p style="font-size:20px;color:#F4DCA6">No se pudo abrir Atrio en este navegador.</p><p>Ábrelo en Safari o Chrome. Si sigue igual, manda captura de esto:</p><p style="font-size:13px;opacity:.7;word-break:break-word">\' + String((e && e.message) || e).slice(0, 200).replace(/</g, "&lt;") + " · " + navigator.userAgent.replace(/</g, "&lt;") + "</p></div>"; });'
 html = f'''<!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="background:#0B3237">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0B3237">
 <title>Atrio</title>{CABEZA}
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap"></noscript>
 <style>
 {r("app.css")}</style>
 </head>
