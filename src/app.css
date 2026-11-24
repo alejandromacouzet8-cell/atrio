@@ -582,3 +582,4 @@ div.jyt{cursor:default}
 .tu-f{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
 .tu-f .lk{color:#3E5A5D;margin:0}
 .tu-f .btn{width:auto;min-height:44px;padding:0 22px;background:var(--manto);color:var(--oroc);box-shadow:none}
+.note a{color:var(--oroc)}
