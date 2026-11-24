@@ -77,10 +77,10 @@ click(d, '[data-a="go"][data-v="rezar"]'); if (!txt(d).includes("Tus Vírgenes")
 click(d, '[data-a="ros"]');
 if (!txt(d).includes("Tu intención") || !txt(d).includes("«Por mi mamá <i>, por un enfermo»")) throw new Error("el rosario no muestra la intención: " + txt(d).slice(0, 200));
 { const q = (x) => d.window.document.querySelector(x); if (!q('.rpie .rb .btn[data-a="sig"]') || !q('.rpie .ra[data-a="ant"]').disabled) throw new Error("rosario: barra fija al empezar");
-  click(d, '[data-a="ant"]'); if (!txt(d).includes("1/73")) throw new Error("regresar deshabilitado se movió");
+  click(d, '[data-a="ant"]'); if (!txt(d).includes("1 de 73")) throw new Error("regresar deshabilitado se movió");
   click(d, '[data-a="sig"]'); if (!q('.rpie .rb .btn[data-a="sig"]') || q('.rpie .ra').disabled || !q(".ro.sg")) throw new Error("rosario: barra fija en el paso 2");
-  click(d, '[data-a="sig"]'); if (!q(".ring .cur") || !txt(d).includes("3/73")) throw new Error("rosario: la cuenta actual no se enciende"); click(d, '[data-a="ant"]');
-  click(d, '[data-a="ant"]'); if (!txt(d).includes("1/73") || !q(".ro.at")) throw new Error("rosario: regresar una cuenta"); }
+  click(d, '[data-a="sig"]'); if (!q(".ring .cur") || !txt(d).includes("3 de 73")) throw new Error("rosario: la cuenta actual no se enciende"); click(d, '[data-a="ant"]');
+  click(d, '[data-a="ant"]'); if (!txt(d).includes("1 de 73") || !q(".ro.at")) throw new Error("rosario: regresar una cuenta"); }
 let n = 0, seen = new Set();
 while (d.window.document.querySelector('[data-a="sig"]')) { seen.add(d.window.document.querySelector(".ring b")?.textContent || "misterio"); click(d, '[data-a="sig"]'); if (++n > 200) throw new Error("rosario sin fin"); }
 if (n !== 73) throw new Error("pasos del rosario: " + n);
@@ -92,7 +92,7 @@ click(d, '[data-a="go"][data-v="hoy"]');
 if (!txt(d).includes("Ya lo rezaste hoy")) throw new Error("hoy no marca el rosario");
 // regresar una cuenta
 click(d, '[data-a="go"][data-v="rezar"]'); click(d, '[data-a="ros"][data-set="dolorosos"]'); click(d, '[data-a="sig"]'); click(d, '[data-a="ant"]');
-if (!txt(d).includes("Misterios dolorosos") || !txt(d).includes("1/73")) throw new Error("regresar cuenta mal");
+if (!txt(d).includes("Misterios dolorosos") || !txt(d).includes("1 de 73")) throw new Error("regresar cuenta mal");
 click(d, '[data-a="cerrar"]');
 
 // 3. mapa, yo, novena, ángelus, sala
@@ -139,7 +139,7 @@ function fakeRoom() {
   click(a, '[data-a="rosala"]'); await new Promise((r) => setTimeout(r, 30));
   for (let i = 0; i < 12; i++) click(a, '[data-a="sig"]');
   await new Promise((r) => setTimeout(r, 30));
-  if (!txt(b).includes("13/73") || !txt(b).includes("dirige. Tú respondes") || b.window.document.querySelector('[data-a="sig"]')) throw new Error("seguidor no sincroniza: " + txt(b).slice(0, 200));
+  if (!txt(b).includes("13 de 73") || !txt(b).includes("dirige. Tú respondes") || b.window.document.querySelector('[data-a="sig"]')) throw new Error("seguidor no sincroniza: " + txt(b).slice(0, 200));
   while (a.window.document.querySelector('[data-a="sig"]')) click(a, '[data-a="sig"]');
   await new Promise((r) => setTimeout(r, 30));
   if (!txt(b).includes("Tu veladora ya")) throw new Error("seguidor no termina: " + txt(b).slice(0, 200));
