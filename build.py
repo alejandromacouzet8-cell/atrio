@@ -24,6 +24,7 @@ CABEZA = f'''
 GAB = sys.argv[5] if len(sys.argv) > 5 else "0"
 OTP = sys.argv[6] if len(sys.argv) > 6 else "0"  # "1" muestra entrar con código por correo  # "1" abre el acceso con Google a todos
 r = lambda n: open("src/" + n, encoding="utf-8").read().replace("__SB_URL__", SBU).replace("__SB_KEY__", SBK).replace("__G__", GAB).replace("__OTP__", OTP)
+ERR = '// si algo falla en un teléfono, se ve el motivo en lugar de una pantalla vacía\nwindow.addEventListener("error", function (e) { var a = document.getElementById("app"); if (a && (!a.firstElementChild || a.firstElementChild.id === "carga")) a.innerHTML = \'<div style="padding:40px 24px;font:16px/1.5 system-ui,sans-serif;color:#F6EFE9"><p style="font-size:20px;color:#F4DCA6">No se pudo abrir Atrio en este navegador.</p><p>Ábrelo en Safari o Chrome. Si sigue igual, manda captura de esto:</p><p style="font-size:13px;opacity:.7;word-break:break-word">\' + String((e && e.message) || e).slice(0, 200).replace(/</g, "&lt;") + " · " + navigator.userAgent.replace(/</g, "&lt;") + "</p></div>"; });'
 html = f'''<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,8 +38,10 @@ html = f'''<!DOCTYPE html>
 {r("app.css")}</style>
 </head>
 <body>
-<main id="app"></main>
+<main id="app"><p id="carga" style="margin:40vh 0 0;text-align:center;font:16px/1.4 system-ui,sans-serif;color:#F4DCA6">Abriendo Atrio…</p></main>
+<noscript><p style="padding:24px;font:16px system-ui;color:#fff">Atrio necesita JavaScript. Ábrelo en Safari o Chrome.</p></noscript>
 <script>
+{ERR}
 {r("map.js")}{r("data.js")}{r("app.js")}</script>
 </body>
 </html>
