@@ -22,10 +22,9 @@ if (!txt(d).includes("Cómo te llamas") || !txt(d).includes("Paso 1 de 5")) thro
 d.window.document.getElementById("fn").value = "Lucía <b>";
 click(d, '[data-a="nom"]');
 if (!txt(d).includes("Paso 2 de 5")) throw new Error("paso 2");
-if (!d.window.document.querySelector('[data-a="est"]').disabled || d.window.document.querySelector(".es.on")) throw new Error("estado preseleccionado");
+if (d.window.document.querySelector(".es.on")) throw new Error("estado preseleccionado");
 { const f = d.window.document.getElementById("fb"); f.value = "quintana"; f.dispatchEvent(new d.window.Event("input", { bubbles: true })); const vis = [...d.window.document.querySelectorAll("#esl .es")].filter((b) => !b.hidden).map((b) => b.textContent); if (vis.length !== 1 || !vis[0].includes("Quintana Roo")) throw new Error("buscador de estado: " + vis); }
-click(d, '#esl [data-a="esc"][data-k="22"]'); if (!txt(d).includes("Continuar: Quintana Roo")) throw new Error("no marca el estado");
-click(d, '[data-a="est"]');
+click(d, '#esl [data-a="esc"][data-k="22"]');
 // si cierra la app a media bienvenida, al volver retoma el paso que le faltaba
 { const g = open("https://atrio.test/?fecha=2026-11-23", d.window.localStorage.getItem("atrio1")); if (!txt(g).includes("Paso 3 de 5") || !txt(g).includes("A qué Virgen le rezas")) throw new Error("no retoma la bienvenida: " + txt(g).slice(0, 160)); }
 if (!txt(d).includes("A qué Virgen le rezas") || !txt(d).includes("Paso 3 de 5") || d.window.document.querySelectorAll('[data-a="advt"]').length !== 12) throw new Error("paso 3: " + txt(d).slice(0, 160));
@@ -103,7 +102,7 @@ click(d, '[data-a="go"][data-v="yo"]'); if (!txt(d).includes("rosario rezado")) 
 if (!txt(d).includes("Por quién rezo") || !txt(d).includes("Por mi mamá <i>, por un enfermo")) throw new Error("yo sin intención: " + txt(d).slice(-400));
 { const v = d.window.document.getElementById("fv"); if (!v || !v.checked) throw new Error("vibración debe venir encendida"); v.checked = false; v.dispatchEvent(new d.window.Event("change", { bubbles: true })); if (JSON.parse(d.window.localStorage.getItem("atrio1")).vib !== 0) throw new Error("no guarda vibración apagada"); v.checked = true; v.dispatchEvent(new d.window.Event("change", { bubbles: true })); if (JSON.parse(d.window.localStorage.getItem("atrio1")).vib !== 1) throw new Error("no guarda vibración encendida"); }
 click(d, '[data-a="go"][data-v="pid"]'); if (txt(d).includes("Paso 4") || txt(d).includes("Saltar")) throw new Error("intención fuera de la bienvenida"); d.window.document.getElementById("fi").value = "  Por mi abuelo   Juan "; click(d, '[data-a="piok"]'); if (!txt(d).includes("Por mi abuelo Juan")) throw new Error("no guarda la intención");
-click(d, '[data-a="go"][data-v="nom"]'); if (!txt(d).includes("Tus datos")) throw new Error("editar datos"); click(d, '[data-a="nom"]'); click(d, '[data-a="est"]'); if (!txt(d).includes("Por quién rezo")) throw new Error("editar datos no regresa a Yo");
+click(d, '[data-a="go"][data-v="nom"]'); if (!txt(d).includes("Tus datos")) throw new Error("editar datos"); click(d, '[data-a="nom"]'); if (!d.window.document.querySelector('.es.on[data-k="22"]')) throw new Error("no marca el estado actual"); click(d, '#esl [data-a="esc"][data-k="22"]'); if (!txt(d).includes("Por quién rezo")) throw new Error("editar datos no regresa a Yo");
 click(d, '[data-a="go"][data-v="hoy"]'); click(d, '[data-a="go"][data-v="nov"]');
 if (d.window.document.querySelectorAll('[data-a="novd"]').length !== 9) throw new Error("novena sin 9 días");
 click(d, '[data-a="novd"][data-n="6"]'); if (!txt(d).includes("que soy tu madre")) throw new Error("día 6");
