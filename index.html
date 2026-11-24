@@ -716,6 +716,67 @@ div.jyt{cursor:default}
 .bv0 .pu,.bv0 .cur,.bv0 [fill="url(#rgl)"]{display:none}
 .bv1 [fill="url(#rgl)"]{opacity:.55}
 .bv1 .pu{display:none}
+/* ---------- onboarding: la decena de cinco pasos ---------- */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.obh .obr{position:relative;display:flex;align-items:center;gap:14px;padding:0 4px;color:#C99A45}
+.obr .obc{position:absolute;left:4px;right:20px;top:50%;height:1.2px;margin-top:-.6px;background:repeating-linear-gradient(90deg,#D9AE5C 0 3px,transparent 3px 4.4px)}
+.obr b{position:relative;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#F6FBFA,#B4CCCA 42%,#5F8486 86%);box-shadow:0 1px 2px rgba(0,0,0,.45);transition:transform .4s}
+.obr b.ok{background:radial-gradient(circle at 34% 30%,#FFF9DE,#F6D27A 40%,#CC9631 86%)}
+.obr b.on{transform:scale(1.45);background:radial-gradient(circle at 40% 36%,#fff,#FFF4D2 50%,#F3CB78);box-shadow:0 0 0 3px rgba(251,233,190,.18),0 0 14px 4px rgba(244,220,166,.55)}
+.obr .obx{position:relative;margin-left:-4px;color:#E6C27A}
+/* paso 1: la veladora */
+.obv{text-align:center}
+.vel{position:relative;width:112px;margin:14px auto 4px;flex:none}
+.vel svg{position:relative;display:block;width:100%;height:auto;overflow:visible}
+.velh{position:absolute;left:50%;top:-6%;width:330px;aspect-ratio:1;transform:translateX(-50%) scale(.5);border-radius:50%;background:radial-gradient(closest-side,rgba(255,214,140,.38),rgba(255,214,140,.1) 45%,rgba(255,214,140,0));opacity:.25;transition:opacity 1.2s,transform 1.2s}
+.vel.lit .velh{opacity:1;transform:translateX(-50%) scale(1)}
+.vfg{transform-origin:60px 52px;transform:scale(.42);opacity:.85;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.vel.lit .vfg{transform:scale(1);animation:vfl 2.6s ease-in-out 1s infinite}
+.vlu{opacity:.15;transition:opacity 1.2s}
+.vel.lit .vlu{opacity:1}
+.vimg{opacity:.75}
+@keyframes vfl{0%,100%{transform:scale(1) skewX(0)}30%{transform:scale(1.04,.97) skewX(-2deg)}60%{transform:scale(.97,1.05) skewX(1.5deg)}}
+.obt{margin-top:6px;font-size:34px;line-height:40px;text-align:center}
+.fld.nm{height:66px;margin-top:22px;border:0;border-bottom:1.5px solid var(--oro);border-radius:0;background:none;text-align:center;font-size:36px;padding:0 8px}
+.fld.nm:focus-visible{outline:0;border-bottom-color:var(--oroc);box-shadow:0 14px 18px -16px rgba(244,220,166,.8)}
+.obg{min-height:26px;margin-top:14px;font-family:var(--se);font-style:italic;font-size:21px;color:var(--oroc);text-align:center;animation:bvin .5s ease both}
+/* paso 2: el mapa con tu estado */
+.obmap{margin:6px 0 -8px;opacity:.95}
+/* paso 4: libro de intenciones */
+.lib{margin-top:20px;padding:16px 18px 12px;border-radius:6px 6px 14px 14px;background:linear-gradient(180deg,#FBF3DF,#F1E2BD);color:#2E2414;box-shadow:0 22px 40px -18px rgba(0,0,0,.6),inset 0 0 0 1px rgba(150,110,40,.25),inset 0 0 0 6px rgba(255,255,255,.25)}
+.libt{display:flex;align-items:center;gap:8px;font-family:var(--se);font-style:italic;font-size:17px;color:#7A5716;padding-bottom:8px;border-bottom:1px solid rgba(122,87,22,.3)}
+.libt span{display:flex;width:22px;color:#9A6E1C}.libt svg{width:22px;height:22px}
+.fld.lbt{height:auto;min-height:96px;margin-top:4px;padding:8px 0;border:0;border-radius:0;background:repeating-linear-gradient(180deg,transparent 0 31px,rgba(122,87,22,.22) 31px 32px);color:#2E2414;font-family:var(--se);font-style:italic;font-size:22px;line-height:32px;font-weight:500;resize:none}
+.fld.lbt::placeholder{color:rgba(46,36,20,.4)}
+.fld.lbt:focus-visible{outline:0}
+.libf{margin-top:6px;text-align:right;font-family:var(--se);font-style:italic;font-size:14px;color:#7A5716}
+/* paso 5: tu atrio se consagra */
+.f5{position:relative;margin-top:6px}
+.f5r{position:absolute;left:50%;top:-14%;width:150%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(244,220,166,.1) 0 1.6deg,rgba(244,220,166,0) 1.6deg 7.5deg);-webkit-mask-image:radial-gradient(closest-side,#000 25%,transparent 100%);mask-image:radial-gradient(closest-side,#000 25%,transparent 100%);animation:bvf 1.6s ease 1s both,bvrot 120s linear infinite;pointer-events:none}
+.f5n{overflow:hidden}
+.f5n .nb{animation:bvin 1s ease 1s both}
+.f5p{position:absolute;top:29px;bottom:0;width:calc(50% - 29px);background:linear-gradient(90deg,#0E3E44,#16555C 70%,#0C363B);border-top:1px solid rgba(230,194,122,.5);z-index:3;animation:f5o 1.6s cubic-bezier(.6,0,.2,1) .35s forwards}
+.f5pl{left:29px;border-radius:9999px 0 0 0;transform-origin:left;border-right:1px solid rgba(230,194,122,.6)}
+.f5pr{right:29px;border-radius:0 9999px 0 0;transform-origin:right;border-left:1px solid rgba(230,194,122,.6);background:linear-gradient(270deg,#0E3E44,#16555C 70%,#0C363B)}
+.f5pl{animation-name:f5ol}.f5pr{animation-name:f5or}
+@keyframes f5ol{to{transform:perspective(600px) rotateY(82deg);opacity:0}}
+@keyframes f5or{to{transform:perspective(600px) rotateY(-82deg);opacity:0}}
+.f5b{margin-top:14px;text-align:center;font-family:var(--se);font-style:italic;font-size:21px;line-height:27px;color:var(--oroc);animation:bvin 1s ease 1.6s both}
+.fin5 .meds .med{animation:bvin .7s ease both}
+.fin5 .tit,.fin5 .pin,.fin5 .sub{animation:bvin .8s ease 1.9s both}
+.fin5 .pie{animation:bvin .8s ease 2.2s both}
+@media (prefers-reduced-motion:reduce){.vel .vfg,.f5r,.f5n .nb,.f5b,.fin5 *,.obg{animation:none!important}.f5p{display:none}}
+/* que las entradas escalonadas de la página no pisen la coreografía */
+.v.bienv>.bvh{animation:bvf .9s ease both}
+.v.bienv>.bva{animation:none}
+.v.bienv>.bvt{animation:none}
+.v.bienv>.bvb{animation:bvin .9s ease 3.6s both}
+.v.fin5>.f5{animation:bvf .6s ease both}
+.v.fin5>.f5b{animation:bvin 1s ease 1.6s both}
+.v.fin5>.tit,.v.fin5>.pin,.v.fin5>.sub{animation:bvin .8s ease 1.9s both}
+.v.fin5>.meds{animation:none}
+.v.fin5>.pie{animation:bvf .8s ease 2.2s both}
+@media (prefers-reduced-motion:reduce){.v.bienv>*,.v.fin5>*{animation:none!important}}
 </style>
 </head>
 <body>
@@ -1582,6 +1643,22 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   const vivos = () => peersL.filter((p) => p.kind !== "agent");
   function encendidos() { if (velasHoy) return Object.assign({}, velasHoy); const lit = {}; vivos().forEach((p) => { const pr = p.presence || {}; if (pr.r && !p.isMe && MX.e[pr.e]) lit[pr.e] = (lit[pr.e] || 0) + 1; }); return lit; }
 
+  /* ---------- bienvenida: el camino de cinco cuentas y la veladora ---------- */
+  // el avance del onboarding es una pequeña decena de oro: cada paso enciende una cuenta
+  const obHd = (n, back) => `<div class="hd z obh"><button class="ic" data-a="go" data-v="${back}" data-b="1" aria-label="Regresar">${I.back}</button><div class="obr"><span class="sr">Paso ${n} de 5</span><i class="obc" aria-hidden="true"></i>${[1, 2, 3, 4, 5].map((k) => `<b class="${k < n ? "ok" : k === n ? "on" : ""}"></b>`).join("")}<svg class="obx" width="12" height="16" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 1v14M1.5 5h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><span class="ic"></span></div>`;
+  // veladora mexicana de vaso alto: la flama crece cuando escribes tu nombre
+  const VEL = (lit) => `<div class="vel${lit ? " lit" : ""}" aria-hidden="true"><div class="velh"></div><svg viewBox="0 0 120 190"><defs>
+      <linearGradient id="vgl" x1="0" x2="1"><stop offset="0" stop-color="#FFF6DE" stop-opacity=".22"/><stop offset=".18" stop-color="#FFF6DE" stop-opacity=".5"/><stop offset=".32" stop-color="#FFF6DE" stop-opacity=".12"/><stop offset=".8" stop-color="#FFF6DE" stop-opacity=".08"/><stop offset="1" stop-color="#FFF6DE" stop-opacity=".3"/></linearGradient>
+      <linearGradient id="vwx" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7B0"/><stop offset=".25" stop-color="#F4D9A4"/><stop offset="1" stop-color="#C99A5A"/></linearGradient>
+      <radialGradient id="vfl" cx=".5" cy=".75" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".3" stop-color="#FFF1BE"/><stop offset=".7" stop-color="#FFC25E"/><stop offset="1" stop-color="#F08A2E" stop-opacity="0"/></radialGradient>
+      <radialGradient id="vin" cx=".5" cy=".25" r=".8"><stop offset="0" stop-color="#FFE9B4" stop-opacity=".9"/><stop offset=".55" stop-color="#F4C978" stop-opacity=".25"/><stop offset="1" stop-color="#F4C978" stop-opacity="0"/></radialGradient></defs>
+      <ellipse cx="60" cy="184" rx="40" ry="5" fill="#021A1D" opacity=".55"/>
+      <rect x="22" y="58" width="76" height="124" rx="7" fill="url(#vwx)"/>
+      <rect class="vlu" x="22" y="58" width="76" height="124" rx="7" fill="url(#vin)"/>
+      <g class="vimg" transform="translate(60 124)"><ellipse rx="17" ry="24" fill="#0F5257" stroke="#E6C27A" stroke-width="1.2"/><polygon points="${JY.ray}" fill="#F3D484" transform="scale(.82)"/><path d="M0-10C2.4-10 3.5-8 3.4-6.2 5-3.8 5.8-.2 6.1 4.3 6.3 7.7 5.3 10.1 0 10.1-5.3 10.1-6.3 7.7-6.1 4.3-5.8-.2-5-3.8-3.4-6.2-3.5-8-2.4-10 0-10Z" fill="#2A8A88" stroke="#FFF3D0" stroke-width=".5"/><ellipse cy="-6.8" rx="1.5" ry="1.9" fill="#F4DFBE"/></g>
+      <rect x="22" y="58" width="76" height="124" rx="7" fill="url(#vgl)" stroke="#FFF6DE" stroke-opacity=".35" stroke-width="1"/>
+      <path d="M60 58v-8" stroke="#3A2A12" stroke-width="1.6" stroke-linecap="round"/>
+      <g class="vfg"><path class="vfo" d="M60 6C66 20 72 28 72 38 72 46 66.6 52 60 52 53.4 52 48 46 48 38 48 28 54 20 60 6Z" fill="url(#vfl)"/><path d="M60 22C63 30 65.5 34 65.5 40 65.5 44.5 63 48 60 48 57 48 54.5 44.5 54.5 40 54.5 34 57 30 60 22Z" fill="#FFFDF2"/></g></svg></div>`;
   /* ---------- pantallas ---------- */
   let view = "hoy", ros = null, nd = 1, vn = 0, msg = "", ob = 0, vuelve = "hoy", sel = [], deG = /[?&]code=/.test(location.search) ? 1 : 0;
   const V = {
@@ -1593,18 +1670,23 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       <div class="bvt z"><p class="bvq">¿No estoy yo aquí,<br>que soy tu madre?</p><p class="ru bvs">Santa María de Guadalupe a san Juan Diego, 1531</p>
       <p class="sub bvd">El rosario, la novena y el Ángelus, solo o con tu familia, aunque estén lejos.</p></div>
       <div class="mt z bvb"><button class="btn go bvgo" data-a="empieza">Empezar a rezar</button>${conG() && !U ? `<button class="lk" data-a="login" style="display:block;margin:6px auto 0">Ya tengo cuenta</button>` : ""}</div></section>`; },
-    nom: () => `<section class="v d in">${sky()}${hd([ob ? "bien" : "yo"], ob ? "Paso 1 de 5" : "Tus datos")}<h1 class="z" style="margin-top:30px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
+    nom: () => ob ? `<section class="v d in obv">${sky()}${obHd(1, "bien")}${VEL(!!S.n)}
+      <h1 class="z obt">¿Cómo te llamas?</h1><p class="sub z c">Para que la Virgen y tu familia te reconozcan aquí.</p>
+      <input class="fld nm z" id="fn" type="text" autocomplete="given-name" autocapitalize="words" maxlength="24" placeholder="Tu nombre" aria-label="Tu nombre" value="${esc(S.n)}">
+      <p class="obg z" id="fng">${S.n ? "Qué gusto tenerte aquí, " + esc(S.n.split(" ")[0]) + "." : "&nbsp;"}</p>
+      <button class="btn go mt z" data-a="nom">Continuar</button></section>`
+      : `<section class="v d in">${sky()}${hd(["yo"], "Tus datos")}<h1 class="z" style="margin-top:10px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
       <label class="lab z" for="fn">Tu nombre</label><input class="fld z" id="fn" type="text" autocomplete="given-name" maxlength="24" value="${esc(S.n)}">
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`,
-    est: () => { const su = sugEst(), L = MX.e.map((e, i) => [i, e[0]]).concat([[99, "Fuera de México"]]), cab = `${sky()}${hd(["nom"], ob ? "Paso 2 de 5" : "Tus datos")}<h1 class="z" style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿Desde dónde rezas?</h1>`;
+    est: () => { const su = sugEst(), L = MX.e.map((e, i) => [i, e[0]]).concat([[99, "Fuera de México"]]), cab = `${sky()}${ob ? obHd(2, "nom") : hd(["nom"], "Tus datos")}<h1 class="z" style="margin-top:${ob ? 18 : 10}px;font-size:34px;line-height:40px">¿Desde dónde rezas?</h1>`;
       // 1) una sola pregunta, si el teléfono sabe dónde está
       if (su !== null && !estAbre && S.e < 0) return `<section class="v d n in">${cab}<p class="sub z">Ahí se enciende tu veladora en el mapa.</p>
-        <div class="esq z"><p class="ru">Parece que estás en</p><h2>${estado(su)}</h2><button class="btn go" data-a="esc" data-k="${su}">Sí, rezo desde aquí</button><button class="lk" data-a="esab" style="display:block;margin:6px auto 0">Estoy en otro estado</button></div></section>`;
+        <div class="z obmap">${mapa({}, su, 0)}</div><div class="esq z"><p class="ru">Parece que estás en</p><h2>${estado(su)}</h2><button class="btn go" data-a="esc" data-k="${su}">Sí, rezo desde aquí</button><button class="lk" data-a="esab" style="display:block;margin:6px auto 0">Estoy en otro estado</button></div></section>`;
       // 2) la lista: un toque elige y avanza
       return `<section class="v d n in">${cab}<p class="sub z">Toca tu estado. Ahí se enciende tu veladora en el mapa.</p>
       <input class="fld bus z" id="fb" type="search" placeholder="Busca tu estado" autocomplete="off" aria-label="Busca tu estado">
       <div class="esl z" id="esl">${L.map(([i, n]) => `<button class="es${S.e === i ? " on" : ""}" data-a="esc" data-k="${i}" data-n="${esc(sinAc(n))}"><span>${n}</span>${S.e === i ? `<i class="pal">${I.ok}</i>` : I.go}</button>`).join("")}<p class="note c" id="esn" hidden>No encontramos ese estado.</p></div></section>`; },
-    advs: () => { const n = sel.length; return `<section class="v d in" style="padding-bottom:120px">${sky()}${hd([ob ? "est" : "adv"], ob ? "Paso 3 de 5" : "Tus Vírgenes")}<h1 class="z" style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Elige una o varias. Es la misma María, con el nombre que le dan en tu casa.</p>
+    advs: () => { const n = sel.length; return `<section class="v d in" style="padding-bottom:120px">${sky()}${ob ? obHd(3, "est") : hd(["adv"], "Tus Vírgenes")}<h1 class="z" style="margin-top:${ob ? 18 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Elige una o varias. Es la misma María, con el nombre que le dan en tu casa.</p>
       <div class="advg z">${ADV.map((a) => { const on = sel.includes(a.k); return `<button class="ni${on ? " on" : ""}" data-a="advt" data-k="${a.k}" aria-pressed="${on}" aria-label="${advN(a)}">${on ? `<span class="pal">${I.ok}</span>` : ""}<span class="em">${EMA[a.k]}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`; }).join("")}</div>
       <p class="note z" style="margin-top:18px">¿No está la tuya? Iremos sumando más advocaciones.</p>
       <div class="pie"><button class="btn go" data-a="advok"${n ? "" : " disabled"}>${n ? (n === 1 ? "Listo, elegí 1" : "Listo, elegí " + n) : "Elige al menos una"}</button></div></section>`; },
@@ -1616,8 +1698,8 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
         <p class="tit z">Su historia</p>${a.h.map((x) => `<p class="his z">${x}</p>`).join("")}${a.fx ? `<p class="note z" style="margin-top:12px">${a.fx}</p>` : ""}
         <p class="tit z">Oración</p>${a.o[0] === "Oración" ? "" : `<p class="ru z c">${a.o[0]}</p>`}<p class="pr z c" style="font-size:20px;line-height:30px">${a.o[1]}</p>
         <div class="z" style="padding-top:28px"><button class="btn go" data-a="ros">Rezar el rosario de hoy</button><button class="lk" data-a="advsel" style="display:block;margin:4px auto 0">Elegir mis Vírgenes</button></div></section>`; },
-    pid: () => `<section class="v d n in">${sky()}${hd([ob ? "advs" : "yo"], ob ? "Paso 4 de 5" : "Tu intención")}<h1 style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿Por quién vas a rezar?</h1><p class="sub">Cada rosario se ofrece por alguien. Escríbelo y te lo recordamos cada vez que reces. Solo tú lo ves.</p>
-      <label class="ru" for="fi" style="display:block;margin-top:22px;font-size:15px">Tu intención</label><textarea class="fld ta" id="fi" rows="3" maxlength="140" placeholder="Por mi mamá, por mi abuelo que está enfermo…">${esc(S.pi)}</textarea>
+    pid: () => `<section class="v d n in">${sky()}${ob ? obHd(4, "advs") : hd(["yo"], "Tu intención")}<h1 style="margin-top:${ob ? 18 : 10}px;font-size:34px;line-height:40px">¿Por quién vas a rezar?</h1><p class="sub">Cada rosario se ofrece por alguien. Escríbelo y te lo recordamos cada vez que reces. Solo tú lo ves.</p>
+      <div class="lib"><p class="libt"><span>${LOGO}</span>Libro de intenciones</p><label class="sr" for="fi">Tu intención</label><textarea class="fld ta lbt" id="fi" rows="3" maxlength="140" placeholder="Por mi mamá, por mi abuelo que está enfermo…">${esc(S.pi)}</textarea><p class="libf">${esc(S.n || "")}${S.n ? " · " : ""}${now().getDate()} de ${MESES[now().getMonth()]} de ${now().getFullYear()}</p></div>
       <div class="chips wr">${PIS.map((t, i) => `<button class="chip" data-a="pich" data-k="${i}">${t}</button>`).join("")}</div>
       <div style="padding-top:26px"><button class="btn go" data-a="piok">${ob ? "Continuar" : "Guardar"}</button>${ob ? `<button class="lk" data-a="pisk" style="display:block;margin:4px auto 0">Saltar este paso</button>` : ""}</div></section>`,
     entrar: () => { const nuevo = vuelveE === "bien";
@@ -1678,13 +1760,14 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       <p class="tit">Cómo confesarte</p><ol class="card pasos">${CFP.map((x) => `<li>${x}</li>`).join("")}</ol>
       <p class="tit">Acto de contrición</p><div class="card" style="padding:16px 18px"><p class="pr" style="margin:0">${CONTRI}</p></div>
       <p class="note c" style="margin-top:14px">Preguntas sencillas para prepararte; tu sacerdote te puede guiar mejor.</p></section>`; },
-    atrio: () => { const vs = mis(), g = 0;
-      return `<section class="v d n in" style="padding-bottom:${g ? 176 : 128}px">${sky()}${hd(["pid"], "Paso 5 de 5")}
-        <div class="nicho"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em">${LOGO}</span><p class="ru">Tu atrio está listo</p><h2>${esc(S.n)}</h2><p class="ins">${esc(estado(S.e))}</p></div></div>
-        <p class="tit">${vs.length > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="meds">${vs.map((a) => `<span class="med"><span class="md">${EMA[a.k]}</span><small>${a.c}</small></span>`).join("")}</div>
-        ${S.pi ? `<p class="tit">Tu intención</p><p class="ci c pin">«${esc(S.pi)}»</p>` : ""}
-        <p class="sub c" style="margin-top:24px">${g ? "Guárdalo con tu cuenta de Google para no perderlo si cambias de teléfono." : `Hoy se rezan los ${MIS[MIS_DIA[now().getDay()]].n.toLowerCase()}.${U ? " Tu avance se guarda en tu cuenta." : ""}`}</p>
-        <div class="pie">${g ? `${gBtn("Guardar con Google")}<button class="lk" data-a="entra" style="display:block;margin:4px auto 0">Ahora no</button>` : `<button class="btn go" data-a="entra">Entrar a Atrio</button>`}</div></section>`; },
+    atrio: () => { const vs = mis(), a0 = vs[0], ved = (n) => (n === 1 ? "la" : "las"), nv = vs.length;
+      return `<section class="v d n in fin5" style="padding-bottom:128px">${sky()}${obHd(5, "pid")}
+        <div class="f5 z"><div class="f5r"></div><div class="nicho f5n"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em f5e">${LOGO}</span><p class="ru">Tu atrio está listo</p><h2>${esc(S.n)}</h2><p class="ins">${esc(estado(S.e))}</p></div><span class="f5p f5pl"></span><span class="f5p f5pr"></span></div></div>
+        <p class="f5b z">Que ${a0 ? (a0.k === "guadalupe" ? "la Virgen de Guadalupe" : esc(a0.p + " " + a0.c)) : "la Virgen"} te cubra con su manto.</p>
+        <p class="tit z">${nv > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="meds z">${vs.map((a, k) => `<span class="med" style="animation-delay:${(1.5 + k * 0.12).toFixed(2)}s"><span class="md">${EMA[a.k]}</span><small>${a.c}</small></span>`).join("")}</div>
+        ${S.pi ? `<p class="tit z">Tu intención</p><p class="ci c pin z">«${esc(S.pi)}»</p>` : ""}
+        <p class="sub c z" style="margin-top:22px">Hoy se rezan los ${MIS[MIS_DIA[now().getDay()]].n.toLowerCase()}.${U ? " Tu avance se guarda en tu cuenta." : ""}</p>
+        <div class="pie"><button class="btn go bvgo" data-a="entra">Entrar a mi atrio</button></div></section>`; },
     /* Hoy: el rosario del día como protagonista (el rosario real, que se enciende cuando lo rezas),
        el mensaje de la Virgen, rezar con los tuyos y lo que toca hoy. */
     hoy: () => {
@@ -1972,7 +2055,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   let tSig = 0;
   document.addEventListener("click", (e) => { const t = e.target.closest ? e.target.closest("[data-a]") : null; if (!t || !A[t.dataset.a] || t.disabled) return; if (t.dataset.a === "sig" && e.isTrusted) { const n = Date.now(); if (n - tSig < 240) return; tSig = n; } A[t.dataset.a](t.dataset); });
   document.addEventListener("change", (e) => { if (e.target && e.target.id === "fcd" && e.target.value) { const v = e.target.value; if (/^\d{4}-\d{2}-\d{2}$/.test(v) && v <= key(now())) { S.cf = v; save(); vibra(1); render(1); } } });
-  document.addEventListener("input", (e) => { if (!e.target || e.target.id !== "fb") return; const q = sinAc(e.target.value.trim()); let n = 0; app.querySelectorAll("#esl .es").forEach((b) => { const ok = !q || b.dataset.n.includes(q); b.hidden = !ok; if (ok) n++; }); const x = document.getElementById("esn"); if (x) x.hidden = n > 0; });
+  document.addEventListener("input", (e) => { if (e.target && e.target.id === "fn" && ob) { const v = e.target.value.replace(/\s+/g, " ").trim().split(" ")[0], g = document.getElementById("fng"), vl = app.querySelector(".vel"); if (g) g.innerHTML = v ? "Qué gusto tenerte aquí, " + esc(v) + "." : "&nbsp;"; if (vl) vl.classList.toggle("lit", !!v); return; } if (!e.target || e.target.id !== "fb") return; const q = sinAc(e.target.value.trim()); let n = 0; app.querySelectorAll("#esl .es").forEach((b) => { const ok = !q || b.dataset.n.includes(q); b.hidden = !ok; if (ok) n++; }); const x = document.getElementById("esn"); if (x) x.hidden = n > 0; });
   document.addEventListener("change", (e) => { if (e.target && e.target.id === "fa") { S.ang = e.target.checked ? 1 : 0; save(); if (S.ang) bell(1); } if (e.target && e.target.id === "fmu") { S.mu = e.target.checked ? 1 : 0; save(); } if (e.target && e.target.id === "fv") { S.vib = e.target.checked ? 1 : 0; save(); vibra(2); } });
   // en iPhone los botones solo muestran su estado presionado si alguien escucha el toque
   document.addEventListener("touchstart", () => {}, { passive: true });
