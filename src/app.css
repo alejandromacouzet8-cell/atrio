@@ -447,7 +447,7 @@ p.pin.z{margin-top:10px}
 .jok .em{width:56px;height:56px;margin:0 auto 6px}
 .jok .em svg{width:56px;height:56px}
 /* ---------- rosario: pasos con mucho texto, letanías y forma de rezar ---------- */
-@supports (aspect-ratio:1){.ro.lg .ring{height:clamp(120px,calc(100vh - 590px),190px);height:clamp(120px,calc(100dvh - 560px),190px)}
+@supports (aspect-ratio:1){.ro.lg .ring{height:clamp(122px,calc(100vh - 560px),190px);height:clamp(122px,calc(100dvh - 536px),190px)}
 .ro.sl.lg .ring{height:clamp(120px,calc(100vh - 620px),180px);height:clamp(120px,calc(100dvh - 590px),180px)}}
 @supports (aspect-ratio:1){.ro.xl .ring,.ro.sl.xl .ring{height:clamp(84px,calc(100vh - 730px),112px);height:clamp(84px,calc(100dvh - 700px),112px)}}
 .ro.xl .pr{font-size:18px;line-height:25px;margin-top:8px}
@@ -470,16 +470,67 @@ p.pin.z{margin-top:10px}
 .ro.sl.lt .li li{font-size:18px;line-height:24.5px}
 /* ---------- el rosario como joya: resplandor, perlas y luz ---------- */
 .v.ro{background:radial-gradient(78% 30% at 50% -6%,rgba(244,220,166,.17),rgba(244,220,166,0) 72%),radial-gradient(52% 24% at -8% 56%,rgba(236,164,98,.11),rgba(236,164,98,0) 70%),radial-gradient(52% 24% at 108% 74%,rgba(236,164,98,.09),rgba(236,164,98,0) 70%),radial-gradient(120% 55% at 50% 0%,#17525A 0%,#0B3237 70%)}
-.ro .ring>div{top:40%;transform:translateY(-50%);padding:0 28%}
+.ro .ring>div{top:37%;transform:translateY(-50%);padding:0 28%}
 .ro .ring>div>b{font-size:clamp(15px,9cqw,23.5px);line-height:1.14;text-wrap:balance}
 .ro.lg .ring>div>b{font-size:clamp(13.5px,9.4cqw,20px)}
 .ro .ring>div>b{text-shadow:0 0 14px rgba(8,40,45,.95),0 0 5px rgba(8,40,45,.9),0 1px 2px rgba(8,40,45,.9)}
 .ro .ring>div>span{display:block;margin-top:2px;text-shadow:0 0 8px rgba(8,40,45,.95)}
 .ro .ring>.emc{display:flex;justify-content:center;padding:0;color:var(--oroc)}
 .ro .ring>.emc svg{position:static;width:27%;height:auto;opacity:.95;filter:drop-shadow(0 0 10px rgba(244,220,166,.35))}
-.ro .ring:before{left:14%;right:14%;top:8%;bottom:26%;background:radial-gradient(closest-side,rgba(244,220,166,.2),rgba(244,220,166,.06) 62%,rgba(244,220,166,0))}
+.ro .ring:before{left:11%;right:11%;top:0;bottom:27%;background:radial-gradient(closest-side,rgba(244,220,166,.2),rgba(244,220,166,.06) 62%,rgba(244,220,166,0))}
 .gli{transform-box:fill-box;transform-origin:center;animation:gli 2.6s ease-in-out infinite}
 @keyframes gli{0%,100%{opacity:0;transform:scale(.2) rotate(0deg)}45%,55%{opacity:1;transform:scale(1) rotate(45deg)}}
 .rpie .btn.go{background:linear-gradient(180deg,#F9E7B6 0%,#E9C67D 48%,#D5A955 100%);box-shadow:0 14px 30px -10px rgba(230,194,122,.5),inset 0 0 0 1px rgba(255,246,220,.35),inset 0 1.5px 0 rgba(255,255,255,.65),inset 0 -2px 0 rgba(125,86,18,.22)}
 .rpie .btn.go:active{background:linear-gradient(180deg,#F1DCA4,#DDB869 48%,#C99C49)}
 @media (prefers-reduced-motion:reduce){.gli{animation:none;opacity:.9}}
+/* ---------- rosario: vista de oración y vista grande ---------- */
+.rb .rs{flex:1}
+.ra.vt{color:var(--oroc);border-color:rgba(230,194,122,.5)}
+.ro .ring[data-a],.colg{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pr.jc{font-size:16.5px;line-height:22px;margin-top:6px}
+.ro.lg .rl{min-height:30px;margin-top:2px}
+.ro.lg .pr{margin-top:7px}
+.colg{display:flex;align-items:center;gap:16px;margin-top:8px}
+.cgv{flex:none;position:relative;width:112px;height:132px;border-radius:22px;background:radial-gradient(closest-side,rgba(244,220,166,.17),rgba(244,220,166,.03) 78%,rgba(244,220,166,0));-webkit-mask-image:linear-gradient(transparent,#000 13%,#000 87%,transparent);mask-image:linear-gradient(transparent,#000 13%,#000 87%,transparent)}
+.cgv .jy{display:block;width:100%;height:100%}
+.cgt{flex:1;min-width:0}
+.cgt>small{display:block;font-size:14px;line-height:20px;font-weight:600;color:var(--txt2)}
+.cgt>b{display:block;margin-top:2px;font-family:var(--se);font-weight:600;font-size:30px;line-height:34px;text-wrap:balance}
+.cgt>span{display:block;margin-top:4px;font-size:15px;line-height:20px;color:var(--oroc)}
+.cgi{margin-top:8px;font-family:var(--se);font-style:italic;font-weight:500;font-size:17px;line-height:22px;color:var(--oroc);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cgi small{display:block;font-family:'Hanken Grotesk',system-ui,sans-serif;font-style:normal;font-weight:600;font-size:12.5px;line-height:17px;color:var(--txt2)}
+.pis{margin-top:8px;font-size:13px;line-height:18px;color:var(--txt2)}
+.ro.cg .rt{margin-top:6px}
+.ro.sg .cgt,.ro.sg .jyc,.ro.sg .jyl{animation:paso .3s cubic-bezier(.2,.7,.2,1) backwards}
+.ro.at .cgt,.ro.at .jyc,.ro.at .jyl{animation:pasoR .3s cubic-bezier(.2,.7,.2,1) backwards}
+.rpie.mas:before{content:"";position:absolute;left:50%;top:-6px;width:30px;height:30px;margin-left:-15px;border-radius:50%;background:#0F3D43 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none' stroke='%23F4DCA6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 5l4 4 4-4'/%3E%3C/svg%3E") center/14px no-repeat;border:1px solid rgba(244,220,166,.45);animation:brinca 1.3s ease-in-out infinite}
+@keyframes brinca{50%{transform:translateY(4px)}}
+.ro.gr{padding-left:14px;padding-right:14px}
+.jyw{position:relative;align-self:center;margin-top:4px;height:min(calc(100vh - 190px),calc((min(100vw,430px) - 28px)*1.832));height:min(calc(100dvh - 190px),calc((min(100vw,430px) - 28px)*1.832));aspect-ratio:346/634;container-type:size}
+.ro.gr.sl .jyw{height:min(calc(100vh - 276px),calc((min(100vw,430px) - 28px)*1.832));height:min(calc(100dvh - 276px),calc((min(100vw,430px) - 28px)*1.832))}
+.jyt{position:absolute;inset:0;display:block;width:100%;height:100%;margin:0;padding:0;border:0;background:none;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+div.jyt{cursor:default}
+.jyt .jy{display:block;width:100%;height:100%;filter:drop-shadow(0 9px 12px rgba(0,0,0,.36))}
+.jyc{position:absolute;left:19%;right:19%;top:29%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none}
+.jyc small{font-size:13px;font-size:clamp(12px,4.6cqw,15px);line-height:1.35;font-weight:600;color:var(--txt2);text-wrap:balance}
+.jyc b{margin-top:4px;font-family:var(--se);font-weight:600;font-size:30px;font-size:clamp(26px,12.4cqw,44px);line-height:1.08;text-wrap:balance}
+.jyc b.tm{font-size:23px;font-size:clamp(20px,8.6cqw,30px);line-height:1.14}
+.jyc span{margin-top:6px;font-size:16px;font-size:clamp(14px,5.6cqw,19px);color:var(--oroc)}
+.jyc .em{margin:0 0 6px;color:var(--oroc)}
+.jyc .em svg{display:block;width:46px;height:46px;width:clamp(40px,19cqw,66px);height:clamp(40px,19cqw,66px)}
+.jyc i{margin-top:5px;font-family:var(--se);font-style:italic;font-size:15px;font-size:clamp(13px,4.6cqw,17px);color:var(--rosa)}
+.jyl{margin-top:2px;min-height:50px;text-align:center}
+.jyl small{display:block;font-size:13.5px;line-height:18px;font-weight:600;color:var(--txt2)}
+.jyl b{font-family:var(--se);font-weight:600;font-size:25px;line-height:30px}
+.jyl em{margin-left:8px;font-style:normal;font-size:15px;color:var(--oroc)}
+.jyf{position:absolute;inset:0;pointer-events:none}
+.fb{position:absolute;aspect-ratio:1;transform:translate(-50%,-50%)}
+.fb .cara{width:100%;height:100%}
+.fb .cara b{font-size:20px;font-size:calc(var(--s)*.125cqw)}
+.fb.ld .cara{border-color:var(--oro);border-width:2px}
+.fb.vz .cara{border-color:rgba(230,194,122,.75)}
+.fb.habla .cara{border-color:var(--oroc);box-shadow:0 0 0 3px rgba(244,220,166,.55),0 0 20px rgba(244,220,166,.5)}
+.fb .mm{width:34%;height:34%;min-width:14px;min-height:14px;right:-6%;bottom:-6%;border-width:1.5px}
+.fb .mm svg{width:62%;height:62%}
+.fb.me video{transform:scaleX(-1)}
+@media (prefers-reduced-motion:reduce){.rpie.mas:before,.ro .cgt,.ro .jyc,.ro .jyl{animation:none!important}}

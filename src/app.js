@@ -20,6 +20,8 @@
     camno: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6.5h5a2.5 2.5 0 0 1 2.5 2.5v3M15.5 15v.5a2 2 0 0 1-2 2H5A2.5 2.5 0 0 1 2.5 15V9a2.5 2.5 0 0 1 1.8-2.4M15.5 10.5l5.5-3.2v9.4l-3-1.7M3 3l18 18"/></svg>',
     nota: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5.5l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/></svg>',
     notano: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity:.75"><path d="M9 18V5.5l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/><path d="M3.5 3.5l17 17" stroke-width="2"/></svg>',
+    txt: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h9"/></svg>',
+    ros: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="9" r="6.4" stroke-width="2.1" stroke-dasharray=".1 3.35"/><path d="M12 15.6v6.2M10.2 18.6h3.6" stroke-width="1.7"/></svg>',
     yo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.9-4 3.9-6 7.5-6s6.6 2 7.5 6"/></svg>'
   };
 
@@ -312,6 +314,7 @@
   async function camara() {
     if (!VZ) return;
     if (VZ.cam) { VZ.cam.stop(); VZ.cam = null; VZ.camMs = null; Object.keys(VZ.pcs).forEach((k) => { const tv = vidT(VZ.pcs[k]); if (tv) tv.sender.replaceTrack(null).catch(() => {}); }); if (sala) sala.presence({ c: null }).catch(() => {}); pinta(); return; }
+    if (peersS.filter((p) => (p.presence || {}).c).length >= 6) { aviso("Ya hay 6 cámaras encendidas; por ahora es el máximo para que la llamada no se trabe."); return; }
     let v;
     try { v = (await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: { ideal: 480 }, height: { ideal: 480 }, frameRate: { ideal: 15, max: 20 } } })).getVideoTracks()[0]; }
     catch (_) { aviso("Para usar la cámara, permítela para Atrio en tu navegador."); return; }
@@ -324,7 +327,7 @@
   const tiles = (gr) => !sala ? "" : `<div class="ppl${gr ? " gr" : ""}">` + peersS.map((p) => { const pr = p.presence || {}, id = esc(p.peer), cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]); return `<div class="pp${pr.v ? " vz" : ""}${p.isMe ? " me" : ""}" data-p="${id}"><span class="cara">${cam ? `<video data-v="${id}" autoplay playsinline muted></video>` : `<b>${esc((pr.n || "?").slice(0, 1).toUpperCase())}</b>`}${pr.v === 2 ? `<i class="mm" aria-label="Sin micrófono">${I.mute}</i>` : pr.v ? "" : ""}</span><small>${esc(p.isMe ? "Tú" : (pr.n || "Alguien").split(" ")[0])}${pr.lead ? `<em>dirige</em>` : ""}</small></div>`; }).join("") + "</div>";
   // en el rosario la familia rodea las cuentas, como si rezaran en círculo
   const orbita = () => { const L = peersS.slice(0, 12), n = L.length; if (!n) return ""; const ab = Math.min(300, (n - 1) * 46), a0 = -90 - ab / 2, R = 132;
-    return `<span class="orb">` + L.map((p, i) => { const pr = p.presence || {}, id = esc(p.peer), a = ((n === 1 ? -90 : a0 + (i * ab) / (n - 1)) * Math.PI) / 180, x = ((130 + R * Math.cos(a)) / 260) * 100, y = ((108 + R * Math.sin(a)) / 270) * 100, cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]);
+    return `<span class="orb">` + L.map((p, i) => { const pr = p.presence || {}, id = esc(p.peer), a = ((n === 1 ? -90 : a0 + (i * ab) / (n - 1)) * Math.PI) / 180, x = ((130 + R * Math.cos(a)) / 260) * 100, y = ((100 + R * Math.sin(a)) / 270) * 100, cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]);
       return `<span class="of${pr.v ? " vz" : ""}${p.isMe ? " me" : ""}${pr.lead ? " ld" : ""}" data-p="${id}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%" title="${esc(p.isMe ? "Tú" : pr.n || "Alguien")}"><span class="cara">${cam ? `<video data-v="${id}" autoplay playsinline muted></video>` : `<b>${esc((pr.n || "?").slice(0, 1).toUpperCase())}</b>`}${pr.v === 2 ? `<i class="mm">${I.mute}</i>` : ""}</span></span>`; }).join("") + "</span>"; };
   function cuelga(id) { if (!VZ || !VZ.pcs[id]) return; try { VZ.pcs[id].close(); } catch (_) {} delete VZ.pcs[id]; delete VZ.cola[id]; delete VZ.rs[id]; delete VZ.an[id]; const a = document.getElementById("vz-" + id); if (a) { a.srcObject = null; a.remove(); } pinta(); }
   function par(id, ofrece) {
@@ -458,7 +461,7 @@
         if (!lead && g && !g.isMe && g.presence.fin && ros && ros.sala) { fin(); return; }
         if (!lead && g && !g.isMe && g.presence.on) {
           const gf = g.presence.f === "mx" ? "mx" : "un";
-          if (!ros || !ros.sala || ros.set !== g.presence.set || ros.f !== gf) { ros = { set: MIS[g.presence.set] ? g.presence.set : MIS_DIA[now().getDay()], i: 0, sala: 1, f: gf }; ros.p = pasos(gf); view = "ros"; }
+          if (!ros || !ros.sala || ros.set !== g.presence.set || ros.f !== gf) { ros = { set: MIS[g.presence.set] ? g.presence.set : MIS_DIA[now().getDay()], i: 0, sala: 1, f: gf, g: grande0(1) }; ros.p = pasos(gf); view = "ros"; }
           const i = Math.max(0, Math.min(ros.p.length - 1, g.presence.i | 0));
           if (i !== ros.i || view !== "ros") { ros.an = i < ros.i ? "at" : "sg"; ros.i = i; view = "ros"; vibraPaso(); }
           render(); ros.an = "";
@@ -492,10 +495,18 @@
   //  «mx», como en México: señal de la cruz y acto de contrición; tras cada Gloria, «María, Madre de gracia» y «Oh Jesús mío»;
   //        al final, Padre nuestro, tres Ave Marías, Salve y letanías.
   //  «un», con Credo al inicio: Credo, Padre nuestro y tres Ave Marías antes de los misterios; al final, la Salve.
-  // «b» es la cuenta que se enciende: la cruz (x), la medalla (M), las cuentas del colgante (p0 a p3) y las de cada misterio.
+  // «b» es la cuenta que se enciende: la cruz (x), la medalla (M), las del colgante (g1 junto a la medalla, p3 a p1 y p0 junto a la cruz) y las de cada misterio.
+  // la vista con que abre el rosario: la última que usó; en una sala, el rosario grande con la familia dentro
+  const grande0 = (enSala) => ((enSala ? S.rg !== 0 : S.rg === 1) ? 1 : 0);
+  // si la oración no cabe en la pantalla, el primer toque de «Amén» baja a lo que falta y el segundo avanza
+  const rueda = () => document.scrollingElement || document.documentElement;
+  const falta = () => { const e = rueda(); return !!e && e.scrollHeight - e.clientHeight - e.scrollTop > 30; };
+  const baja = () => { const e = rueda(); try { e.scrollBy({ top: Math.max(140, e.clientHeight - 300), behavior: "smooth" }); } catch (_) { e.scrollTop += 300; } };
+  const mas = () => { const q = app.querySelector(".rpie"); if (q) q.classList.toggle("mas", !!(ros && !ros.g && falta())); };
   const forma = () => (S.fr === "mx" || S.fr === "un" ? S.fr : S.e === 99 ? "un" : "mx");
-  const decena = (p, m, mx) => { p.push({ t: "mis", m, b: "L" + m }); p.push({ t: "pn", m, b: "L" + m }); for (let k = 1; k <= 10; k++) p.push({ t: "am", m, k, of: 10, b: "s" + m + "_" + k }); p.push({ t: "gl", m, x: mx ? 2 : 1, lg: mx ? 1 : 0, b: "s" + m + "_10" }); };
-  const cierre = (p, mx, solo) => { if (mx) { if (!solo) { p.push({ t: "pn", b: "M", fin: 1, l: "Por las intenciones del Papa" }); [1, 2, 3].forEach((k) => p.push({ t: "am" + k, k, of: 3, b: "p" + (4 - k), fin: 1, lg: 1 })); } p.push({ t: "salvemx", b: "p0", fin: 1, lg: 2 }); if (!solo) for (let k = 1; k <= LET.length; k++) p.push({ t: "let", k, of: LET.length, b: "x", fin: 1 }); } else { p.push({ t: "salve", b: "M", fin: 1, lg: 1 }); if (!solo) p.push({ t: "fin", b: "M", fin: 1 }); } };
+  // El primer Padre nuestro no tiene cuenta en el collar: en México se reza en la medalla; con Credo, en la cuenta grande junto a ella
+  const decena = (p, m, mx) => { const g = m ? "L" + m : mx ? "M" : "g1"; p.push({ t: "mis", m, b: g }); p.push({ t: "pn", m, b: g }); for (let k = 1; k <= 10; k++) p.push({ t: "am", m, k, of: 10, b: "s" + m + "_" + k }); p.push({ t: "gl", m, x: mx ? 2 : 1, lg: mx ? 1 : 0, b: "s" + m + "_10" }); };
+  const cierre = (p, mx, solo) => { if (mx) { if (!solo) { p.push({ t: "pn", b: "g1", fin: 1, l: "Por las intenciones del Papa" }); [1, 2, 3].forEach((k) => p.push({ t: "am" + k, k, of: 3, b: "p" + (4 - k), fin: 1, lg: 1 })); } p.push({ t: "salvemx", b: "p0", fin: 1, lg: 2 }); if (!solo) for (let k = 1; k <= LET.length; k++) p.push({ t: "let", k, of: LET.length, b: "x", fin: 1 }); } else { p.push({ t: "salve", b: "M", fin: 1, lg: 1 }); if (!solo) p.push({ t: "fin", b: "M", fin: 1 }); } };
   function pasos(f) {
     const mx = f === "mx", p = mx
       ? [{ t: "cruz", b: "x" }, { t: "contri", b: "M", lg: 1 }, { t: "abre", b: "M" }]
@@ -503,50 +514,108 @@
     for (let m = 0; m < 5; m++) decena(p, m, mx);
     cierre(p, mx); return p;
   }
-  /* El rosario como joya: perlas plateadas que se vuelven de oro y luz al rezarlas, medalla, crucifijo
-     y, detrás, un rosetón de cinco pétalos (uno por misterio) que se va llenando de color con cada decena. */
-  const TONO = { gozosos: ["#FCE6BA", "#F2A69C"], luminosos: ["#FFF7D2", "#9AD2E8"], dolorosos: ["#F0909C", "#9150A0"], gloriosos: ["#FFE694", "#6FA0E2"] };
-  function ring(i) {
-    const P = ros.p, done = {}, cur = P[i].b; for (let j = 0; j < i; j++) done[P[j].b] = 1;
-    if (ros.jt) jtHechos(ros.jt.id).forEach((m) => { done["L" + m] = 1; for (let k = 1; k <= 10; k++) done["s" + m + "_" + k] = 1; });
-    const cx = 130, cy = 108, R = 98, st = 360 / 56, f = (n) => (Math.round(n * 10) / 10).toString(), ang = (n) => ((90 + n * st) * Math.PI) / 180, tn = TONO[ros.set] || TONO.gozosos;
-    let luz = "", cu = "", vit = "";
-    const bead = (id, x, y, r, oro) => { const c = id === cur, d = done[id], rr = c ? r + 1.3 : r;
-      if (c || d) luz += `<circle cx="${f(x)}" cy="${f(y)}" r="${f(rr * (c ? 3.7 : 2.8))}" fill="url(#rgl)"${c ? "" : ' opacity=".6"'}/>`;
-      cu += (c ? `<circle class="pu" cx="${f(x)}" cy="${f(y)}" r="${f(r + 3.6)}" fill="none" stroke="#FBE9BE" stroke-width="1.1"/>` : "") +
-        `<circle${c ? ' class="cur"' : ""} cx="${f(x)}" cy="${f(y)}" r="${f(rr)}" fill="url(#${c ? "rbc" : d ? (oro ? "rbd" : "rbo") : oro ? "rbg" : "rbf"})"/>` +
-        `<circle cx="${f(x - rr * 0.3)}" cy="${f(y - rr * 0.34)}" r="${f(rr * 0.25)}" fill="#fff" opacity="${c ? 0.95 : d ? 0.85 : 0.55}"/>` +
-        (c ? `<g transform="translate(${f(x + rr * 0.95)} ${f(y - rr * 1.05)}) scale(.44) translate(-8 -8)"><polygon class="gli" fill="#fff" points="${S16}"/></g>` : ""); };
-    // resplandor: cada cuenta tiene su rayo y lo enciende al rezarla; detrás avanza la luz del misterio
-    const pt = (r, a) => f(cx + r * Math.cos(a)) + " " + f(cy + r * Math.sin(a)), RI = 60, RO = 92.4; let ap = "", en = "";
-    const rayos = (n, on, largo) => { const a = ang(n), b = ang(n + 0.5), mb = (74 + RO) / 2, d = `M${pt(largo ? 61 : 67, a)}L${pt(RO, a)}M${pt(75, b)}Q${f(cx + mb * Math.cos(b) - 1.9 * Math.sin(b))} ${f(cy + mb * Math.sin(b) + 1.9 * Math.cos(b))} ${pt(RO, b)}`; if (on) en += d; else ap += d; };
-    for (let m = 0; m < 5; m++) { let n = 0; const pn = done["L" + m] || cur === "L" + m; rayos(m * 11 + 1, pn, 1);
-      for (let k = 1; k <= 10; k++) { const id = "s" + m + "_" + k, on = done[id] || id === cur; if (on) n = k; rayos(m * 11 + k + 1, on); }
-      if (pn || n) { const a0 = ang(m * 11 + 0.5), a1 = ang(m * 11 + n + 1.5); vit += `<path d="M${pt(RO + 1, a0)}A${RO + 1} ${RO + 1} 0 0 1 ${pt(RO + 1, a1)}L${pt(RI, a1)}A${RI} ${RI} 0 0 0 ${pt(RI, a0)}Z" fill="url(#rpt)"/>`; } }
-    vit += `<path d="${ap}" fill="none" stroke="#E6C27A" stroke-opacity=".3" stroke-width=".7" stroke-linecap="round"/>` + (en ? `<path d="${en}" fill="none" stroke="#FFF3D0" stroke-opacity=".34" stroke-width="2.6" stroke-linecap="round"/><path d="${en}" fill="none" stroke="#FFF1C9" stroke-width="1" stroke-linecap="round"/>` : "") +
-      `<circle cx="${cx}" cy="${cy}" r="${RI - 1.6}" fill="none" stroke="#E6C27A" stroke-opacity=".34" stroke-width=".7"/>`;
-    for (let m = 0; m < 5; m++) for (let k = 0; k <= 10; k++) { const a = ang(m * 11 + k + 1); bead(k === 0 ? "L" + m : "s" + m + "_" + k, cx + R * Math.cos(a), cy + R * Math.sin(a), k === 0 ? 4.9 : 3.4, k === 0); }
-    bead("p3", cx, cy + R + 15, 3.1); bead("p2", cx, cy + R + 22.8, 3.1); bead("p1", cx, cy + R + 30.6, 3.1); bead("p0", cx, cy + R + 39.6, 4.3, 1);
-    // medalla: une el collar con el colgante; se enciende al empezar
-    const mc = cur === "M", mon = mc || i > 0, my = cy + R + 1.5;
-    const med = (mc ? `<circle cx="${cx}" cy="${my}" r="22" fill="url(#rgl)"/><ellipse class="pu" cx="${cx}" cy="${my}" rx="11" ry="12.6" fill="none" stroke="#FBE9BE" stroke-width="1.1"/>` : "") +
-      `<g transform="translate(${cx} ${my})"${mon ? "" : ' opacity=".9"'}><ellipse rx="7.6" ry="9.2" fill="url(#${mon ? "rbd" : "rbg"})" stroke="#7E5C1B" stroke-width=".5"/><ellipse rx="5.7" ry="7.3" fill="none" stroke="#FFF6DA" stroke-opacity=".6" stroke-width=".5"/><polygon transform="translate(-3.7 -3.7) scale(.4625)" fill="${mon ? "#FFFBEA" : "#EAD9A8"}" points="${S16}"/></g>`;
-    // crucifijo
-    const xc = cur === "x", xy = cy + R + 45.6;
-    const cruz = (xc ? `<circle cx="${cx}" cy="${xy + 8}" r="21" fill="url(#rgl)"/><circle class="pu" cx="${cx}" cy="${xy + 8.5}" r="12.5" fill="none" stroke="#FBE9BE" stroke-width="1.1"/>` : "") +
-      `<g transform="translate(${cx} ${xy})"><path d="M0 0v17.6M-6 5.6h12" stroke="${xc ? "#FFF3D0" : "#C99A45"}" stroke-width="2.7" stroke-linecap="round"/><path d="M0 .4v16.8M-5.6 5.6h11.2" stroke="${xc ? "#FFFFFF" : "#F6E0AC"}" stroke-width="1.05" stroke-linecap="round"/><circle cy="5.6" r="1.35" fill="#FFF8E1"/></g>`;
-    return `<svg width="260" height="262" viewBox="0 0 260 270" aria-hidden="true"><defs>
-      <radialGradient id="rbf" cx=".34" cy=".3" r=".78"><stop offset="0" stop-color="#F6FBFA"/><stop offset=".42" stop-color="#B4CCCA"/><stop offset=".86" stop-color="#5F8486"/><stop offset="1" stop-color="#365C60"/></radialGradient>
+  // estado de cada cuenta: las ya rezadas y la que se está rezando
+  const cuentas = (i) => { const P = ros.p, done = {}, cur = P[i].b; for (let j = 0; j < i; j++) done[P[j].b] = 1;
+    if (ros.jt) jtHechos(ros.jt.id).forEach((m) => { if (m) done["L" + m] = 1; else if (ros.f !== "mx") done.g1 = 1; for (let k = 1; k <= 10; k++) done["s" + m + "_" + k] = 1; });
+    return { done, cur }; };
+  const f1 = (n) => (Math.round(n * 10) / 10).toString();
+  // una cuenta: perla plateada mientras espera; de oro y con luz cuando ya se rezó. Devuelve [halo, perla]
+  const perla = (o, id, x, y, r, oro) => { const c = id === o.cur, d = o.done[id], rr = c ? r * 1.38 : r;
+    return [c || d ? `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(rr * (c ? 3.6 : 2.7))}" fill="url(#rgl)"${c ? "" : ' opacity=".6"'}/>` : "",
+      (c ? `<circle class="pu" cx="${f1(x)}" cy="${f1(y)}" r="${f1(r * 2.05)}" fill="none" stroke="#FBE9BE" stroke-width="${f1(r * 0.32)}"/>` : "") +
+      `<circle${c ? ' class="cur"' : ""} cx="${f1(x)}" cy="${f1(y)}" r="${f1(rr)}" fill="url(#${c ? "rbc" : d ? (oro ? "rbd" : "rbo") : oro ? "rbg" : "rbf"})"/><circle cx="${f1(x - rr * 0.3)}" cy="${f1(y - rr * 0.34)}" r="${f1(rr * 0.25)}" fill="#fff" opacity="${c ? 0.95 : d ? 0.85 : 0.55}"/>` +
+      (c ? `<g transform="translate(${f1(x + rr * 0.95)} ${f1(y - rr * 1.05)}) scale(${f1(r * 0.13)}) translate(-8 -8)"><polygon class="gli" fill="#fff" points="${S16}"/></g>` : "")]; };
+  const DEFS = `<radialGradient id="rbf" cx=".34" cy=".3" r=".78"><stop offset="0" stop-color="#F6FBFA"/><stop offset=".42" stop-color="#B4CCCA"/><stop offset=".86" stop-color="#5F8486"/><stop offset="1" stop-color="#365C60"/></radialGradient>
       <radialGradient id="rbo" cx=".34" cy=".3" r=".78"><stop offset="0" stop-color="#FFFDF2"/><stop offset=".4" stop-color="#FBE2A8"/><stop offset=".86" stop-color="#DDAA50"/><stop offset="1" stop-color="#A97722"/></radialGradient>
       <radialGradient id="rbg" cx=".34" cy=".3" r=".78"><stop offset="0" stop-color="#F3E6BC"/><stop offset=".45" stop-color="#B99C58"/><stop offset="1" stop-color="#5E4C20"/></radialGradient>
       <radialGradient id="rbd" cx=".34" cy=".3" r=".78"><stop offset="0" stop-color="#FFF9DE"/><stop offset=".4" stop-color="#F6D27A"/><stop offset=".86" stop-color="#CC9631"/><stop offset="1" stop-color="#93661A"/></radialGradient>
       <radialGradient id="rbc" cx=".4" cy=".36" r=".75"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#FFF4D2"/><stop offset="1" stop-color="#F3CB78"/></radialGradient>
-      <radialGradient id="rgl"><stop offset="0" stop-color="#FFEFC4" stop-opacity=".62"/><stop offset=".45" stop-color="#F0CF8A" stop-opacity=".2"/><stop offset="1" stop-color="#E6C27A" stop-opacity="0"/></radialGradient>
+      <radialGradient id="rgl"><stop offset="0" stop-color="#FFEFC4" stop-opacity=".62"/><stop offset=".45" stop-color="#F0CF8A" stop-opacity=".2"/><stop offset="1" stop-color="#E6C27A" stop-opacity="0"/></radialGradient>`;
+  /* El rosario como aro de luz (para leer la oración): 50 perlas y 4 cuentas de oro en el collar, la medalla y el colgante.
+     Cada cuenta tiene su rayo y lo enciende al rezarla; detrás avanza la luz del misterio. */
+  const TONO = { gozosos: ["#FCE6BA", "#F2A69C"], luminosos: ["#FFF7D2", "#9AD2E8"], dolorosos: ["#F0909C", "#9150A0"], gloriosos: ["#FFE694", "#6FA0E2"] };
+  function ring(i) {
+    const o = cuentas(i), done = o.done, cur = o.cur, cx = 130, cy = 100, R = 94, st = 360 / 55, ang = (n) => ((90 + n * st) * Math.PI) / 180, tn = TONO[ros.set] || TONO.gozosos, RI = 57.5, RO = 88.6;
+    let luz = "", cu = "", vit = "", ap = "", en = "";
+    const pon = (id, x, y, r, oro) => { const q = perla(o, id, x, y, r, oro); luz += q[0]; cu += q[1]; };
+    const pt = (r, a) => f1(cx + r * Math.cos(a)) + " " + f1(cy + r * Math.sin(a));
+    const rayos = (n, on, largo) => { const a = ang(n), b = ang(n + 0.5), mb = (71 + RO) / 2, d = `M${pt(largo ? 58.5 : 64.5, a)}L${pt(RO, a)}M${pt(72, b)}Q${f1(cx + mb * Math.cos(b) - 1.9 * Math.sin(b))} ${f1(cy + mb * Math.sin(b) + 1.9 * Math.cos(b))} ${pt(RO, b)}`; if (on) en += d; else ap += d; };
+    for (let m = 0; m < 5; m++) { let n = 0; const g = m ? "L" + m : "", pn = !!g && (done[g] || cur === g);
+      if (g) { const a = ang(m * 11); rayos(m * 11, pn, 1); pon(g, cx + R * Math.cos(a), cy + R * Math.sin(a), 4.9, 1); }
+      for (let k = 1; k <= 10; k++) { const id = "s" + m + "_" + k, on = done[id] || id === cur, a = ang(m * 11 + k); if (on) n = k; rayos(m * 11 + k, on); pon(id, cx + R * Math.cos(a), cy + R * Math.sin(a), 3.4); }
+      if (pn || n) { const a0 = ang(m * 11 + (g ? -0.5 : 0.5)), a1 = ang(m * 11 + n + 0.5); vit += `<path d="M${pt(RO + 1, a0)}A${RO + 1} ${RO + 1} 0 0 1 ${pt(RO + 1, a1)}L${pt(RI, a1)}A${RI} ${RI} 0 0 0 ${pt(RI, a0)}Z" fill="url(#rpt)"/>`; } }
+    vit += `<path d="${ap}" fill="none" stroke="#E6C27A" stroke-opacity=".3" stroke-width=".7" stroke-linecap="round"/>` + (en ? `<path d="${en}" fill="none" stroke="#FFF3D0" stroke-opacity=".34" stroke-width="2.6" stroke-linecap="round"/><path d="${en}" fill="none" stroke="#FFF1C9" stroke-width="1" stroke-linecap="round"/>` : "") +
+      `<circle cx="${cx}" cy="${cy}" r="${RI - 1.6}" fill="none" stroke="#E6C27A" stroke-opacity=".34" stroke-width=".7"/>`;
+    const mc = cur === "M", mon = mc || i > 0, my = cy + R + 1.5, xc = cur === "x", xy = my + 56.6;
+    pon("g1", cx, my + 15.5, 4.3, 1); pon("p3", cx, my + 25.2, 3.1); pon("p2", cx, my + 33, 3.1); pon("p1", cx, my + 40.8, 3.1); pon("p0", cx, my + 50.3, 4.3, 1);
+    const med = (mc ? `<circle cx="${cx}" cy="${my}" r="22" fill="url(#rgl)"/><ellipse class="pu" cx="${cx}" cy="${my}" rx="11" ry="12.6" fill="none" stroke="#FBE9BE" stroke-width="1.1"/>` : "") +
+      `<g transform="translate(${cx} ${my})"${mon ? "" : ' opacity=".9"'}><ellipse rx="7.6" ry="9.2" fill="url(#${mon ? "rbd" : "rbg"})" stroke="#7E5C1B" stroke-width=".5"/><ellipse rx="5.7" ry="7.3" fill="none" stroke="#FFF6DA" stroke-opacity=".6" stroke-width=".5"/><polygon transform="translate(-3.7 -3.7) scale(.4625)" fill="${mon ? "#FFFBEA" : "#EAD9A8"}" points="${S16}"/></g>`;
+    const cruz = (xc ? `<circle cx="${cx}" cy="${xy + 8}" r="21" fill="url(#rgl)"/><circle class="pu" cx="${cx}" cy="${xy + 8.5}" r="12.5" fill="none" stroke="#FBE9BE" stroke-width="1.1"/>` : "") +
+      `<g transform="translate(${cx} ${f1(xy)})"><path d="M0 0v17M-6 5.5h12" stroke="${xc ? "#FFF3D0" : "#C99A45"}" stroke-width="2.7" stroke-linecap="round"/><path d="M0 .4v16.2M-5.6 5.5h11.2" stroke="${xc ? "#FFFFFF" : "#F6E0AC"}" stroke-width="1.05" stroke-linecap="round"/><circle cy="5.5" r="1.35" fill="#FFF8E1"/></g>`;
+    return `<svg width="260" height="262" viewBox="0 0 260 270" aria-hidden="true"><defs>${DEFS}
       <radialGradient id="rpt" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${RO + 1}"><stop offset=".63" stop-color="${tn[0]}" stop-opacity="0"/><stop offset=".8" stop-color="${tn[0]}" stop-opacity=".34"/><stop offset="1" stop-color="${tn[1]}" stop-opacity=".62"/></radialGradient>
       <radialGradient id="rvl" gradientUnits="userSpaceOnUse" cx="${cx}" cy="${cy}" r="${RI}"><stop offset="0" stop-color="#113F45" stop-opacity=".55"/><stop offset=".7" stop-color="#0B3237" stop-opacity=".5"/><stop offset="1" stop-color="#082A2F" stop-opacity=".72"/></radialGradient></defs>
       <circle cx="${cx}" cy="${cy}" r="${RI - 1.6}" fill="url(#rvl)"/><g class="vit">${vit}</g>
-      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#E6C27A" stroke-opacity=".42" stroke-width=".9"/><path d="M${cx} ${cy + R + 9}V${xy}" stroke="#E6C27A" stroke-opacity=".5" stroke-width=".9"/>
+      <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#E6C27A" stroke-opacity=".42" stroke-width=".9"/><path d="M${cx} ${my + 9}V${f1(xy)}" stroke="#E6C27A" stroke-opacity=".5" stroke-width=".9"/>
       ${luz}${cu}${med}${cruz}</svg>`;
+  }
+  /* El rosario real, a pantalla completa: cinco lados, uno por misterio, con las cuentas de Padre nuestro en las esquinas;
+     medalla de la Virgen, colgante de cinco cuentas y crucifijo. Va en el sentido del aro: el primer misterio sube por la izquierda. */
+  const JY = (() => {
+    const K = [[50, 300], [94, 100], [296, 100], [340, 300]], cen = [195, 262], pos = {}, curv = [];
+    [[[186, 441], K[0], 15, 19], [K[0], K[1], 19, 19], [K[1], K[2], 19, 19], [K[2], K[3], 19, 19], [K[3], [204, 441], 19, 15]].forEach(([A, B, ga, gb], m) => {
+      const mx = (A[0] + B[0]) / 2, my = (A[1] + B[1]) / 2, dx = B[0] - A[0], dy = B[1] - A[1], L = Math.hypot(dx, dy); let nx = -dy / L, ny = dx / L;
+      if (Math.hypot(mx + nx - cen[0], my + ny - cen[1]) < Math.hypot(mx - cen[0], my - cen[1])) { nx = -nx; ny = -ny; }
+      const bw = m === 2 ? 7 : 11, C = [mx + nx * bw, my + ny * bw]; curv.push([A, C, B]);
+      for (let k = 1; k <= 10; k++) { const t = ga / L + ((k - 1) * (1 - (ga + gb) / L)) / 9, u = 1 - t; pos["s" + m + "_" + k] = [u * u * A[0] + 2 * t * u * C[0] + t * t * B[0], u * u * A[1] + 2 * t * u * C[1] + t * t * B[1]]; } });
+    K.forEach((q, n) => { pos["L" + (n + 1)] = q; });
+    pos.M = [195, 462]; pos.g1 = [195, 508]; pos.p3 = [195, 530]; pos.p2 = [195, 548]; pos.p1 = [195, 566]; pos.p0 = [195, 588]; pos.x = [195, 652];
+    let ray = ""; for (let k = 0; k < 28; k++) { const a = (k / 28) * 2 * Math.PI, e = k % 2 ? 0.78 : 1; ray += f1(11.8 * e * Math.cos(a)) + "," + f1(17.8 * e * Math.sin(a)) + " "; }
+    return { pos, curv, ray, cad: `M${curv[0][0][0]} ${curv[0][0][1]}` + curv.map((c) => `Q${f1(c[1][0])} ${f1(c[1][1])} ${c[2][0]} ${c[2][1]}`).join("") + "M195 486V603" };
+  })();
+  function joya(i, corta) {
+    const o = cuentas(i), done = o.done, cur = o.cur, tn = TONO[ros.set] || TONO.gozosos, P = JY.pos; let luz = "", cu = "", aura = "";
+    const pon = (id, r, oro) => { const q = perla(o, id, P[id][0], P[id][1], r, oro); luz += q[0]; cu += q[1]; };
+    for (let m = 0; m < 5; m++) { let n = 0; for (let k = 1; k <= 10; k++) { const id = "s" + m + "_" + k; if (done[id] || id === cur) n = k; pon(id, 7); }
+      if (n) { let d = ""; for (let k = 1; k <= n; k++) d += (k === 1 ? "M" : "L") + f1(P["s" + m + "_" + k][0]) + " " + f1(P["s" + m + "_" + k][1]); if (n === 1) d += "l.1 0";
+        aura += `<path d="${d}" stroke="${tn[1]}" stroke-opacity=".1" stroke-width="46"/><path d="${d}" stroke="${tn[0]}" stroke-opacity=".12" stroke-width="29"/><path d="${d}" stroke="${tn[0]}" stroke-opacity=".15" stroke-width="15"/>`; } }
+    [1, 2, 3, 4].forEach((m) => pon("L" + m, 9.4, 1)); pon("g1", 9.4, 1); pon("p3", 7); pon("p2", 7); pon("p1", 7); pon("p0", 9.4, 1);
+    const mc = cur === "M", mon = mc || i > 0, xc = cur === "x", pr = ros.p.length > 1 ? i / (ros.p.length - 1) : 0;
+    // medalla: óvalo de oro con filo de perlitas, esmalte y la Virgen en relieve, con su resplandor
+    const med = `<g transform="translate(195 462)">${mc ? `<ellipse rx="46" ry="52" fill="url(#rgl)"/><ellipse class="pu" rx="24" ry="30" fill="none" stroke="#FBE9BE" stroke-width="1.5"/>` : ""}
+      <g fill="none" stroke="#D9B35A" stroke-width="1.5"><circle cx="-9" cy="-21.4" r="2.6"/><circle cx="9" cy="-21.4" r="2.6"/><circle cy="25.6" r="2.6"/></g>
+      <ellipse rx="18" ry="24" fill="url(#jmm)" stroke="#6E4E14" stroke-width=".9"/><ellipse rx="15.9" ry="21.9" fill="none" stroke="#FFF6DA" stroke-opacity=".85" stroke-width="1.5" stroke-dasharray=".1 3.05" stroke-linecap="round"/>
+      <ellipse rx="13.2" ry="19.2" fill="url(#jme)" stroke="#8A6420" stroke-width=".7"/>
+      <polygon points="${JY.ray}" fill="#F3D484" opacity="${mon ? ".96" : ".6"}"/>
+      <path d="M0-12.5C3-12.5 4.4-10 4.2-7.8 6.3-4.8 7.3-.2 7.6 5.4 7.9 9.6 6.6 12.6 0 12.6-6.6 12.6-7.9 9.6-7.6 5.4-7.3-.2-6.3-4.8-4.2-7.8-4.4-10-3-12.5 0-12.5Z" fill="url(#jmv)" stroke="#FFF3D0" stroke-width=".6"/>
+      <ellipse cy="-8.5" rx="1.9" ry="2.4" fill="#F4DFBE"/><path d="M-1.5-2.4L0-5 1.5-2.4 0-.5Z" fill="#F4DFBE"/><g fill="#F6E0AC"><circle cx="-3.6" cy="3" r=".55"/><circle cx="3.4" cy="1.2" r=".55"/><circle cx="-2" cy="8" r=".55"/><circle cx="2.8" cy="7" r=".55"/><circle cx="4.6" cy="4.6" r=".5"/><circle cx="-4.8" cy="6.4" r=".5"/></g>
+      <path d="M-4.6 14.2Q0 17 4.6 14.2" fill="none" stroke="#F6E0AC" stroke-width="1.1" stroke-linecap="round"/></g>`;
+    // crucifijo: oro con esmalte y remates de botón
+    const cz = `<rect x="-6" y="0" width="12" height="96" rx="3.2"/><rect x="-29" y="23" width="58" height="12" rx="3.2"/><circle cy="1" r="6.6"/><circle cy="95" r="6.6"/><circle cx="-29" cy="29" r="6.6"/><circle cx="29" cy="29" r="6.6"/>`;
+    const cruz = `<g transform="translate(195 606)">${xc ? `<ellipse cy="48" rx="62" ry="76" fill="url(#rgl)"/><ellipse class="pu" cy="48" rx="40" ry="58" fill="none" stroke="#FBE9BE" stroke-width="1.5"/>` : ""}
+      <circle cy="-4.6" r="3.4" fill="none" stroke="#D9B35A" stroke-width="1.6"/><g fill="#6E4E14" stroke="#6E4E14" stroke-width="1.7">${cz}</g><g fill="url(#jmo)">${cz}</g>
+      <g fill="url(#jme)"><rect x="-3" y="6" width="6" height="84" rx="2"/><rect x="-24.5" y="26" width="49" height="6" rx="2"/></g>
+      <g fill="#FFF3D0"><circle cy="1" r="2.1"/><circle cy="95" r="2.1"/><circle cx="-29" cy="29" r="2.1"/><circle cx="29" cy="29" r="2.1"/><rect x="-4.4" y="9" width="8.8" height="3.8" rx=".8"/></g>
+      <g fill="none" stroke="#FFF3D0" stroke-linecap="round" stroke-linejoin="round"><circle cy="20" r="3.1" fill="#FFF3D0" stroke="none"/><path d="M-19.5 25.4Q-9 27.8 0 31.4Q9 27.8 19.5 25.4" stroke-width="2.3"/><path d="M0 28V55Q-2.2 65 .6 77" stroke-width="3.5"/></g></g>`;
+    const yc = cur === "x" ? 650 : cur === "p0" ? 606 : cur === "g1" ? 512 : cur === "M" ? 470 : 560, y0 = Math.max(392, Math.min(565, yc - 72.5));
+    return `<svg class="jy" viewBox="${corta ? `133.5 ${f1(y0)} 123 145` : "22 76 346 634"}" aria-hidden="true"><defs>${DEFS}
+      <linearGradient id="jmm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF4CC"/><stop offset=".3" stop-color="#EBC66E"/><stop offset=".58" stop-color="#B8862A"/><stop offset=".8" stop-color="#E8C36A"/><stop offset="1" stop-color="#9A6E1C"/></linearGradient>
+      <linearGradient id="jmo" gradientUnits="userSpaceOnUse" x1="-30" y1="0" x2="30" y2="98"><stop offset="0" stop-color="#FFF4CC"/><stop offset=".28" stop-color="#EBC66E"/><stop offset=".52" stop-color="#B8862A"/><stop offset=".76" stop-color="#EDCB78"/><stop offset="1" stop-color="#9A6E1C"/></linearGradient>
+      <radialGradient id="jme" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#1B646A"/><stop offset="1" stop-color="#082C31"/></radialGradient>
+      <linearGradient id="jmv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A8A88"/><stop offset="1" stop-color="#0F5257"/></linearGradient>
+      <radialGradient id="jau"><stop offset="0" stop-color="#F4DCA6" stop-opacity=".16"/><stop offset=".6" stop-color="#F4DCA6" stop-opacity=".05"/><stop offset="1" stop-color="#F4DCA6" stop-opacity="0"/></radialGradient></defs>
+      <ellipse cx="195" cy="268" rx="205" ry="240" fill="url(#jau)" opacity="${f1(0.45 + 0.55 * pr)}"/><g fill="none" stroke-linecap="round" stroke-linejoin="round">${aura}</g>
+      <path d="${JY.cad}" fill="none" stroke="#5C4312" stroke-opacity=".55" stroke-width="2.6"/><path d="${JY.cad}" fill="none" stroke="#E9C67D" stroke-width="1.5" stroke-dasharray="2.6 1.5"/>
+      ${luz}${cu}${med}${cruz}</svg>`;
+  }
+  // dónde acomodar a la familia dentro del rosario: filas de círculos que siguen el hueco entre las cuentas
+  const hueco = (y) => { const xl = y <= 300 ? 94 - ((y - 100) / 200) * 44 : 50 + ((y - 300) / 162) * 145; return [xl + 20, 370 - xl]; };
+  function enjambre(n) {
+    for (let s = 96; s >= 30; s -= 2) { const pts = [], g = Math.max(5, s * 0.12); let y = 126 + s / 2, ok = true;
+      while (pts.length < n) { const a = hueco(y - s / 2), b = hueco(y + s / 2), w = Math.min(a[1], b[1]) - Math.max(a[0], b[0]), c = Math.min(n - pts.length, Math.floor((w + g) / (s + g)));
+        if (c < 1 || y + s / 2 > 432) { ok = false; break; } const x0 = 195 - ((c - 1) * (s + g)) / 2; for (let k = 0; k < c; k++) pts.push([x0 + k * (s + g), y]); y += s + g; }
+      if (ok) { const baja = Math.max(0, Math.min(26, (400 - (y - g)) / 2)); return { s, pts: baja > 8 && n > 2 ? pts : pts }; } }
+    return { s: 30, pts: [] };
   }
   const tabs = (on, dk) => `<nav class="tabs dk" aria-label="Secciones">` + [["hoy", "Hoy", I.sun], ["rezar", "Rezar", I.st], ["mapa", "Mapa", I.pin], ["yo", "Yo", I.yo]].map(([v, t, ic]) => `<button class="tab${on === v ? " on" : ""}" data-a="go" data-v="${v}"${on === v ? ' aria-current="page"' : ""}>${ic}${t}</button>`).join("") + "</nav>";
   const hd = (back, title, right) => `<div class="hd z"><button class="ic" data-a="go" data-v="${back[0]}" data-b="1" aria-label="${back[1] === "x" ? "Cerrar" : "Regresar"}">${back[1] === "x" ? I.x : I.back}</button><p class="ru">${title}</p>${right || '<span class="ic"></span>'}</div>`;
@@ -686,19 +755,35 @@
         <p class="tit">${mis().length > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="card">${mis().map((x) => `<button class="row" data-a="verv" data-k="${x.k}"><span class="md">${EMA[x.k]}</span><span class="g"><b>${advN(x)}</b><small>${x.k === delDia().k ? "Hoy te trae el mensaje del día" : "Su historia y su oración"}</small></span>${I.go}</button>`).join("")}<button class="row" data-a="advsel"><span class="g"><b style="font-size:16px">Elegir mis Vírgenes</b></span>${I.go}</button></div>
         <p class="tit">Devociones</p><div class="card">${row('data-a="go" data-v="vir"', "virgen", "Devociones a la Virgen", "Bajo tu amparo, Acordaos y más")}${row('data-a="go" data-v="ang"', "angelus", "Ángelus", hh.a ? "Ya lo rezaste hoy" : "A mediodía, con campana")}${row('data-a="go" data-v="nov"', "novena", "Novena de Guadalupe", nvTxt)}</div>${tabs("rezar")}</section>`;
     },
+    /* El rosario tiene dos vistas. «Oración»: el texto completo, con el aro de luz arriba (o un acercamiento al colgante
+       en lo que se reza ahí). «Grande»: el rosario real a pantalla completa, para quien se lo sabe de memoria; en una sala,
+       la familia queda dentro del rosario. Se cambia tocando el rosario o con el botón de la barra. */
     ros: () => {
-      const st = ros.p[ros.i], M = MIS[ros.set], o = ORA[st.t], mm = st.m != null ? M.m[st.m] : null, g = guia(), sigo = ros.sala && !lead, cl = (ros.sala ? " sl" : "") + (ros.an ? " " + ros.an : "");
+      const st = ros.p[ros.i], M = MIS[ros.set], o = ORA[st.t], mm = st.m != null ? M.m[st.m] : null, g = guia(), sigo = ros.sala && !lead, G = !!ros.g, cl = (ros.sala ? " sl" : "") + (ros.an ? " " + ros.an : "");
+      const nom = st.t === "let" ? "Letanías" : st.t === "mis" ? "" : o.n, cta = st.of ? st.k + " de " + st.of : "", don = mm ? ORD[st.m] + " misterio: " + mm[0] : st.l ? st.l : st.fin ? "Para terminar" : "Para empezar";
+      const it = ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion ? ["Su intención", JT[ros.jt.id].intencion] : S.pi ? ["Tu intención", S.pi] : null;
       const cab = `<div class="hd z"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}<small class="cnt">${ros.i + 1} de ${ros.p.length}</small></p>${botMu()}</div>`;
+      const vis = `<button class="ra vt" data-a="vista" aria-label="${G ? "Ver la oración escrita" : "Ver el rosario en grande"}">${G ? I.txt : I.ros}</button>`;
       // La barra de abajo queda fija: «Amén» siempre está en el mismo lugar y el pulgar lo encuentra sin mirar
-      const pie = `<div class="rpie">${ros.sala ? `<div class="vzl"><p class="note">${peersS.length === 1 ? "Solo tú" : peersS.length + " rezando"}</p>${botVoz(1)}</div>` : ""}${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<div class="rb"><button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" || (st.t === "let" && st.k < st.of) ? "Continuar" : "Amén"}</button></div>`}</div>`;
-      const gente = "", orb = ros.sala ? orbita() : "";
+      const pie = `<div class="rpie">${ros.sala ? `<div class="vzl"><p class="note">${peersS.length === 1 ? "Solo tú" : peersS.length + " rezando"}</p>${botVoz(1)}</div>` : ""}<div class="rb">${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" || (st.t === "let" && st.k < st.of) ? "Continuar" : "Amén"}</button>`}${vis}</div></div>`;
+      if (G) { const fam = ros.sala && peersS.length > 1;
+        const cara = (p, xy, sz) => { const pr = p.presence || {}, id = esc(p.peer), cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]);
+          return `<span class="fb${pr.v ? " vz" : ""}${p.isMe ? " me" : ""}${pr.lead ? " ld" : ""}" data-p="${id}" style="left:${f1(((xy[0] - 22) / 346) * 100)}%;top:${f1(((xy[1] - 76) / 634) * 100)}%;width:${f1((sz / 346) * 100)}%;--s:${sz}" title="${esc(p.isMe ? "Tú" : pr.n || "Alguien")}"><span class="cara">${cam ? `<video data-v="${id}" autoplay playsinline muted></video>` : `<b>${esc((pr.n || "?").slice(0, 1).toUpperCase())}</b>`}${pr.v === 2 ? `<i class="mm">${I.mute}</i>` : ""}</span></span>`; };
+        const L = peersS.slice(0, 16), q = fam ? enjambre(L.length) : null;
+        const centro = fam ? `<div class="jyf">${L.map((p, k) => cara(p, q.pts[k] || [195, 262], q.s)).join("")}</div>`
+          : `<div class="jyc">${st.t === "mis" ? `<span class="em">${EM[ros.set] || ""}</span><small>${ORD[st.m]} misterio</small><b class="tm">${mm[0]}</b><i>${mm[1]}</i>` : `<small>${don}</small><b class="rn">${nom}</b>${cta ? `<span>${cta}</span>` : ""}`}</div>`;
+        const arriba = fam ? `<p class="jyl z">${st.t === "mis" ? `<small>${ORD[st.m]} misterio</small><b>${mm[0]}</b>` : `<small>${don}</small><b class="rn">${nom}</b>${cta ? `<em>${cta}</em>` : ""}`}</p>` : "";
+        return `<section class="v d ro gr${fam ? " fm" : ""}${cl}">${sky()}${cab}${arriba}<div class="jyw z">${sigo ? `<div class="jyt">${joya(ros.i)}</div>` : `<button class="jyt" data-a="sig" aria-label="${st.t === "mis" ? "Continuar" : "Amén"}">${joya(ros.i)}</button>`}${centro}</div>${pie}</section>`; }
+      const orb = ros.sala ? orbita() : "";
       const bloques = (bl) => (bl || []).map(([k, t]) => (k === "v" ? `<p class="pr"><i>V/.</i> ${t}</p>` : k === "r" ? `<p class="pr rr"><i>R/.</i> ${t}</p>` : k === "t" ? `<p class="pr"><i>Todos.</i> ${t}</p>` : `<p class="ex">${t}</p>`)).join("");
-      if (st.t === "let") { const L = LET[st.k - 1], lista = (r, inv) => (inv ? `<p class="lr"><i>R/.</i> ${r}</p><ul class="li">${inv.map((x) => `<li>${x}</li>`).join("")}</ul>` : "");
-        return `<section class="v d ro lg lt${cl}">${sky()}${cab}${gente}<p class="rl z">Para terminar</p><div class="ring z">${ring(ros.i)}${orb}<div><b>Letanías</b><span>${st.k} de ${st.of}</span></div></div><div class="rt z">${lista(L.r, L.inv)}${lista(L.r2, L.inv2)}${bloques(L.bl)}</div>${pie}</section>`; }
-      if (st.t === "mis") return `<section class="v d ro mi${cl}">${sky()}${cab}${gente}<div class="rt z"><p class="c" style="margin-top:12px;font-size:14px;font-weight:600;color:var(--txt2)">${ORD[st.m]} misterio</p><h1 class="c" style="font-size:28px;line-height:34px">${mm[0]}</h1><p class="ru c" style="margin-top:6px;font-size:16px">${mm[1]}</p></div><div class="ring z">${ring(ros.i)}${orb}<div class="emc">${EM[ros.set] || ""}</div></div><div class="rt z"><p class="pr c" style="font-size:21px;line-height:29px">${mm[2]}</p></div>${pie}</section>`;
-      return `<section class="v d ro${st.lg ? " lg" : ""}${st.lg === 2 ? " xl" : ""}${cl}">${sky()}${cab}${gente}<p class="rl z">${mm ? ORD[st.m] + " misterio: " + mm[0] : st.l ? st.l : (ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion) ? `<span><small>Su intención</small><em>«${esc(JT[ros.jt.id].intencion)}»</em></span>` : S.pi ? `<span><small>Tu intención</small><em>«${esc(S.pi)}»</em></span>` : st.fin ? "Para terminar" : "Para empezar"}</p>
-        <div class="ring z">${ring(ros.i)}${orb}<div><b>${o.n}</b>${st.of ? `<span>${st.k} de ${st.of}</span>` : ""}</div></div>
-        <div class="rt z">${o.v ? `<p class="pr"><i>V/.</i> ${o.v}</p><p class="pr rr"><i>R/.</i> ${o.r}</p>` : ""}${bloques(o.bl)}${st.x === 2 ? bloques([["v", o.mg[0]], ["r", o.mg[1]], ["t", o.x]]) : st.x ? `<p class="ex">${o.x}</p>` : ""}</div>${pie}</section>`;
+      const texto = () => (o.v ? `<p class="pr"><i>V/.</i> ${o.v}</p><p class="pr rr"><i>R/.</i> ${o.r}</p>` : "") + bloques(o.bl) + (st.x === 2 ? `<p class="pr jc"><i>V/.</i> ${o.mg[0]}</p><p class="pr rr jc"><i>R/.</i> ${o.mg[1]}</p><p class="pr jc"><i>Todos.</i> ${o.x}</p>` : st.x ? `<p class="ex">${o.x}</p>` : "");
+      if (st.t === "mis") return `<section class="v d ro mi${cl}">${sky()}${cab}<div class="rt z"><p class="c" style="margin-top:12px;font-size:14px;font-weight:600;color:var(--txt2)">${ORD[st.m]} misterio</p><h1 class="c" style="font-size:28px;line-height:34px">${mm[0]}</h1><p class="ru c" style="margin-top:6px;font-size:16px">${mm[1]}</p></div><div class="ring z" data-a="vista">${ring(ros.i)}${orb}<div class="emc">${EM[ros.set] || ""}</div></div><div class="rt z"><p class="pr c" style="font-size:21px;line-height:29px">${mm[2]}</p></div>${pie}</section>`;
+      // las cuentas de cada misterio: el aro de luz
+      if (mm) return `<section class="v d ro${st.lg ? " lg" : ""}${cl}">${sky()}${cab}<p class="rl z">${don}</p><div class="ring z" data-a="vista">${ring(ros.i)}${orb}<div><b class="rn">${nom}</b>${cta ? `<span>${cta}</span>` : ""}</div></div><div class="rt z">${texto()}</div>${pie}</section>`;
+      // lo que se reza en la cruz, la medalla y el colgante: un acercamiento a esa parte del rosario
+      const L = st.t === "let" ? LET[st.k - 1] : null, lista = (r, inv) => (inv ? `<p class="lr"><i>R/.</i> ${r}</p><ul class="li">${inv.map((x) => `<li>${x}</li>`).join("")}</ul>` : "");
+      return `<section class="v d ro cg${L ? " lt" : ""}${st.lg === 2 ? " xl" : ""}${cl}">${sky()}${cab}<div class="colg z" data-a="vista"><div class="cgv">${joya(ros.i, 1)}</div><div class="cgt"><small>${don}</small><b class="rn">${nom}</b>${cta ? `<span>${cta}</span>` : ""}${it && !st.lg && !L ? `<p class="cgi"><small>${it[0]}</small>«${esc(it[1])}»</p>` : ""}${S.rg == null && ros.i < 1 ? `<p class="pis">Toca el rosario para verlo en grande</p>` : ""}</div></div>
+        <div class="rt z">${L ? lista(L.r, L.inv) + lista(L.r2, L.inv2) + bloques(L.bl) : texto()}</div>${pie}</section>`;
     },
     listo: () => { const lit = encendidos(), n = vivos().length, ra = racha(), hito = total() <= 1 ? 1 : [3, 7, 14, 30, 60, 100, 200, 365].includes(ra) ? 2 : 0; return `<section class="v d in">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p>${S.pi ? `<p class="pin c z">Lo ofreciste «${esc(S.pi)}»</p>` : ""}<div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
       <div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>
@@ -775,7 +860,7 @@
     // hacia adentro la vista entra por la derecha; al regresar, por la izquierda; las pestañas solo suben
     dirN = b ? "bk" : /^(nom|est|advs|adv|pid|nov|novd|ang|vir|vird|sala)$/.test(view) ? "fw" : "";
     render(); dirN = ""; try { window.scrollTo(0, 0); } catch (_) {} }
-  function render(quieto) { despierta(view === "ros" || !!VZ); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); if (VZ) { pegaVideos(); escucha(); } volMu(); const x = app.querySelector(".in"); if (x) { if (quieto === 1) x.classList.remove("in"); else if (dirN) x.classList.add(dirN); } }
+  function render(quieto) { despierta(view === "ros" || !!VZ); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); if (view === "ros") setTimeout(mas, 90); if (VZ) { pegaVideos(); escucha(); } volMu(); const x = app.querySelector(".in"); if (x) { if (quieto === 1) x.classList.remove("in"); else if (dirN) x.classList.add(dirN); } }
   // tras redibujar una lista de opciones, el foco vuelve al botón que se tocó (teclado y lectores de pantalla)
   // y si quedó elegido, su palomita brota y el teléfono da un toque
   const foco = (a, k) => { try { const b = app.querySelector(`[data-a="${a}"][data-k="${k}"]`); if (!b) return; b.focus({ preventScroll: true }); if (b.classList.contains("on") || b.classList.contains("now")) { b.classList.add("ya"); const li = b.closest("li"); if (li) li.classList.add("ya"); } vibra(1); } catch (_) {} };
@@ -794,9 +879,10 @@
     advok: () => { if (!sel.length) return; S.vs = ADV.filter((x) => sel.includes(x.k)).map((x) => x.k); S.v = S.vs[0]; save(); va = ""; go(ob ? "pid" : "adv"); },
     verv: (d) => { va = d.k; go("adv"); },
     entra: () => { ob = 0; delete S.ob; save(); go("hoy"); },
-    ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0, f: forma() }; ros.p = pasos(ros.f); if (S.mu) musica(true); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
-    rosala: () => { ros = { set: MIS_DIA[now().getDay()], i: 0, sala: 1, f: forma() }; ros.p = pasos(ros.f); if (S.mu) musica(true); presSala(); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
-    sig: () => { if (!ros) return; if (ros.i >= ros.p.length - 1) return fin(); ros.i++; vibraPaso(); presSala(); ros.an = "sg"; render(); ros.an = ""; try { window.scrollTo(0, 0); } catch (_) {} },
+    ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0, f: forma(), g: Q.get("demo") && Q.get("g") ? 1 : grande0(0) }; ros.p = pasos(ros.f); if (S.mu) musica(true); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
+    rosala: () => { ros = { set: MIS_DIA[now().getDay()], i: 0, sala: 1, f: forma(), g: grande0(1) }; ros.p = pasos(ros.f); if (S.mu) musica(true); presSala(); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
+    vista: () => { if (!ros) return; ros.g = ros.g ? 0 : 1; S.rg = ros.g; save(); vibra(1); ros.an = "sg"; render(); ros.an = ""; try { window.scrollTo(0, 0); } catch (_) {} },
+    sig: () => { if (!ros) return; if (!ros.g && falta()) return baja(); if (ros.i >= ros.p.length - 1) return fin(); ros.i++; vibraPaso(); presSala(); ros.an = "sg"; render(); ros.an = ""; try { window.scrollTo(0, 0); } catch (_) {} },
     ant: () => { if (ros && ros.i > 0) { ros.i--; vibra(1); presSala(); ros.an = "at"; render(); ros.an = ""; } },
     cerrar: () => { const s = ros && ros.sala; ros = null; musica(false); if (s) presSala(); go(s ? "sala" : "hoy"); },
     novd: (d) => { nd = +d.n; go("novd"); },
@@ -828,7 +914,7 @@
     },
     jnom: () => { const f = document.getElementById("fn"), v = ((f && f.value) || "").replace(/\s+/g, " ").trim().slice(0, 24); if (!v) { if (f) f.focus(); return; } S.n = v; if (S.e < 0) S.ob = 1; save(); render(); },
     jtr: (d) => { if (!SB) return; const m = +d.k, h = jtHechos(jtA); if (h.includes(m)) return; const set = MIS_DIA[now().getDay()], ult = h.length === 4;
-      const f = forma(); ros = { set, i: 0, jt: { id: jtA, m }, f };
+      const f = forma(); ros = { set, i: 0, jt: { id: jtA, m }, f, g: grande0(0) };
       ros.p = [{ t: "cruz", b: "x" }]; decena(ros.p, m, f === "mx"); if (ult) cierre(ros.p, f === "mx", 1);
       if (S.mu) musica(true); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
     jtv: () => { if (!RM) { aviso("La videollamada necesita internet."); return; } const c = "J" + jtA.replace(/-/g, "").slice(0, 5).toUpperCase(); if (!sala || codigo !== c) { if (sala) salir(); entrar(c, false); } go("sala"); },
@@ -876,6 +962,7 @@
   // en iPhone los botones solo muestran su estado presionado si alguien escucha el toque
   document.addEventListener("touchstart", () => {}, { passive: true });
   document.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target && e.target.id === "fn") A.nom(); });
+  window.addEventListener("scroll", () => { if (view === "ros") mas(); }, { passive: true });
   window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (/^(hoy|rezar|mapa|yo)$/.test(h) && h !== view && view !== "ros") go(h); });
   if (Q.get("demo") && Q.get("ob")) ob = 1;
   if (Q.get("paloma")) S.pd = "";
@@ -887,7 +974,7 @@
   if (LUZ) { h0 = "luzv"; try { history.replaceState(null, "", location.pathname); } catch (_) {} }
   if (h0 === "ros" && S.n) A.ros({}); else if (h0 === "novd" && S.n) { nd = +(Q.get("n") || 6); go("novd"); } else go(V[h0] ? h0 : "hoy");
   if (errG) { try { history.replaceState(null, "", location.pathname); } catch (_) {} setTimeout(() => aviso("No se pudo entrar con Google. Intenta de nuevo."), 400); }
-  if (Q.get("demo") && Q.get("gente") && ros) { const N = ["Lucía", "Pedro", "Ana", "Rosa", "Juan", "Carmen", "Luis", "Sofía", "Diego", "Elena", "Pablo", "Marta"]; ros.sala = 1; lead = true; peersS = N.slice(0, +Q.get("gente")).map((n, i) => ({ peer: "p" + i, isMe: !i, presence: { n, v: i % 4 === 3 ? 2 : 1, lead: !i ? 1 : 0 } })); render(); const h = app.querySelector('[data-p="p2"]'); if (h) h.classList.add("habla"); }
+  if (Q.get("demo") && Q.get("gente") && ros) { const N = ["Lucía", "Pedro", "Ana", "Rosa", "Juan", "Carmen", "Toño", "Sofía", "Diego", "Elena", "Pablo", "Marta", "Mateo", "Valeria", "Emilio", "Regina"]; ros.sala = 1; ros.g = Q.get("g") !== null ? +Q.get("g") : grande0(1); lead = !Q.get("sigo"); peersS = N.slice(0, +Q.get("gente")).map((n, i) => ({ peer: "p" + i, isMe: !i, presence: { n, v: i % 4 === 3 ? 2 : 1, lead: !i ? 1 : 0 } })); render(); const h = app.querySelector('[data-p="p2"]'); if (h) h.classList.add("habla"); }
   if (Q.get("demo") && Q.get("jtd")) { const id = "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed", n = +Q.get("jtd"), Q2 = ["Constanza", S.n, "Constanza", S.n, "Constanza"], hh = ["T13:40:00", "T15:05:00", "T19:20:00", "T21:10:00", "T22:30:00"];
     S.jt = [{ id, con: "Constanza" }]; JT[id] = { creador: S.n, intencion: "Por nuestra familia", cuentas: [0, 1, 2, 3, 4].slice(0, n).map((m) => ({ m, quien: Q2[m], hecho: key(now()) + hh[m] })), completos: n === 5 ? [key(now()), key(add(now(), -1)), key(add(now(), -2))] : [key(add(now(), -1)), key(add(now(), -2))], gente: ["Constanza"] }; jtA = id; if (Q.get("v") === "jt") go("jt"); else render(1); }
   if (Q.get("demo") && Q.get("t")) setTimeout(() => aviso(Q.get("t")), 30);
