@@ -20,7 +20,9 @@ function fakeSupabase(sesIni) {
     },
     removeChannel: (ch) => ch._leave(),
     rpc: (fn, arg) => { if (fn !== "velas_del_dia") return Promise.resolve({ data: null, error: { message: "no existe" } }); const c = {}; velas.filter((x) => x.dia === arg.d).forEach((x) => { c[x.estado] = (c[x.estado] || 0) + 1; }); return Promise.resolve({ data: Object.keys(c).map((e) => ({ estado: +e, n: c[e] })), error: null }); },
-    auth: (() => { let cb = null, ses = sesIni || null; const A = { getSession: () => Promise.resolve({ data: { session: ses } }), onAuthStateChange: (f) => { cb = f; return { data: { subscription: { unsubscribe() {} } } }; }, signInWithOAuth: () => { ses = { user: { id: 'u1', email: 'lucia@example.com' } }; setTimeout(() => cb && cb('SIGNED_IN', ses), 2); return Promise.resolve({ error: null }); }, signOut: () => { ses = null; cb && cb('SIGNED_OUT', null); return Promise.resolve({}); } }; return A; })(),
+    auth: (() => { let cb = null, ses = sesIni || null; const A = { getSession: () => Promise.resolve({ data: { session: ses } }), onAuthStateChange: (f) => { cb = f; return { data: { subscription: { unsubscribe() {} } } }; }, signInWithOtp: (o) => { A.__otp = o.options && o.options.shouldCreateUser && /@/.test(o.email) ? "123456" : null; return Promise.resolve({ error: A.__otp ? null : { message: "bad" } }); },
+      verifyOtp: (o) => { if (o.token !== A.__otp) return Promise.resolve({ error: { message: "Token has expired or is invalid" } }); ses = { user: { id: "u2", email: o.email } }; setTimeout(() => cb && cb("SIGNED_IN", ses), 5); return Promise.resolve({ data: { session: ses }, error: null }); },
+      signInWithOAuth: () => { ses = { user: { id: 'u1', email: 'lucia@example.com' } }; setTimeout(() => cb && cb('SIGNED_IN', ses), 2); return Promise.resolve({ error: null }); }, signOut: () => { ses = null; cb && cb('SIGNED_OUT', null); return Promise.resolve({}); } }; return A; })(),
     from: (t) => t === 'progreso' ? { upsert: (row) => { nubeRows[row.user_id] = JSON.parse(JSON.stringify(row)); return Promise.resolve({ error: null }); }, select: () => ({ eq: (_c, v) => ({ maybeSingle: () => Promise.resolve({ data: nubeRows[v] ? { datos: nubeRows[v].datos } : null }) }) }) } : ({ insert: (row) => { if (t !== "velas") throw new Error("tabla"); velas.push(row); return Promise.resolve({ error: null }); }, select: () => ({ eq: (_c, v) => ({ limit: () => Promise.resolve({ data: velas.filter((x) => x.dia === v) }) }) }) })
   }; } };
 }
@@ -52,13 +54,13 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   if (!txt(b2).includes("11 de 73")) throw new Error("quien entra tarde no alcanza la cuenta: " + txt(b2).slice(0, 200));
   click(a2, '[data-a="sig"]'); await wait(40); if (!txt(b2).includes("12 de 73")) throw new Error("no sigue después de entrar tarde: " + txt(b2).slice(0, 120));
   // cuenta de Google: guarda el avance en la nube y lo recupera en otro teléfono
-  click(a, '[data-a="go"][data-v="hoy"]'); click(a, '[data-a="go"][data-v="yo"]'); if (!txt(a).includes("Guardar con Google")) throw new Error("sin botón de Google"); click(a, '[data-a="login"]'); await wait(1500);
-  if (!txt(a).includes("Tu avance está guardado") || !nubeRows.u1 || !nubeRows.u1.datos.d["2026-12-03"].r) throw new Error("nube: " + JSON.stringify(nubeRows).slice(0, 200) + txt(a).slice(0, 200));
+  click(a, '[data-a="go"][data-v="hoy"]'); click(a, '[data-a="go"][data-v="yo"]'); if (!txt(a).includes("Guardar con Google")) throw new Error("sin botón de Google"); click(a, '[data-a="login"]'); click(a, '[data-a="gg"]'); await wait(1500);
+  click(a, '[data-a="go"][data-v="yo"]'); if (!txt(a).includes("Tu avance está guardado") || !nubeRows.u1 || !nubeRows.u1.datos.d["2026-12-03"].r) throw new Error("nube: " + JSON.stringify(nubeRows).slice(0, 200) + txt(a).slice(0, 200));
   const e = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-04&google=1", pretendToBeVisual: true }); e.window.scrollTo = () => {}; const fs2 = fakeSupabase(); e.window.supabase = fs2; e.window.eval(sc); await wait(30);
   if (!txt(e).includes("Ya tengo cuenta")) throw new Error("bienvenida sin «Ya tengo cuenta»");
   click(e, '[data-a="empieza"]'); e.window.document.getElementById("fn").value = "Lucía"; click(e, '[data-a="nom"]'); click(e, '#esl [data-a="esc"][data-k="22"]'); click(e, '[data-a="advt"][data-k="lourdes"]'); click(e, '[data-a="advok"]'); e.window.document.getElementById("fi").value = "Por mi abuela"; click(e, '.btn[data-a="piok"]');
   if (!txt(e).includes("Guardar con Google") || !txt(e).includes("Ahora no")) throw new Error("resumen sin guardar con Google: " + txt(e).slice(-300));
-  click(e, '[data-a="login"]'); await wait(1500);
+  click(e, '[data-a="login"]'); if (!txt(e).includes("Guarda tu avance")) throw new Error("pantalla de entrar: " + txt(e).slice(0, 200)); click(e, '[data-a="gg"]'); await wait(1500);
   if (!txt(e).includes("Tu avance se guarda en tu cuenta")) throw new Error("resumen después de entrar: " + txt(e).slice(-300));
   click(e, '[data-a="entra"]'); if (txt(e).includes("vive solo en este teléfono")) throw new Error("sigue pidiendo guardar con sesión"); click(e, '[data-a="go"][data-v="yo"]');
   if (!/1\s*rosario rezado/.test(txt(e).replace(/\s+/g, " ")) && !txt(e).includes("1rosario rezado")) throw new Error("no recupera el avance en otro teléfono: " + txt(e).slice(0, 300));
@@ -66,7 +68,7 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   if (nubeRows.u1.datos.pi !== "Por mi abuela") throw new Error("la intención no viaja con la cuenta");
   // teléfono nuevo: «Ya tengo cuenta» en la bienvenida recupera todo y salta los pasos
   const f = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-05&google=1", pretendToBeVisual: true }); f.window.scrollTo = () => {}; f.window.supabase = fakeSupabase(); f.window.eval(sc); await wait(30);
-  click(f, '[data-a="login"]'); await wait(1500);
+  click(f, '[data-a="login"]'); if (!txt(f).includes("Entra a tu cuenta")) throw new Error("entrar desde bienvenida"); click(f, '[data-a="gg"]'); await wait(1500);
   if (!txt(f).includes("Lucía") || !txt(f).includes("Mensaje del día") || !txt(f).includes("Lourdes")) throw new Error("«Ya tengo cuenta» no recupera: " + txt(f).slice(0, 300));
   // quien ya tiene sesión nunca ve el aviso de «vive solo en este teléfono», ni un instante al abrir
   const guardado = e.window.localStorage.getItem("atrio1");
@@ -108,6 +110,16 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   // cuenta sin avance: se queda en la bienvenida y lo dice
   const m = abre("&code=abc123", { user: { id: "u9", email: "otra@example.com" } }, null); await wait(80);
   if (!txt(m).includes("todavía no tiene avance guardado") || !txt(m).includes("Empezar") || m.window.document.querySelector('[data-a="login"]')) throw new Error("cuenta vacía: " + txt(m).slice(0, 300));
+  // entrar con código por correo
+  const o = abre("&correo=1", null, conRezo); await wait(60);
+  click(o, '[data-a="go"][data-v="yo"]'); click(o, '[data-a="login"]');
+  o.window.document.getElementById("fm").value = "sin-arroba"; click(o, '[data-a="otp"]'); if (txt(o).includes("Revisa tu correo")) throw new Error("acepta correo inválido");
+  o.window.document.getElementById("fm").value = " Rosa@Gmail.com "; click(o, '[data-a="otp"]'); await wait(30);
+  if (!txt(o).includes("Revisa tu correo") || !txt(o).includes("rosa@gmail.com")) throw new Error("no pasa al código: " + txt(o).slice(0, 200));
+  o.window.document.getElementById("fk").value = "111111"; click(o, '[data-a="otpok"]'); await wait(30); if (!txt(o).includes("no es correcto")) throw new Error("acepta código malo");
+  o.window.document.getElementById("fk").value = "123 456"; click(o, '[data-a="otpok"]'); await wait(200);
+  if (!txt(o).includes("Tu avance está guardado") || !txt(o).includes("rosa@gmail.com")) throw new Error("no entra con el código: " + txt(o).slice(0, 300));
+  if (!nubeRows.u2 || !nubeRows.u2.datos.d["2026-12-04"]) throw new Error("no sube el avance al entrar con código");
   // sin la bandera, nadie ve botones de Google
   const g = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?demo=1&fecha=2026-12-06&v=yo", pretendToBeVisual: true }); g.window.scrollTo = () => {}; g.window.supabase = fakeSupabase(); g.window.eval(sc); await wait(30);
   if (g.window.document.querySelector('[data-a="login"]')) throw new Error("ofrece Google con el acceso cerrado");
