@@ -661,6 +661,61 @@ div.jyt{cursor:default}
 .gsiw .gsi{display:none}
 .gsiw.on>.btn{display:none}
 .gsiw.on .gsi{display:flex;justify-content:center;min-height:44px;padding:6px 0}
+/* final: guardar con Google a la vista, sin bajar */
+.lsg h1{margin-top:6px!important;font-size:30px!important;line-height:35px!important}
+.lsg .gua{margin-top:10px}
+.lsg .mapa-full{min-height:190px;flex:none;margin-top:4px}
+.lsg .mapa-full svg{max-height:210px}
+/* la notita de música, centrada en su círculo */
+.ic.mu{justify-content:center}
+/* consejo de la música, colgado del botón de arriba */
+.hd.htm{position:relative;z-index:30}
+.hd .tip.tm{position:absolute;right:-4px;top:calc(100% + 12px);width:min(290px,calc(100vw - 40px));padding:16px 16px 12px 18px;border-radius:18px;background:linear-gradient(180deg,#FFF8E6,#F6E3B4);color:var(--manto);box-shadow:0 18px 40px -12px rgba(0,0,0,.55);text-align:left;animation:tipin .42s cubic-bezier(.2,.8,.2,1) .5s backwards}
+.hd .tip.tm:before{content:"";position:absolute;right:18px;top:-8px;width:16px;height:16px;background:#FFF8E6;transform:rotate(45deg);border-radius:4px 0 0 0}
+.tipbs{display:flex;align-items:center;justify-content:flex-end;gap:14px;margin-top:10px}
+.tipbs .tipok{margin:0}
+.tipbs .lk{color:#3E5A5D;font-size:15px}
+.hd.htm .ic.mu{border-color:var(--oroc);animation:tipl 1.8s ease-out infinite}
+@media (prefers-reduced-motion:reduce){.hd .tip.tm,.hd.htm .ic.mu{animation:none}}
+/* ---------- bienvenida: el rosario se enciende dentro del arco ---------- */
+@property --bva{syntax:"<angle>";inherits:false;initial-value:0deg}
+.bienv{overflow:hidden}
+.bvh{justify-content:flex-start;gap:10px;animation:bvf .9s ease both}
+.bvh b{font-family:var(--se);font-size:24px;font-weight:600;letter-spacing:.01em}
+.bva{position:relative;width:min(94%,370px);aspect-ratio:300/380;margin:6px auto 0;flex:none}
+.bva:before{content:"";position:absolute;inset:4% 4% 0;border-radius:200px 200px 0 0;background:radial-gradient(70% 50% at 50% 38%,rgba(244,220,166,.22),rgba(244,220,166,0) 72%),linear-gradient(180deg,rgba(27,100,106,.55),rgba(8,42,47,.15));animation:bvf 1.4s ease .2s both}
+.bvarc{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.bvarc path{stroke-dasharray:900;stroke-dashoffset:900;animation:bvdr 2.2s cubic-bezier(.6,.1,.2,1) .15s forwards}
+.bvr{position:absolute;left:50%;top:-10%;width:170%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(244,220,166,.09) 0 1.6deg,rgba(244,220,166,0) 1.6deg 7.5deg);-webkit-mask-image:radial-gradient(closest-side,#000 30%,transparent 100%);mask-image:radial-gradient(closest-side,#000 30%,transparent 100%);animation:bvf 2s ease 1s both,bvrot 90s linear infinite}
+.bvj{position:absolute;left:17%;right:17%;top:4.5%;aspect-ratio:346/634}
+.bvj>div{position:absolute;inset:0}
+.bvj .jy{display:block;width:100%;height:auto;filter:drop-shadow(0 10px 16px rgba(0,0,0,.45))}
+.bv0{animation:bvf 1.2s ease .5s both}
+.bv1{-webkit-mask-image:conic-gradient(from 180deg at 50% 64%,#000 var(--bva),transparent calc(var(--bva) + 14deg));mask-image:conic-gradient(from 180deg at 50% 64%,#000 var(--bva),transparent calc(var(--bva) + 14deg));animation:bvsw 4.2s cubic-bezier(.4,0,.6,1) 1s forwards}
+.bvch{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:200px 200px 0 0}
+.bvch i{position:absolute;bottom:-4%;width:3px;height:3px;border-radius:50%;background:#FBE9BE;box-shadow:0 0 8px 2px rgba(251,233,190,.6);opacity:0;animation:bvup 8s linear infinite}
+.bvt{text-align:center;margin-top:6px}
+.bvq{font-family:var(--se);font-style:italic;font-weight:500;font-size:31px;line-height:36px;animation:bvin 1.1s cubic-bezier(.2,.8,.2,1) 2.4s both}
+.bvs{margin-top:8px;font-size:15px;animation:bvin 1s ease 2.9s both}
+.bvd{margin:12px auto 0;max-width:32ch;font-size:16px;line-height:23px;animation:bvin 1s ease 3.2s both}
+.bvb{padding-top:18px;animation:bvin .9s ease 3.6s both}
+.bvgo{position:relative;overflow:hidden}
+.bvgo:after{content:"";position:absolute;top:0;bottom:0;left:-40%;width:30%;background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));transform:skewX(-18deg);animation:bvsh 4.8s ease-in-out 4.4s infinite}
+@keyframes bvf{from{opacity:0}}
+@keyframes bvin{from{opacity:0;transform:translateY(14px)}}
+@keyframes bvdr{to{stroke-dashoffset:0}}
+@keyframes bvsw{to{--bva:375deg}}
+@keyframes bvrot{to{transform:translateX(-50%) rotate(360deg)}}
+@keyframes bvup{0%{opacity:0;transform:translateY(0)}15%{opacity:.9}80%{opacity:.5}100%{opacity:0;transform:translateY(-330px)}}
+@keyframes bvsh{0%,60%{left:-40%}100%{left:130%}}
+@media (max-height:740px){.bva{width:min(70%,290px)}.bvq{font-size:27px;line-height:32px}.bvd{display:none}}
+@media (prefers-reduced-motion:reduce){.bienv *{animation:none!important}.bvarc path{stroke-dashoffset:0}.bv1{-webkit-mask-image:none;mask-image:none}}
+
+.bienv{justify-content:flex-start}
+.bienv .bvb{margin-top:auto}
+.bv0 .pu,.bv0 .cur,.bv0 [fill="url(#rgl)"]{display:none}
+.bv1 [fill="url(#rgl)"]{opacity:.55}
+.bv1 .pu{display:none}
 </style>
 </head>
 <body>
@@ -1468,8 +1523,12 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     return { pos, curv, ray, cad: `M${curv[0][0][0]} ${curv[0][0][1]}` + curv.map((c) => `Q${f1(c[1][0])} ${f1(c[1][1])} ${c[2][0]} ${c[2][1]}`).join("") + "M195 486V603" };
   })();
   function joya(i, corta) {
-    const o = cuentas(i), done = o.done, cur = o.cur, tn = TONO[ros.set] || TONO.gozosos, P = JY.pos; let luz = "", cu = "", aura = "";
-    const pon = (id, r, oro) => { const q = perla(o, id, P[id][0], P[id][1], r, oro); luz += q[0]; cu += q[1]; };
+    const o = cuentas(i), done = o.done, cur = o.cur, tn = TONO[ros.set] || TONO.gozosos, P = JY.pos; let luz = "", cu = "", aura = "", som = "";
+    // cada cuenta: sombra suave abajo, perla con oriente de nácar; las de Padre nuestro, esferas de filigrana de oro
+    const pon = (id, r, oro) => { const x = P[id][0], y = P[id][1], c = id === cur, rr = c ? r * 1.38 : r, q = perla(o, id, x, y, r, oro), t = `translate(${f1(x)} ${f1(y)})`; luz += q[0];
+      som += `<ellipse cx="${f1(x + rr * 0.12)}" cy="${f1(y + rr * 0.42)}" rx="${f1(rr * 1.02)}" ry="${f1(rr * 0.95)}" fill="#03191C" opacity=".42"/>`;
+      cu += q[1] + (oro ? `<g transform="${t}" fill="none" stroke-width="${f1(rr * 0.07)}"><g stroke="#6E4E14" stroke-opacity=".55"><ellipse rx="${f1(rr * 0.97)}" ry="${f1(rr * 0.34)}"/><ellipse rx="${f1(rr * 0.34)}" ry="${f1(rr * 0.97)}"/><ellipse rx="${f1(rr * 0.72)}" ry="${f1(rr * 0.97)}"/><ellipse rx="${f1(rr * 0.97)}" ry="${f1(rr * 0.72)}"/></g><circle r="${f1(rr * 0.18)}" fill="#FFF6DA" stroke="none" opacity=".75"/><circle r="${f1(rr * 0.99)}" stroke="#FFF3D0" stroke-opacity=".55"/></g>`
+        : `<g transform="${t}"><circle r="${f1(rr)}" fill="url(#jnc)"/><ellipse cy="${f1(rr * 0.58)}" rx="${f1(rr * 0.46)}" ry="${f1(rr * 0.2)}" fill="#fff" opacity=".2"/><circle cx="${f1(rr * 0.36)}" cy="${f1(-rr * 0.5)}" r="${f1(rr * 0.08)}" fill="#fff" opacity=".9"/></g>`); };
     for (let m = 0; m < 5; m++) { let n = 0; for (let k = 1; k <= 10; k++) { const id = "s" + m + "_" + k; if (done[id] || id === cur) n = k; pon(id, 7); }
       if (n) { let d = ""; for (let k = 1; k <= n; k++) d += (k === 1 ? "M" : "L") + f1(P["s" + m + "_" + k][0]) + " " + f1(P["s" + m + "_" + k][1]); if (n === 1) d += "l.1 0";
         aura += `<path d="${d}" stroke="${tn[1]}" stroke-opacity=".1" stroke-width="46"/><path d="${d}" stroke="${tn[0]}" stroke-opacity=".12" stroke-width="29"/><path d="${d}" stroke="${tn[0]}" stroke-opacity=".15" stroke-width="15"/>`; } }
@@ -1478,29 +1537,36 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     // medalla: óvalo de oro con filo de perlitas, esmalte y la Virgen en relieve, con su resplandor
     const med = `<g transform="translate(195 462)">${mc ? `<ellipse rx="46" ry="52" fill="url(#rgl)"/><ellipse class="pu" rx="24" ry="30" fill="none" stroke="#FBE9BE" stroke-width="1.5"/>` : ""}
       <g fill="none" stroke="#D9B35A" stroke-width="1.5"><circle cx="-9" cy="-21.4" r="2.6"/><circle cx="9" cy="-21.4" r="2.6"/><circle cy="25.6" r="2.6"/></g>
-      <ellipse rx="18" ry="24" fill="url(#jmm)" stroke="#6E4E14" stroke-width=".9"/><ellipse rx="15.9" ry="21.9" fill="none" stroke="#FFF6DA" stroke-opacity=".85" stroke-width="1.5" stroke-dasharray=".1 3.05" stroke-linecap="round"/>
+      <ellipse cx="1.4" cy="3.2" rx="19" ry="25" fill="#03191C" opacity=".42"/>
+      <ellipse rx="18" ry="24" fill="url(#jmm)" stroke="#6E4E14" stroke-width=".9"/><ellipse rx="17.1" ry="23.1" fill="none" stroke="#7A5716" stroke-opacity=".7" stroke-width=".9" stroke-dasharray="1.1 1.1"/><ellipse rx="15.9" ry="21.9" fill="none" stroke="#FFF6DA" stroke-opacity=".85" stroke-width="1.5" stroke-dasharray=".1 3.05" stroke-linecap="round"/>
       <ellipse rx="13.2" ry="19.2" fill="url(#jme)" stroke="#8A6420" stroke-width=".7"/>
       <polygon points="${JY.ray}" fill="#F3D484" opacity="${mon ? ".96" : ".6"}"/>
       <path d="M0-12.5C3-12.5 4.4-10 4.2-7.8 6.3-4.8 7.3-.2 7.6 5.4 7.9 9.6 6.6 12.6 0 12.6-6.6 12.6-7.9 9.6-7.6 5.4-7.3-.2-6.3-4.8-4.2-7.8-4.4-10-3-12.5 0-12.5Z" fill="url(#jmv)" stroke="#FFF3D0" stroke-width=".6"/>
-      <ellipse cy="-8.5" rx="1.9" ry="2.4" fill="#F4DFBE"/><path d="M-1.5-2.4L0-5 1.5-2.4 0-.5Z" fill="#F4DFBE"/><g fill="#F6E0AC"><circle cx="-3.6" cy="3" r=".55"/><circle cx="3.4" cy="1.2" r=".55"/><circle cx="-2" cy="8" r=".55"/><circle cx="2.8" cy="7" r=".55"/><circle cx="4.6" cy="4.6" r=".5"/><circle cx="-4.8" cy="6.4" r=".5"/></g>
+      <g fill="#FFF3C4">${Array.from({ length: 12 }, (_, k) => { const a = Math.PI * (1.12 + (k * 0.76) / 11); return `<circle cx="${f1(10.6 * Math.cos(a))}" cy="${f1(-3 + 15.4 * Math.sin(a))}" r=".62"/>`; }).join("")}</g><ellipse cy="-8.5" rx="1.9" ry="2.4" fill="#F4DFBE"/><path d="M-1.5-2.4L0-5 1.5-2.4 0-.5Z" fill="#F4DFBE"/><g fill="#F6E0AC"><circle cx="-3.6" cy="3" r=".55"/><circle cx="3.4" cy="1.2" r=".55"/><circle cx="-2" cy="8" r=".55"/><circle cx="2.8" cy="7" r=".55"/><circle cx="4.6" cy="4.6" r=".5"/><circle cx="-4.8" cy="6.4" r=".5"/></g>
       <path d="M-4.6 14.2Q0 17 4.6 14.2" fill="none" stroke="#F6E0AC" stroke-width="1.1" stroke-linecap="round"/></g>`;
     // crucifijo: oro con esmalte y remates de botón
-    const cz = `<rect x="-6" y="0" width="12" height="96" rx="3.2"/><rect x="-29" y="23" width="58" height="12" rx="3.2"/><circle cy="1" r="6.6"/><circle cy="95" r="6.6"/><circle cx="-29" cy="29" r="6.6"/><circle cx="29" cy="29" r="6.6"/>`;
+    const tre = (x, y, a) => { const c = Math.cos(a), s2 = Math.sin(a), p = (u, v) => `cx="${f1(x + u * c - v * s2)}" cy="${f1(y + u * s2 + v * c)}"`; return `<circle ${p(0, -4.6)} r="4.3"/><circle ${p(-4.4, -.4)} r="4.3"/><circle ${p(4.4, -.4)} r="4.3"/><circle ${p(0, 1.4)} r="3.4"/>`; };
+    const cz = `<rect x="-6" y="0" width="12" height="96" rx="3.2"/><rect x="-29" y="23" width="58" height="12" rx="3.2"/>${tre(0, 1, 0)}${tre(0, 95, Math.PI)}${tre(-29, 29, -Math.PI / 2)}${tre(29, 29, Math.PI / 2)}`;
     const cruz = `<g transform="translate(195 606)">${xc ? `<ellipse cy="48" rx="62" ry="76" fill="url(#rgl)"/><ellipse class="pu" cy="48" rx="40" ry="58" fill="none" stroke="#FBE9BE" stroke-width="1.5"/>` : ""}
-      <circle cy="-4.6" r="3.4" fill="none" stroke="#D9B35A" stroke-width="1.6"/><g fill="#6E4E14" stroke="#6E4E14" stroke-width="1.7">${cz}</g><g fill="url(#jmo)">${cz}</g>
+      <circle cy="-4.6" r="3.4" fill="none" stroke="#D9B35A" stroke-width="1.6"/><g fill="#03191C" opacity=".42" transform="translate(2.2 4)">${cz}</g><g fill="#6E4E14" stroke="#6E4E14" stroke-width="1.7">${cz}</g><g fill="url(#jmo)">${cz}</g>
       <g fill="url(#jme)"><rect x="-3" y="6" width="6" height="84" rx="2"/><rect x="-24.5" y="26" width="49" height="6" rx="2"/></g>
+      <g fill="none" stroke="#E9C67D" stroke-opacity=".55" stroke-width=".45" stroke-dasharray=".1 1.6" stroke-linecap="round"><path d="M-4.6 14V88M4.6 14V88M-26 24.6H-8M8 24.6H26M-26 33.4H-8M8 33.4H26"/></g>
+      <g stroke="#F6E0AC" stroke-width=".55" stroke-linecap="round" opacity=".8">${Array.from({ length: 16 }, (_, k) => { const a = (k / 16) * 2 * Math.PI, l = k % 2 ? 9 : 12.5; return `<path d="M${f1(5.2 * Math.cos(a))} ${f1(20 + 5.2 * Math.sin(a))}L${f1(l * Math.cos(a))} ${f1(20 + l * Math.sin(a))}"/>`; }).join("")}</g>
       <g fill="#FFF3D0"><circle cy="1" r="2.1"/><circle cy="95" r="2.1"/><circle cx="-29" cy="29" r="2.1"/><circle cx="29" cy="29" r="2.1"/><rect x="-4.4" y="9" width="8.8" height="3.8" rx=".8"/></g>
-      <g fill="none" stroke="#FFF3D0" stroke-linecap="round" stroke-linejoin="round"><circle cy="20" r="3.1" fill="#FFF3D0" stroke="none"/><path d="M-19.5 25.4Q-9 27.8 0 31.4Q9 27.8 19.5 25.4" stroke-width="2.3"/><path d="M0 28V55Q-2.2 65 .6 77" stroke-width="3.5"/></g></g>`;
+      <circle cy="19.6" r="5.2" fill="none" stroke="#FFF3D0" stroke-opacity=".7" stroke-width=".6"/><g fill="url(#jcp)" stroke="#8A6420" stroke-width=".35" stroke-linejoin="round"><path d="M-3.4 28.9L-20.2 24.6Q-21.9 24.7-21.2 26.1L-3.2 32.9ZM3.4 28.9L20.2 24.6Q21.9 24.7 21.2 26.1L3.2 32.9Z"/><path d="M-1.3 22.6H1.3L1.6 25.6Q3.6 26.4 3.9 28.8L3.8 34.6Q3.4 40.6 2.8 45.6H-2.8Q-3.4 40.6-3.8 34.6L-3.9 28.8Q-3.6 26.4-1.6 25.6Z"/><path d="M-2.6 50.2Q-2.3 60-1.8 66.6Q-1.5 72.4-.8 77.8H.9Q1.4 71.8 1.8 66Q2.3 58 2.7 50.2Z"/><path d="M-3.6 45.2H3.6L4.3 50.4Q2.4 52.2 0 51.4Q-2.4 52.2-4.3 50.4Z" fill="#FFF8E4"/></g><ellipse cy="19.7" rx="2.5" ry="3" fill="url(#jcp)" stroke="#8A6420" stroke-width=".35"/><path d="M-1.9 33.4Q0 34.6 1.9 33.4M-1.6 37.4Q0 38.4 1.6 37.4" fill="none" stroke="#B48A3C" stroke-opacity=".55" stroke-width=".35" stroke-linecap="round"/></g>`;
     const yc = cur === "x" ? 650 : cur === "p0" ? 606 : cur === "g1" ? 512 : cur === "M" ? 470 : 560, y0 = Math.max(392, Math.min(565, yc - 72.5));
     return `<svg class="jy" viewBox="${corta ? `133.5 ${f1(y0)} 123 145` : "22 76 346 634"}" aria-hidden="true"><defs>${DEFS}
       <linearGradient id="jmm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF4CC"/><stop offset=".3" stop-color="#EBC66E"/><stop offset=".58" stop-color="#B8862A"/><stop offset=".8" stop-color="#E8C36A"/><stop offset="1" stop-color="#9A6E1C"/></linearGradient>
       <linearGradient id="jmo" gradientUnits="userSpaceOnUse" x1="-30" y1="0" x2="30" y2="98"><stop offset="0" stop-color="#FFF4CC"/><stop offset=".28" stop-color="#EBC66E"/><stop offset=".52" stop-color="#B8862A"/><stop offset=".76" stop-color="#EDCB78"/><stop offset="1" stop-color="#9A6E1C"/></linearGradient>
+      <linearGradient id="jcp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E9CF96"/><stop offset=".45" stop-color="#FFF6DC"/><stop offset="1" stop-color="#D8B670"/></linearGradient>
+      <radialGradient id="jnc" cx=".5" cy=".5" r=".5"><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#F7C9DA" stop-opacity=".2"/><stop offset=".93" stop-color="#A8D8EE" stop-opacity=".26"/><stop offset="1" stop-color="#E8F4F2" stop-opacity=".1"/></radialGradient>
       <radialGradient id="jme" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#1B646A"/><stop offset="1" stop-color="#082C31"/></radialGradient>
       <linearGradient id="jmv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A8A88"/><stop offset="1" stop-color="#0F5257"/></linearGradient>
       <radialGradient id="jau"><stop offset="0" stop-color="#F4DCA6" stop-opacity=".16"/><stop offset=".6" stop-color="#F4DCA6" stop-opacity=".05"/><stop offset="1" stop-color="#F4DCA6" stop-opacity="0"/></radialGradient></defs>
       <ellipse cx="195" cy="268" rx="205" ry="240" fill="url(#jau)" opacity="${f1(0.45 + 0.55 * pr)}"/><g fill="none" stroke-linecap="round" stroke-linejoin="round">${aura}</g>
-      <path d="${JY.cad}" fill="none" stroke="#5C4312" stroke-opacity=".55" stroke-width="2.6"/><path d="${JY.cad}" fill="none" stroke="#E9C67D" stroke-width="1.5" stroke-dasharray="2.6 1.5"/>
-      ${luz}${cu}${med}${cruz}</svg>`;
+      <path d="${JY.cad}" fill="none" stroke="#03191C" stroke-opacity=".4" stroke-width="3.4" transform="translate(.8 1.8)"/><path d="${JY.cad}" fill="none" stroke="#5C4312" stroke-opacity=".7" stroke-width="2.8"/>
+      <path d="${JY.cad}" fill="none" stroke="#D9AE5C" stroke-width="2.3" stroke-dasharray="3.4 1.4"/><path d="${JY.cad}" fill="none" stroke="#FFF2CC" stroke-opacity=".8" stroke-width=".7" stroke-dasharray="2 2.8" stroke-dashoffset="-.6"/><path d="${JY.cad}" fill="none" stroke="#B08433" stroke-width="1.2" stroke-dasharray="1.2 3.6" stroke-dashoffset="-3.6"/>
+      ${som}${luz}${cu}${med}${cruz}</svg>`;
   }
   // dónde acomodar a la familia dentro del rosario: filas de círculos que siguen el hueco entre las cuentas
   const hueco = (y) => { const xl = y <= 300 ? 94 - ((y - 100) / 200) * 44 : 50 + ((y - 300) / 162) * 145; return [xl + 20, 370 - xl]; };
@@ -1519,10 +1585,14 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   /* ---------- pantallas ---------- */
   let view = "hoy", ros = null, nd = 1, vn = 0, msg = "", ob = 0, vuelve = "hoy", sel = [], deG = /[?&]code=/.test(location.search) ? 1 : 0;
   const V = {
-    bien: () => `<section class="v d in">${sky()}<div class="hd z" style="justify-content:flex-start;gap:10px"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M6.5 24.5V13a7.5 7.5 0 0 1 15 0v11.5M3.5 24.5h21" stroke="#E6C27A" stroke-width="1.6" stroke-linecap="round"/><polygon transform="translate(8 8.2) scale(.75)" fill="#E6C27A" points="${S16}"/></svg><b style="font-family:var(--se);font-size:26px;font-weight:600">Atrio</b></div>${portal()}
-      <p class="z" style="margin-top:14px;font-family:var(--se);font-style:italic;font-weight:500;font-size:33px;line-height:39px">¿No estoy yo aquí,<br>que soy tu madre?</p><p class="ru z" style="margin-top:8px;font-size:16px">Santa María de Guadalupe a san Juan Diego, 1531</p>
-      <p class="sub z" style="margin-top:14px;font-size:16px;line-height:24px">Reza el rosario, la novena y el Ángelus, solo o con tu familia. No importa cuánto tiempo pasó.</p>
-      <div class="mt z" style="padding-top:24px"><button class="btn go" data-a="empieza">Empezar</button>${conG() && !U ? `<button class="lk" data-a="login" style="display:block;margin:6px auto 0">Ya tengo cuenta</button>` : ""}</div></section>`,
+    bien: () => { const par = (() => { const prev = ros; try { const f = forma(); ros = { set: "gloriosos", f, i: 0 }; ros.p = pasos(f); return [joya(0), joya(ros.p.length - 1)]; } catch (_) { return ["", ""]; } finally { ros = prev; } })();
+      const chispas = Array.from({ length: 14 }, (_, k) => `<i style="left:${(7 + ((k * 37) % 86)).toFixed(0)}%;animation-delay:${(2.2 + (k * 0.61) % 5).toFixed(2)}s;animation-duration:${(7 + (k % 4) * 1.6).toFixed(1)}s"></i>`).join("");
+      return `<section class="v d bienv in">${sky()}<div class="hd z bvh"><svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M6.5 24.5V13a7.5 7.5 0 0 1 15 0v11.5M3.5 24.5h21" stroke="#E6C27A" stroke-width="1.6" stroke-linecap="round"/><polygon transform="translate(8 8.2) scale(.75)" fill="#E6C27A" points="${S16}"/></svg><b>Atrio</b></div>
+      <div class="bva z" aria-hidden="true"><div class="bvr"></div><svg class="bvarc" viewBox="0 0 300 380" preserveAspectRatio="none"><path d="M12 378V150A138 138 0 0 1 288 150V378" fill="none" stroke="#E6C27A" stroke-width="1.4" stroke-opacity=".75"/><path d="M24 378V152A126 126 0 0 1 276 152V378" fill="none" stroke="#E6C27A" stroke-width=".7" stroke-opacity=".35"/></svg>
+        <div class="bvj"><div class="bv0">${par[0]}</div><div class="bv1">${par[1]}</div></div><div class="bvch">${chispas}</div></div>
+      <div class="bvt z"><p class="bvq">¿No estoy yo aquí,<br>que soy tu madre?</p><p class="ru bvs">Santa María de Guadalupe a san Juan Diego, 1531</p>
+      <p class="sub bvd">El rosario, la novena y el Ángelus, solo o con tu familia, aunque estén lejos.</p></div>
+      <div class="mt z bvb"><button class="btn go bvgo" data-a="empieza">Empezar a rezar</button>${conG() && !U ? `<button class="lk" data-a="login" style="display:block;margin:6px auto 0">Ya tengo cuenta</button>` : ""}</div></section>`; },
     nom: () => `<section class="v d in">${sky()}${hd([ob ? "bien" : "yo"], ob ? "Paso 1 de 5" : "Tus datos")}<h1 class="z" style="margin-top:30px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
       <label class="lab z" for="fn">Tu nombre</label><input class="fld z" id="fn" type="text" autocomplete="given-name" maxlength="24" value="${esc(S.n)}">
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`,
@@ -1661,8 +1731,9 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       const st = ros.p[ros.i], M = MIS[ros.set], o = ORA[st.t], mm = st.m != null ? M.m[st.m] : null, g = guia(), sigo = ros.sala && !lead, G = !!ros.g, cl = (ros.sala ? " sl" : "") + (ros.an ? " " + ros.an : "");
       const nom = st.t === "let" ? "Letanías" : st.t === "mis" ? "" : o.n, cta = st.of ? st.k + " de " + st.of : "", don = mm ? ORD[st.m] + " misterio: " + mm[0] : st.l ? st.l : st.fin ? "Para terminar" : "Para empezar";
       const it = ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion ? ["Su intención", JT[ros.jt.id].intencion] : S.pi ? ["Tu intención", S.pi] : null;
-      const cab = `<div class="hd z"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}<small class="cnt">${ros.i + 1} de ${ros.p.length}</small></p>${botMu()}</div>`;
-      const tk = G ? "g" : "t", tip = !(S.tp || {})[tk] && !Q.get("notip") ? `<div class="tip" role="dialog" aria-label="Consejo"><p>${G ? "<b>¿Quieres leer las oraciones?</b> Toca este botón y ves cada una completa." : "<b>¿Te lo sabes de memoria?</b> Toca este botón y ves el rosario en grande, sin texto."}</p><p class="tip2">${G ? "Para avanzar, toca el rosario o «Amén»." : "Ahí avanzas tocando el rosario o «Amén»."}</p><button class="tipok" data-a="tipok" data-k="${tk}">Entendido</button></div>` : "";
+            const tk = G ? "g" : "t", tip0 = !(S.tp || {})[tk] && !Q.get("notip") ? `<div class="tip" role="dialog" aria-label="Consejo"><p>${G ? "<b>¿Quieres leer las oraciones?</b> Toca este botón y ves cada una completa." : "<b>¿Te lo sabes de memoria?</b> Toca este botón y ves el rosario en grande, sin texto."}</p><p class="tip2">${G ? "Para avanzar, toca el rosario o «Amén»." : "Ahí avanzas tocando el rosario o «Amén»."}</p><button class="tipok" data-a="tipok" data-k="${tk}">Entendido</button></div>` : "", tip = tip0;
+      const tipM = !tip && !S.mu && !(S.tp || {}).mu && !Q.get("notip") && ros.i >= 1 ? `<div class="tip tm" role="dialog" aria-label="Consejo"><p><b>¿Rezas con música?</b> Toca la notita y suena un órgano suave de capilla mientras rezas.</p><div class="tipbs"><button class="lk" data-a="tipok" data-k="mu">Sin música</button><button class="tipok" data-a="mu">Poner música</button></div></div>` : "";
+      const cab = `<div class="hd z${tipM ? " htm" : ""}"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}<small class="cnt">${ros.i + 1} de ${ros.p.length}</small></p>${botMu()}${tipM}</div>`;
       const vis = `<button class="ra vt${tip ? " tipon" : ""}" data-a="vista" aria-label="${G ? "Ver la oración escrita" : "Ver el rosario en grande"}">${G ? I.txt : I.ros}</button>`;
       // La barra de abajo queda fija: «Amén» siempre está en el mismo lugar y el pulgar lo encuentra sin mirar
       const pie = `<div class="rpie">${ros.sala ? `<div class="vzl"><p class="note">${peersS.length === 1 ? "Solo tú" : peersS.length + " rezando"}</p>${botVoz(1)}</div>` : ""}<div class="rb">${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" || (st.t === "let" && st.k < st.of) ? "Continuar" : "Amén"}</button>`}${vis}</div>${tip}</div>`;
@@ -1692,10 +1763,9 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       return `<section class="v d ro cg${L ? " lt" : ""}${st.lg === 2 ? " xl" : ""}${cl}">${sky()}${cab}<div class="colg z" data-a="vista"><div class="cgv">${joya(ros.i, 1)}</div><div class="cgt"><small>${don}</small><b class="rn">${nom}</b>${cta ? `<span>${cta}</span>` : ""}${it && !st.lg && !L ? `<p class="cgi"><small>${it[0]}</small>«${esc(it[1])}»</p>` : ""}</div></div>
         <div class="rt z">${L ? lista(L.r, L.inv) + lista(L.r2, L.inv2) + bloques(L.bl) : texto()}</div>${pie}</section>`;
     },
-    listo: () => { const lit = encendidos(), n = vivos().length, ra = racha(), hito = total() <= 1 ? 1 : [3, 7, 14, 30, 60, 100, 200, 365].includes(ra) ? 2 : 0; return `<section class="v d in">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p>${S.pi ? `<p class="pin c z">Lo ofreciste «${esc(S.pi)}»</p>` : ""}<div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
-      <div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>
+    listo: () => { const lit = encendidos(), n = vivos().length, ra = racha(), hito = total() <= 1 ? 1 : [3, 7, 14, 30, 60, 100, 200, 365].includes(ra) ? 2 : 0; const guarda1 = pideG() && hito; return `<section class="v d in${guarda1 ? " lsg" : ""}">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p>${S.pi ? `<p class="pin c z">Lo ofreciste «${esc(S.pi)}»</p>` : ""}<div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>${guarda1 ? `<div class="gua z"><p class="ru">${hito === 1 ? "No la pierdas" : "No los pierdas"}</p><p class="sub" style="margin:2px 0 12px">${hito === 1 ? "Tu veladora y tu racha viven solo en este teléfono. Guárdalas con tu cuenta de Google." : `Tus ${ra} días seguidos viven solo en este teléfono. Guárdalos con tu cuenta de Google.`}</p>${gBtn("Guardar con Google")}</div>` : ""}<div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
       ${n > 1 ? `<p class="note z" style="margin-top:12px">Ahora mismo hay ${n} personas con Atrio abierto.</p>` : ""}
-      ${pideG() && hito ? `<div class="gua z"><p class="ru">${hito === 1 ? "No la pierdas" : "No los pierdas"}</p><p class="sub" style="margin:2px 0 12px">${hito === 1 ? "Tu veladora y tu racha viven solo en este teléfono. Guárdalas con tu cuenta de Google." : `Tus ${ra} días seguidos viven solo en este teléfono. Guárdalos con tu cuenta de Google.`}</p>${gBtn("Guardar con Google")}</div><button class="btn gh z" data-a="go" data-v="hoy" style="margin-top:10px">Volver a hoy</button>` : `<button class="btn go mt z" data-a="go" data-v="hoy">Volver a hoy</button>`}<button class="btn gh z" data-a="luzn" data-q="ros" style="margin-top:10px">Avisarle a alguien que recé por él</button><button class="lk c z" data-a="copiar" style="margin-top:4px">Copiar invitación para mi familia</button></section>`; },
+      ${guarda1 ? `<button class="btn gh z" data-a="go" data-v="hoy" style="margin-top:14px">Volver a hoy</button>` : `<button class="btn go mt z" data-a="go" data-v="hoy">Volver a hoy</button>`}<button class="btn gh z" data-a="luzn" data-q="ros" style="margin-top:10px">Avisarle a alguien que recé por él</button><button class="lk c z" data-a="copiar" style="margin-top:4px">Copiar invitación para mi familia</button></section>`; },
     mapa: () => { const lit = encendidos(), n = vivos().length, r = hoy().r, mio = r && MX.e[S.e] ? 1 : 0, c = Object.keys(lit).filter((k) => MX.e[k]).length + (mio && !lit[S.e] ? 1 : 0), tot = Object.keys(lit).reduce((a, k) => a + (MX.e[k] ? lit[k] : 0), 0) + (mio && (!velasHoy || !lit[S.e]) ? 1 : 0); return `<section class="v d tb in">${sky()}<p class="ru z">México en oración</p><h1 class="z">${r ? "Tu veladora está encendida" : "Enciende tu estado"}</h1><p class="sub z">${r ? esc(estado(S.e)) + " brilla hoy por tu rosario." : "Cada rosario terminado enciende una veladora en " + esc(estado(S.e)) + "."}</p>
       <div class="z mapa-full"><div class="halo"></div>${mapa(lit, r ? S.e : -1, 1, `<div class="cuenta"><p class="num">${tot}</p><p>${tot === 1 ? "veladora encendida" : "veladoras encendidas"} ${velasHoy ? "hoy" : "ahora"}<br>${tot ? `en ${c} ${c === 1 ? "estado" : "estados"}` : "Enciende la primera."}${n > 1 ? `<br>${n} personas con Atrio abierto` : ""}</p></div>`)}</div>
       <p class="note z" style="margin-top:4px">${velasHoy ? "Cada veladora es un rosario terminado hoy en ese estado." : RM ? "El mapa muestra a quienes tienen Atrio abierto en este momento." : "En esta versión el mapa muestra tu veladora."}</p>
@@ -1878,7 +1948,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     luzam: () => { luzRe = 1; vibra(1); render(1); },
     luzok: () => { luzRe = 2; vibra(2); render(1); if (S.n) guarda("l", "Tu oración ya va en camino", "Guarda en tu cuenta de Google tus intenciones y a quién le mandaste luz."); },
     luzdev: () => { luzPara = LUZ ? LUZ.d : ""; luzQ = "am"; go(S.n ? "luz" : "bien"); },
-    mu: () => { S.mu = S.mu ? 0 : 1; save(); musica(!!S.mu); vibra(1); render(1); if (S.mu) aviso("Música de fondo encendida. Sube el volumen si no la oyes."); },
+    mu: () => { S.mu = S.mu ? 0 : 1; S.tp = Object.assign({}, S.tp, { mu: 1 }); save(); musica(!!S.mu); vibra(1); render(1); if (S.mu) aviso("Música de fondo encendida. Sube el volumen si no la oyes."); },
     mudo: () => { if (!VZ) return; VZ.mudo = VZ.mudo ? 0 : 1; VZ.st.getAudioTracks().forEach((t) => { t.enabled = !VZ.mudo; }); vibra(1); if (sala) sala.presence({ v: VZ.mudo ? 2 : 1 }).catch(() => {}); pinta(); },
     login: () => { if (!SB) { aviso("Conectando. Intenta de nuevo en un momento."); return; } if (view !== "entrar") vuelveE = view; go("entrar"); },
     gg: () => { if (!SB) return; if (/FBAN|FBAV|FB_IAB|Instagram|TikTok|musical_ly|Snapchat|Line\//i.test(navigator.userAgent)) { aviso("Para entrar con Google, abre Atrio en Safari o Chrome. O entra con tu correo."); return; } if (vuelveE === "atrio") { ob = 0; delete S.ob; save(); } try { SB.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } }).then((r) => { if (r && r.error) aviso("No se pudo abrir Google. Intenta otra vez."); }, () => aviso("No se pudo abrir Google. Intenta otra vez.")); } catch (_) {} },
