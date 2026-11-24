@@ -352,3 +352,18 @@ p.pin.z{margin-top:10px}
 .vzb.ch.ic2,.vzr.ch .ic2{width:36px;min-height:36px}
 .vzr.ch .vzb{min-height:36px;padding:0 12px;border-radius:18px;font-size:14px}
 .vzr.ch .ic2{padding:0}
+
+/* ---------- elegir estado ---------- */
+.bus{margin-top:20px;height:52px;font-size:17px;font-family:var(--sa);padding:0 18px}
+.esl{margin-top:12px;border:1px solid rgba(246,239,233,.14);border-radius:18px;overflow:hidden}
+.es{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:54px;padding:0 18px;border:0;border-bottom:1px solid rgba(246,239,233,.09);background:none;color:var(--txt);font-family:var(--se);font-size:19px;font-weight:500;text-align:left;cursor:pointer}
+.es:last-of-type{border-bottom:0}
+.es .pal{opacity:0;transform:scale(.6);transition:opacity .15s,transform .2s}
+.es.on{background:rgba(230,194,122,.14);color:var(--oroc)}
+.es.on .pal{opacity:1;transform:none}
+.es:active{background:rgba(246,239,233,.07)}
+.es:focus-visible{outline:2px solid var(--oroc);outline-offset:-2px}
+.es.sug{margin-top:8px;border:1.5px solid rgba(230,194,122,.6);border-radius:16px;background:rgba(230,194,122,.08);font-size:21px}
+.es.sug.on{border-color:var(--oro)}
+.es .pal{position:static;flex:none}
+.es[hidden],#esn[hidden]{display:none}
