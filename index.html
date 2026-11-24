@@ -1425,7 +1425,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       SB.rpc("juntos_crear", { c: S.n || "Alguien", i }).then((r) => {
         if (!r || r.error || !UUID.test(String(r.data))) { aviso("No se pudo crear. Intenta otra vez."); render(1); return; }
         const id = String(r.data); S.jt.unshift({ id, con: c }); save(); jtA = id; vibra(2);
-        jtComparte(id, `${c}, te invito a rezar el rosario conmigo en Atrio. Cada quien reza su misterio cuando pueda y se va completando solito. 🕊️`);
+        jtComparte(id, `${c}, te invito a rezar el rosario conmigo en Atrio. Cada quien reza su misterio cuando pueda y se va completando solito.`);
         go("jt"); jtVer(id);
       }, () => { aviso("Sin conexión. Intenta otra vez."); render(1); });
     },
@@ -1436,13 +1436,13 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       if (S.mu) musica(true); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
     jtv: () => { if (!RM) { aviso("La videollamada necesita internet."); return; } const c = "J" + jtA.replace(/-/g, "").slice(0, 5).toUpperCase(); if (!sala || codigo !== c) { if (sala) salir(); entrar(c, false); } go("sala"); },
     jtw: () => { const d = JT[jtA], n = d ? (d.cuentas || []).length : 0, f = 5 - n, j = S.jt.find((x) => x.id === jtA) || {};
-      jtComparte(jtA, n && n < 5 ? `Ya vamos ${n} de 5 misterios del rosario de hoy. ${f === 1 ? "Falta uno" : "Faltan " + f}, ¿te echas uno? 🕊️` : `${j.con ? j.con + ", r" : "R"}ecemos juntos el rosario de hoy en Atrio. Cada quien reza su misterio cuando pueda. 🕊️`); },
+      jtComparte(jtA, n && n < 5 ? `Ya vamos ${n} de 5 misterios del rosario de hoy. ${f === 1 ? "Falta uno" : "Faltan " + f}, ¿te echas uno?` : `${j.con ? j.con + ", r" : "R"}ecemos juntos el rosario de hoy en Atrio. Cada quien reza su misterio cuando pueda.`); },
     luzn: (d) => { luzPara = d && d.p ? d.p : ""; luzQ = d && d.q ? d.q : "am"; go("luz"); },
     luzq: (d) => { if (LQ[d.k]) { luzQ = d.k; const f = document.getElementById("fl"); luzPara = f ? f.value : luzPara; render(1); } },
     luzm: () => {
       const f = document.getElementById("fl"), para = ((f && f.value) || "").replace(/\s+/g, " ").trim().slice(0, 40);
       if (!para) { aviso("Escribe por quién rezaste."); if (f) f.focus(); return; }
-      const url = ligaLuz({ d: S.n || "Alguien", p: para, q: luzQ }), t = `${para}, recé ${LQ[luzQ][0]} por ti. 🕊️\n${url}`;
+      const url = ligaLuz({ d: S.n || "Alguien", p: para, q: luzQ }), t = `${para}, recé ${LQ[luzQ][0]} por ti.\n${url}`;
       S.lz = (S.lz || 0) + 1; save(); vibra(2);
       if (navigator.share) { navigator.share({ text: t }).then(() => { aviso("Tu luz va en camino."); go("hoy"); }, () => {}); return; }
       try { window.open("https://wa.me/?text=" + encodeURIComponent(t), "_blank"); } catch (_) {} aviso("Tu luz va en camino."); go("hoy");
