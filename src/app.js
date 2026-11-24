@@ -97,6 +97,9 @@
   const conG = () => SB_URL.indexOf("http") === 0 && (G_AB === "1" || S.g === 1);
   // A quien no tiene cuenta se le invita a guardar. Mientras el servidor confirma la sesión se usa la pista
   // de si este teléfono ya entró antes: así el aviso no aparece ni desaparece de golpe al abrir.
+  // arriba a la derecha: tu foto o inicial si entraste; si no, «Entrar» con Google
+  const perfil = () => { if (!conG()) return ""; if (U) { const m = U.user_metadata || {}, f = m.avatar_url || m.picture; return `<button class="pf" data-a="go" data-v="yo" aria-label="Tu perfil">${f ? `<img src="${esc(f)}" alt="" referrerpolicy="no-referrer">` : `<b>${esc((S.n || m.full_name || "?").slice(0, 1).toUpperCase())}</b>`}</button>`; }
+    return `<button class="pfe" data-a="login" aria-label="Entrar con Google"><svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span>Entrar</span></button>`; };
   const pideG = () => conG() && !U && (lista === 1 || !pista);
 
   /* ---------- fechas y tiempo litúrgico ---------- */
@@ -725,8 +728,8 @@
       const d = now(), h = d.getHours(), tp = tiempo(d), set = MIS_DIA[d.getDay()], nv = nov(), hh = hoy(), rc = racha();
       const nvTxt = nv.n ? `Día ${nv.n} de 9` : nv.fiesta ? "Hoy es su fiesta" : nv.f === 1 ? "Empieza mañana" : `Empieza el 3 de diciembre, faltan ${nv.f} días`;
       const item = (cls, on, a, ru, t, right) => `<li><span class="nd">${on ? star(16, "#C8962E") : starO(16, "rgba(244,220,166,.6)")}</span><button class="it ${cls}" ${a}><span class="g"><span class="ru" style="display:block">${ru}</span><b>${t}</b></span>${right}</button></li>`;
-      return `<section class="v d n tb in">${sky()}<div class="hd"><p class="ru">${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}</p>
-        <button class="btn" data-a="go" data-v="yo" aria-label="Tu racha: ${rc} ${rc === 1 ? "día" : "días"}" style="width:auto;flex:none;white-space:nowrap;min-height:44px;padding:0 14px;gap:6px;border:1px solid var(--line);background:rgba(246,239,233,.06);color:var(--oroc);font-size:14px"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="#C8962E" d="M8 1.5c.4 2.2 3.5 3.7 3.5 7.2a3.5 3.5 0 0 1-7 0c0-1.3.6-2.3 1.4-3.1.2 1 .8 1.6 1.3 1.7C7 5.5 7.3 3.3 8 1.5z"/></svg>${rc} ${rc === 1 ? "día" : "días"}</button></div><h1>${h < 12 ? "Buenos días" : h < 19 ? "Buenas tardes" : "Buenas noches"}, ${esc(S.n)}</h1>
+      return `<section class="v d n tb in">${sky()}<div class="hd hh"><p class="ru">${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}</p>
+        <button class="btn" data-a="go" data-v="yo" aria-label="Tu racha: ${rc} ${rc === 1 ? "día" : "días"}" style="width:auto;flex:none;white-space:nowrap;min-height:44px;padding:0 14px;gap:6px;border:1px solid var(--line);background:rgba(246,239,233,.06);color:var(--oroc);font-size:14px"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="#C8962E" d="M8 1.5c.4 2.2 3.5 3.7 3.5 7.2a3.5 3.5 0 0 1-7 0c0-1.3.6-2.3 1.4-3.1.2 1 .8 1.6 1.3 1.7C7 5.5 7.3 3.3 8 1.5z"/></svg>${rc} ${rc === 1 ? "día" : "días"}</button>${perfil()}</div><h1>${h < 12 ? "Buenos días" : h < 19 ? "Buenas tardes" : "Buenas noches"}, ${esc(S.n)}</h1>
         <p style="margin-top:8px;display:flex;align-items:center;gap:8px;font-size:14px;line-height:20px;color:var(--ink2)"><span style="flex:none;width:10px;height:10px;border-radius:5px;background:${tp.c};box-shadow:0 0 0 1.5px rgba(246,239,233,.5)"></span>${tp.t}</p>
         ${pideG() && total() > 0 ? `<button class="avi" data-a="login">Tu avance vive solo en este teléfono. <u>Guardar con Google</u></button>` : ""}
         ${deHoy("", 1)}
@@ -841,6 +844,27 @@
   /* ---------- acciones ---------- */
   // El aviso se pone encima de la vista sin volver a dibujarla (no repite animaciones ni borra lo que se escribe)
   let tMsg = 0;
+  /* Recorrido de la primera vez: cinco globos que señalan lo importante de Hoy */
+  let tourI = -1;
+  const TOUR = [
+    ['.tl .it[data-a="ros"]', "El rosario de hoy", "Toca aquí y te guiamos cuenta por cuenta. Cada día te toca el misterio que corresponde."],
+    ['.tl .it[data-a="jnew"], .tl .it[data-a="jabre"]', "Rosario juntos", "Invita a tu pareja o familia: cada quien reza su misterio a su hora y entre todos lo completan."],
+    ['.tl .it[data-a="luzn"]', "Manda una luz", "Reza un Ave María por alguien y avísale por WhatsApp con una paloma."],
+    ['.tl .hero', "Rosario en familia", "Abre una sala y recen al mismo tiempo, con voz y cámara, cada quien desde su casa."],
+    ['.tabs', "Tu Atrio", "En Rezar están todas las oraciones; en Mapa ves las veladoras de México; en Yo, tu racha y tus ajustes."],
+    ['.pfe, .pf', "Guarda tu avance", "Entra con Google para no perder tu racha si cambias de teléfono."]
+  ];
+  function tour(n) {
+    const x = document.getElementById("tour"); if (x) x.remove();
+    if (view !== "hoy") return;
+    while (n < TOUR.length && !app.querySelector(TOUR[n][0])) n++;
+    if (n >= TOUR.length) { tourI = -1; S.tour = 1; save(); return; }
+    tourI = n; const [sel, t, d] = TOUR[n], el = app.querySelector(sel);
+    try { el.scrollIntoView({ block: "center", behavior: "instant" }); } catch (_) { el.scrollIntoView(); }
+    const r = el.getBoundingClientRect(), H = window.innerHeight, abajo = r.top + r.height / 2 < H / 2, quedan = TOUR.slice(n + 1).filter((q) => app.querySelector(q[0])).length;
+    app.insertAdjacentHTML("beforeend", `<div id="tour" role="dialog" aria-label="${t}"><div class="tu-h" style="left:${r.left - 6}px;top:${r.top - 6}px;width:${r.width + 12}px;height:${r.height + 12}px"></div>
+      <div class="tu-b ${abajo ? "ab" : "ar"}" style="${abajo ? `top:${r.bottom + 16}px` : `bottom:${H - r.top + 16}px`}"><p class="ru">${n + 1} de ${n + 1 + quedan}</p><b>${t}</b><p>${d}</p><div class="tu-f"><button class="lk" data-a="tourx">Saltar</button><button class="btn go sm" data-a="tourn">${quedan ? "Siguiente" : "Empezar"}</button></div></div></div>`);
+  }
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
   function finJt(s) {
     ros = null; vibra(3); musica(false); jtA = s.jt.id;
@@ -886,7 +910,9 @@
     advsel: () => { sel = S.vs.slice(); go("advs"); },
     advok: () => { if (!sel.length) return; S.vs = ADV.filter((x) => sel.includes(x.k)).map((x) => x.k); S.v = S.vs[0]; save(); va = ""; go(ob ? "pid" : "adv"); },
     verv: (d) => { va = d.k; go("adv"); },
-    entra: () => { ob = 0; delete S.ob; save(); go("hoy"); },
+    entra: () => { ob = 0; delete S.ob; save(); go("hoy"); if (!S.tour) setTimeout(() => tour(0), 700); },
+    tourn: () => tour(tourI + 1),
+    tourx: () => tour(99),
     ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0, f: forma(), g: Q.get("demo") && Q.get("g") === "1" ? 1 : grande0(0) }; ros.p = pasos(ros.f); if (S.mu) musica(true); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
     rosala: () => { ros = { set: MIS_DIA[now().getDay()], i: 0, sala: 1, f: forma(), g: grande0(1) }; ros.p = pasos(ros.f); if (S.mu) musica(true); presSala(); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
     foco: (d) => { if (!ros) return; ros.fo = d.k && ros.fo !== d.k ? d.k : ""; vibra(1); render(); },
@@ -989,5 +1015,7 @@
     S.jt = [{ id, con: "Constanza" }]; JT[id] = { creador: S.n, intencion: "Por nuestra familia", cuentas: [0, 1, 2, 3, 4].slice(0, n).map((m) => ({ m, quien: Q2[m], hecho: key(now()) + hh[m] })), completos: n === 5 ? [key(now()), key(add(now(), -1)), key(add(now(), -2))] : [key(add(now(), -1)), key(add(now(), -2))], gente: ["Constanza"] }; jtA = id; if (Q.get("v") === "jt") go("jt"); else render(1); }
   if (Q.get("demo") && Q.get("t")) setTimeout(() => aviso(Q.get("t")), 30);
   if (Q.get("demo") && Q.get("lista")) { lista = 1; render(1); }
+  if (Q.get("demo") && Q.get("tour")) setTimeout(() => tour(+Q.get("tour") - 1), 300);
+  if (Q.get("demo") && Q.get("u")) { U = { id: "x", email: "demo@atrio", user_metadata: {} }; S.g = 1; render(1); }
   if (Q.get("demo") && Q.get("pt")) { palT = Date.now() - +Q.get("pt"); render(1); }
 })();
