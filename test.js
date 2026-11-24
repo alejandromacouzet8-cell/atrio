@@ -77,15 +77,15 @@ click(d, '[data-a="go"][data-v="rezar"]'); if (!txt(d).includes("Tus Vírgenes")
 click(d, '[data-a="ros"]');
 if (!txt(d).includes("Tu intención") || !txt(d).includes("«Por mi mamá <i>, por un enfermo»")) throw new Error("el rosario no muestra la intención: " + txt(d).slice(0, 200));
 { const q = (x) => d.window.document.querySelector(x); if (!q('.rpie .rb .btn[data-a="sig"]') || !q('.rpie .ra[data-a="ant"]').disabled) throw new Error("rosario: barra fija al empezar");
-  click(d, '[data-a="ant"]'); if (!txt(d).includes("1 de 80")) throw new Error("regresar deshabilitado se movió");
+  click(d, '[data-a="ant"]'); if (!txt(d).includes("1 de 82")) throw new Error("regresar deshabilitado se movió");
   click(d, '[data-a="sig"]'); if (!q('.rpie .rb .btn[data-a="sig"]') || q('.rpie .ra').disabled || !q(".ro.sg")) throw new Error("rosario: barra fija en el paso 2");
-  click(d, '[data-a="sig"]'); if (!q(".ring .pu") || !txt(d).includes("3 de 80")) throw new Error("rosario: la medalla no se enciende"); click(d, '[data-a="ant"]');
-  click(d, '[data-a="ant"]'); if (!txt(d).includes("1 de 80") || !q(".ro.at")) throw new Error("rosario: regresar una cuenta"); }
+  click(d, '[data-a="sig"]'); if (!q(".pu") || !txt(d).includes("3 de 82")) throw new Error("rosario: la medalla no se enciende"); click(d, '[data-a="ant"]');
+  click(d, '[data-a="ant"]'); if (!txt(d).includes("1 de 82") || !q(".ro.at")) throw new Error("rosario: regresar una cuenta"); }
 let n = 0, seen = new Set(), orden = [], hojas = [];
-while (d.window.document.querySelector('[data-a="sig"]')) { const nom = d.window.document.querySelector(".ring b")?.textContent || "misterio"; seen.add(nom); orden.push(nom); hojas.push(txt(d)); click(d, '[data-a="sig"]'); if (++n > 200) throw new Error("rosario sin fin"); }
-if (n !== 80) throw new Error("pasos del rosario: " + n);
+while (d.window.document.querySelector('[data-a="sig"]')) { const nom = d.window.document.querySelector(".rn")?.textContent || "misterio"; seen.add(nom); orden.push(nom); hojas.push(txt(d)); click(d, '[data-a="sig"]'); if (++n > 200) throw new Error("rosario sin fin"); }
+if (n !== 82) throw new Error("pasos del rosario: " + n);
 // Orden como se reza en México (Arquidiócesis de México y Basílica de Guadalupe)
-{ const esp = ["Señal de la cruz", "Acto de contrición", "Invocación"]; for (let m = 0; m < 5; m++) esp.push("misterio", "Padre nuestro", ...Array(10).fill("Ave María"), "Gloria"); esp.push("Padre nuestro", "Ave María", "Ave María", "Ave María", "Salve", ...Array(7).fill("Letanías"));
+{ const esp = ["Señal de la cruz", "Acto de contrición", "Invocación"]; for (let m = 0; m < 5; m++) esp.push("misterio", "Padre nuestro", ...Array(10).fill("Ave María"), "Gloria"); esp.push("Padre nuestro", "Ave María", "Ave María", "Ave María", "Salve", ...Array(9).fill("Letanías"));
   if (orden.join("|") !== esp.join("|")) throw new Error("orden del rosario mexicano: " + orden.join("|"));
   const tiene = (i, ...xs) => xs.forEach((x) => { if (!hojas[i].includes(x)) throw new Error("paso " + (i + 1) + " sin «" + x + "»: " + hojas[i].slice(0, 300)); });
   tiene(0, "Por la señal de la santa cruz"); tiene(1, "me pesa de todo corazón haber pecado", "Confío me perdonarás por tu infinita misericordia"); tiene(2, "Abre, Señor, mis labios", "Señor, date prisa en socorrerme");
@@ -93,13 +93,14 @@ if (n !== 80) throw new Error("pasos del rosario: " + n);
   tiene(68, "Por las intenciones del Papa", "Padre nuestro, que estás en el cielo");
   tiene(69, "Hija de Dios Padre", "antes del parto", "nuestra fe para que la ilumines", "Santa María, Madre de Dios"); tiene(70, "Madre de Dios Hijo", "en el parto", "nuestra esperanza para que la alientes"); tiene(71, "Esposa de Dios Espíritu Santo", "después del parto", "nuestra caridad para que la inflames");
   tiene(72, "templo, trono y sagrario de la Santísima Trinidad", "Dios te salve, Reina y Madre de misericordia", "oh dulce siempre Virgen María", "Para que seamos dignos de alcanzar las promesas de nuestro Señor Jesucristo");
-  tiene(73, "Señor, ten piedad", "Cristo, escúchanos"); tiene(74, "Dios, Padre celestial", "Ten piedad de nosotros", "Santa María", "Madre de la misericordia", "Madre de la esperanza", "Ruega por nosotros");
-  tiene(75, "Madre purísima", "Virgen fiel"); tiene(76, "Espejo de justicia", "Estrella de la mañana"); tiene(77, "Salud de los enfermos", "Consuelo de los migrantes", "Reina de todos los santos", "Reina asunta a los cielos"); tiene(78, "Reina del santísimo Rosario", "Reina de la familia", "Reina de la paz", "Cordero de Dios, que quitas el pecado del mundo", "Ten misericordia de nosotros"); tiene(79, "Para que seamos dignos de las promesas de Cristo", "disfrutar de las alegrías eternas");
+  tiene(73, "Señor, ten piedad", "Cristo, escúchanos"); tiene(74, "Dios, Padre celestial", "Ten piedad de nosotros", "Santa María", "Madre de la Iglesia", "Ruega por nosotros"); tiene(75, "Madre de la misericordia", "Madre de la esperanza", "Madre del buen consejo");
+  tiene(76, "Madre del Creador", "Virgen fiel", "Trono de la sabiduría"); tiene(77, "Causa de nuestra alegría", "Puerta del cielo"); tiene(78, "Estrella de la mañana", "Consuelo de los migrantes", "Reina de los apóstoles"); tiene(79, "Reina de los mártires", "Reina asunta a los cielos", "Reina de la familia", "Reina de la paz");
+  tiene(80, "Cordero de Dios, que quitas el pecado del mundo", "Ten misericordia de nosotros", "Para que seamos dignos de las promesas de Cristo"); tiene(81, "disfrutar de las alegrías eternas", "Amén");
   const inv = d.window.eval("LET.reduce((a, L) => a + (L.r === 'Ruega por nosotros.' ? L.inv.length : 0) + (L.inv2 ? L.inv2.length : 0), 0)"); if (inv !== 54) throw new Error("letanías: " + inv + " invocaciones a la Virgen, deben ser 54"); }
 // La otra forma, con Credo al inicio: es la que sale sola fuera de México
 { const u = open("https://atrio.test/?fecha=2026-11-23", JSON.stringify({ n: "Ana", e: 99, d: {}, nov: {}, ang: 1, vs: ["guadalupe"], pi: "" }));
   click(u, '[data-a="ros"]'); const o2 = [], h2 = []; let k = 0;
-  while (u.window.document.querySelector('[data-a="sig"]')) { o2.push(u.window.document.querySelector(".ring b")?.textContent || "misterio"); h2.push(txt(u)); click(u, '[data-a="sig"]'); if (++k > 200) throw new Error("rosario sin fin (Credo)"); }
+  while (u.window.document.querySelector('[data-a="sig"]')) { o2.push(u.window.document.querySelector(".rn")?.textContent || "misterio"); h2.push(txt(u)); click(u, '[data-a="sig"]'); if (++k > 200) throw new Error("rosario sin fin (Credo)"); }
   if (k !== 74) throw new Error("pasos con Credo: " + k);
   if (o2.slice(0, 7).join("|") !== "Señal de la cruz|Credo|Padre nuestro|Ave María|Ave María|Ave María|Gloria" || o2.slice(-2).join("|") !== "Salve|Oración final") throw new Error("orden con Credo: " + o2.slice(0, 8).join("|") + " … " + o2.slice(-3).join("|"));
   if (!h2[1].includes("está sentado a la derecha de Dios, Padre todopoderoso. Desde allí ha de venir a juzgar a vivos y muertos.") || !h2[1].includes("Creo en el Espíritu Santo, la santa Iglesia católica")) throw new Error("Credo incompleto");
@@ -115,12 +116,12 @@ if (n !== 80) throw new Error("pasos del rosario: " + n);
 t = txt(d);
 if (!t.includes("Tu veladora ya") || !t.includes("Quintana Roo")) throw new Error("no llega al cierre: " + t.slice(0, 120));
 if (!t.includes("1día seguido") && !t.includes("día seguido")) throw new Error("racha mal");
-console.log("rosario: 80 pasos, oraciones vistas:", [...seen].join(", "));
+console.log("rosario: 82 pasos, oraciones vistas:", [...seen].join(", "));
 click(d, '[data-a="go"][data-v="hoy"]');
 if (!txt(d).includes("Ya lo rezaste hoy")) throw new Error("hoy no marca el rosario");
 // regresar una cuenta
 click(d, '[data-a="go"][data-v="rezar"]'); click(d, '[data-a="ros"][data-set="dolorosos"]'); click(d, '[data-a="sig"]'); click(d, '[data-a="ant"]');
-if (!txt(d).includes("Misterios dolorosos") || !txt(d).includes("1 de 80")) throw new Error("regresar cuenta mal");
+if (!txt(d).includes("Misterios dolorosos") || !txt(d).includes("1 de 82")) throw new Error("regresar cuenta mal");
 click(d, '[data-a="cerrar"]');
 
 // 3. mapa, yo, novena, ángelus, sala
@@ -167,7 +168,7 @@ function fakeRoom() {
   click(a, '[data-a="rosala"]'); await new Promise((r) => setTimeout(r, 30));
   for (let i = 0; i < 12; i++) click(a, '[data-a="sig"]');
   await new Promise((r) => setTimeout(r, 30));
-  if (!txt(b).includes("13 de 80") || !txt(b).includes("dirige. Tú respondes") || b.window.document.querySelector('[data-a="sig"]')) throw new Error("seguidor no sincroniza: " + txt(b).slice(0, 200));
+  if (!txt(b).includes("13 de 82") || !txt(b).includes("dirige. Tú respondes") || b.window.document.querySelector('[data-a="sig"]')) throw new Error("seguidor no sincroniza: " + txt(b).slice(0, 200));
   while (a.window.document.querySelector('[data-a="sig"]')) click(a, '[data-a="sig"]');
   await new Promise((r) => setTimeout(r, 30));
   if (!txt(b).includes("Tu veladora ya")) throw new Error("seguidor no termina: " + txt(b).slice(0, 200));
