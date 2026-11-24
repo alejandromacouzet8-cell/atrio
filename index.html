@@ -1738,7 +1738,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   /* Recorrido de la primera vez: cinco globos que señalan lo importante de Hoy */
   let tourI = -1;
   const TOUR = [
-    ['.rh', "El rosario de hoy", "Toca el rosario o «Empezar a rezar» y te guiamos cuenta por cuenta. Cada cuenta que reces se enciende."],
+    ['.rhgo, .rhb', "El rosario de hoy", "Toca el rosario o «Empezar a rezar» y te guiamos cuenta por cuenta. Cada cuenta que reces se enciende."],
     ['.tj[data-a="jnew"], .tj[data-a="jabre"]', "Rosario juntos", "Invita a tu pareja o familia: cada quien reza su misterio a su hora y entre todos lo completan."],
     ['.tj[data-a="luzn"]', "Manda una luz", "Reza un Ave María por alguien y avísale por WhatsApp con una paloma."],
     ['.tj[data-v="sala"]', "Rosario en familia", "Abre una sala y recen al mismo tiempo, con voz y cámara, cada quien desde su casa."],
@@ -1752,9 +1752,10 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     if (n >= TOUR.length) { tourI = -1; S.tour = 1; save(); return; }
     tourI = n; const [sel, t, d] = TOUR[n], el = app.querySelector(sel);
     try { el.scrollIntoView({ block: "center", behavior: "instant" }); } catch (_) { try { el.scrollIntoView(); } catch (_) {} }
-    const r = el.getBoundingClientRect(), H = window.innerHeight, abajo = r.top + r.height / 2 < H / 2, quedan = TOUR.slice(n + 1).filter((q) => app.querySelector(q[0])).length;
+    const r0 = el.getBoundingClientRect(), H = window.innerHeight, alto = r0.height > H * 0.45, r = { left: r0.left, width: r0.width, top: Math.max(8, r0.top), bottom: Math.min(H - 8, r0.bottom) }; r.height = r.bottom - r.top;
+    const abajo = alto ? false : r.top + r.height / 2 < H / 2, quedan = TOUR.slice(n + 1).filter((q) => app.querySelector(q[0])).length;
     app.insertAdjacentHTML("beforeend", `<div id="tour" role="dialog" aria-label="${t}"><div class="tu-h" style="left:${r.left - 6}px;top:${r.top - 6}px;width:${r.width + 12}px;height:${r.height + 12}px"></div>
-      <div class="tu-b ${abajo ? "ab" : "ar"}" style="${abajo ? `top:${r.bottom + 16}px` : `bottom:${H - r.top + 16}px`}"><p class="ru">${n + 1} de ${n + 1 + quedan}</p><b>${t}</b><p>${d}</p><div class="tu-f"><button class="lk" data-a="tourx">Saltar</button><button class="btn go sm" data-a="tourn">${quedan ? "Siguiente" : "Empezar"}</button></div></div></div>`);
+      <div class="tu-b ${abajo ? "ab" : "ar"}" style="${alto ? "bottom:96px" : abajo ? `top:${r.bottom + 16}px` : `bottom:${H - r.top + 16}px`}"><p class="ru">${n + 1} de ${n + 1 + quedan}</p><b>${t}</b><p>${d}</p><div class="tu-f"><button class="lk" data-a="tourx">Saltar</button><button class="btn go sm" data-a="tourn">${quedan ? "Siguiente" : "Empezar"}</button></div></div></div>`);
   }
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
   function finJt(s) {
