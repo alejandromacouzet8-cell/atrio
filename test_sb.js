@@ -19,7 +19,11 @@ function fakeSupabase(sesIni) {
       return ch;
     },
     removeChannel: (ch) => ch._leave(),
-    rpc: (fn, arg) => { if (fn !== "velas_del_dia") return Promise.resolve({ data: null, error: { message: "no existe" } }); const c = {}; velas.filter((x) => x.dia === arg.d).forEach((x) => { c[x.estado] = (c[x.estado] || 0) + 1; }); return Promise.resolve({ data: Object.keys(c).map((e) => ({ estado: +e, n: c[e] })), error: null }); },
+    rpc: (fn, arg) => { const JTS = globalThis.__jt || (globalThis.__jt = {}); const ver = (j, d) => { const g = JTS[j]; if (!g) return null; const cs = g.c.filter((x) => x.dia === d); const dias = {}; g.c.forEach((x) => { dias[x.dia] = (dias[x.dia] || 0) + 1; }); return JSON.parse(JSON.stringify({ creador: g.creador, intencion: g.i, cuentas: cs.sort((a, b) => a.m - b.m), completos: Object.keys(dias).filter((k) => dias[k] === 5), gente: [...new Set(g.c.map((x) => x.quien))] })); };
+      if (fn === "juntos_crear") { const id = "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4b" + String(Object.keys(JTS).length + 10).padStart(2, "0"); JTS[id] = { creador: arg.c, i: arg.i || null, c: [] }; return Promise.resolve({ data: id, error: null }); }
+      if (fn === "juntos_ver") return Promise.resolve({ data: ver(arg.j, arg.d), error: null });
+      if (fn === "juntos_marca") { const g = JTS[arg.j]; if (!g) return Promise.resolve({ data: null, error: { message: "no existe" } }); if (!g.c.some((x) => x.dia === arg.d && x.m === arg.m)) g.c.push({ dia: arg.d, m: arg.m, quien: arg.q, hecho: "2026-12-05T13:40:00Z" }); return Promise.resolve({ data: ver(arg.j, arg.d), error: null }); }
+      if (fn !== "velas_del_dia") return Promise.resolve({ data: null, error: { message: "no existe" } }); const c = {}; velas.filter((x) => x.dia === arg.d).forEach((x) => { c[x.estado] = (c[x.estado] || 0) + 1; }); return Promise.resolve({ data: Object.keys(c).map((e) => ({ estado: +e, n: c[e] })), error: null }); },
     auth: (() => { let cb = null, ses = sesIni || null; const A = { getSession: () => Promise.resolve({ data: { session: ses } }), onAuthStateChange: (f) => { cb = f; return { data: { subscription: { unsubscribe() {} } } }; }, signInWithOtp: (o) => { A.__otp = o.options && o.options.shouldCreateUser && /@/.test(o.email) ? "123456" : null; return Promise.resolve({ error: A.__otp ? null : { message: "bad" } }); },
       verifyOtp: (o) => { if (o.token !== A.__otp) return Promise.resolve({ error: { message: "Token has expired or is invalid" } }); ses = { user: { id: "u2", email: o.email } }; setTimeout(() => cb && cb("SIGNED_IN", ses), 5); return Promise.resolve({ data: { session: ses }, error: null }); },
       signInWithOAuth: () => { ses = { user: { id: 'u1', email: 'lucia@example.com' } }; setTimeout(() => cb && cb('SIGNED_IN', ses), 2); return Promise.resolve({ error: null }); }, signOut: () => { ses = null; cb && cb('SIGNED_OUT', null); return Promise.resolve({}); } }; return A; })(),
@@ -120,6 +124,35 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   o.window.document.getElementById("fk").value = "123 456"; click(o, '[data-a="otpok"]'); await wait(200);
   if (!txt(o).includes("Tu avance está guardado") || !txt(o).includes("rosa@gmail.com")) throw new Error("no entra con el código: " + txt(o).slice(0, 300));
   if (!nubeRows.u2 || !nubeRows.u2.datos.d["2026-12-04"]) throw new Error("no sube el avance al entrar con código");
+  // rosario juntos: Lucía crea, Rosa abre la liga, cada quien reza misterios a su hora y se completa
+  const rezaMis = async (w) => { for (let k = 0; k < 20 && w.window.document.querySelector('[data-a="sig"]'); k++) { click(w, '[data-a="sig"]'); await wait(2); } await wait(40); };
+  const pa = abre("", null, JSON.stringify(Object.assign(JSON.parse(guardado), { d: {}, jt: [] }))); await wait(60);
+  if (!txt(pa).includes("Rezar el rosario con alguien")) throw new Error("Hoy sin rosario juntos: " + txt(pa).slice(0, 300));
+  pa.window.open = (u) => { pa.window.__wa = u; };
+  click(pa, '[data-a="jnew"]'); if (!txt(pa).includes("Recen juntos el rosario")) throw new Error("pantalla para crear");
+  pa.window.document.getElementById("fj").value = "Rosa"; pa.window.document.getElementById("fji").value = "Por mi abuela <b>"; click(pa, '[data-a="jcrea"]'); await wait(60);
+  if (!pa.window.__wa || !decodeURIComponent(pa.window.__wa).includes("?j=")) throw new Error("no invita por WhatsApp");
+  const lj = decodeURIComponent(pa.window.__wa).split("\n")[1];
+  if (!txt(pa).includes("Con Rosa") || !txt(pa).includes("0 de 5") || !txt(pa).includes("«Por mi abuela <b>»")) throw new Error("pantalla del rosario juntos: " + txt(pa).slice(0, 300));
+  click(pa, '[data-a="jtr"][data-k="0"]'); if (!txt(pa).includes("Señal de la cruz") || !txt(pa).includes("Su intención")) throw new Error("rezar un misterio: " + txt(pa).slice(0, 200));
+  await rezaMis(pa); if (!txt(pa).includes("1 de 5") || !txt(pa).includes("Lo rezaste tú")) throw new Error("no marca el misterio: " + txt(pa).slice(0, 300));
+  // Rosa abre la liga en su teléfono, sin Atrio
+  const pb = new JSDOM(html, { runScripts: "outside-only", url: lj.replace("https://atrio.test/?", "https://atrio.test/?fecha=2026-12-05&"), pretendToBeVisual: true }); pb.window.scrollTo = () => {}; pb.window.supabase = fakeSupabase(); pb.window.eval(sc); await wait(80);
+  if (!txt(pb).includes("Lucía te invitó")) throw new Error("invitación sin Atrio: " + txt(pb).slice(0, 200));
+  pb.window.document.getElementById("fn").value = "Rosa"; click(pb, '[data-a="jnom"]'); await wait(60);
+  if (!txt(pb).includes("Lo rezó Lucía") || !txt(pb).includes("1 de 5")) throw new Error("Rosa no ve el misterio de Lucía: " + txt(pb).slice(0, 300));
+  for (const m of [1, 2, 3]) { click(pb, '[data-a="jtr"][data-k="' + m + '"]'); await rezaMis(pb); }
+  if (!txt(pb).includes("4 de 5")) throw new Error("no lleva la cuenta: " + txt(pb).slice(0, 200));
+  // Lucía vuelve a Hoy y ve lo que rezó Rosa; reza el último con la Salve
+  click(pa, '.hd [data-a="go"]'); await wait(60);
+  if (!txt(pa).includes("Rosa rezó el cuarto misterio") || !txt(pa).includes("Van 4 de 5")) throw new Error("Hoy no muestra el avance: " + txt(pa).slice(0, 400));
+  click(pa, '[data-a="jabre"]'); await wait(40); click(pa, '[data-a="jtr"][data-k="4"]');
+  if (!pa.window.document.querySelector(".ro")) throw new Error("no abre el último misterio");
+  { let vioSalve = false; for (let k = 0; k < 20 && pa.window.document.querySelector('[data-a="sig"]'); k++) { if (txt(pa).includes("Salve")) vioSalve = true; click(pa, '[data-a="sig"]'); await wait(2); } await wait(60); if (!vioSalve) throw new Error("el último no cierra con la Salve"); }
+  if (!txt(pa).includes("Tu veladora ya") ) throw new Error("al completar no enciende: " + txt(pa).slice(0, 200));
+  click(pa, '[data-a="go"][data-v="hoy"]'); await wait(40); if (!txt(pa).includes("Completo hoy")) throw new Error("Hoy no dice completo");
+  // la videollamada usa una sala propia del grupo
+  click(pa, '[data-a="jabre"]'); await wait(30); click(pa, '[data-a="jtv"]'); await wait(80); if (!txt(pa).includes("Rosario en familia")) throw new Error("videollamada: " + txt(pa).slice(0, 200));
   // sin la bandera, nadie ve botones de Google
   const g = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?demo=1&fecha=2026-12-06&v=yo", pretendToBeVisual: true }); g.window.scrollTo = () => {}; g.window.supabase = fakeSupabase(); g.window.eval(sc); await wait(30);
   if (g.window.document.querySelector('[data-a="login"]')) throw new Error("ofrece Google con el acceso cerrado");

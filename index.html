@@ -438,6 +438,38 @@ p.pin.z{margin-top:10px}
 .btn.gw{display:flex;align-items:center;justify-content:center;gap:10px;background:#F6EFE9;color:#1F1F1F;border:0}
 .btn.gw span{font-weight:700}
 .fld.cod{font-family:var(--sa);font-size:30px;letter-spacing:.35em;text-align:center;font-variant-numeric:tabular-nums}
+
+/* ---------- rosario juntos ---------- */
+.jex{margin:18px 0 0;padding:0;list-style:none;counter-reset:j}
+.jex li{position:relative;padding:0 0 12px 38px;font-size:16px;line-height:23px;color:var(--txt2);counter-increment:j}
+.jex li:before{content:counter(j);position:absolute;left:0;top:-1px;width:26px;height:26px;border-radius:13px;border:1px solid rgba(230,194,122,.5);color:var(--oroc);font-family:var(--se);font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center}
+.jex b{color:var(--txt);font-weight:600}
+.jp{display:flex;align-items:center;gap:12px;margin-top:20px}
+.jpb{flex:1;height:8px;border-radius:4px;background:rgba(246,239,233,.1);overflow:hidden}
+.jpb i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#C8962E,#F4DCA6);transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.jp p{flex:none;font-family:var(--se);font-weight:600;font-size:18px;color:var(--oroc)}
+.jok{margin-top:16px;padding:18px;border-radius:20px;border:1px solid rgba(230,194,122,.55);background:rgba(230,194,122,.1);text-align:center}
+.jok .em{display:inline-flex;color:var(--oro)}
+.jl{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.jm{display:flex;align-items:center;gap:12px;padding:12px 12px 12px 14px;border-radius:18px;border:1px solid rgba(246,239,233,.14);background:rgba(246,239,233,.03)}
+.jm.ok{border-color:rgba(230,194,122,.45);background:rgba(230,194,122,.08)}
+.jb{flex:none;width:42px;height:42px;border-radius:21px;border:1.5px solid rgba(244,220,166,.35);display:flex;align-items:center;justify-content:center;font-family:var(--se);font-weight:600;font-size:19px;color:var(--txt2)}
+.jb i{font-style:normal}
+.jm.ok .jb{background:var(--oro);border-color:var(--oro);color:var(--manto)}
+.jm .g{flex:1;min-width:0}
+.jm .g .ru{display:block;font-size:13.5px;line-height:18px}
+.jm .g b{display:block;font-family:var(--se);font-weight:600;font-size:18px;line-height:23px;color:var(--txt)}
+.jm .g small{display:block;margin-top:2px;font-size:13px;line-height:17px;color:var(--oroc)}
+.btn.sm.jr{flex:none;width:auto;min-height:40px;padding:0 16px;font-size:15px;margin:0}
+.jra{margin-top:16px;text-align:center;font-size:15px;color:var(--txt2)}
+.jra b{font-family:var(--se);font-size:24px;color:var(--oroc);margin-right:4px}
+.jbt{display:flex;gap:10px;margin-top:18px}
+.jbt .vzb{flex:1}
+.jmini{flex:none;display:flex;gap:4px}
+.jmini i{width:9px;height:9px;border-radius:5px;border:1px solid rgba(244,220,166,.55)}
+.jmini i.on{background:var(--oro);border-color:var(--oro)}
+.jok .em{width:56px;height:56px;margin:0 auto 6px}
+.jok .em svg{width:56px;height:56px}
 </style>
 </head>
 <body>
@@ -813,6 +845,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     } catch (_) {}
   }
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") { despierta(view === "ros"); if (view === "mapa" || view === "listo") cargaVelas(); } });
+  setInterval(() => { if (!document.hidden && SB) { if (view === "jt" && jtA) jtVer(jtA); else if (view === "hoy" && tic % 3 === 0) jtTodos(); } }, 20000);
   setInterval(() => { const d = now(); if (++tic % 3 === 0 && (view === "mapa" || view === "listo") && !document.hidden) cargaVelas(); if (S.ang && S.n && d.getHours() === 12 && d.getMinutes() < 10 && sono !== key(d) && !hoy().a && view !== "ros") { sono = key(d); bell(3); go("ang"); } }, 20000);
 
   /* ---------- sala y mapa en vivo (solo cuando la plataforma lo permite) ---------- */
@@ -891,7 +924,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   }
   function conectaSB() {
     if (SB_URL.indexOf("http") !== 0 || RM) return;
-    const init = () => { try { SB = window.supabase.createClient(SB_URL, SB_KEY, { auth: { flowType: "pkce" } }); RM = sbRoom(SB);
+    const init = () => { try { SB = window.supabase.createClient(SB_URL, SB_KEY, { auth: { flowType: "pkce" } }); RM = sbRoom(SB); setTimeout(() => { jtTodos(); if (jtA && !S.jt.some((x) => x.id === jtA)) jtVer(jtA); }, 0);
       const sesion = (u) => { const cambia = (u && u.id) !== (U && U.id), p0 = pideG(); U = u; lista = 1; if (U && view === "entrar" && otpE === 0) { go(V[vuelveE] && vuelveE !== "entrar" ? vuelveE : "hoy"); } if (U && cambia) setTimeout(sincroniza, 0); else if ((cambia || p0 !== pideG()) && /^(hoy|yo|listo|atrio|bien)$/.test(view)) render(1); };
       try { SB.auth.getSession().then((r) => sesion((r && r.data && r.data.session && r.data.session.user) || null), () => sesion(null)); SB.auth.onAuthStateChange((_e, ses) => sesion((ses && ses.user) || null)); } catch (_) {} RM.onPeers((c) => { peersL = c.peers || []; if (view === "mapa" || view === "listo" || (view === "sala" && !sala)) render(); }); presLobby(); cargaVelas(); if (hoy().r) enciende(); if (view === "sala") render(); } catch (_) { RM = null; SB = null; } };
     if (window.supabase && window.supabase.createClient) return init();
@@ -1008,6 +1041,27 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     return `<span class="vzr${chico ? " ch" : ""}"><button class="vzb on${VZ.mudo ? " mu" : ""}" data-a="mudo" aria-pressed="${!VZ.mudo}">${VZ.mudo ? I.mute : I.mic}<span>${lb}</span></button><button class="vzb ic2${VZ.cam ? " on" : ""}" data-a="cam" aria-label="${VZ.cam ? "Apagar cámara" : "Encender cámara"}" aria-pressed="${!!VZ.cam}">${VZ.cam ? I.cam : I.camno}</button>${chico ? "" : `<button class="vzb" data-a="cuelga">Colgar</button>`}</span>`;
   };
   if (Q.get("demo") || Q.get("prueba")) window.atrioVoz = () => (VZ ? { mudo: VZ.mudo, pcs: Object.keys(VZ.pcs).map((k) => VZ.pcs[k].connectionState), audios: document.querySelectorAll("#voces audio").length } : null);
+  /* ---------- rosario juntos: cada quien reza su misterio cuando puede, y el rosario del día se va llenando ---------- */
+  if (!Array.isArray(S.jt)) S.jt = [];
+  const JT = {}, UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+  let jtA = "", jtErr = 0;
+  const jtOk = () => SB_URL.indexOf("http") === 0;
+  const jtHechos = (id) => ((JT[id] && JT[id].cuentas) || []).map((c) => c.m);
+  const jtCon = (j) => { const d = JT[j.id]; if (j.con) return j.con; const g = d ? (d.gente || []).concat(d.creador).filter((x) => x && x !== S.n) : []; return g.length ? [...new Set(g)].slice(0, 3).join(", ") : "tu familia"; };
+  const jtRacha = (id) => { const c = (JT[id] && JT[id].completos) || []; let n = 0, d = now(); if (!c.includes(key(d))) d = add(d, -1); while (c.includes(key(d))) { n++; d = add(d, -1); } return n; };
+  function jtVer(id, pinta) {
+    if (!SB || !UUID.test(id)) return Promise.resolve(null);
+    return SB.rpc("juntos_ver", { j: id, d: key(now()) }).then((r) => {
+      if (r && !r.error && r.data) { JT[id] = r.data; jtErr = 0;
+        // si entre todos completaron el rosario de hoy y yo recé un misterio, mi veladora también se enciende
+        if (jtHechos(id).length === 5 && (r.data.cuentas || []).some((c) => c.quien === S.n) && !hoy().r) { marca("r"); enciende(); }
+      } else if (r && r.error) jtErr = 1;
+      if (pinta !== false && /^(hoy|jt)$/.test(view)) render(1); return JT[id];
+    }, () => { jtErr = 1; if (/^(jt)$/.test(view)) render(1); return null; });
+  }
+  const jtTodos = () => S.jt.forEach((j) => jtVer(j.id));
+  const ligaJt = (id) => location.origin + location.pathname + "?j=" + id;
+  const jtComparte = (id, txt) => { const t = txt + "\n" + ligaJt(id); if (navigator.share) { navigator.share({ text: t }).catch(() => {}); return; } try { window.open("https://wa.me/?text=" + encodeURIComponent(t), "_blank"); } catch (_) {} };
   /* ---------- rezar por alguien: se manda una luz por WhatsApp ---------- */
   const LQ = { am: ["un Ave María", "Ave María"], ros: ["un rosario", "Rosario"], vel: ["una veladora", "Veladora"] };
   let LUZ = null, luzQ = "am", luzPara = "", luzRe = 0;
@@ -1095,6 +1149,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   }
   function ring(i) {
     const P = ros.p, done = {}, cur = P[i].b; for (let j = 0; j < i; j++) done[P[j].b] = 1;
+    if (ros.jt) jtHechos(ros.jt.id).forEach((m) => { done["L" + m] = 1; for (let k = 1; k <= 10; k++) done["s" + m + "_" + k] = 1; });
     const cx = 130, cy = 108, R = 98, st = 360 / 56; let s = "";
     const bead = (id, x, y, r) => { const c = id === cur, d = done[id]; s += (c ? `<circle class="pu" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r + 3}" fill="none" stroke="#F4DCA6" stroke-width="1.2"/>` : "") + `<circle${c ? ' class="cur"' : ""} cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${c ? r + 1.2 : r}" fill="${c ? "#FFF3D0" : d ? "#E6C27A" : "none"}" stroke="${d || c ? "none" : "rgba(244,220,166,.55)"}" stroke-width="1"/>`; };
     for (let m = 0; m < 5; m++) for (let k = 0; k <= 10; k++) { const a = ((90 + (m * 11 + k + 1) * st) * Math.PI) / 180; bead(k === 0 ? "L" + m : "s" + m + "_" + k, cx + R * Math.cos(a), cy + R * Math.sin(a), k === 0 ? 4.6 : 3); }
@@ -1155,6 +1210,25 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
         <label class="ru" for="fm" style="display:block;font-size:15px">Tu correo</label><input class="fld" id="fm" type="email" inputmode="email" autocomplete="email" autocapitalize="off" placeholder="tucorreo@gmail.com" value="${esc(correo)}">
         <button class="btn go" data-a="otp" style="margin-top:14px"${otpE === 1 ? " disabled" : ""}>${otpE === 1 ? "Mandando…" : "Mandarme un código"}</button>
         <p class="note c" style="margin-top:12px">Te llega un código de un solo uso. No guardamos contraseñas.</p>` : ""}</section>`; },
+    jnew: () => `<section class="v d n in">${sky()}${hd(["hoy"], "Rosario juntos")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">Recen juntos el rosario de cada día</h1>
+      <ol class="jex"><li><b>Cada quien a su hora.</b> El rosario de hoy tiene cinco misterios; cada uno reza los que pueda.</li><li><b>Se va llenando solo.</b> Ves quién rezó cada misterio y cuántos faltan.</li><li><b>El último cierra.</b> Quien reza el quinto termina con la Salve y se enciende su veladora.</li></ol>
+      <label class="ru" for="fj" style="display:block;margin-top:22px;font-size:15px">¿Con quién?</label><input class="fld" id="fj" maxlength="40" autocomplete="off" placeholder="Constanza, mi mamá…">
+      <label class="ru" for="fji" style="display:block;margin-top:16px;font-size:15px">¿Por quién rezan? <span style="font-family:var(--sa);font-style:normal;font-size:13px;color:var(--txt2)">opcional</span></label><input class="fld" id="fji" maxlength="140" autocomplete="off" placeholder="Por nuestra familia…">
+      <div style="padding-top:22px"><button class="btn go" data-a="jcrea">Crear e invitar por WhatsApp</button></div></section>`,
+    jt: () => { const id = jtA, d = JT[id], j = S.jt.find((x) => x.id === id) || { id }, set = MIS_DIA[now().getDay()], M = MIS[set], hechos = d ? d.cuentas || [] : [], n = hechos.length, ra = jtRacha(id);
+      if (!S.n) return `<section class="v d n in">${sky()}<div class="hd"><span></span><p class="ru">Rosario juntos</p><span></span></div><h1 style="margin-top:30px;font-size:34px;line-height:40px">${d ? esc(d.creador) + " te invitó a rezar el rosario juntos" : "Te invitaron a rezar el rosario juntos"}</h1><p class="sub">Cada quien reza su misterio cuando puede. Para que sepan quién rezó, ¿cómo te llamas?</p>
+        <label class="ru" for="fn" style="display:block;margin-top:22px;font-size:15px">Tu nombre</label><input class="fld" id="fn" maxlength="24" autocomplete="given-name" placeholder="Tu nombre de pila"><div style="padding-top:22px"><button class="btn go" data-a="jnom">Entrar</button></div></section>`;
+      const fila = (m) => { const c = hechos.find((x) => x.m === m), mm = M.m[m], h = c ? new Date(c.hecho) : null, yo = c && c.quien === S.n;
+        return `<li class="jm${c ? " ok" : ""}"><span class="jb">${c ? `<b>${esc(c.quien.slice(0, 1).toUpperCase())}</b>` : `<i>${m + 1}</i>`}</span><span class="g"><span class="ru">${ORD[m]} misterio</span><b>${mm[0]}</b>${c ? `<small>${yo ? "Lo rezaste tú" : "Lo rezó " + esc(c.quien)}${h && !isNaN(h) ? ", " + String(h.getHours()).padStart(2, "0") + ":" + String(h.getMinutes()).padStart(2, "0") : ""}</small>` : ""}</span>${c ? `<span class="pal2">${I.ok}</span>` : `<button class="btn go sm jr" data-a="jtr" data-k="${m}">Rezar</button>`}</li>`; };
+      return `<section class="v d n in">${sky()}${hd(["hoy"], "Rosario juntos")}<h1 style="margin-top:10px;font-size:32px;line-height:38px">Con ${esc(jtCon(j))}</h1>
+        <p class="sub">Hoy, ${M.n.toLowerCase()}.${d && d.intencion ? "" : " Cada quien reza su misterio cuando puede."}</p>${d && d.intencion ? `<p class="pin">«${esc(d.intencion)}»</p>` : ""}
+        ${!d ? `<p class="note" style="margin-top:20px">${jtErr ? "No pudimos cargar el rosario. Revisa tu internet." : "Cargando…"}</p>` : `
+        <div class="jp"><div class="jpb"><i style="width:${n * 20}%"></i></div><p>${n === 5 ? "Completo" : n + " de 5"}</p></div>
+        ${n === 5 ? `<div class="jok"><span class="em">${LOGO}</span><p class="ru">Su rosario de hoy está completo</p><p class="sub c" style="margin:2px 0 0">Mañana empieza uno nuevo.</p></div>` : ""}
+        <ol class="jl">${[0, 1, 2, 3, 4].map(fila).join("")}</ol>
+        ${ra > 1 ? `<p class="jra"><b>${ra}</b> días seguidos rezando juntos</p>` : ""}`}
+        <div class="jbt"><button class="vzb" data-a="jtv">${I.cam}<span>Videollamada</span></button><button class="vzb" data-a="jtw">${n && n < 5 ? "Avisarles" : "Invitar"}</button></div>
+        <p class="note c" style="margin-top:12px">Quien tenga la liga puede ver y rezar este rosario. Compártela solo con tu familia.</p></section>`; },
     luz: () => `<section class="v d n in">${sky()}${hd(["hoy"], "Rezar por alguien")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">¿Por quién rezaste?</h1><p class="sub">Le llega por WhatsApp con una paloma. Así sabe que alguien lo tuvo en su oración.</p>
       <label class="ru" for="fl" style="display:block;margin-top:22px;font-size:15px">Su nombre</label><input class="fld" id="fl" maxlength="40" autocomplete="off" placeholder="Constanza, mi mamá…" value="${esc(luzPara)}">
       <p class="ru" style="margin-top:22px;font-size:15px">Recé</p><div class="lq">${Object.keys(LQ).map((k) => `<button class="lqo${luzQ === k ? " on" : ""}" data-a="luzq" data-k="${k}" aria-pressed="${luzQ === k}"><span class="md">${k === "am" ? EM.virgen : k === "ros" ? EM.gozosos : LOGO}</span><b>${LQ[k][1]}</b></button>`).join("")}</div>
@@ -1198,6 +1272,9 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
         ${item(hh.r ? "" : "now", !hh.r, 'data-a="ros"', hh.r ? "Ya lo rezaste hoy" : "Hoy, " + MIS[set].n.toLowerCase(), "Santo rosario", hh.r ? '<span class="ok">Hecho</span>' : `<span style="color:var(--teal)">${I.go}</span>`)}
         ${item("", false, 'data-a="go" data-v="ang"', hh.a ? "Ya lo rezaste hoy" : "A las 12:00, con campana", "Ángelus", hh.a ? '<span class="ok">Hecho</span>' : `<span style="color:var(--teal)">${I.bell}</span>`)}
         ${item("", false, 'data-a="go" data-v="nov"', nvTxt, "Novena de Guadalupe", `<span style="color:var(--ink2)">${I.go}</span>`)}
+        ${jtOk() ? (S.jt.length ? S.jt.slice(0, 3).map((j) => { const d = JT[j.id], c = d ? d.cuentas || [] : [], n = c.length, ot = c.filter((x) => x.quien !== S.n).sort((a, b) => (a.hecho < b.hecho ? 1 : -1))[0];
+          return `<li><span class="nd">${n === 5 ? star(16, "#C8962E") : starO(16, "rgba(244,220,166,.6)")}</span><button class="it${n && n < 5 ? " now" : ""}" data-a="jabre" data-k="${j.id}"><span class="g"><span class="ru" style="display:block">${ot && n < 5 ? esc(ot.quien) + " rezó el " + ORD[ot.m].toLowerCase() + " misterio" : "Rosario juntos, con " + esc(jtCon(j))}</span><b>${n === 5 ? "Completo hoy" : d ? `Van ${n} de 5 misterios` : "Rosario juntos"}</b></span>${n === 5 ? '<span class="ok">Hecho</span>' : `<span class="jmini">${[0, 1, 2, 3, 4].map((m) => `<i${c.some((x) => x.m === m) ? ' class="on"' : ""}></i>`).join("")}</span>`}</button></li>`; }).join("")
+          : `<li><span class="nd">${starO(16, "rgba(244,220,166,.6)")}</span><button class="it" data-a="jnew"><span class="g"><span class="ru" style="display:block">Cada quien a su hora</span><b>Rezar el rosario con alguien</b></span><span style="color:var(--teal)">${I.go}</span></button></li>`) : ""}
         <li><span class="nd">${starO(16, "rgba(244,220,166,.6)")}</span><button class="it" data-a="luzn"><span class="g"><span class="ru" style="display:block">Mándale una luz</span><b>Rezar por alguien</b></span><span style="color:var(--teal)">${I.go}</span></button></li>
         <li><span class="nd">${starO(16, "rgba(244,220,166,.6)")}</span><div class="hero"><p class="ru">Cada quien desde donde está</p><h2>Rosario en familia</h2><p class="sub">Abre una sala, comparte el código y recen el mismo rosario al mismo tiempo.</p><button class="btn go sm" data-a="go" data-v="sala" style="margin-top:12px">Abrir la sala</button></div></li>
         </ol>${tabs("hoy")}</section>`;
@@ -1223,7 +1300,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       const pie = `<div class="rpie">${ros.sala ? `<div class="vzl"><p class="note">${peersS.length === 1 ? "Solo tú" : peersS.length + " rezando"}</p>${botVoz(1)}</div>` : ""}${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<div class="rb"><button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" ? "Continuar" : "Amén"}</button></div>`}</div>`;
       const gente = "", orb = ros.sala ? orbita() : "";
       if (st.t === "mis") return `<section class="v d ro mi${cl}">${sky()}${cab}${gente}<div class="rt z"><p class="c" style="margin-top:12px;font-size:14px;font-weight:600;color:var(--txt2)">${ORD[st.m]} misterio</p><h1 class="c" style="font-size:28px;line-height:34px">${mm[0]}</h1><p class="ru c" style="margin-top:6px;font-size:16px">${mm[1]}</p></div><div class="ring z">${ring(ros.i)}${orb}</div><div class="rt z"><p class="pr c" style="font-size:21px;line-height:29px">${mm[2]}</p></div>${pie}</section>`;
-      return `<section class="v d ro${cl}">${sky()}${cab}${gente}<p class="rl z">${mm ? ORD[st.m] + " misterio: " + mm[0] : S.pi ? `<span><small>Tu intención</small><em>«${esc(S.pi)}»</em></span>` : st.t === "salve" ? "Para terminar" : "Para empezar"}</p>
+      return `<section class="v d ro${cl}">${sky()}${cab}${gente}<p class="rl z">${mm ? ORD[st.m] + " misterio: " + mm[0] : (ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion) ? `<span><small>Su intención</small><em>«${esc(JT[ros.jt.id].intencion)}»</em></span>` : S.pi ? `<span><small>Tu intención</small><em>«${esc(S.pi)}»</em></span>` : st.t === "salve" ? "Para terminar" : "Para empezar"}</p>
         <div class="ring z">${ring(ros.i)}${orb}<div><b>${o.n}</b><span>${st.of ? st.k + " de " + st.of : "&nbsp;"}</span></div></div>
         <div class="rt z"><p class="pr"><i>V/.</i> ${o.v}</p><p class="pr rr"><i>R/.</i> ${o.r}</p>${st.x ? `<p class="ex">${o.x}</p>` : ""}</div>${pie}</section>`;
     },
@@ -1252,7 +1329,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       return `<section class="v d n tb in">${sky()}<div class="hd" style="align-items:flex-start"><div><p class="ru">Tu bitácora</p><h1>${esc(S.n)}</h1></div><span aria-hidden="true" style="flex:none;margin-top:8px;width:44px;height:44px;border-radius:22px;background:var(--teal);color:var(--card);font-family:var(--se);font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center">${esc(S.n.slice(0, 1).toUpperCase())}</span></div>
       <div class="st"><div><b>${racha()}</b><span>${racha() === 1 ? "día seguido" : "días seguidos"}</span></div><div><b>${total()}</b><span>${total() === 1 ? "rosario rezado" : "rosarios rezados"}</span></div></div>
       <div class="card" style="margin-top:12px;padding:12px 12px 14px"><p class="ru" style="margin:0 6px 6px;font-size:16px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)} de ${y}</p><div class="cal">${c}</div></div>
-      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="go" data-v="pid"><span class="g"><b>Por quién rezo</b><small>${S.pi ? esc(S.pi) : "Escribe tu intención"}</small></span>${I.go}</button><button class="row" data-a="go" data-v="conf"><span class="g"><b>Mi última confesión</b><small>${S.cf ? (() => { const n = Math.max(0, Math.round((now() - new Date(S.cf + "T12:00:00")) / 864e5)); return n === 0 ? "Hoy" : n === 1 ? "Ayer" : n < 60 ? "Hace " + n + " días" : "Hace " + Math.round(n / 30.4) + " meses"; })() : "Solo tú la ves"}</small></span>${I.go}</button><label class="row"><span class="g"><b>Música de fondo al rezar</b><small>Órgano suave, como en una capilla</small></span><span class="sw"><input type="checkbox" id="fmu"${S.mu ? " checked" : ""}><span></span></span></label><label class="row"><span class="g"><b>Vibración al rezar</b><small>Un toque en cada cuenta, más fuerte en cada misterio</small></span><span class="sw"><input type="checkbox" id="fv"${S.vib !== 0 ? " checked" : ""}><span></span></span></label><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
+      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="go" data-v="pid"><span class="g"><b>Por quién rezo</b><small>${S.pi ? esc(S.pi) : "Escribe tu intención"}</small></span>${I.go}</button>${jtOk() ? `<button class="row" data-a="jnueva"><span class="g"><b>Rosario juntos</b><small>${S.jt.length ? "Crear otro con alguien más" : "Reza por misterios con tu pareja o familia"}</small></span>${I.go}</button>` : ""}<button class="row" data-a="go" data-v="conf"><span class="g"><b>Mi última confesión</b><small>${S.cf ? (() => { const n = Math.max(0, Math.round((now() - new Date(S.cf + "T12:00:00")) / 864e5)); return n === 0 ? "Hoy" : n === 1 ? "Ayer" : n < 60 ? "Hace " + n + " días" : "Hace " + Math.round(n / 30.4) + " meses"; })() : "Solo tú la ves"}</small></span>${I.go}</button><label class="row"><span class="g"><b>Música de fondo al rezar</b><small>Órgano suave, como en una capilla</small></span><span class="sw"><input type="checkbox" id="fmu"${S.mu ? " checked" : ""}><span></span></span></label><label class="row"><span class="g"><b>Vibración al rezar</b><small>Un toque en cada cuenta, más fuerte en cada misterio</small></span><span class="sw"><input type="checkbox" id="fv"${S.vib !== 0 ? " checked" : ""}><span></span></span></label><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
       ${U ? `<div class="card" style="margin-top:12px"><div class="row" style="cursor:default"><span class="g"><b>Tu avance está guardado</b><small>${esc(U.email || "Cuenta de Google")}</small></span><span class="ok">Listo</span></div><button class="row" data-a="logout"><span class="g"><b>Cerrar sesión</b></span>${I.go}</button></div>` : !conG() ? `<p class="note" style="margin-top:12px">Tu avance se guarda solo en este dispositivo.</p>` : pideG() ? `<button class="btn te" data-a="login" style="margin-top:12px">Guardar con Google</button><p class="note" style="margin-top:8px">Sin cuenta, tu avance vive solo en este teléfono.</p>` : ""}${tabs("yo")}</section>`; },
     sala: () => {
       const cab = sky() + hd(["hoy"], "Rosario en familia");
@@ -1276,7 +1353,17 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   // El aviso se pone encima de la vista sin volver a dibujarla (no repite animaciones ni borra lo que se escribe)
   let tMsg = 0;
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
-  function fin() { const s = ros; ros = null; vibra(3); musica(false); marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {}); go("listo"); }
+  function finJt(s) {
+    ros = null; vibra(3); musica(false); jtA = s.jt.id;
+    const pend = () => 5 - jtHechos(s.jt.id).length;
+    go("jt");
+    SB.rpc("juntos_marca", { j: s.jt.id, d: key(now()), m: s.jt.m, q: S.n || "Alguien" }).then((r) => {
+      if (r && !r.error && r.data) JT[s.jt.id] = r.data;
+      if (pend() === 0) { marca("r"); enciende(); go("listo"); aviso("Entre todos completaron el rosario de hoy."); }
+      else { render(1); aviso(pend() === 1 ? "Listo. Falta un misterio." : `Listo. Faltan ${pend()} misterios.`); }
+    }, () => aviso("No se pudo guardar. Revisa tu internet e intenta otra vez."));
+  }
+  function fin() { const s = ros; if (s && s.jt) return finJt(s); ros = null; vibra(3); musica(false); marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {}); go("listo"); }
   const OTP_ON = SB_URL.indexOf("http") === 0 && (Q.get("correo") || "0" === "1");
   let dirN = "", estAbre = 0, vuelveE = "hoy", correo = "", otpE = 0, otpT = 0;
   const sinAc = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -1284,8 +1371,10 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   const sugEst = () => { let z = ""; try { z = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (_) {} if (Q.get("tz")) z = Q.get("tz");
     const M = { "America/Cancun": 22, "America/Merida": 30, "America/Monterrey": 18, "America/Tijuana": 1, "America/Hermosillo": 25, "America/Chihuahua": 5, "America/Ciudad_Juarez": 5, "America/Ojinaga": 5, "America/Matamoros": 27, "America/Bahia_Banderas": 17, "America/Mazatlan": 24 };
     if (M[z] !== undefined) return M[z]; if (z && !/^America\/(Mexico_City|Monterrey|Merida|Cancun|Matamoros|Chihuahua|Ojinaga|Ciudad_Juarez|Hermosillo|Mazatlan|Bahia_Banderas|Tijuana)$/.test(z) && !/^(UTC|Etc\/)/.test(z)) return 99; return null; };
-  function go(v, b) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est|luzv|entrar)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|est)$/.test(view)) { ob = 1; view = "est"; } try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
+  function go(v, b) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est|luzv|entrar|jt)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|est|jt|ros|listo|sala)$/.test(view)) { ob = 1; view = "est"; } try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
     // la paloma trae el mensaje la primera vez que se abre Hoy cada día
+    if (view === "hoy" && SB) jtTodos();
+    if (view === "jt" && SB && jtA) jtVer(jtA);
     if (view === "hoy" && S.n && S.pd !== key(now())) { palT = Date.now(); S.pd = key(now()); save(); }
     // hacia adentro la vista entra por la derecha; al regresar, por la izquierda; las pestañas solo suben
     dirN = b ? "bk" : /^(nom|est|advs|adv|pid|nov|novd|ang|vir|vird|sala)$/.test(view) ? "fw" : "";
@@ -1327,6 +1416,27 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     cuelga: () => { apagaVoz(); },
     cam: () => { camara(); },
     cfhoy: () => { S.cf = key(now()); save(); vibra(2); render(1); aviso("Que Dios te bendiga."); },
+    jnew: () => { if (!jtOk()) { aviso("Necesitas internet para rezar juntos."); return; } go(S.jt.length && !Q.get("nuevo") ? "jt" : "jnew"); },
+    jnueva: () => go("jnew"),
+    jabre: (d) => { jtA = d.k; go("jt"); jtVer(d.k); },
+    jcrea: () => { if (!SB) { aviso("Conectando. Intenta en un momento."); return; } const c = ((document.getElementById("fj") || {}).value || "").replace(/\s+/g, " ").trim().slice(0, 40), i = ((document.getElementById("fji") || {}).value || "").replace(/\s+/g, " ").trim().slice(0, 140);
+      if (!c) { aviso("Escribe con quién van a rezar."); const f = document.getElementById("fj"); if (f) f.focus(); return; }
+      const b = app.querySelector('[data-a="jcrea"]'); if (b) { b.disabled = true; b.textContent = "Creando…"; }
+      SB.rpc("juntos_crear", { c: S.n || "Alguien", i }).then((r) => {
+        if (!r || r.error || !UUID.test(String(r.data))) { aviso("No se pudo crear. Intenta otra vez."); render(1); return; }
+        const id = String(r.data); S.jt.unshift({ id, con: c }); save(); jtA = id; vibra(2);
+        jtComparte(id, `${c}, te invito a rezar el rosario conmigo en Atrio. Cada quien reza su misterio cuando pueda y se va completando solito. 🕊️`);
+        go("jt"); jtVer(id);
+      }, () => { aviso("Sin conexión. Intenta otra vez."); render(1); });
+    },
+    jnom: () => { const f = document.getElementById("fn"), v = ((f && f.value) || "").replace(/\s+/g, " ").trim().slice(0, 24); if (!v) { if (f) f.focus(); return; } S.n = v; if (S.e < 0) S.ob = 1; save(); render(); },
+    jtr: (d) => { if (!SB) return; const m = +d.k, h = jtHechos(jtA); if (h.includes(m)) return; const set = MIS_DIA[now().getDay()], ult = h.length === 4;
+      ros = { set, i: 0, jt: { id: jtA, m } };
+      ros.p = [{ t: "cruz", b: "x" }, { t: "mis", m, b: "L" + m }, { t: "pn", m, b: "L" + m }]; for (let k = 1; k <= 10; k++) ros.p.push({ t: "am", m, k, of: 10, b: "s" + m + "_" + k }); ros.p.push({ t: "gl", m, x: 1, b: "s" + m + "_10" }); if (ult) ros.p.push({ t: "salve", b: "M" });
+      if (S.mu) musica(true); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
+    jtv: () => { if (!RM) { aviso("La videollamada necesita internet."); return; } const c = "J" + jtA.replace(/-/g, "").slice(0, 5).toUpperCase(); if (!sala || codigo !== c) { if (sala) salir(); entrar(c, false); } go("sala"); },
+    jtw: () => { const d = JT[jtA], n = d ? (d.cuentas || []).length : 0, f = 5 - n, j = S.jt.find((x) => x.id === jtA) || {};
+      jtComparte(jtA, n && n < 5 ? `Ya vamos ${n} de 5 misterios del rosario de hoy. ${f === 1 ? "Falta uno" : "Faltan " + f}, ¿te echas uno? 🕊️` : `${j.con ? j.con + ", r" : "R"}ecemos juntos el rosario de hoy en Atrio. Cada quien reza su misterio cuando pueda. 🕊️`); },
     luzn: (d) => { luzPara = d && d.p ? d.p : ""; luzQ = d && d.q ? d.q : "am"; go("luz"); },
     luzq: (d) => { if (LQ[d.k]) { luzQ = d.k; const f = document.getElementById("fl"); luzPara = f ? f.value : luzPara; render(1); } },
     luzm: () => {
@@ -1375,10 +1485,14 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   const errG = /[?&#]error(_code|_description)?=/.test(location.search + location.hash);
   let h0 = Q.get("v") || (errG ? "" : location.hash.slice(1));
   if (S.ob && S.n && !Q.get("demo")) { ob = 1; h0 = S.e < 0 ? "est" : S.vs.length ? "pid" : "advs"; }
+  const jQ = Q.get("j");
+  if (jQ && UUID.test(jQ)) { if (!S.jt.some((x) => x.id === jQ)) { S.jt.unshift({ id: jQ }); save(); } jtA = jQ; h0 = "jt"; try { history.replaceState(null, "", location.pathname); } catch (_) {} }
   if (LUZ) { h0 = "luzv"; try { history.replaceState(null, "", location.pathname); } catch (_) {} }
   if (h0 === "ros" && S.n) A.ros({}); else if (h0 === "novd" && S.n) { nd = +(Q.get("n") || 6); go("novd"); } else go(V[h0] ? h0 : "hoy");
   if (errG) { try { history.replaceState(null, "", location.pathname); } catch (_) {} setTimeout(() => aviso("No se pudo entrar con Google. Intenta de nuevo."), 400); }
   if (Q.get("demo") && Q.get("gente") && ros) { const N = ["Lucía", "Pedro", "Ana", "Rosa", "Juan", "Carmen", "Luis", "Sofía", "Diego", "Elena", "Pablo", "Marta"]; ros.sala = 1; lead = true; peersS = N.slice(0, +Q.get("gente")).map((n, i) => ({ peer: "p" + i, isMe: !i, presence: { n, v: i % 4 === 3 ? 2 : 1, lead: !i ? 1 : 0 } })); render(); const h = app.querySelector('[data-p="p2"]'); if (h) h.classList.add("habla"); }
+  if (Q.get("demo") && Q.get("jtd")) { const id = "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed", n = +Q.get("jtd"), Q2 = ["Constanza", S.n, "Constanza", S.n, "Constanza"], hh = ["T13:40:00", "T15:05:00", "T19:20:00", "T21:10:00", "T22:30:00"];
+    S.jt = [{ id, con: "Constanza" }]; JT[id] = { creador: S.n, intencion: "Por nuestra familia", cuentas: [0, 1, 2, 3, 4].slice(0, n).map((m) => ({ m, quien: Q2[m], hecho: key(now()) + hh[m] })), completos: n === 5 ? [key(now()), key(add(now(), -1)), key(add(now(), -2))] : [key(add(now(), -1)), key(add(now(), -2))], gente: ["Constanza"] }; jtA = id; if (Q.get("v") === "jt") go("jt"); else render(1); }
   if (Q.get("demo") && Q.get("t")) setTimeout(() => aviso(Q.get("t")), 30);
   if (Q.get("demo") && Q.get("lista")) { lista = 1; render(1); }
   if (Q.get("demo") && Q.get("pt")) { palT = Date.now() - +Q.get("pt"); render(1); }
