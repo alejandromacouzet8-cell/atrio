@@ -166,3 +166,12 @@ const ADV = [
     fr: [["c", "La Madre piadosa estaba junto a la cruz y lloraba mientras el Hijo pendía.", "Stabat Mater, versión de Lope de Vega"],
       ["i", "No huyó: se quedó de pie junto a la cruz. Quédate hoy junto a alguien que sufre.", "Evangelio según san Juan 19, 25"]] }
 ];
+
+// Confesión: preguntas sencillas para prepararse (escritas para Atrio), pasos y el acto de contrición tradicional
+const EXA = [
+  ["Con Dios", ["¿Le he dado tiempo a Dios en la oración?", "¿He faltado a misa el domingo sin una razón seria?", "¿He usado el nombre de Dios con falta de respeto?"]],
+  ["Con los demás", ["¿He tratado con cariño y paciencia a mi familia?", "¿He mentido, criticado o hablado mal de alguien?", "¿Guardo rencor o me cuesta perdonar?", "¿He sido injusto en mi trabajo o he tomado lo que no es mío?"]],
+  ["Conmigo", ["¿He cuidado mi cuerpo y mi pureza?", "¿Me he dejado llevar por el orgullo, la envidia o la pereza?", "¿Dejé de ayudar a quien lo necesitaba?"]]
+];
+const CFP = ["Examina tu conciencia con calma.", "Arrepiéntete de corazón y propón no volver a hacerlo.", "Dile tus pecados al sacerdote, con sencillez.", "Escucha su consejo y recibe la absolución.", "Cumple la penitencia que te dé."];
+const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre y Redentor mío; por ser tú quien eres, bondad infinita, y porque te amo sobre todas las cosas, me pesa de todo corazón haberte ofendido; también me pesa porque puedes castigarme con las penas del infierno. Ayudado de tu divina gracia, propongo firmemente nunca más pecar, confesarme y cumplir la penitencia que me fuere impuesta. Amén.";

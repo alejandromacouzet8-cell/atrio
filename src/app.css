@@ -372,3 +372,40 @@ p.pin.z{margin-top:10px}
 .esq h2{margin:4px 0 22px;font-family:var(--se);font-weight:600;font-size:34px;line-height:40px;color:var(--oroc)}
 .es svg{flex:none;opacity:.45}
 .es.on{background:rgba(230,194,122,.2)}
+
+/* ---------- música, rezar por alguien, confesión ---------- */
+.hd .ru small.cnt{display:block;text-align:center;font-family:var(--sa);font-style:normal;font-size:12px;line-height:16px;color:var(--txt2);font-weight:600}
+.ic.mu{color:var(--txt2)}
+.ic.mu.on{color:var(--oroc)}
+.ic.mu.on svg{animation:latido 2.4s ease-in-out infinite}
+.lq{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px}
+.lqo{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px;border-radius:18px;border:1.5px solid rgba(246,239,233,.16);background:rgba(246,239,233,.03);color:var(--txt);cursor:pointer}
+.lqo b{font-family:var(--se);font-weight:600;font-size:17px}
+.lqo.on{border-color:var(--oro);background:rgba(230,194,122,.12);color:var(--oroc)}
+.lqo.on .md{background:var(--oro);border-color:var(--oro);color:var(--manto)}
+.lqo:active{transform:scale(.97)}
+.lqo:focus-visible{outline:2px solid var(--oroc);outline-offset:3px}
+.lprev{margin-top:20px;padding:14px 16px;border-radius:16px;border:1px dashed rgba(230,194,122,.4);text-align:center}
+.lprev .pin{margin-top:4px}
+.cfd{margin-top:22px;padding:22px;border-radius:22px;border:1px solid rgba(230,194,122,.4);text-align:center;background:rgba(246,239,233,.04)}
+.cfd .ru{font-size:30px;line-height:36px}
+.cfb{margin-top:18px}
+.exa{padding:16px 18px}
+.exa .ru{margin-top:10px;font-size:16px}
+.exa .ru:first-child{margin-top:0}
+.exa ul{margin:6px 0 0;padding-left:20px}
+.exa li,.pasos li{font-size:16px;line-height:23px;color:var(--txt);margin:5px 0}
+.pasos{padding:14px 18px 14px 38px;margin:0}
+@media (prefers-reduced-motion:reduce){.ic.mu.on svg{animation:none}}
+.chips.wr{flex-wrap:wrap;overflow:visible}
+.ic.mu{border:1px solid rgba(246,239,233,.18);border-radius:22px}
+.ic.mu.on{border-color:rgba(230,194,122,.6);background:rgba(230,194,122,.12)}
+
+/* la paloma de quien recibe una luz: llega y se queda con su carta */
+.lzd{margin:36px auto 0;width:150px;height:118px}
+.dov.fija{position:relative;right:auto;top:auto;width:150px;height:118px;opacity:1;animation:llegaF 1.7s cubic-bezier(.22,.8,.3,1) both,flota 3.2s ease-in-out 1.7s infinite}
+.dov.fija .carta{animation:none}
+.dov.fija .al1,.dov.fija .al2{animation:aleteo .22s ease-in-out 9 alternate}
+@keyframes llegaF{from{opacity:0;transform:translate(160px,-150px) rotate(-12deg) scale(.6)}to{opacity:1;transform:none}}
+@keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media (prefers-reduced-motion:reduce){.dov.fija{display:block;animation:none}}
