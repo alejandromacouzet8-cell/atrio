@@ -269,7 +269,7 @@
   function conectaSB() {
     if (SB_URL.indexOf("http") !== 0 || RM) return;
     const init = () => { try { SB = window.supabase.createClient(SB_URL, SB_KEY, { auth: { flowType: "pkce" } }); RM = sbRoom(SB);
-      const sesion = (u) => { const cambia = (u && u.id) !== (U && U.id), p0 = pideG(); U = u; lista = 1; if (U && cambia) setTimeout(sincroniza, 0); else if ((cambia || p0 !== pideG()) && /^(hoy|yo|listo|atrio|bien)$/.test(view)) render(1); };
+      const sesion = (u) => { const cambia = (u && u.id) !== (U && U.id), p0 = pideG(); U = u; lista = 1; if (U && view === "entrar" && otpE === 0) { go(V[vuelveE] && vuelveE !== "entrar" ? vuelveE : "hoy"); } if (U && cambia) setTimeout(sincroniza, 0); else if ((cambia || p0 !== pideG()) && /^(hoy|yo|listo|atrio|bien)$/.test(view)) render(1); };
       try { SB.auth.getSession().then((r) => sesion((r && r.data && r.data.session && r.data.session.user) || null), () => sesion(null)); SB.auth.onAuthStateChange((_e, ses) => sesion((ses && ses.user) || null)); } catch (_) {} RM.onPeers((c) => { peersL = c.peers || []; if (view === "mapa" || view === "listo" || (view === "sala" && !sala)) render(); }); presLobby(); cargaVelas(); if (hoy().r) enciende(); if (view === "sala") render(); } catch (_) { RM = null; SB = null; } };
     if (window.supabase && window.supabase.createClient) return init();
     const sc = document.createElement("script"); sc.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"; sc.onload = init; document.head.appendChild(sc);
@@ -392,25 +392,28 @@
   const ligaLuz = (o) => { const b = btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); return location.origin + location.pathname + "?luz=" + b; };
   /* ---------- música de fondo: acordes lentos de órgano con eco de capilla, generados aquí ---------- */
   let MU = null;
-  const MUS = [[50, 57, 62, 66, 69], [43, 55, 62, 67, 71], [47, 54, 59, 62, 66], [45, 52, 57, 62, 64], [45, 52, 57, 61, 64], [50, 57, 62, 66, 69], [43, 50, 59, 62, 67], [45, 52, 57, 61, 69]];
+  const MUS = [[62, 69, 74, 78, 81], [55, 67, 74, 79, 83], [59, 66, 71, 74, 78], [57, 64, 69, 74, 76], [57, 64, 69, 73, 76], [62, 69, 74, 78, 81], [55, 62, 71, 74, 79], [57, 64, 69, 73, 81]];
   const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
   function acorde(t0, i) {
     if (!MU) return; const ac = MU.ac, d = 11;
-    MUS[i % MUS.length].forEach((m, j) => { [["sine", 0, 1], ["triangle", 5, 0.45], ["sine", 1200, 0.12]].forEach(([ty, dt, vol]) => {
+    MUS[i % MUS.length].forEach((m, j) => { [["sine", 0, 1], ["triangle", 5, 0.6], ["sine", 1200, 0.18], ["sine", -1200, j === 0 ? 0.5 : 0]].forEach(([ty, dt, vol]) => {
       const o = ac.createOscillator(), g = ac.createGain(); o.type = ty; o.frequency.value = hz(m); o.detune.value = dt + (j % 2 ? 2 : -2);
       const v = (j === 0 ? 0.05 : 0.032) * vol; g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(v, t0 + 3.5); g.gain.setValueAtTime(v, t0 + d - 3.5); g.gain.linearRampToValueAtTime(0, t0 + d + 1.5);
       o.connect(g); g.connect(MU.in); o.start(t0); o.stop(t0 + d + 2); }); });
   }
   function musica(on) {
     if (on && !MU) {
+      try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (_) {}
       let ac; try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) { return; }
       const lp = ac.createBiquadFilter(), rv = ac.createConvolver(), seco = ac.createGain(), humedo = ac.createGain(), out = ac.createGain();
-      lp.type = "lowpass"; lp.frequency.value = 1500; lp.Q.value = 0.4;
+      lp.type = "lowpass"; lp.frequency.value = 2600; lp.Q.value = 0.4;
       // eco de capilla: ruido que se apaga en cinco segundos
       const n = ac.sampleRate * 5, b = ac.createBuffer(2, n, ac.sampleRate); for (let c = 0; c < 2; c++) { const x = b.getChannelData(c); for (let i = 0; i < n; i++) x[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3.2); } rv.buffer = b;
       seco.gain.value = 0.45; humedo.gain.value = 0.9; out.gain.value = 0;
       lp.connect(seco); lp.connect(rv); rv.connect(humedo); seco.connect(out); humedo.connect(out); out.connect(ac.destination);
-      MU = { ac, in: lp, out, i: 0, t: 0 }; if (ac.state === "suspended") ac.resume();
+      MU = { ac, in: lp, out, i: 0, t: 0 }; if (ac.state !== "running") ac.resume().catch(() => {});
+      // si el teléfono interrumpe el audio (llamada, otra app), se reanuda al volver
+      ac.onstatechange = () => { if (MU && MU.ac === ac && ac.state !== "running" && ac.state !== "closed") ac.resume().catch(() => {}); };
       const t = ac.currentTime + 0.1; MU.t = t; acorde(t, 0); MU.i = 1; MU.t = t + 8;
       MU.k = setInterval(() => { if (!MU) return; while (MU.t < MU.ac.currentTime + 4) { acorde(MU.t, MU.i++); MU.t += 8; } }, 1000);
       volMu();
@@ -518,6 +521,17 @@
       <label class="ru" for="fi" style="display:block;margin-top:22px;font-size:15px">Tu intención</label><textarea class="fld ta" id="fi" rows="3" maxlength="140" placeholder="Por mi mamá, por mi abuelo que está enfermo…">${esc(S.pi)}</textarea>
       <div class="chips wr">${PIS.map((t, i) => `<button class="chip" data-a="pich" data-k="${i}">${t}</button>`).join("")}</div>
       <div style="padding-top:26px"><button class="btn go" data-a="piok">${ob ? "Continuar" : "Guardar"}</button>${ob ? `<button class="lk" data-a="pisk" style="display:block;margin:4px auto 0">Saltar este paso</button>` : ""}</div></section>`,
+    entrar: () => { const nuevo = vuelveE === "bien";
+      const G = `<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>`;
+      if (otpE >= 2) return `<section class="v d n in">${sky()}${hd(["entrar"], "Tu código")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">Revisa tu correo</h1><p class="sub">Te mandamos un código a <b style="color:var(--oroc)">${esc(correo)}</b>. Si no lo ves, busca en spam o en promociones.</p>
+        <label class="ru" for="fk" style="display:block;margin-top:22px;font-size:15px">Código</label><input class="fld cod" id="fk" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="000000">
+        <div style="padding-top:22px"><button class="btn go" data-a="otpok"${otpE === 3 ? " disabled" : ""}>${otpE === 3 ? "Entrando…" : "Entrar"}</button><button class="lk" data-a="otp" style="display:block;margin:6px auto 0">Mandar otro código</button><button class="lk" data-a="otpno" style="display:block;margin:0 auto">Usar otro correo</button></div></section>`;
+      return `<section class="v d n in">${sky()}${hd([vuelveE === "entrar" ? "hoy" : vuelveE], nuevo ? "Ya tengo cuenta" : "Guardar mi avance")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">${nuevo ? "Entra a tu cuenta" : "Guarda tu avance"}</h1><p class="sub">${nuevo ? "Recupera tu racha, tus Vírgenes y tu intención." : "Así no pierdes tu racha ni tus veladoras si cambias de teléfono."}</p>
+        <button class="btn gw" data-a="gg" style="margin-top:24px">${G}<span>Continuar con Google</span></button>
+        ${OTP_ON ? `<p class="tit">o con tu correo, sin contraseña</p>
+        <label class="ru" for="fm" style="display:block;font-size:15px">Tu correo</label><input class="fld" id="fm" type="email" inputmode="email" autocomplete="email" autocapitalize="off" placeholder="tucorreo@gmail.com" value="${esc(correo)}">
+        <button class="btn go" data-a="otp" style="margin-top:14px"${otpE === 1 ? " disabled" : ""}>${otpE === 1 ? "Mandando…" : "Mandarme un código"}</button>
+        <p class="note c" style="margin-top:12px">Te llega un código de un solo uso. No guardamos contraseñas.</p>` : ""}</section>`; },
     luz: () => `<section class="v d n in">${sky()}${hd(["hoy"], "Rezar por alguien")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">¿Por quién rezaste?</h1><p class="sub">Le llega por WhatsApp con una paloma. Así sabe que alguien lo tuvo en su oración.</p>
       <label class="ru" for="fl" style="display:block;margin-top:22px;font-size:15px">Su nombre</label><input class="fld" id="fl" maxlength="40" autocomplete="off" placeholder="Constanza, mi mamá…" value="${esc(luzPara)}">
       <p class="ru" style="margin-top:22px;font-size:15px">Recé</p><div class="lq">${Object.keys(LQ).map((k) => `<button class="lqo${luzQ === k ? " on" : ""}" data-a="luzq" data-k="${k}" aria-pressed="${luzQ === k}"><span class="md">${k === "am" ? EM.virgen : k === "ros" ? EM.gozosos : LOGO}</span><b>${LQ[k][1]}</b></button>`).join("")}</div>
@@ -640,13 +654,14 @@
   let tMsg = 0;
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
   function fin() { const s = ros; ros = null; vibra(3); musica(false); marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {}); go("listo"); }
-  let dirN = "", estAbre = 0;
+  const OTP_ON = SB_URL.indexOf("http") === 0 && (Q.get("correo") || "__OTP__" === "1");
+  let dirN = "", estAbre = 0, vuelveE = "hoy", correo = "", otpE = 0, otpT = 0;
   const sinAc = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
   // sugerencia por la zona horaria del teléfono (solo las que señalan un estado con claridad)
   const sugEst = () => { let z = ""; try { z = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (_) {} if (Q.get("tz")) z = Q.get("tz");
     const M = { "America/Cancun": 22, "America/Merida": 30, "America/Monterrey": 18, "America/Tijuana": 1, "America/Hermosillo": 25, "America/Chihuahua": 5, "America/Ciudad_Juarez": 5, "America/Ojinaga": 5, "America/Matamoros": 27, "America/Bahia_Banderas": 17, "America/Mazatlan": 24 };
     if (M[z] !== undefined) return M[z]; if (z && !/^America\/(Mexico_City|Monterrey|Merida|Cancun|Matamoros|Chihuahua|Ojinaga|Ciudad_Juarez|Hermosillo|Mazatlan|Bahia_Banderas|Tijuana)$/.test(z) && !/^(UTC|Etc\/)/.test(z)) return 99; return null; };
-  function go(v, b) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est|luzv)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|est)$/.test(view)) { ob = 1; view = "est"; } try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
+  function go(v, b) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est|luzv|entrar)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|est)$/.test(view)) { ob = 1; view = "est"; } try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
     // la paloma trae el mensaje la primera vez que se abre Hoy cada día
     if (view === "hoy" && S.n && S.pd !== key(now())) { palT = Date.now(); S.pd = key(now()); save(); }
     // hacia adentro la vista entra por la derecha; al regresar, por la izquierda; las pestañas solo suben
@@ -702,9 +717,25 @@
     luzam: () => { luzRe = 1; vibra(1); render(1); },
     luzok: () => { luzRe = 2; vibra(2); render(1); },
     luzdev: () => { luzPara = LUZ ? LUZ.d : ""; luzQ = "am"; go(S.n ? "luz" : "bien"); },
-    mu: () => { S.mu = S.mu ? 0 : 1; save(); musica(!!S.mu); vibra(1); render(1); if (S.mu) aviso("Música de fondo. Si no se oye, quita el modo silencio."); },
+    mu: () => { S.mu = S.mu ? 0 : 1; save(); musica(!!S.mu); vibra(1); render(1); if (S.mu) aviso("Música de fondo encendida. Sube el volumen si no la oyes."); },
     mudo: () => { if (!VZ) return; VZ.mudo = VZ.mudo ? 0 : 1; VZ.st.getAudioTracks().forEach((t) => { t.enabled = !VZ.mudo; }); vibra(1); if (sala) sala.presence({ v: VZ.mudo ? 2 : 1 }).catch(() => {}); pinta(); },
-    login: () => { if (!SB) { aviso("Conectando. Intenta de nuevo en un momento."); return; } if (/FBAN|FBAV|FB_IAB|Instagram|TikTok|musical_ly|Snapchat|Line\//i.test(navigator.userAgent)) { aviso("Para entrar con Google, abre Atrio en Safari o Chrome."); return; } if (view === "atrio") { ob = 0; delete S.ob; save(); } try { SB.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } }).then((r) => { if (r && r.error) aviso("No se pudo abrir Google. Intenta otra vez."); }, () => aviso("No se pudo abrir Google. Intenta otra vez.")); } catch (_) {} },
+    login: () => { if (!SB) { aviso("Conectando. Intenta de nuevo en un momento."); return; } if (view !== "entrar") vuelveE = view; go("entrar"); },
+    gg: () => { if (!SB) return; if (/FBAN|FBAV|FB_IAB|Instagram|TikTok|musical_ly|Snapchat|Line\//i.test(navigator.userAgent)) { aviso("Para entrar con Google, abre Atrio en Safari o Chrome. O entra con tu correo."); return; } if (vuelveE === "atrio") { ob = 0; delete S.ob; save(); } try { SB.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } }).then((r) => { if (r && r.error) aviso("No se pudo abrir Google. Intenta otra vez."); }, () => aviso("No se pudo abrir Google. Intenta otra vez.")); } catch (_) {} },
+    otp: () => { const f = document.getElementById("fm"), m = ((f && f.value) || correo).trim().toLowerCase();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m)) { aviso("Ese correo parece incompleto. Revísalo."); if (f) f.focus(); return; }
+      if (Date.now() - otpT < 55000 && m === correo) { aviso("Ya te mandamos uno. Espera un minuto para pedir otro."); return; }
+      correo = m; otpE = 1; otpT = Date.now(); render(1);
+      SB.auth.signInWithOtp({ email: m, options: { shouldCreateUser: true } }).then((r) => { if (r && r.error) { const t = /rate|limit|seconds/i.test(r.error.message || "") ? "Ya pedimos varios códigos. Espera unos minutos e intenta otra vez." : "No pudimos mandar el código. Revisa tu correo e intenta otra vez."; otpE = 0; otpT = 0; render(1); aviso(t); } else { otpE = 2; render(1); const k = document.getElementById("fk"); if (k) k.focus(); } }, () => { otpE = 0; render(1); aviso("Sin conexión. Intenta otra vez."); });
+    },
+    otpok: () => { const k = document.getElementById("fk"), t = ((k && k.value) || "").replace(/\D/g, "");
+      if (t.length < 6) { aviso("Escribe los números que te llegaron."); if (k) k.focus(); return; }
+      otpE = 3; render(1);
+      SB.auth.verifyOtp({ email: correo, token: t, type: "email" }).then((r) => {
+        if (r && r.error) { otpE = 2; render(1); aviso("Ese código no es correcto o ya venció. Revísalo o pide otro."); const x = document.getElementById("fk"); if (x) x.focus(); return; }
+        otpE = 0; vibra(2); if (vuelveE === "atrio") { ob = 0; delete S.ob; save(); } deG = 1; const v = vuelveE === "entrar" ? "hoy" : vuelveE; go(V[v] ? v : "hoy");
+      }, () => { otpE = 2; render(1); aviso("Sin conexión. Intenta otra vez."); });
+    },
+    otpno: () => { otpE = 0; render(1); },
     logout: () => { if (SB) try { SB.auth.signOut().then(() => { U = null; render(1); }, () => {}); } catch (_) {} }
   };
   let tSig = 0;

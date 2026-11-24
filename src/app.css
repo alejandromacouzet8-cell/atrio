@@ -409,3 +409,8 @@ p.pin.z{margin-top:10px}
 @keyframes llegaF{from{opacity:0;transform:translate(160px,-150px) rotate(-12deg) scale(.6)}to{opacity:1;transform:none}}
 @keyframes flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){.dov.fija{display:block;animation:none}}
+
+/* ---------- entrar ---------- */
+.btn.gw{display:flex;align-items:center;justify-content:center;gap:10px;background:#F6EFE9;color:#1F1F1F;border:0}
+.btn.gw span{font-weight:700}
+.fld.cod{font-family:var(--sa);font-size:30px;letter-spacing:.35em;text-align:center;font-variant-numeric:tabular-nums}
