@@ -1,0 +1,20 @@
+Imágenes de la Virgen que usa Atrio (rosariojuntos.com)
+
+Son fotografías y pinturas de Wikimedia Commons, recortadas a 2:3 para la app.
+Cada archivo tiene dos tamaños: nombre.jpg (400x600) y nombre-s.jpg (200x300).
+Las versiones recortadas se comparten con la misma licencia que su original.
+
+guadalupe    Imagen de la tilma, Basílica de Guadalupe. Dominio público.  commons.wikimedia.org/wiki/File:Virgen_de_guadalupe1.jpg
+fatima       János Korom. Dominio público.  File:Fatima_0752_(19796283042)_(cropped).jpg
+lourdes      IgnaceBoitaclou. CC BY 4.0.  File:Villers-Châtel_-_Grotte_-_Statue_mariale.jpg
+carmen       David.Lopez.Sala. CC BY 4.0.  File:Nuestra_Señora_del_Carmen_Perchelerita.png
+pilar        El Justicia de Aragón. CC0.  File:13_de_Mayo,_Virgen_del_Pilar_con_el_manto_de_la_Institución_(52103197996).jpg
+sanjuan      Metropolitanogto. CC0.  File:Virgen_de_San_Juan_de_los_Lagos_(2023).jpg
+zapopan      ExorcisioTe. CC BY-SA 4.0.  File:Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg
+juquila      Autor desconocido. Dominio público.  File:Juquilita.jpg
+socorro      Autor desconocido. Dominio público.  File:Perpetual_help_original_icon.jpg
+milagrosa    Nheyob. CC BY-SA 4.0.  File:Old_Saint_Mary's_Church_(Cincinnati,_Ohio)_-_Immaculate_Conception_statue_2.jpg
+auxiliadora  Sanji1986. CC BY-SA 4.0.  File:Maria_Auxilium_Christianorum,_ora_pro_nobis.jpg
+dolores      Pederseguro. Dominio público.  File:Nuestra_Señora_de_los_Dolores_-_Camas_(Sevilla).jpg
+
+Licencias: creativecommons.org/licenses/by/4.0  ·  creativecommons.org/licenses/by-sa/4.0  ·  creativecommons.org/publicdomain/zero/1.0
