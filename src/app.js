@@ -101,14 +101,14 @@
   const perfil = () => { if (!conG()) return ""; if (U) { const m = U.user_metadata || {}, f = m.avatar_url || m.picture; return `<button class="pf" data-a="go" data-v="yo" aria-label="Tu perfil">${f ? `<img src="${esc(f)}" alt="" referrerpolicy="no-referrer">` : `<b>${esc((S.n || m.full_name || "?").slice(0, 1).toUpperCase())}</b>`}</button>`; }
     if (!pideG()) return "";
     return `<button class="pfe" data-a="login" aria-label="Entrar con Google"><svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span>Entrar</span></button>`; };
-  const gBtn = (t) => `<button class="btn gw" data-a="gg"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span>${t || "Continuar con Google"}</span></button>`;
+  const gBtn = (t) => `<div class="gsiw"><button class="btn gw" data-a="gg"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span>${t || "Continuar con Google"}</span></button><div class="gsi"></div></div>`;
   /* Pedir la cuenta en el momento justo: después de rezar algo, no antes. Una hoja que sube desde abajo,
      una vez por motivo y no más de una vez cada tres días. */
   function guarda(motivo, t, d) {
     if (!pideG() || (S.gx || {})[motivo] || Date.now() - (S.gt || 0) < 3 * 864e5) return;
     S.gx = Object.assign({}, S.gx, { [motivo]: 1 }); S.gt = Date.now(); save(); vuelveE = view;
     setTimeout(() => { const x = document.getElementById("gsh"); if (x) x.remove();
-      app.insertAdjacentHTML("beforeend", `<div id="gsh" role="dialog" aria-label="${t}"><div class="gsf" data-a="gno"></div><div class="gsb"><span class="gsv"><svg viewBox="0 0 40 52" width="40" height="52" aria-hidden="true"><defs><radialGradient id="vlg"><stop offset="0" stop-color="#FFF3D0"/><stop offset=".5" stop-color="#F4C76A" stop-opacity=".55"/><stop offset="1" stop-color="#E6C27A" stop-opacity="0"/></radialGradient></defs><circle cx="20" cy="14" r="14" fill="url(#vlg)"/><path d="M20 4c2.4 4 5 6 5 10a5 5 0 0 1-10 0c0-4 2.6-6 5-10z" fill="#FFE7A8"/><rect x="11" y="24" width="18" height="24" rx="3" fill="#F6EFE9"/><rect x="11" y="24" width="18" height="5" rx="2.5" fill="#E6C27A"/></svg></span><b>${t}</b><p>${d}</p>${gBtn()}<button class="lk" data-a="gno" style="display:block;margin:6px auto 0">Ahora no</button><p class="note c" style="margin-top:4px">Sin contraseñas. Al entrar aceptas los <a href="/terminos/">términos</a> y el <a href="/privacidad/">aviso de privacidad</a>.</p></div></div>`); vibra(1); }, 650);
+      app.insertAdjacentHTML("beforeend", `<div id="gsh" role="dialog" aria-label="${t}"><div class="gsf" data-a="gno"></div><div class="gsb"><span class="gsv"><svg viewBox="0 0 40 52" width="40" height="52" aria-hidden="true"><defs><radialGradient id="vlg"><stop offset="0" stop-color="#FFF3D0"/><stop offset=".5" stop-color="#F4C76A" stop-opacity=".55"/><stop offset="1" stop-color="#E6C27A" stop-opacity="0"/></radialGradient></defs><circle cx="20" cy="14" r="14" fill="url(#vlg)"/><path d="M20 4c2.4 4 5 6 5 10a5 5 0 0 1-10 0c0-4 2.6-6 5-10z" fill="#FFE7A8"/><rect x="11" y="24" width="18" height="24" rx="3" fill="#F6EFE9"/><rect x="11" y="24" width="18" height="5" rx="2.5" fill="#E6C27A"/></svg></span><b>${t}</b><p>${d}</p>${gBtn()}<button class="lk" data-a="gno" style="display:block;margin:6px auto 0">Ahora no</button><p class="note c" style="margin-top:4px">Sin contraseñas. Al entrar aceptas los <a href="/terminos/">términos</a> y el <a href="/privacidad/">aviso de privacidad</a>.</p></div></div>`); pintaG(); vibra(1); }, 650);
   }
   const pideG = () => conG() && !U && (lista === 1 || !pista);
 
@@ -345,11 +345,11 @@
   function cuelga(id) { if (!VZ || !VZ.pcs[id]) return; try { VZ.pcs[id].close(); } catch (_) {} delete VZ.pcs[id]; delete VZ.cola[id]; delete VZ.rs[id]; delete VZ.an[id]; const a = document.getElementById("vz-" + id); if (a) { a.srcObject = null; a.remove(); } pinta(); }
   function par(id, ofrece) {
     if (!VZ) return null; if (VZ.pcs[id]) return VZ.pcs[id];
-    const pc = new RTCPeerConnection(ICE); VZ.pcs[id] = pc; VZ.cola[id] = VZ.cola[id] || [];
+    const pc = new RTCPeerConnection(ICE); VZ.pcs[id] = pc; VZ.cola[id] = VZ.cola[id] || []; pc._t = Date.now(); pc._c = [];
     VZ.st.getAudioTracks().forEach((t) => pc.addTrack(t, VZ.st));
     // el canal de video se abre desde el principio, vacío; al prender la cámara solo se le pone la imagen
     if (ofrece) { const tv = pc.addTransceiver("video", { direction: "sendrecv" }); if (VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); }
-    pc.onicecandidate = (e) => { if (e.candidate && sala) sala.manda({ para: id, t: "ice", d: e.candidate.toJSON ? e.candidate.toJSON() : e.candidate }); };
+    pc.onicecandidate = (e) => { if (!e.candidate) return; pc._c.push(e.candidate.toJSON ? e.candidate.toJSON() : e.candidate); if (!pc._ct) pc._ct = setTimeout(() => { pc._ct = 0; const d = pc._c.splice(0); if (d.length && sala && VZ && VZ.pcs[id] === pc) sala.manda({ para: id, t: "ices", d }); }, 250); };
     pc.ontrack = (e) => {
       const ms = VZ.rs[id] || (VZ.rs[id] = new MediaStream()); if (!ms.getTracks().includes(e.track)) ms.addTrack(e.track);
       if (e.track.kind === "video") { e.track.onunmute = () => pegaVideos(); return; }
@@ -357,9 +357,21 @@
       a.srcObject = ms; try { const r = a.play(); if (r && r.catch) r.catch(() => {}); } catch (_) {}
       mide(id, new MediaStream([e.track]));
     };
-    pc.onconnectionstatechange = () => { const s = pc.connectionState; if (s === "failed" || s === "closed") cuelga(id); else if (s === "connected") { vibra(1); pinta(); } };
+    pc.onconnectionstatechange = () => { if (!VZ || VZ.pcs[id] !== pc) return; const s = pc.connectionState; pc._d = s === "disconnected" ? Date.now() : 0; if (s === "failed" || s === "closed") cuelga(id); else if (s === "connected") { vibra(1); pinta(); } };
     if (ofrece) pc.createOffer().then((o) => pc.setLocalDescription(o)).then(() => { if (sala) sala.manda({ para: id, t: "offer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id));
     return pc;
+  }
+  // soltar una conexión que no cuajó, para volver a intentarla desde cero
+  const suelta = (id) => { const pc = VZ && VZ.pcs[id]; if (!pc) return; clearTimeout(pc._ct); try { pc.close(); } catch (_) {} delete VZ.pcs[id]; delete VZ.rs[id]; VZ.cola[id] = []; };
+  const viva = (pc, t) => !!pc && (pc.connectionState === "connected" || (pc.connectionState === "disconnected" ? t - (pc._d || t) < 9000 : t - pc._t < 10000));
+  /* Con diez o quince en la sala hay decenas de conexiones entre teléfonos; si un aviso se pierde en el camino,
+     ese par se quedaría mudo. Cada pocos segundos se revisa quién falta y se vuelve a llamar. */
+  function repara() {
+    if (!VZ || !sala) return; const t = Date.now();
+    peersS.forEach((p) => { const id = p.peer; if (p.isMe || !(p.presence || {}).v) return; const pc = VZ.pcs[id];
+      if (viva(pc, t)) { if (pc.connectionState === "disconnected" && !pc._d) pc._d = t; return; }
+      suelta(id); if (sala.yo < id) par(id, true); else sala.manda({ para: id, t: "hola" }); });
+    Object.keys(VZ.pcs).forEach((id) => { if (!peersS.some((p) => p.peer === id)) cuelga(id); });
   }
   const vacia = (id) => { const pc = VZ && VZ.pcs[id]; if (!pc) return; (VZ.cola[id] || []).splice(0).forEach((c) => pc.addIceCandidate(c).catch(() => {})); };
   function senal(q) {
@@ -367,11 +379,11 @@
     const id = q.de;
     if (q.t === "_listo") { sala.manda({ t: "hola" }); return; }
     // el de identificador menor llama; el otro contesta. Así cada par se conecta una sola vez.
-    if (q.t === "hola") { if (!q.para) sala.manda({ para: id, t: "hola" }); if (sala.yo < id && !VZ.pcs[id]) par(id, true); return; }
+    if (q.t === "hola") { if (!q.para) sala.manda({ para: id, t: "hola" }); if (sala.yo < id) { if (q.para && VZ.pcs[id] && !viva(VZ.pcs[id], Date.now() + 6000)) suelta(id); if (!VZ.pcs[id]) par(id, true); } return; }
     if (q.t === "adios") { cuelga(id); return; }
-    if (q.t === "offer") { const pc = par(id, false); pc.setRemoteDescription(q.d).then(() => { const tv = vidT(pc); if (tv) { tv.direction = "sendrecv"; if (VZ && VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); } return pc.createAnswer(); }).then((a) => pc.setLocalDescription(a)).then(() => { vacia(id); sala.manda({ para: id, t: "answer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id)); return; }
+    if (q.t === "offer") { if (VZ.pcs[id]) suelta(id); const pc = par(id, false); pc.setRemoteDescription(q.d).then(() => { const tv = vidT(pc); if (tv) { tv.direction = "sendrecv"; if (VZ && VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); } return pc.createAnswer(); }).then((a) => pc.setLocalDescription(a)).then(() => { vacia(id); sala.manda({ para: id, t: "answer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id)); return; }
     if (q.t === "answer") { const pc = VZ.pcs[id]; if (pc && pc.signalingState === "have-local-offer") pc.setRemoteDescription(q.d).then(() => vacia(id)).catch(() => cuelga(id)); return; }
-    if (q.t === "ice") { const pc = VZ.pcs[id]; if (!pc || !pc.remoteDescription) { (VZ.cola[id] = VZ.cola[id] || []).push(q.d); return; } pc.addIceCandidate(q.d).catch(() => {}); }
+    if (q.t === "ice" || q.t === "ices") { const L = q.t === "ice" ? [q.d] : q.d || [], pc = VZ.pcs[id]; if (!pc || !pc.remoteDescription) { VZ.cola[id] = (VZ.cola[id] || []).concat(L); return; } L.forEach((c) => pc.addIceCandidate(c).catch(() => {})); }
   }
   async function prendeVoz() {
     if (VZ || !hayVoz()) return;
@@ -381,7 +393,7 @@
     if (!sala) { st.getTracks().forEach((t) => t.stop()); return; }
     VZ = { st, pcs: {}, cola: {}, rs: {}, an: {}, mudo: 0, cam: null, camMs: null, ac: null };
     try { VZ.ac = new (window.AudioContext || window.webkitAudioContext)(); if (VZ.ac.state === "suspended") VZ.ac.resume(); } catch (_) {}
-    mide(sala.yo, st); VZ.tk = setInterval(escucha, 140);
+    mide(sala.yo, st); VZ.tk = setInterval(escucha, 140); VZ.rp = setInterval(repara, 4000);
     if (!sala.vz) { sala.vz = 1; sala.senal(senal); }
     sala.presence({ v: 1 }).catch(() => {}); sala.manda({ t: "hola" }); vibra(2); despierta(true); pinta();
   }
@@ -389,11 +401,12 @@
     if (!VZ) return;
     if (sala) { sala.manda({ t: "adios" }); sala.presence({ v: null }).catch(() => {}); }
     Object.keys(VZ.pcs).forEach((id) => { try { VZ.pcs[id].close(); } catch (_) {} });
-    VZ.st.getTracks().forEach((t) => t.stop()); if (VZ.cam) VZ.cam.stop(); clearInterval(VZ.tk); try { if (VZ.ac) VZ.ac.close(); } catch (_) {} VZ = null;
+    VZ.st.getTracks().forEach((t) => t.stop()); if (VZ.cam) VZ.cam.stop(); clearInterval(VZ.tk); clearInterval(VZ.rp); try { if (VZ.ac) VZ.ac.close(); } catch (_) {} VZ = null;
     if (sala) sala.presence({ c: null }).catch(() => {});
     const b = document.getElementById("voces"); if (b) b.innerHTML = "";
     despierta(view === "ros"); if (!callado) pinta();
   }
+  if (Q.get("demo") || Q.get("prueba")) window.atrioVz = () => (!VZ ? Promise.resolve(null) : Promise.all(Object.keys(VZ.pcs).map((id) => { const pc = VZ.pcs[id]; return pc.getStats().then((st) => { let rx = 0, lv = 0; st.forEach((r) => { if (r.type === "inbound-rtp" && r.kind === "audio") { rx += r.packetsReceived || 0; lv = Math.max(lv, r.audioLevel || 0); } }); return { id, s: pc.connectionState, rx, lv }; }, () => ({ id, s: "x", rx: 0, lv: 0 })); })).then((L) => ({ yo: sala && sala.yo, n: L.length, con: L.filter((x) => x.s === "connected").length, rx: L.filter((x) => x.rx > 20).length, oyen: L.filter((x) => x.lv > 0.001).length, gente: peersS.length })));
   // botones de voz, iguales en la sala y durante el rosario
   const botVoz = (chico) => {
     if (!hayVoz()) return "";
@@ -428,38 +441,88 @@
   let LUZ = null, luzQ = "am", luzPara = "", luzRe = 0;
   try { if (Q.get("luz")) { const j = JSON.parse(decodeURIComponent(escape(atob(Q.get("luz").replace(/-/g, "+").replace(/_/g, "/"))))); if (j && j.d && LQ[j.q]) LUZ = { d: String(j.d).slice(0, 40), p: String(j.p || "").slice(0, 40), q: j.q }; } } catch (_) {}
   const ligaLuz = (o) => { const b = btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); return location.origin + location.pathname + "?luz=" + b; };
-  /* ---------- música de fondo: acordes lentos de órgano con eco de capilla, generados aquí ---------- */
+  /* ---------- cánticos: un coro canta, sin letra, una melodía modal como las del canto llano, sobre un bajo de órgano y con eco de catedral.
+     Todo se genera aquí; no hay grabaciones. Cada grupo de misterios tiene su modo, su altura y su paso. ---------- */
   let MU = null;
-  const MUS = [[62, 69, 74, 78, 81], [55, 67, 74, 79, 83], [59, 66, 71, 74, 78], [57, 64, 69, 74, 76], [57, 64, 69, 73, 76], [62, 69, 74, 78, 81], [55, 62, 71, 74, 79], [57, 64, 69, 73, 81]];
   const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
-  function acorde(t0, i) {
-    if (!MU) return; const ac = MU.ac, d = 11;
-    MUS[i % MUS.length].forEach((m, j) => { [["sine", 0, 1], ["triangle", 5, 0.6], ["sine", 1200, 0.18], ["sine", -1200, j === 0 ? 0.5 : 0]].forEach(([ty, dt, vol]) => {
-      const o = ac.createOscillator(), g = ac.createGain(); o.type = ty; o.frequency.value = hz(m); o.detune.value = dt + (j % 2 ? 2 : -2);
-      const v = (j === 0 ? 0.05 : 0.032) * vol; g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(v, t0 + 3.5); g.gain.setValueAtTime(v, t0 + d - 3.5); g.gain.linearRampToValueAtTime(0, t0 + d + 1.5);
-      o.connect(g); g.connect(MU.in); o.start(t0); o.stop(t0 + d + 2); }); });
+  const MAY = [0, 2, 4, 5, 7, 9, 11], DOR = [0, 2, 3, 5, 7, 9, 10], MIX = [0, 2, 4, 5, 7, 9, 10];
+  const MODO = { gozosos: [50, MAY, 0.64], luminosos: [52, MIX, 0.62], dolorosos: [50, DOR, 0.76], gloriosos: [53, MAY, 0.6] };
+  // frases en grados del modo (0 es la nota final; 4, la cuerda donde se recita) con su duración en pulsos
+  const FRA = [
+    [[0, 1], [2, 1], [3, 1], [4, 2], [4, 1], [5, 1], [4, 3]],
+    [[4, 1], [4, 1], [5, 1], [4, 1], [3, 1], [4, 2], [3, 1], [2, 1], [3, 1], [2, 2], [1, 1], [0, 4]],
+    [[2, 1], [3, 1], [4, 1], [4, 1], [6, 1], [5, 1], [4, 2], [5, 1], [4, 1], [3, 1], [2, 3]],
+    [[4, 1], [5, 1], [7, 2], [6, 1], [5, 1], [4, 2], [3, 1], [4, 1], [2, 1], [1, 1], [0, 4]],
+    [[0, 1], [-1, 1], [0, 1], [2, 1], [3, 2], [2, 1], [3, 1], [4, 3]],
+    [[4, 1], [3, 1], [4, 1], [5, 2], [4, 1], [3, 1], [2, 1], [3, 1], [1, 1], [0, 4]],
+    [[7, 2], [6, 1], [7, 1], [5, 1], [4, 2], [5, 1], [3, 1], [4, 1], [2, 2], [1, 1], [0, 5]],
+    [[0, 2], [1, 1], [2, 1], [1, 1], [0, 5]]
+  ], ORDF = [0, 1, 2, 3, 4, 5, 2, 6, 4, 1, 7];
+  const VOC = { o: [430, 820, 2650], a: [690, 1140, 2700] };
+  // eco de catedral: ruido que se apaga en cinco segundos y se va oscureciendo, con unas primeras reflexiones
+  function eco(ac) {
+    const sr = ac.sampleRate, n = Math.floor(sr * 5.5), b = ac.createBuffer(2, n, sr);
+    for (let c = 0; c < 2; c++) { const x = b.getChannelData(c); let y = 0;
+      for (let i = 0; i < n; i++) { const t = i / n, a = 0.55 - 0.47 * Math.min(1, t * 2.2); y += a * (Math.random() * 2 - 1 - y); x[i] = y * Math.pow(1 - t, 2.6) * (1 + 1.6 * (0.55 - a)) * Math.min(1, i / (sr * 0.012)); }
+      [0.019, 0.031, 0.047, 0.063].forEach((d, k) => { x[Math.floor(sr * (d + c * 0.004))] += (k % 2 ? -0.5 : 0.6) / (k + 1); }); }
+    return b;
+  }
+  function motor(ac, set) {
+    const md = MODO[set] || MODO.gozosos, fin = md[0], esc_ = md[1], pulso = md[2], nota = (g) => fin + esc_[((g % 7) + 7) % 7] + 12 * Math.floor(g / 7);
+    const out = ac.createGain(), bus = ac.createGain(), lp = ac.createBiquadFilter(), rv = ac.createConvolver(), seco = ac.createGain(), hum = ac.createGain(), cmp = ac.createDynamicsCompressor();
+    lp.type = "lowpass"; lp.frequency.value = 3800; lp.Q.value = 0.3; rv.buffer = eco(ac); seco.gain.value = 0.34; hum.gain.value = 0.95; out.gain.value = 0; bus.gain.value = 0.8;
+    cmp.threshold.value = -22; cmp.knee.value = 20; cmp.ratio.value = 3; cmp.attack.value = 0.03; cmp.release.value = 0.5;
+    bus.connect(lp); lp.connect(seco); lp.connect(rv); rv.connect(hum); const lim = ac.createDynamicsCompressor(); lim.threshold.value = -2.5; lim.knee.value = 2; lim.ratio.value = 20; lim.attack.value = 0.003; lim.release.value = 0.2;
+    seco.connect(cmp); hum.connect(cmp); cmp.connect(out); out.connect(lim); lim.connect(ac.destination);
+    // la voz: una onda de garganta (armónicos que se apagan suave), su pecho y tres formantes que hacen la vocal
+    const N = 26, re = new Float32Array(N), im = new Float32Array(N); for (let k = 1; k < N; k++) im[k] = 1 / Math.pow(k, 1.22);
+    const onda = ac.createPeriodicWave(re, im), cant = [];
+    const cantor = (oct, pan, vol, des) => {
+      const g = ac.createGain(), mix = ac.createGain(), pe = ac.createBiquadFilter(), pg = ac.createGain(), lf = ac.createOscillator(), lg = ac.createGain(), os = [ac.createOscillator(), ac.createOscillator()], k = oct ? 1.15 : 1;
+      g.gain.value = 0; mix.gain.value = 0.5; pe.type = "lowpass"; pe.frequency.value = oct ? 900 : 520; pg.gain.value = 0.3; mix.connect(pe); pe.connect(pg); pg.connect(g);
+      os.forEach((o, q) => { o.setPeriodicWave(onda); o.frequency.value = hz(fin + 12 * oct); o.detune.value = des + (q ? 7 : -6); o.connect(mix); });
+      lf.frequency.value = 4.3 + Math.random() * 1.2; lg.gain.value = 6 + Math.random() * 5; lf.connect(lg); os.forEach((o) => lg.connect(o.detune));
+      const fs = [0, 1, 2].map((q) => { const f = ac.createBiquadFilter(), fg = ac.createGain(); f.type = "bandpass"; f.Q.value = [4.5, 7, 8][q]; f.frequency.value = k * VOC.o[q]; fg.gain.value = [1.25, 0.62, 0.22][q]; mix.connect(f); f.connect(fg); fg.connect(g); return f; });
+      if (ac.createStereoPanner) { const pn = ac.createStereoPanner(); pn.pan.value = pan; g.connect(pn); pn.connect(bus); } else g.connect(bus);
+      os.forEach((o) => o.start()); lf.start(); cant.push({ g, os, fs, oct, vol, k, dt: Math.random() * 0.035 });
+    };
+    cantor(0, -0.4, 1, -4); cantor(0, 0.35, 0.95, 5); cantor(0, 0, 1, 0); cantor(1, -0.2, 0.3, 3); cantor(1, 0.22, 0.27, -5);
+    // el órgano: un bajo que no se mueve (la final y su quinta) y un acorde suave que responde entre frase y frase
+    const tubo = (m, tipo, vol, t0, dur) => { const o = ac.createOscillator(), g = ac.createGain(); o.type = tipo; o.frequency.value = hz(m); o.detune.value = Math.random() * 6 - 3; g.gain.value = 0; o.connect(g); g.connect(bus);
+      if (dur) { g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(vol, t0 + dur * 0.4); g.gain.setTargetAtTime(0, t0 + dur * 0.55, dur * 0.3); o.start(t0); o.stop(t0 + dur * 2.4); } else { g.gain.setTargetAtTime(vol, t0, 2.5); o.start(t0); } };
+    let t = ac.currentTime + 0.3, n = 0;
+    [[fin - 12, "sine", 0.02], [fin, "sine", 0.03], [fin, "triangle", 0.012], [fin + 7, "sine", 0.02]].forEach((q) => tubo(q[0], q[1], q[2], t, 0));
+    const resp = (t0, gr) => { [0, 4, 7, 9].forEach((d, q) => { tubo(nota(gr + d), q % 2 ? "triangle" : "sine", [0.034, 0.026, 0.024, 0.014][q], t0, 3.6); }); };
+    const camp = (t0) => { const f = hz(fin + 24); [[0.5, 0.5, 4.5], [1, 1, 3.6], [1.19, 0.4, 2.8], [1.5, 0.28, 2.3], [2, 0.42, 1.9], [2.74, 0.16, 1.2], [3, 0.12, 0.9]].forEach((q) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f * q[0]; g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.026 * q[1], t0 + 0.008); g.gain.setTargetAtTime(0, t0 + 0.02, q[2] / 3); o.connect(g); g.connect(bus); o.start(t0); o.stop(t0 + q[2] * 2.2); }); };
+    const canta = (t0, fr, alto) => { let x = t0;
+      cant.forEach((c) => { if (c.oct && !alto) return; c.g.gain.setTargetAtTime(c.vol * 0.24, t0 + c.dt, 0.3); });
+      fr.forEach((q) => { const ab = Math.max(0, Math.min(1, (q[0] - 1) / 5));
+        cant.forEach((c) => { if (c.oct && !alto) return; const tt = x + c.dt; c.os.forEach((o) => o.frequency.setTargetAtTime(hz(nota(q[0]) + 12 * c.oct), tt, 0.032)); c.fs.forEach((f, w) => f.frequency.setTargetAtTime(c.k * (VOC.o[w] + (VOC.a[w] - VOC.o[w]) * ab), tt, 0.14)); });
+        x += q[1] * pulso; });
+      cant.forEach((c) => c.g.gain.setTargetAtTime(0, x - 0.3 + c.dt, 0.45));
+      return x; };
+    // se va escribiendo por adelantado, frase por frase
+    const agenda = (hasta) => { while (t < hasta) { const k = n % ORDF.length, fr = FRA[ORDF[k]]; if (!k) { camp(t); t += 1.3; }
+        const f2 = canta(t, fr, k % 4 === 3 || ORDF[k] === 6); resp(f2 - 0.7, fr[fr.length - 1][0] === 2 ? -2 : 0); t = f2 + 2.2 + (n % 3) * 0.3; n++; } };
+    return { out, agenda };
   }
   function musica(on) {
     if (on && !MU) {
       try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (_) {}
       let ac; try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) { return; }
-      const lp = ac.createBiquadFilter(), rv = ac.createConvolver(), seco = ac.createGain(), humedo = ac.createGain(), out = ac.createGain();
-      lp.type = "lowpass"; lp.frequency.value = 2600; lp.Q.value = 0.4;
-      // eco de capilla: ruido que se apaga en cinco segundos
-      const n = ac.sampleRate * 5, b = ac.createBuffer(2, n, ac.sampleRate); for (let c = 0; c < 2; c++) { const x = b.getChannelData(c); for (let i = 0; i < n; i++) x[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3.2); } rv.buffer = b;
-      seco.gain.value = 0.45; humedo.gain.value = 0.9; out.gain.value = 0;
-      lp.connect(seco); lp.connect(rv); rv.connect(humedo); seco.connect(out); humedo.connect(out); out.connect(ac.destination);
-      MU = { ac, in: lp, out, i: 0, t: 0 }; if (ac.state !== "running") ac.resume().catch(() => {});
+      let m; try { m = motor(ac, ros && ros.set); } catch (_) { try { ac.close(); } catch (_) {} return; }
+      MU = { ac, out: m.out, m }; if (ac.state !== "running") ac.resume().catch(() => {});
       // si el teléfono interrumpe el audio (llamada, otra app), se reanuda al volver
       ac.onstatechange = () => { if (MU && MU.ac === ac && ac.state !== "running" && ac.state !== "closed") ac.resume().catch(() => {}); };
-      const t = ac.currentTime + 0.1; MU.t = t; acorde(t, 0); MU.i = 1; MU.t = t + 8;
-      MU.k = setInterval(() => { if (!MU) return; while (MU.t < MU.ac.currentTime + 4) { acorde(MU.t, MU.i++); MU.t += 8; } }, 1000);
+      m.agenda(ac.currentTime + 9); MU.k = setInterval(() => { if (MU) try { MU.m.agenda(MU.ac.currentTime + 9); } catch (_) {} }, 1000);
       volMu();
     } else if (!on && MU) { const m = MU; MU = null; clearInterval(m.k); try { m.out.gain.cancelScheduledValues(m.ac.currentTime); m.out.gain.setTargetAtTime(0, m.ac.currentTime, 0.6); } catch (_) {} setTimeout(() => { try { m.ac.close(); } catch (_) {} }, 3500); }
   }
   // más bajita cuando la familia habla por la sala
   function volMu() { if (!MU) return; const v = VZ ? 0.6 : 1.8; try { MU.out.gain.cancelScheduledValues(MU.ac.currentTime); MU.out.gain.setTargetAtTime(v, MU.ac.currentTime, 0.8); } catch (_) {} }
-  if (Q.get("demo") || Q.get("prueba")) window.atrioMu = () => { if (!MU) return null; if (!MU.an) { MU.an = MU.ac.createAnalyser(); MU.out.connect(MU.an); } const b = new Float32Array(2048); MU.an.getFloatTimeDomainData(b); let q = 0; for (const v of b) q += v * v; return { st: MU.ac.state, rms: Math.sqrt(q / b.length) }; };
+  if (Q.get("demo") || Q.get("prueba")) { window.atrioMu = () => { if (!MU) return null; if (!MU.an) { MU.an = MU.ac.createAnalyser(); MU.out.connect(MU.an); } const b = new Float32Array(2048); MU.an.getFloatTimeDomainData(b); let q = 0; for (const v of b) q += v * v; return { st: MU.ac.state, rms: Math.sqrt(q / b.length) }; };
+    // para oírlo sin teléfono: lo graba fuera de tiempo real y devuelve el sonido y su volumen
+    window.atrioCanto = (seg, set) => { const oc = new OfflineAudioContext(2, 44100 * seg, 44100), m = motor(oc, set); m.out.gain.value = 1.8; m.agenda(seg); return oc.startRendering().then((b) => { const L = b.getChannelData(0), R = b.getChannelData(1), mono = new Array(L.length >> 1); let pk = 0, q = 0; for (let i = 0; i < L.length; i++) { const v = (L[i] + R[i]) / 2; pk = Math.max(pk, Math.abs(L[i]), Math.abs(R[i])); q += v * v; if (!(i & 1)) mono[i >> 1] = Math.round(Math.max(-1, Math.min(1, v)) * 32767); } return { pk, rms: Math.sqrt(q / L.length), mono }; }); }; }
   const botMu = () => `<button class="ic r mu${S.mu ? " on" : ""}" data-a="mu" aria-label="${S.mu ? "Apagar la música" : "Poner música de fondo"}" aria-pressed="${!!S.mu}">${S.mu ? I.nota : I.notano}</button>`;
   const presSala = () => { if (sala) sala.presence({ n: S.n.slice(0, 24), e: S.e, lead: lead ? 1 : 0, on: ros && ros.sala ? 1 : 0, i: ros ? ros.i : 0, set: ros ? ros.set : "", f: ros ? ros.f : "", fin: null }).catch(() => {}); };
   const guia = () => peersS.filter((p) => p.presence && p.presence.lead).sort((a, b) => (a.peer < b.peer ? -1 : 1))[0];
@@ -486,7 +549,8 @@
   function salir() { apagaVoz(1); try { if (sala) sala.leave(); } catch (_) {} sala = null; peersS = []; lead = false; codigo = ""; }
 
   /* ---------- piezas visuales ---------- */
-  const sky = () => '<div class="sky">' + [[20, 5, 10, 0], [55, 8, 8, 1.4], [86, 4, 10, 2.6], [1.5, 430, 9, 0.8], [96.5, 300, 9, 3.3], [96, 610, 8, 2], [1.5, 700, 8, 1.1]].map(([x, y, s, d]) => star(s, "#F4DCA6", `class="tw" style="left:${x}%;top:${y}px;animation-delay:${d}s"`)).join("") + "</div>";
+  const SKY = [[20, 5, 10, 0], [55, 8, 8, 1.4], [86, 4, 10, 2.6], [1.5, 430, 9, 0.8], [96.5, 300, 9, 3.3], [96, 610, 8, 2], [1.5, 700, 8, 1.1], [9, 92, 5, 2.1], [38, 30, 5, 3.7], [70, 58, 6, 0.4], [93, 140, 5, 1.7], [4, 236, 6, 2.9], [97, 468, 5, 0.2], [3, 560, 5, 3.1], [95, 820, 7, 1.3], [2, 930, 6, 2.4], [97, 1080, 6, 0.9], [3, 1240, 7, 1.9]];
+  const sky = () => '<div class="sky"><i class="cup"></i>' + SKY.map(([x, y, sz, d]) => star(sz, "#F4DCA6", `class="tw${sz < 7 ? " tq" : ""}" style="left:${x}%;top:${y}px;animation-delay:${d}s"`)).join("") + "</div>";
   function portal() {
     let r = "";
     for (let i = 0; i < 61; i++) { const a = Math.PI + (Math.PI * i) / 60, r1 = 104, r2 = r1 + (i % 2 ? 40 : 24); r += `<line x1="${(150 + r1 * Math.cos(a)).toFixed(1)}" y1="${(132 + r1 * Math.sin(a)).toFixed(1)}" x2="${(150 + r2 * Math.cos(a)).toFixed(1)}" y2="${(132 + r2 * Math.sin(a)).toFixed(1)}"/>`; }
@@ -587,8 +651,12 @@
     return { pos, curv, ray, cad: `M${curv[0][0][0]} ${curv[0][0][1]}` + curv.map((c) => `Q${f1(c[1][0])} ${f1(c[1][1])} ${c[2][0]} ${c[2][1]}`).join("") + "M195 486V603" };
   })();
   function joya(i, corta) {
-    const o = cuentas(i), done = o.done, cur = o.cur, tn = TONO[ros.set] || TONO.gozosos, P = JY.pos; let luz = "", cu = "", aura = "";
-    const pon = (id, r, oro) => { const q = perla(o, id, P[id][0], P[id][1], r, oro); luz += q[0]; cu += q[1]; };
+    const o = cuentas(i), done = o.done, cur = o.cur, tn = TONO[ros.set] || TONO.gozosos, P = JY.pos; let luz = "", cu = "", aura = "", som = "";
+    // cada cuenta: sombra suave abajo, perla con oriente de nácar; las de Padre nuestro, esferas de filigrana de oro
+    const pon = (id, r, oro) => { const x = P[id][0], y = P[id][1], c = id === cur, rr = c ? r * 1.38 : r, q = perla(o, id, x, y, r, oro), t = `translate(${f1(x)} ${f1(y)})`; luz += q[0];
+      som += `<ellipse cx="${f1(x + rr * 0.12)}" cy="${f1(y + rr * 0.42)}" rx="${f1(rr * 1.02)}" ry="${f1(rr * 0.95)}" fill="#03191C" opacity=".42"/>`;
+      cu += q[1] + (oro ? `<g transform="${t}" fill="none" stroke-width="${f1(rr * 0.07)}"><g stroke="#6E4E14" stroke-opacity=".55"><ellipse rx="${f1(rr * 0.97)}" ry="${f1(rr * 0.34)}"/><ellipse rx="${f1(rr * 0.34)}" ry="${f1(rr * 0.97)}"/><ellipse rx="${f1(rr * 0.72)}" ry="${f1(rr * 0.97)}"/><ellipse rx="${f1(rr * 0.97)}" ry="${f1(rr * 0.72)}"/></g><circle r="${f1(rr * 0.18)}" fill="#FFF6DA" stroke="none" opacity=".75"/><circle r="${f1(rr * 0.99)}" stroke="#FFF3D0" stroke-opacity=".55"/></g>`
+        : `<g transform="${t}"><circle r="${f1(rr)}" fill="url(#jnc)"/><ellipse cy="${f1(rr * 0.58)}" rx="${f1(rr * 0.46)}" ry="${f1(rr * 0.2)}" fill="#fff" opacity=".2"/><circle cx="${f1(rr * 0.36)}" cy="${f1(-rr * 0.5)}" r="${f1(rr * 0.08)}" fill="#fff" opacity=".9"/></g>`); };
     for (let m = 0; m < 5; m++) { let n = 0; for (let k = 1; k <= 10; k++) { const id = "s" + m + "_" + k; if (done[id] || id === cur) n = k; pon(id, 7); }
       if (n) { let d = ""; for (let k = 1; k <= n; k++) d += (k === 1 ? "M" : "L") + f1(P["s" + m + "_" + k][0]) + " " + f1(P["s" + m + "_" + k][1]); if (n === 1) d += "l.1 0";
         aura += `<path d="${d}" stroke="${tn[1]}" stroke-opacity=".1" stroke-width="46"/><path d="${d}" stroke="${tn[0]}" stroke-opacity=".12" stroke-width="29"/><path d="${d}" stroke="${tn[0]}" stroke-opacity=".15" stroke-width="15"/>`; } }
@@ -597,29 +665,36 @@
     // medalla: óvalo de oro con filo de perlitas, esmalte y la Virgen en relieve, con su resplandor
     const med = `<g transform="translate(195 462)">${mc ? `<ellipse rx="46" ry="52" fill="url(#rgl)"/><ellipse class="pu" rx="24" ry="30" fill="none" stroke="#FBE9BE" stroke-width="1.5"/>` : ""}
       <g fill="none" stroke="#D9B35A" stroke-width="1.5"><circle cx="-9" cy="-21.4" r="2.6"/><circle cx="9" cy="-21.4" r="2.6"/><circle cy="25.6" r="2.6"/></g>
-      <ellipse rx="18" ry="24" fill="url(#jmm)" stroke="#6E4E14" stroke-width=".9"/><ellipse rx="15.9" ry="21.9" fill="none" stroke="#FFF6DA" stroke-opacity=".85" stroke-width="1.5" stroke-dasharray=".1 3.05" stroke-linecap="round"/>
+      <ellipse cx="1.4" cy="3.2" rx="19" ry="25" fill="#03191C" opacity=".42"/>
+      <ellipse rx="18" ry="24" fill="url(#jmm)" stroke="#6E4E14" stroke-width=".9"/><ellipse rx="17.1" ry="23.1" fill="none" stroke="#7A5716" stroke-opacity=".7" stroke-width=".9" stroke-dasharray="1.1 1.1"/><ellipse rx="15.9" ry="21.9" fill="none" stroke="#FFF6DA" stroke-opacity=".85" stroke-width="1.5" stroke-dasharray=".1 3.05" stroke-linecap="round"/>
       <ellipse rx="13.2" ry="19.2" fill="url(#jme)" stroke="#8A6420" stroke-width=".7"/>
       <polygon points="${JY.ray}" fill="#F3D484" opacity="${mon ? ".96" : ".6"}"/>
       <path d="M0-12.5C3-12.5 4.4-10 4.2-7.8 6.3-4.8 7.3-.2 7.6 5.4 7.9 9.6 6.6 12.6 0 12.6-6.6 12.6-7.9 9.6-7.6 5.4-7.3-.2-6.3-4.8-4.2-7.8-4.4-10-3-12.5 0-12.5Z" fill="url(#jmv)" stroke="#FFF3D0" stroke-width=".6"/>
-      <ellipse cy="-8.5" rx="1.9" ry="2.4" fill="#F4DFBE"/><path d="M-1.5-2.4L0-5 1.5-2.4 0-.5Z" fill="#F4DFBE"/><g fill="#F6E0AC"><circle cx="-3.6" cy="3" r=".55"/><circle cx="3.4" cy="1.2" r=".55"/><circle cx="-2" cy="8" r=".55"/><circle cx="2.8" cy="7" r=".55"/><circle cx="4.6" cy="4.6" r=".5"/><circle cx="-4.8" cy="6.4" r=".5"/></g>
+      <g fill="#FFF3C4">${Array.from({ length: 12 }, (_, k) => { const a = Math.PI * (1.12 + (k * 0.76) / 11); return `<circle cx="${f1(10.6 * Math.cos(a))}" cy="${f1(-3 + 15.4 * Math.sin(a))}" r=".62"/>`; }).join("")}</g><ellipse cy="-8.5" rx="1.9" ry="2.4" fill="#F4DFBE"/><path d="M-1.5-2.4L0-5 1.5-2.4 0-.5Z" fill="#F4DFBE"/><g fill="#F6E0AC"><circle cx="-3.6" cy="3" r=".55"/><circle cx="3.4" cy="1.2" r=".55"/><circle cx="-2" cy="8" r=".55"/><circle cx="2.8" cy="7" r=".55"/><circle cx="4.6" cy="4.6" r=".5"/><circle cx="-4.8" cy="6.4" r=".5"/></g>
       <path d="M-4.6 14.2Q0 17 4.6 14.2" fill="none" stroke="#F6E0AC" stroke-width="1.1" stroke-linecap="round"/></g>`;
     // crucifijo: oro con esmalte y remates de botón
-    const cz = `<rect x="-6" y="0" width="12" height="96" rx="3.2"/><rect x="-29" y="23" width="58" height="12" rx="3.2"/><circle cy="1" r="6.6"/><circle cy="95" r="6.6"/><circle cx="-29" cy="29" r="6.6"/><circle cx="29" cy="29" r="6.6"/>`;
+    const tre = (x, y, a) => { const c = Math.cos(a), s2 = Math.sin(a), p = (u, v) => `cx="${f1(x + u * c - v * s2)}" cy="${f1(y + u * s2 + v * c)}"`; return `<circle ${p(0, -4.6)} r="4.3"/><circle ${p(-4.4, -.4)} r="4.3"/><circle ${p(4.4, -.4)} r="4.3"/><circle ${p(0, 1.4)} r="3.4"/>`; };
+    const cz = `<rect x="-6" y="0" width="12" height="96" rx="3.2"/><rect x="-29" y="23" width="58" height="12" rx="3.2"/>${tre(0, 1, 0)}${tre(0, 95, Math.PI)}${tre(-29, 29, -Math.PI / 2)}${tre(29, 29, Math.PI / 2)}`;
     const cruz = `<g transform="translate(195 606)">${xc ? `<ellipse cy="48" rx="62" ry="76" fill="url(#rgl)"/><ellipse class="pu" cy="48" rx="40" ry="58" fill="none" stroke="#FBE9BE" stroke-width="1.5"/>` : ""}
-      <circle cy="-4.6" r="3.4" fill="none" stroke="#D9B35A" stroke-width="1.6"/><g fill="#6E4E14" stroke="#6E4E14" stroke-width="1.7">${cz}</g><g fill="url(#jmo)">${cz}</g>
+      <circle cy="-4.6" r="3.4" fill="none" stroke="#D9B35A" stroke-width="1.6"/><g fill="#03191C" opacity=".42" transform="translate(2.2 4)">${cz}</g><g fill="#6E4E14" stroke="#6E4E14" stroke-width="1.7">${cz}</g><g fill="url(#jmo)">${cz}</g>
       <g fill="url(#jme)"><rect x="-3" y="6" width="6" height="84" rx="2"/><rect x="-24.5" y="26" width="49" height="6" rx="2"/></g>
+      <g fill="none" stroke="#E9C67D" stroke-opacity=".55" stroke-width=".45" stroke-dasharray=".1 1.6" stroke-linecap="round"><path d="M-4.6 14V88M4.6 14V88M-26 24.6H-8M8 24.6H26M-26 33.4H-8M8 33.4H26"/></g>
+      <g stroke="#F6E0AC" stroke-width=".55" stroke-linecap="round" opacity=".8">${Array.from({ length: 16 }, (_, k) => { const a = (k / 16) * 2 * Math.PI, l = k % 2 ? 9 : 12.5; return `<path d="M${f1(5.2 * Math.cos(a))} ${f1(20 + 5.2 * Math.sin(a))}L${f1(l * Math.cos(a))} ${f1(20 + l * Math.sin(a))}"/>`; }).join("")}</g>
       <g fill="#FFF3D0"><circle cy="1" r="2.1"/><circle cy="95" r="2.1"/><circle cx="-29" cy="29" r="2.1"/><circle cx="29" cy="29" r="2.1"/><rect x="-4.4" y="9" width="8.8" height="3.8" rx=".8"/></g>
-      <g fill="none" stroke="#FFF3D0" stroke-linecap="round" stroke-linejoin="round"><circle cy="20" r="3.1" fill="#FFF3D0" stroke="none"/><path d="M-19.5 25.4Q-9 27.8 0 31.4Q9 27.8 19.5 25.4" stroke-width="2.3"/><path d="M0 28V55Q-2.2 65 .6 77" stroke-width="3.5"/></g></g>`;
+      <circle cy="19.6" r="5.2" fill="none" stroke="#FFF3D0" stroke-opacity=".7" stroke-width=".6"/><g fill="url(#jcp)" stroke="#8A6420" stroke-width=".35" stroke-linejoin="round"><path d="M-3.4 28.9L-20.2 24.6Q-21.9 24.7-21.2 26.1L-3.2 32.9ZM3.4 28.9L20.2 24.6Q21.9 24.7 21.2 26.1L3.2 32.9Z"/><path d="M-1.3 22.6H1.3L1.6 25.6Q3.6 26.4 3.9 28.8L3.8 34.6Q3.4 40.6 2.8 45.6H-2.8Q-3.4 40.6-3.8 34.6L-3.9 28.8Q-3.6 26.4-1.6 25.6Z"/><path d="M-2.6 50.2Q-2.3 60-1.8 66.6Q-1.5 72.4-.8 77.8H.9Q1.4 71.8 1.8 66Q2.3 58 2.7 50.2Z"/><path d="M-3.6 45.2H3.6L4.3 50.4Q2.4 52.2 0 51.4Q-2.4 52.2-4.3 50.4Z" fill="#FFF8E4"/></g><ellipse cy="19.7" rx="2.5" ry="3" fill="url(#jcp)" stroke="#8A6420" stroke-width=".35"/><path d="M-1.9 33.4Q0 34.6 1.9 33.4M-1.6 37.4Q0 38.4 1.6 37.4" fill="none" stroke="#B48A3C" stroke-opacity=".55" stroke-width=".35" stroke-linecap="round"/></g>`;
     const yc = cur === "x" ? 650 : cur === "p0" ? 606 : cur === "g1" ? 512 : cur === "M" ? 470 : 560, y0 = Math.max(392, Math.min(565, yc - 72.5));
     return `<svg class="jy" viewBox="${corta ? `133.5 ${f1(y0)} 123 145` : "22 76 346 634"}" aria-hidden="true"><defs>${DEFS}
       <linearGradient id="jmm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF4CC"/><stop offset=".3" stop-color="#EBC66E"/><stop offset=".58" stop-color="#B8862A"/><stop offset=".8" stop-color="#E8C36A"/><stop offset="1" stop-color="#9A6E1C"/></linearGradient>
       <linearGradient id="jmo" gradientUnits="userSpaceOnUse" x1="-30" y1="0" x2="30" y2="98"><stop offset="0" stop-color="#FFF4CC"/><stop offset=".28" stop-color="#EBC66E"/><stop offset=".52" stop-color="#B8862A"/><stop offset=".76" stop-color="#EDCB78"/><stop offset="1" stop-color="#9A6E1C"/></linearGradient>
+      <linearGradient id="jcp" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E9CF96"/><stop offset=".45" stop-color="#FFF6DC"/><stop offset="1" stop-color="#D8B670"/></linearGradient>
+      <radialGradient id="jnc" cx=".5" cy=".5" r=".5"><stop offset=".55" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#F7C9DA" stop-opacity=".2"/><stop offset=".93" stop-color="#A8D8EE" stop-opacity=".26"/><stop offset="1" stop-color="#E8F4F2" stop-opacity=".1"/></radialGradient>
       <radialGradient id="jme" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#1B646A"/><stop offset="1" stop-color="#082C31"/></radialGradient>
       <linearGradient id="jmv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A8A88"/><stop offset="1" stop-color="#0F5257"/></linearGradient>
       <radialGradient id="jau"><stop offset="0" stop-color="#F4DCA6" stop-opacity=".16"/><stop offset=".6" stop-color="#F4DCA6" stop-opacity=".05"/><stop offset="1" stop-color="#F4DCA6" stop-opacity="0"/></radialGradient></defs>
       <ellipse cx="195" cy="268" rx="205" ry="240" fill="url(#jau)" opacity="${f1(0.45 + 0.55 * pr)}"/><g fill="none" stroke-linecap="round" stroke-linejoin="round">${aura}</g>
-      <path d="${JY.cad}" fill="none" stroke="#5C4312" stroke-opacity=".55" stroke-width="2.6"/><path d="${JY.cad}" fill="none" stroke="#E9C67D" stroke-width="1.5" stroke-dasharray="2.6 1.5"/>
-      ${luz}${cu}${med}${cruz}</svg>`;
+      <path d="${JY.cad}" fill="none" stroke="#03191C" stroke-opacity=".4" stroke-width="3.4" transform="translate(.8 1.8)"/><path d="${JY.cad}" fill="none" stroke="#5C4312" stroke-opacity=".7" stroke-width="2.8"/>
+      <path d="${JY.cad}" fill="none" stroke="#D9AE5C" stroke-width="2.3" stroke-dasharray="3.4 1.4"/><path d="${JY.cad}" fill="none" stroke="#FFF2CC" stroke-opacity=".8" stroke-width=".7" stroke-dasharray="2 2.8" stroke-dashoffset="-.6"/><path d="${JY.cad}" fill="none" stroke="#B08433" stroke-width="1.2" stroke-dasharray="1.2 3.6" stroke-dashoffset="-3.6"/>
+      ${som}${luz}${cu}${med}${cruz}</svg>`;
   }
   // dónde acomodar a la familia dentro del rosario: filas de círculos que siguen el hueco entre las cuentas
   const hueco = (y) => { const xl = y <= 300 ? 94 - ((y - 100) / 200) * 44 : 50 + ((y - 300) / 162) * 145; return [xl + 20, 370 - xl]; };
@@ -635,38 +710,195 @@
   const vivos = () => peersL.filter((p) => p.kind !== "agent");
   function encendidos() { if (velasHoy) return Object.assign({}, velasHoy); const lit = {}; vivos().forEach((p) => { const pr = p.presence || {}; if (pr.r && !p.isMe && MX.e[pr.e]) lit[pr.e] = (lit[pr.e] || 0) + 1; }); return lit; }
 
+  /* Las Vírgenes, dibujadas: cada una con su manto, su vestido y lo que la distingue,
+     dentro de su nicho de luz. Iconografía tradicional, trazada aquí. */
+  const VIRGD = (() => {
+    const T = {
+      guadalupe: { m: ["#2E8C86", "#17524F"], d: ["#E7A796", "#B9614F"], sk: "#C9946A", h: "#3A2418", est: 1, ray: "man", luna: 1, ang: 1, inc: 1 },
+      fatima: { m: ["#FFFFFF", "#D8DCD8"], d: ["#FFFFFF", "#E1E4E0"], sk: "#F2D9BC", cor: 1, ro: 1, en: 1, borde: "#E3C06A", nube: 1 },
+      lourdes: { m: ["#FFFFFF", "#DCE2E2"], d: ["#FFFFFF", "#E4E8E6"], sk: "#F2D9BC", faja: "#7FAEE6", ro: 1, gruta: 1, rosas: 1, ojos: 1 },
+      carmen: { m: ["#F6EFDF", "#D9CDB2"], d: ["#7A5434", "#4F3520"], sk: "#F0D4B2", cor: 1, nino: 1, esc: 1 },
+      pilar: { m: ["#E8F0F6", "#A9BCCB"], d: ["#E8F0F6", "#B7C6D2"], sk: "#E9C9A6", cor: 1, nino: 1, col: 1, chica: 1 },
+      sanjuan: { m: ["#4E83C8", "#24508C"], d: ["#FFFFFF", "#DDE3EA"], sk: "#D8AE86", cor: 1, tri: 1, luna: 1, rayc: 1 },
+      zapopan: { m: ["#3F74BC", "#1F477F"], d: ["#F4E3EA", "#D7B6C3"], sk: "#C9946A", cor: 1, tri: 1, banda: 1, rayc: 1 },
+      juquila: { m: ["#FFFFFF", "#E2E2DE"], d: ["#FFFFFF", "#E2E2DE"], sk: "#D3A27C", h: "#1E140E", cor: 1, tri: 1, encaje: 1, luna: 1, rayc: 1, pelo: 1 },
+      socorro: { m: ["#2B4C86", "#16294E"], d: ["#B23A34", "#7C211D"], sk: "#D9B087", icono: 1, nino: 1, estf: 1 },
+      milagrosa: { m: ["#6E9FE0", "#3C67A8"], d: ["#FFFFFF", "#DDE2E6"], sk: "#F2D9BC", est: 2, manos: 1, mundo: 1 },
+      auxiliadora: { m: ["#4C7FCB", "#27508F"], d: ["#E7A3A0", "#B5615D"], sk: "#F0D4B2", cor: 2, nino: 1, cetro: 1 },
+      dolores: { m: ["#3A2D52", "#1C152B"], d: ["#5C3C6E", "#35223F"], sk: "#EED2B4", velo: 1, cor7: 1, llora: 1 }
+    };
+    const f = (n) => Math.round(n * 10) / 10;
+    return (k, sz) => {
+      const t = T[k] || T.guadalupe, id = "vg" + k, w = sz || 64;
+      const g = `<defs><linearGradient id="${id}m" x1="0" x2="1"><stop offset="0" stop-color="${t.m[1]}"/><stop offset=".45" stop-color="${t.m[0]}"/><stop offset="1" stop-color="${t.m[1]}"/></linearGradient>
+        <linearGradient id="${id}d" x1="0" x2="1"><stop offset="0" stop-color="${t.d[1]}"/><stop offset=".5" stop-color="${t.d[0]}"/><stop offset="1" stop-color="${t.d[1]}"/></linearGradient>
+        <radialGradient id="${id}h" cx=".5" cy=".42" r=".55"><stop offset="0" stop-color="#FFF3CF" stop-opacity=".95"/><stop offset=".45" stop-color="#F4D58E" stop-opacity=".35"/><stop offset="1" stop-color="#F4D58E" stop-opacity="0"/></radialGradient>
+        <linearGradient id="${id}o" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF4CC"/><stop offset=".45" stop-color="#E5BF66"/><stop offset="1" stop-color="#A97A24"/></linearGradient></defs>`;
+      let bg = "", fig = "", top = "";
+      // fondo: el nicho de luz y lo propio de cada advocación
+      if (t.icono) bg += `<rect x="6" y="4" width="48" height="74" rx="3" fill="url(#${id}o)"/><rect x="8.5" y="6.5" width="43" height="69" rx="2" fill="none" stroke="#7A5716" stroke-opacity=".5" stroke-width=".6"/>`;
+      else bg += `<ellipse cx="30" cy="40" rx="27" ry="36" fill="url(#${id}h)"/>`;
+      if (t.ray === "man") { let r = ""; for (let i = 0; i < 36; i++) { const a = (i / 36) * Math.PI * 2, l = i % 2 ? 0.86 : 1; r += `M${f(30 + 13 * Math.cos(a))} ${f(43 + 25 * Math.sin(a))}L${f(30 + 18 * l * Math.cos(a))} ${f(43 + 33 * l * Math.sin(a))}`; } bg += `<path d="${r}" stroke="#F3D484" stroke-width="1.4" stroke-linecap="round" opacity=".95"/>`; }
+      if (t.rayc) { let r = ""; for (let i = 0; i < 20; i++) { const a = Math.PI + (i / 19) * Math.PI; r += `M${f(30 + 9 * Math.cos(a))} ${f(23 + 9 * Math.sin(a))}L${f(30 + 15 * Math.cos(a))} ${f(23 + 15 * Math.sin(a))}`; } bg += `<path d="${r}" stroke="#F3D484" stroke-width="1" stroke-linecap="round"/>`; }
+      if (t.gruta) bg += `<path d="M2 78V34Q4 6 30 5Q56 6 58 34V78H50V38Q48 16 30 15Q12 16 10 38V78Z" fill="#7F8C8A" opacity=".55"/><path d="M10 38Q12 16 30 15Q48 16 50 38" fill="none" stroke="#C9D2CF" stroke-opacity=".5" stroke-width=".8"/>`;
+      if (t.col) bg += `<rect x="23" y="50" width="14" height="28" fill="#C7A06A"/><rect x="21" y="48" width="18" height="3.4" rx="1" fill="#E8D1A4"/><rect x="21" y="75" width="18" height="3" fill="#E8D1A4"/><path d="M26 52V75M30 52V75M34 52V75" stroke="#9C7745" stroke-width=".6"/>`;
+      if (t.nube) bg += `<g fill="#6F9A6B"><circle cx="20" cy="74" r="6"/><circle cx="30" cy="72" r="7.5"/><circle cx="40" cy="74" r="6"/></g><path d="M14 78Q30 70 46 78" fill="#FFFFFF" opacity=".85"/>`;
+      // la figura: manto, vestido, rostro
+      const S = t.chica ? 0.62 : t.tri ? 0.94 : 1, oy = t.chica ? 4 : t.tri ? 3 : 0;
+      if (t.tri) {
+        fig += `<path d="M30 15C25 15 23 19 22.5 23L10 72H50L37.5 23C37 19 35 15 30 15Z" fill="url(#${id}m)" stroke="#000" stroke-opacity=".18" stroke-width=".6"/>`;
+        fig += `<path d="M30 25C27.5 25 26.4 28 26 31L20 72H40L34 31C33.6 28 32.5 25 30 25Z" fill="url(#${id}d)"/>`;
+        if (t.encaje) { let e = ""; for (let y = 40; y < 72; y += 5) for (let x = 0; x < 5; x++) e += `<circle cx="${f(24 - (y - 40) * 0.16 + x * (3 + (y - 40) * 0.064))}" cy="${y}" r=".75"/>`; fig += `<g fill="#C9B98A" opacity=".8">${e}</g><path d="M10 72H50" stroke="#E3C06A" stroke-width="1.4"/>`; }
+        else fig += `<path d="M10 72H50" stroke="#E3C06A" stroke-width="1.4"/><g fill="#F3D484">${[18, 24, 30, 36, 42].map((x) => `<circle cx="${x}" cy="66" r=".9"/>`).join("")}</g>`;
+        if (t.banda) fig += `<path d="M22 46L38 52" stroke="#C83A3A" stroke-width="2.4"/><path d="M22 46L38 52" stroke="#F3D484" stroke-width=".6"/>`;
+        if (t.pelo) fig += `<path d="M26.4 19Q25 30 23.6 40M33.6 19Q35 30 36.4 40" stroke="${t.h}" stroke-width="2.2" stroke-linecap="round" fill="none"/>`;
+      } else {
+        fig += `<path d="M30 13C24.6 13 22 17.6 21.4 22.6 18.6 32 15.6 52 13.4 76H46.6C44.4 52 41.4 32 38.6 22.6 38 17.6 35.4 13 30 13Z" fill="url(#${id}m)" stroke="#000" stroke-opacity=".2" stroke-width=".6"/>`;
+        fig += `<path d="M30 24C27 24 25.6 27 25.2 30.6 24 42 22.6 58 21.8 76H38.2C37.4 58 36 42 34.8 30.6 34.4 27 33 24 30 24Z" fill="url(#${id}d)"/>`;
+        fig += `<path d="M21.6 24Q19 50 16 76M38.4 24Q41 50 44 76" fill="none" stroke="${t.borde || "#E3C06A"}" stroke-width=".9" opacity=".9"/>`;
+        if (t.faja) fig += `<path d="M25.6 38Q30 40 34.4 38" stroke="${t.faja}" stroke-width="2.2" fill="none"/><path d="M29 39.5L27.4 56M31 39.5L32.4 56" stroke="${t.faja}" stroke-width="1.4"/>`;
+        if (t.esc) fig += `<rect x="27.6" y="30" width="4.8" height="6" rx=".6" fill="#5A3A22" stroke="#E3C06A" stroke-width=".4"/>`;
+        if (t.velo) fig += `<path d="M24.6 17.4Q30 13.8 35.4 17.4L36 25H24Z" fill="#F4F1EA"/>`;
+      }
+      // rostro y manos
+      const hy = t.tri ? 21 : 19.8;
+      if (t.h && !t.tri) fig += `<path d="M26.4 19Q26 23 25.6 26M33.6 19Q34 23 34.4 26" stroke="${t.h}" stroke-width="1.4" fill="none"/>`;
+      fig += `<ellipse cx="30" cy="${hy}" rx="3.5" ry="4.3" fill="${t.sk}"/><ellipse cx="29" cy="${hy - 1.4}" rx="1.2" ry="1.6" fill="#fff" opacity=".22"/>`;
+      if (t.inc) fig += `<path d="M27.6 ${hy - 4.6}Q30 ${hy - 6.4} 33 ${hy - 4}" fill="none" stroke="${t.m[1]}" stroke-width="2"/>`;
+      fig += `<g stroke="#5A3A22" stroke-opacity=".55" stroke-width=".45" stroke-linecap="round"><path d="M28.4 ${hy - 0.2}h1M30.8 ${hy - 0.2}h1"/></g>`;
+      if (t.llora) fig += `<path d="M28.6 ${hy + 0.8}v1.6M31.4 ${hy + 0.8}v1.6" stroke="#BFE3F2" stroke-width=".6"/>`;
+      if (!t.tri && !t.manos && !t.nino) fig += `<path d="M28.4 38.6L30 33.4 31.6 38.6Z" fill="${t.sk}" stroke="#B48A5E" stroke-opacity=".5" stroke-width=".3"/>`;
+      if (t.manos) { fig += `<g fill="${t.sk}"><ellipse cx="22.6" cy="42" rx="1.5" ry="2"/><ellipse cx="37.4" cy="42" rx="1.5" ry="2"/></g>`; let r = ""; for (let i = 0; i < 7; i++) { r += `M${f(22.6 - 1 - i * 0.7)} 44L${f(16 - i * 1.4)} 70M${f(37.4 + 1 + i * 0.7)} 44L${f(44 + i * 1.4)} 70`; } fig += `<path d="${r}" stroke="#FFE9A8" stroke-width=".7" opacity=".9"/>`; }
+      if (t.icono) fig = `<circle cx="30" cy="${hy}" r="6.6" fill="#F3D484" stroke="#A97A24" stroke-width=".4"/><circle cx="35.4" cy="31.8" r="4.4" fill="#F3D484" stroke="#A97A24" stroke-width=".4"/>` + fig;
+      if (t.nino) { const cx = t.tri ? 34 : 35.4, cy = t.tri ? 34 : 34; fig += `<path d="M${cx - 3.6} ${cy + 1}Q${cx} ${cy - 2} ${cx + 3.6} ${cy + 1}L${cx + 3} ${cy + 9}H${cx - 3}Z" fill="${k === "socorro" ? "#2F6B4E" : "#FFF6E6"}" stroke="#000" stroke-opacity=".15" stroke-width=".4"/><circle cx="${cx}" cy="${cy - 2.2}" r="2.5" fill="${t.sk}"/><circle cx="${cx}" cy="${cy - 2.2}" r="3.6" fill="none" stroke="#F3D484" stroke-width=".7"/>`; }
+      if (t.ro) { let r = ""; for (let i = 0; i < 9; i++) r += `<circle cx="${f(30 + 2.2 * Math.sin(i * 0.5))}" cy="${f(37 + i * 1.6)}" r=".55"/>`; fig += `<g fill="#F8F1DA">${r}</g><path d="M30 51.6v2.4M29 52.6h2" stroke="#E3C06A" stroke-width=".6"/>`; }
+      if (t.cetro) fig += `<path d="M22.4 30L20 48" stroke="url(#${id}o)" stroke-width="1.2" stroke-linecap="round"/><circle cx="22.6" cy="29" r="1.3" fill="#F3D484"/>`;
+      if (t.cor7) { fig += `<path d="M30 33.6C28.4 31.4 25.8 32.6 26.6 35 27.2 36.8 30 38.6 30 38.6S32.8 36.8 33.4 35C34.2 32.6 31.6 31.4 30 33.6Z" fill="#C8283A"/>`; let s = ""; for (let i = 0; i < 7; i++) { const a = Math.PI * (0.15 + (i / 6) * 0.7); s += `M${f(30 + 1.6 * Math.cos(a))} ${f(35.6 - 1.6 * Math.sin(a))}L${f(30 + 6 * Math.cos(a))} ${f(35.6 - 6 * Math.sin(a))}`; } fig += `<path d="${s}" stroke="#E4E8EC" stroke-width=".55"/>`; }
+      if (t.estf) fig += `<polygon points="30,${f(hy - 7.4)} 30.6,${f(hy - 6)} 32,${f(hy - 6)} 30.9,${f(hy - 5.1)} 31.3,${f(hy - 3.8)} 30,${f(hy - 4.6)} 28.7,${f(hy - 3.8)} 29.1,${f(hy - 5.1)} 28,${f(hy - 6)} 29.4,${f(hy - 6)}" fill="#F3D484"/>`;
+      if (t.est) { let s = ""; const n = 12; for (let i = 0; i < n; i++) { const a = t.est === 2 ? Math.PI * (1.08 + (i / (n - 1)) * 0.84) : null; const x = t.est === 2 ? 30 + 9.6 * Math.cos(a) : 17 + (i % 4) * 8.6 + (Math.floor(i / 4) % 2) * 3, y = t.est === 2 ? hy + 9.6 * Math.sin(a) : 34 + Math.floor(i / 4) * 12 + (i % 2) * 2; s += `<circle cx="${f(x)}" cy="${f(y)}" r="${t.est === 2 ? 0.8 : 0.75}"/>`; } fig += `<g fill="#F6D980">${s}</g>`; }
+      // corona, aureola, luna, ángel, mundo
+      if (t.cor) top += `<path d="M26.4 ${hy - 4.6}L26 ${hy - 8.6}L27.8 ${hy - 6.6}L30 ${hy - 9.6}L32.2 ${hy - 6.6}L34 ${hy - 8.6}L33.6 ${hy - 4.6}Z" fill="url(#${id}o)" stroke="#7A5716" stroke-width=".35"/>`;
+      if (t.cor === 2) top += `<circle cx="30" cy="${hy - 10.4}" r=".9" fill="#F3D484"/>`;
+      if (!t.icono && !t.rayc && !t.est) top += `<circle cx="30" cy="${hy - 0.6}" r="${t.cor ? 8.4 : 6.8}" fill="none" stroke="#F3D484" stroke-width=".7" opacity=".85"/>`;
+
+      let pie = "";
+      if (t.luna) pie += `<path d="M${t.tri ? 14 : 17} 72Q30 82 ${t.tri ? 46 : 43} 72Q30 77 ${t.tri ? 14 : 17} 72Z" fill="${k === "guadalupe" ? "#26201C" : "#D9DEE3"}"/>`;
+      if (t.ang) pie += `<g><path d="M18 76Q24 70 30 74Q36 70 42 76" fill="none" stroke="#C9524A" stroke-width="1.6"/><path d="M18 76Q24 70 30 74Q36 70 42 76" fill="none" stroke="#2E7C6A" stroke-width=".7" transform="translate(0 1.5)"/><circle cx="30" cy="76.4" r="2" fill="#C9946A"/></g>`;
+      if (t.mundo) pie += `<path d="M14 78Q30 64 46 78Z" fill="#6E8FB8"/><path d="M16 76Q24 70 32 74Q38 76 44 72" stroke="#4E8A4A" stroke-width="1.4" fill="none"/>`;
+      if (t.rosas) pie += `<g fill="#F2C84B"><circle cx="24.6" cy="76.4" r="1.4"/><circle cx="35.4" cy="76.4" r="1.4"/></g>`;
+      const body = (S !== 1 ? `<g transform="translate(${f(30 - 30 * S)} ${oy}) scale(${S})">${fig}${top}</g>` : fig + top);
+      return `<svg class="vir" viewBox="0 0 60 82" width="${w}" height="${f(w * 82 / 60)}" aria-hidden="true">${g}${bg}${body}${pie}</svg>`;
+    };
+  })();
+  /* La imagen real de cada Virgen. Son fotos de Wikimedia Commons, recortadas para Atrio (c = x0, y0 y ancho del recorte,
+     en fracción de la foto) y guardadas en /v. «hd» es la original en grande: solo se pide al verla de cerca. */
+  const WM = "https://upload.wikimedia.org/wikipedia/commons/";
+  const LIC = { "CC0": "https://creativecommons.org/publicdomain/zero/1.0/deed.es", "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/deed.es", "CC BY-SA 4.0": "https://creativecommons.org/licenses/by-sa/4.0/deed.es" };
+  const VFOTO = {
+    guadalupe: { hd: "2/2c/Virgen_de_guadalupe1.jpg", ow: 788, oh: 1226, c: [0.02, 0.005, 0.88], a: "Imagen de la tilma, Basílica de Guadalupe", l: "Dominio público", f: "Virgen_de_guadalupe1.jpg" },
+    fatima: { hd: "3/34/Fatima_0752_%2819796283042%29_%28cropped%29.jpg", ow: 614, oh: 1092, c: [0.075, 0.11, 0.83], a: "János Korom", l: "Dominio público", f: "Fatima_0752_%2819796283042%29_%28cropped%29.jpg" },
+    lourdes: { hd: "thumb/6/6a/Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg/960px-Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg", ow: 3654, oh: 5760, c: [0.08, 0.13, 0.8], a: "IgnaceBoitaclou", l: "CC BY 4.0", f: "Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg" },
+    carmen: { hd: "thumb/d/d3/Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png/960px-Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png", ow: 1414, oh: 2000, c: [0.127, 0.08, 0.7355], a: "David.Lopez.Sala", l: "CC BY 4.0", f: "Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png" },
+    pilar: { hd: "thumb/a/a0/13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg/1280px-13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg", ow: 1338, oh: 1441, c: [0.252, 0.28, 0.4954], a: "El Justicia de Aragón", l: "CC0", f: "13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg" },
+    sanjuan: { hd: "thumb/0/0c/Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg/960px-Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg", ow: 1506, oh: 2048, c: [0.0445, 0.001, 0.905], a: "Metropolitanogto", l: "CC0", f: "Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg" },
+    zapopan: { hd: "thumb/3/3a/Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg/1920px-Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg", ow: 1936, oh: 2592, c: [0.4508, 0.03, 0.4284], a: "ExorcisioTe", l: "CC BY-SA 4.0", f: "Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg" },
+    juquila: { hd: "8/84/Juquilita.jpg", ow: 314, oh: 400, c: [0.119, 0.01, 0.722], a: "Autor desconocido", l: "Dominio público", f: "Juquilita.jpg" },
+    socorro: { hd: "2/26/Perpetual_help_original_icon.jpg", ow: 500, oh: 609, c: [0.12, 0, 0.811], a: "Autor desconocido", l: "Dominio público", f: "Perpetual_help_original_icon.jpg" },
+    milagrosa: { hd: "thumb/f/ff/Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg/960px-Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg", ow: 2122, oh: 3747, c: [0.01, 0.03, 0.93], a: "Nheyob", l: "CC BY-SA 4.0", f: "Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg" },
+    auxiliadora: { hd: "9/93/Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg", ow: 703, oh: 1000, c: [0.138, 0.128, 0.664], a: "Sanji1986", l: "CC BY-SA 4.0", f: "Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg" },
+    dolores: { hd: "thumb/5/5a/Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg/960px-Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg", ow: 1331, oh: 1704, c: [0.0935, 0, 0.853], a: "Pederseguro", l: "Dominio público", f: "Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg" }
+  };
+  // la foto en su arco de oro (2:3); mientras llega, o si falta, queda su dibujo
+  const VIRG = (k, w, ya) => { if (!VFOTO[k]) return VIRGD(k, w); const h = Math.round(w * 1.5);
+    return `<span class="vph" style="width:${w}px;height:${h}px"><span class="vpd">${VIRGD(k, Math.round(w * 0.86))}</span><img src="v/${k}${w <= 100 ? "-s" : ""}.jpg" width="${w}" height="${h}" alt=""${ya ? "" : ' loading="lazy"'} decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></span>`; };
+  /* Verla de cerca: la imagen grande con puntos dorados; cada punto cuenta un detalle. */
+  let LU = null;
+  const luTxt = (sim) => { const s = LU.i >= 0 ? sim[LU.i] : null; return [s ? `<b>${esc(s[2])}</b><p>${esc(s[3])}</p>` : `<b>Mírala de cerca</b><p>Toca los puntos dorados: cada uno guarda un detalle de su imagen.</p>`, LU.i < 0 ? "Ver el primer detalle" : LU.i >= sim.length - 1 ? "Listo" : "Siguiente detalle"]; };
+  function lupa() {
+    const x = document.getElementById("lupa"); if (x) x.remove(); if (!LU) return;
+    const a = ADV.find((q) => q.k === LU.k), f = VFOTO[LU.k]; if (!a || !f) { LU = null; return; }
+    const H = window.innerHeight, W = Math.round(Math.max(190, Math.min(app.clientWidth - 44, (H - 262) / 1.5, 380))), x0 = f.c[0], y0 = f.c[1], iw = W / f.c[2], ih = (iw * f.oh) / f.ow, sim = a.sim || [], tx = luTxt(sim);
+    app.insertAdjacentHTML("beforeend", `<div id="lupa" role="dialog" aria-label="${esc(advN(a))}, de cerca"><div class="lub"><p class="ru">${esc(a.p)} ${esc(a.c)}</p><button class="ic r" data-a="lupax" aria-label="Cerrar">${I.x}</button></div>
+      <div class="luf" style="width:${W}px;height:${Math.round(W * 1.5)}px"><img src="v/${a.k}.jpg" alt=""><img class="luh" src="${WM + f.hd}" alt="" referrerpolicy="no-referrer" style="width:${f1(iw)}px;height:${f1(ih)}px;left:${f1(-x0 * iw)}px;top:${f1(-y0 * ih)}px" onload="this.classList.add('ok')" onerror="this.remove()">
+        ${sim.map((q, i) => `<button class="lup${i === LU.i ? " on" : ""}" data-a="lupan" data-k="${i}" style="left:${q[0]}%;top:${q[1]}%" aria-label="${esc(q[2])}"><i>${i + 1}</i></button>`).join("")}</div>
+      <div class="luc" aria-live="polite">${tx[0]}</div><button class="btn go lus" data-a="lupas">${tx[1]}</button></div>`);
+  }
+  function lupaT() { const T = document.getElementById("lupa"), a = LU && ADV.find((q) => q.k === LU.k); if (!T || !a) return; const tx = luTxt(a.sim || []);
+    T.querySelectorAll(".lup").forEach((b, i) => b.classList.toggle("on", i === LU.i)); const c = T.querySelector(".luc"); c.innerHTML = tx[0]; c.classList.remove("lin"); void c.offsetWidth; c.classList.add("lin"); T.querySelector(".lus").textContent = tx[1]; }
+  // la paloma que baja: alas abiertas, cabeza hacia abajo, como se pinta al Espíritu Santo
+  const PAL_ES = (() => { const ala = `<path d="M108 104C84 86 52 64 14 38C22 62 34 80 48 92C38 92 30 92 22 90C36 106 52 116 68 122C60 126 52 128 44 128C62 138 84 142 104 138Z" fill="url(#pg2)" stroke="#fff" stroke-opacity=".7" stroke-width=".8" stroke-linejoin="round"/><path d="M104 120C80 110 50 88 26 56M104 131C84 126 62 116 46 104" fill="none" stroke="#9DB9BC" stroke-opacity=".55" stroke-width="1" stroke-linecap="round"/>`;
+    return `<svg class="pal0" viewBox="0 0 240 220"><defs><radialGradient id="pg1" cx=".5" cy=".6" r=".65"><stop offset="0" stop-color="#fff"/><stop offset=".65" stop-color="#F4F9F9"/><stop offset="1" stop-color="#C6DADB"/></radialGradient><linearGradient id="pg2" x1=".9" y1=".9" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#EEF5F5"/><stop offset="1" stop-color="#B7CFD1"/></linearGradient><radialGradient id="pgl"><stop offset="0" stop-color="#FFF6D8" stop-opacity=".95"/><stop offset=".32" stop-color="#F4DCA6" stop-opacity=".42"/><stop offset="1" stop-color="#F4DCA6" stop-opacity="0"/></radialGradient></defs>
+      <circle class="pgh" cx="120" cy="120" r="104" fill="url(#pgl)"/>
+      <g class="pwl">${ala}</g><g class="pwr"><g transform="translate(240 0) scale(-1 1)">${ala}</g></g>
+      <path d="M120 98L99 36Q109 27 120 31Q131 27 141 36Z" fill="url(#pg1)" stroke="#fff" stroke-opacity=".7" stroke-width=".8" stroke-linejoin="round"/><path d="M120 96V33M120 96L108 33M120 96L132 33" stroke="#9DB9BC" stroke-opacity=".5" stroke-width="1" stroke-linecap="round"/>
+      <path d="M120 68C105 86 100 118 104 140C106 154 112 164 120 168C128 164 134 154 136 140C140 118 135 86 120 68Z" fill="url(#pg1)"/>
+      <circle cx="120" cy="170" r="11.5" fill="url(#pg1)"/><path d="M116.2 179.5L120 191.5L123.8 179.5Z" fill="#E9B95A"/><circle cx="115.2" cy="171.5" r="1.5" fill="#23464A"/><circle cx="124.8" cy="171.5" r="1.5" fill="#23464A"/></svg>`; })();
+  /* ---------- bienvenida: el camino de cinco cuentas y la veladora ---------- */
+  // el avance del onboarding es una pequeña decena de oro: cada paso enciende una cuenta
+  const obHd = (n, back) => `<div class="hd z obh"><button class="ic" data-a="go" data-v="${back}" data-b="1" aria-label="Regresar">${I.back}</button><div class="obr"><span class="sr">Paso ${n} de 5</span><i class="obc" aria-hidden="true"></i>${[1, 2, 3, 4, 5].map((k) => `<b class="${k < n ? "ok" : k === n ? "on" : ""}"></b>`).join("")}<svg class="obx" width="12" height="16" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 1v14M1.5 5h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><span class="ic"></span></div>`;
+  // veladora mexicana de vaso alto: la flama crece cuando escribes tu nombre
+  const VEL = (lit) => `<div class="vel${lit ? " lit" : ""}" aria-hidden="true"><div class="velh"></div><svg viewBox="0 0 120 190"><defs>
+      <linearGradient id="vgl" x1="0" x2="1"><stop offset="0" stop-color="#FFF6DE" stop-opacity=".22"/><stop offset=".18" stop-color="#FFF6DE" stop-opacity=".5"/><stop offset=".32" stop-color="#FFF6DE" stop-opacity=".12"/><stop offset=".8" stop-color="#FFF6DE" stop-opacity=".08"/><stop offset="1" stop-color="#FFF6DE" stop-opacity=".3"/></linearGradient>
+      <linearGradient id="vwx" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE7B0"/><stop offset=".25" stop-color="#F4D9A4"/><stop offset="1" stop-color="#C99A5A"/></linearGradient>
+      <radialGradient id="vfl" cx=".5" cy=".75" r=".7"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".3" stop-color="#FFF1BE"/><stop offset=".7" stop-color="#FFC25E"/><stop offset="1" stop-color="#F08A2E" stop-opacity="0"/></radialGradient>
+      <radialGradient id="vin" cx=".5" cy=".25" r=".8"><stop offset="0" stop-color="#FFE9B4" stop-opacity=".9"/><stop offset=".55" stop-color="#F4C978" stop-opacity=".25"/><stop offset="1" stop-color="#F4C978" stop-opacity="0"/></radialGradient></defs>
+      <ellipse cx="60" cy="184" rx="40" ry="5" fill="#021A1D" opacity=".55"/>
+      <rect x="22" y="58" width="76" height="124" rx="7" fill="url(#vwx)"/>
+      <rect class="vlu" x="22" y="58" width="76" height="124" rx="7" fill="url(#vin)"/>
+      <g class="vimg" transform="translate(60 124)"><ellipse rx="17" ry="24" fill="#0F5257" stroke="#E6C27A" stroke-width="1.2"/><polygon points="${JY.ray}" fill="#F3D484" transform="scale(.82)"/><path d="M0-10C2.4-10 3.5-8 3.4-6.2 5-3.8 5.8-.2 6.1 4.3 6.3 7.7 5.3 10.1 0 10.1-5.3 10.1-6.3 7.7-6.1 4.3-5.8-.2-5-3.8-3.4-6.2-3.5-8-2.4-10 0-10Z" fill="#2A8A88" stroke="#FFF3D0" stroke-width=".5"/><ellipse cy="-6.8" rx="1.5" ry="1.9" fill="#F4DFBE"/></g>
+      <rect x="22" y="58" width="76" height="124" rx="7" fill="url(#vgl)" stroke="#FFF6DE" stroke-opacity=".35" stroke-width="1"/>
+      <path d="M60 58v-8" stroke="#3A2A12" stroke-width="1.6" stroke-linecap="round"/>
+      <g class="vfg"><path class="vfo" d="M60 6C66 20 72 28 72 38 72 46 66.6 52 60 52 53.4 52 48 46 48 38 48 28 54 20 60 6Z" fill="url(#vfl)"/><path d="M60 22C63 30 65.5 34 65.5 40 65.5 44.5 63 48 60 48 57 48 54.5 44.5 54.5 40 54.5 34 57 30 60 22Z" fill="#FFFDF2"/></g></svg></div>`;
   /* ---------- pantallas ---------- */
   let view = "hoy", ros = null, nd = 1, vn = 0, msg = "", ob = 0, vuelve = "hoy", sel = [], deG = /[?&]code=/.test(location.search) ? 1 : 0;
   const V = {
-    bien: () => `<section class="v d in">${sky()}<div class="hd z" style="justify-content:flex-start;gap:10px"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M6.5 24.5V13a7.5 7.5 0 0 1 15 0v11.5M3.5 24.5h21" stroke="#E6C27A" stroke-width="1.6" stroke-linecap="round"/><polygon transform="translate(8 8.2) scale(.75)" fill="#E6C27A" points="${S16}"/></svg><b style="font-family:var(--se);font-size:26px;font-weight:600">Atrio</b></div>${portal()}
-      <p class="z" style="margin-top:14px;font-family:var(--se);font-style:italic;font-weight:500;font-size:33px;line-height:39px">¿No estoy yo aquí,<br>que soy tu madre?</p><p class="ru z" style="margin-top:8px;font-size:16px">Santa María de Guadalupe a san Juan Diego, 1531</p>
-      <p class="sub z" style="margin-top:14px;font-size:16px;line-height:24px">Reza el rosario, la novena y el Ángelus, solo o con tu familia. No importa cuánto tiempo pasó.</p>
-      <div class="mt z" style="padding-top:24px"><button class="btn go" data-a="empieza">Empezar</button>${conG() && !U ? `<button class="lk" data-a="login" style="display:block;margin:6px auto 0">Ya tengo cuenta</button>` : ""}</div></section>`,
-    nom: () => `<section class="v d in">${sky()}${hd([ob ? "bien" : "yo"], ob ? "Paso 1 de 5" : "Tus datos")}<h1 class="z" style="margin-top:30px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
+    bien: () => { const par = (() => { const prev = ros; try { const f = forma(); ros = { set: "gloriosos", f, i: 0 }; ros.p = pasos(f); return [joya(0), joya(ros.p.length - 1)]; } catch (_) { return ["", ""]; } finally { ros = prev; } })();
+      const chispas = Array.from({ length: 14 }, (_, k) => `<i style="left:${(7 + ((k * 37) % 86)).toFixed(0)}%;animation-delay:${(2.2 + (k * 0.61) % 5).toFixed(2)}s;animation-duration:${(7 + (k % 4) * 1.6).toFixed(1)}s"></i>`).join("");
+      return `<section class="v d bienv in">${sky()}<div class="hd z bvh"><svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true"><path d="M6.5 24.5V13a7.5 7.5 0 0 1 15 0v11.5M3.5 24.5h21" stroke="#E6C27A" stroke-width="1.6" stroke-linecap="round"/><polygon transform="translate(8 8.2) scale(.75)" fill="#E6C27A" points="${S16}"/></svg><b>Atrio</b></div>
+      <div class="bva z" aria-hidden="true"><div class="bvr"></div><svg class="bvarc" viewBox="0 0 300 380" preserveAspectRatio="none"><path d="M12 378V150A138 138 0 0 1 288 150V378" fill="none" stroke="#E6C27A" stroke-width="1.4" stroke-opacity=".75"/><path d="M24 378V152A126 126 0 0 1 276 152V378" fill="none" stroke="#E6C27A" stroke-width=".7" stroke-opacity=".35"/></svg>
+        <div class="bvj"><div class="bv0">${par[0]}</div><div class="bv1">${par[1]}</div></div><div class="bvch">${chispas}</div></div>
+      <div class="bvt z"><p class="bvq">¿No estoy yo aquí,<br>que soy tu madre?</p><p class="ru bvs">Santa María de Guadalupe a san Juan Diego, 1531</p>
+      <p class="sub bvd">El rosario, la novena y el Ángelus, solo o con tu familia, aunque estén lejos.</p></div>
+      <div class="mt z bvb"><button class="btn go bvgo" data-a="empieza">Empezar a rezar</button>${conG() && !U ? `<button class="lk" data-a="login" style="display:block;margin:6px auto 0">Ya tengo cuenta</button>` : ""}</div></section>`; },
+    nom: () => ob ? `<section class="v d in obv">${sky()}${obHd(1, "bien")}${VEL(!!S.n)}
+      <h1 class="z obt">¿Cómo te llamas?</h1><p class="sub z c">Para que la Virgen y tu familia te reconozcan aquí.</p>
+      <input class="fld nm z" id="fn" type="text" autocomplete="given-name" autocapitalize="words" maxlength="24" placeholder="Tu nombre" aria-label="Tu nombre" value="${esc(S.n)}">
+      <button class="btn go mt z" data-a="nom">Continuar</button></section>`
+      : `<section class="v d in">${sky()}${hd(["yo"], "Tus datos")}<h1 class="z" style="margin-top:10px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
       <label class="lab z" for="fn">Tu nombre</label><input class="fld z" id="fn" type="text" autocomplete="given-name" maxlength="24" value="${esc(S.n)}">
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`,
-    est: () => { const su = sugEst(), L = MX.e.map((e, i) => [i, e[0]]).concat([[99, "Fuera de México"]]), cab = `${sky()}${hd(["nom"], ob ? "Paso 2 de 5" : "Tus datos")}<h1 class="z" style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿Desde dónde rezas?</h1>`;
+    // el saludo: una paloma baja con luz, como en Pentecostés, y la invocación más antigua al Espíritu Santo
+    gusto: () => `<section class="v d in gst">${sky()}${obHd(1, "nom")}
+      <div class="gsa z" aria-hidden="true"><div class="gsl"></div><div class="gsr"></div>${PAL_ES}<div class="gsch">${Array.from({ length: 16 }, (_, k) => `<i style="left:${(22 + ((k * 29) % 56)).toFixed(0)}%;animation-delay:${(1.4 + ((k * 0.47) % 4.4)).toFixed(2)}s;animation-duration:${(4.6 + (k % 5) * 0.7).toFixed(1)}s"></i>`).join("")}</div></div>
+      <div class="gsx z"><p class="gsq">Qué gusto tenerte aquí,</p><h1 class="gsn">${esc((S.n || "").split(" ")[0])}</h1></div>
+      <p class="gsp z">Ven, Espíritu Santo, llena los corazones de tus fieles y enciende en ellos el fuego de tu amor.</p>
+      <div class="mt z gsk"><button class="btn go bvgo" data-a="go" data-v="est">Continuar</button></div></section>`,
+    est: () => { const su = sugEst(), L = MX.e.map((e, i) => [i, e[0]]).concat([[99, "Fuera de México"]]), cab = `${sky()}${ob ? obHd(2, "nom") : hd(["nom"], "Tus datos")}<h1 class="z" style="margin-top:${ob ? 18 : 10}px;font-size:34px;line-height:40px">¿Desde dónde rezas?</h1>`;
       // 1) una sola pregunta, si el teléfono sabe dónde está
       if (su !== null && !estAbre && S.e < 0) return `<section class="v d n in">${cab}<p class="sub z">Ahí se enciende tu veladora en el mapa.</p>
-        <div class="esq z"><p class="ru">Parece que estás en</p><h2>${estado(su)}</h2><button class="btn go" data-a="esc" data-k="${su}">Sí, rezo desde aquí</button><button class="lk" data-a="esab" style="display:block;margin:6px auto 0">Estoy en otro estado</button></div></section>`;
+        <div class="z obmap">${mapa({}, su, 0)}</div><div class="esq z"><p class="ru">Parece que estás en</p><h2>${estado(su)}</h2><button class="btn go" data-a="esc" data-k="${su}">Sí, rezo desde aquí</button><button class="lk" data-a="esab" style="display:block;margin:6px auto 0">Estoy en otro estado</button></div></section>`;
       // 2) la lista: un toque elige y avanza
       return `<section class="v d n in">${cab}<p class="sub z">Toca tu estado. Ahí se enciende tu veladora en el mapa.</p>
       <input class="fld bus z" id="fb" type="search" placeholder="Busca tu estado" autocomplete="off" aria-label="Busca tu estado">
       <div class="esl z" id="esl">${L.map(([i, n]) => `<button class="es${S.e === i ? " on" : ""}" data-a="esc" data-k="${i}" data-n="${esc(sinAc(n))}"><span>${n}</span>${S.e === i ? `<i class="pal">${I.ok}</i>` : I.go}</button>`).join("")}<p class="note c" id="esn" hidden>No encontramos ese estado.</p></div></section>`; },
-    advs: () => { const n = sel.length; return `<section class="v d in" style="padding-bottom:120px">${sky()}${hd([ob ? "est" : "adv"], ob ? "Paso 3 de 5" : "Tus Vírgenes")}<h1 class="z" style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Elige una o varias. Es la misma María, con el nombre que le dan en tu casa.</p>
-      <div class="advg z">${ADV.map((a) => { const on = sel.includes(a.k); return `<button class="ni${on ? " on" : ""}" data-a="advt" data-k="${a.k}" aria-pressed="${on}" aria-label="${advN(a)}">${on ? `<span class="pal">${I.ok}</span>` : ""}<span class="em">${EMA[a.k]}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`; }).join("")}</div>
+    advs: () => { const n = sel.length; return `<section class="v d in" style="padding-bottom:120px">${sky()}${ob ? obHd(3, "est") : hd(["adv"], "Tus Vírgenes")}<h1 class="z" style="margin-top:${ob ? 18 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Elige una o varias. Es la misma María, con el nombre que le dan en tu casa.</p>
+      <div class="advg z">${ADV.map((a) => { const on = sel.includes(a.k); return `<button class="ni${on ? " on" : ""}" data-a="advt" data-k="${a.k}" aria-pressed="${on}" aria-label="${advN(a)}">${on ? `<span class="pal">${I.ok}</span>` : ""}<span class="vfig">${VIRG(a.k, 76)}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`; }).join("")}</div>
       <p class="note z" style="margin-top:18px">¿No está la tuya? Iremos sumando más advocaciones.</p>
       <div class="pie"><button class="btn go" data-a="advok"${n ? "" : " disabled"}>${n ? (n === 1 ? "Listo, elegí 1" : "Listo, elegí " + n) : "Elige al menos una"}</button></div></section>`; },
     adv: () => { const a = adv(), ff = fiesta(a), f = frase(a);
-      return `<section class="v d in">${sky()}${hd([vuelve], "Tu Virgen")}
+      return `<section class="v d in advp">${sky()}${hd([vuelve], "Tu Virgen")}
         ${mis().length > 1 ? `<div class="chips z">${mis().map((x) => `<button class="chip${x.k === a.k ? " on" : ""}" data-a="verv" data-k="${x.k}">${x.c}</button>`).join("")}</div>` : ""}
-        <div class="nicho z"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em">${EMA[a.k]}</span><p class="ru">${a.p}</p><h2>${a.c}</h2><p class="ins">${a.l}</p><p class="fie">${ff ? `Su fiesta es el ${a.f[0]} de ${MESES[a.f[1] - 1]}. ${ff === 1 ? "Es mañana." : "Faltan " + ff + " días."}` : "Hoy es su fiesta."}</p></div></div>
+        <div class="nicho z"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><button class="vver" data-a="lupa" data-k="${a.k}" aria-label="Ver su imagen de cerca">${VIRG(a.k, 140, 1)}${a.sim ? `<span class="vlc"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>Tócala para verla de cerca</span>` : ""}</button><p class="ru">${a.p}</p><h2>${a.c}</h2><p class="ins">${a.l}</p><p class="fie">${ff ? `Su fiesta es el ${a.f[0]} de ${MESES[a.f[1] - 1]}. ${ff === 1 ? "Es mañana." : "Faltan " + ff + " días."}` : "Hoy es su fiesta."}</p></div></div>
+        ${a.n3 ? `<div class="n3 z">${a.n3.map((q) => `<div><b>${q[0]}</b><small>${q[1]}</small></div>`).join("")}</div>` : ""}
         <p class="tit z">${a.k === delDia().k ? "Mensaje del día" : "Su mensaje"}</p><div class="z c">${cita(f)}<p class="note" style="margin-top:8px">${f[2]}</p></div>
         <p class="tit z">Su historia</p>${a.h.map((x) => `<p class="his z">${x}</p>`).join("")}${a.fx ? `<p class="note z" style="margin-top:12px">${a.fx}</p>` : ""}
+        ${a.pr ? `<p class="tit z">Historias y prodigios</p><div class="prs z">${a.pr.map((q, i) => `<article class="prc"><span class="prn">${i + 1} de ${a.pr.length}</span><h3>${q[0]}</h3><p>${q[1]}</p></article>`).join("")}</div><p class="note c z prh">Desliza hacia un lado para leer las ${a.pr.length}</p>` : ""}
+        ${a.sab ? `<p class="tit z">¿Sabías que…?</p><div class="sabs z">${a.sab.map((q) => `<details class="sab"><summary><span>${q[0]}</span><i aria-hidden="true"></i></summary><p>${q[1]}</p></details>`).join("")}</div>` : ""}
+        ${a.san ? `<p class="tit z">Dónde visitarla</p><a class="sanc z" href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(a.san[2])}" target="_blank" rel="noopener"><span class="md">${I.pin}</span><span class="g"><b>${a.san[0]}</b><small>${a.san[1]}</small></span><em>Ver mapa</em></a>` : ""}
         <p class="tit z">Oración</p>${a.o[0] === "Oración" ? "" : `<p class="ru z c">${a.o[0]}</p>`}<p class="pr z c" style="font-size:20px;line-height:30px">${a.o[1]}</p>
         <div class="z" style="padding-top:28px"><button class="btn go" data-a="ros">Rezar el rosario de hoy</button><button class="lk" data-a="advsel" style="display:block;margin:4px auto 0">Elegir mis Vírgenes</button></div></section>`; },
-    pid: () => `<section class="v d n in">${sky()}${hd([ob ? "advs" : "yo"], ob ? "Paso 4 de 5" : "Tu intención")}<h1 style="margin-top:${ob ? 30 : 10}px;font-size:34px;line-height:40px">¿Por quién vas a rezar?</h1><p class="sub">Cada rosario se ofrece por alguien. Escríbelo y te lo recordamos cada vez que reces. Solo tú lo ves.</p>
-      <label class="ru" for="fi" style="display:block;margin-top:22px;font-size:15px">Tu intención</label><textarea class="fld ta" id="fi" rows="3" maxlength="140" placeholder="Por mi mamá, por mi abuelo que está enfermo…">${esc(S.pi)}</textarea>
+    pid: () => `<section class="v d n in">${sky()}${ob ? obHd(4, "advs") : hd(["yo"], "Tu intención")}<h1 style="margin-top:${ob ? 18 : 10}px;font-size:34px;line-height:40px">¿Por quién vas a rezar?</h1><p class="sub">Cada rosario se ofrece por alguien. Escríbelo y te lo recordamos cada vez que reces. Solo tú lo ves.</p>
+      <div class="lib"><p class="libt"><span>${LOGO}</span>Libro de intenciones</p><label class="sr" for="fi">Tu intención</label><textarea class="fld ta lbt" id="fi" rows="3" maxlength="140" placeholder="Por mi mamá, por mi abuelo que está enfermo…">${esc(S.pi)}</textarea><p class="libf">${esc(S.n || "")}${S.n ? " · " : ""}${now().getDate()} de ${MESES[now().getMonth()]} de ${now().getFullYear()}</p></div>
       <div class="chips wr">${PIS.map((t, i) => `<button class="chip" data-a="pich" data-k="${i}">${t}</button>`).join("")}</div>
       <div style="padding-top:26px"><button class="btn go" data-a="piok">${ob ? "Continuar" : "Guardar"}</button>${ob ? `<button class="lk" data-a="pisk" style="display:block;margin:4px auto 0">Saltar este paso</button>` : ""}</div></section>`,
     entrar: () => { const nuevo = vuelveE === "bien";
@@ -675,11 +907,13 @@
         <label class="ru" for="fk" style="display:block;margin-top:22px;font-size:15px">Código</label><input class="fld cod" id="fk" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="000000">
         <div style="padding-top:22px"><button class="btn go" data-a="otpok"${otpE === 3 ? " disabled" : ""}>${otpE === 3 ? "Entrando…" : "Entrar"}</button><button class="lk" data-a="otp" style="display:block;margin:6px auto 0">Mandar otro código</button><button class="lk" data-a="otpno" style="display:block;margin:0 auto">Usar otro correo</button></div></section>`;
       return `<section class="v d n in">${sky()}${hd([vuelveE === "entrar" ? "hoy" : vuelveE], nuevo ? "Ya tengo cuenta" : "Guardar mi avance")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">${nuevo ? "Entra a tu cuenta" : "Guarda tu avance"}</h1><p class="sub">${nuevo ? "Recupera tu racha, tus Vírgenes y tu intención." : "Así no pierdes tu racha ni tus veladoras si cambias de teléfono."}</p>
-        <button class="btn gw" data-a="gg" style="margin-top:24px">${G}<span>Continuar con Google</span></button><p class="note c" style="margin-top:12px">Al entrar aceptas los <a href="/terminos/">términos de uso</a> y el <a href="/privacidad/">aviso de privacidad</a>.</p>
+        <div style="margin-top:24px">${gBtn()}</div><p class="note c" style="margin-top:12px">Al entrar aceptas los <a href="/terminos/">términos de uso</a> y el <a href="/privacidad/">aviso de privacidad</a>.</p>
         ${OTP_ON ? `<p class="tit">o con tu correo, sin contraseña</p>
         <label class="ru" for="fm" style="display:block;font-size:15px">Tu correo</label><input class="fld" id="fm" type="email" inputmode="email" autocomplete="email" autocapitalize="off" placeholder="tucorreo@gmail.com" value="${esc(correo)}">
         <button class="btn go" data-a="otp" style="margin-top:14px"${otpE === 1 ? " disabled" : ""}>${otpE === 1 ? "Mandando…" : "Mandarme un código"}</button>
         <p class="note c" style="margin-top:12px">Te llega un código de un solo uso. No guardamos contraseñas.</p>` : ""}</section>`; },
+    cred: () => `<section class="v d in">${sky()}${hd(["yo"], "Créditos")}<h1 class="z" style="margin-top:10px;font-size:32px;line-height:38px">Las imágenes de la Virgen</h1><p class="sub z">Fotografías y pinturas de Wikimedia Commons, recortadas para Atrio. Gracias a quienes las compartieron. Las versiones recortadas se comparten con la misma licencia que su original.</p>
+      <div class="card z" style="margin-top:16px">${ADV.map((a) => { const f = VFOTO[a.k], lu = f && LIC[f.l]; return f ? `<div class="row crd">${VIRG(a.k, 36)}<span class="g"><b>${a.c}</b><small>${esc(f.a)} · ${lu ? `<a href="${lu}" target="_blank" rel="noopener">${f.l}</a>` : f.l} · <a href="https://commons.wikimedia.org/wiki/File:${f.f}" target="_blank" rel="noopener">ver original</a></small></span></div>` : ""; }).join("")}</div></section>`,
     jnew: () => `<section class="v d n in">${sky()}${hd(["hoy"], "Rosario juntos")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">Recen juntos el rosario de cada día</h1>
       <ol class="jex"><li><b>Cada quien a su hora.</b> El rosario de hoy tiene cinco misterios; cada uno reza los que pueda.</li><li><b>Se va llenando solo.</b> Ves quién rezó cada misterio y cuántos faltan.</li><li><b>El último cierra.</b> Quien reza el quinto termina con la Salve y se enciende su veladora.</li></ol>
       <label class="ru" for="fj" style="display:block;margin-top:22px;font-size:15px">¿Con quién?</label><input class="fld" id="fj" maxlength="40" autocomplete="off" placeholder="Constanza, mi mamá…">
@@ -727,13 +961,14 @@
       <p class="tit">Cómo confesarte</p><ol class="card pasos">${CFP.map((x) => `<li>${x}</li>`).join("")}</ol>
       <p class="tit">Acto de contrición</p><div class="card" style="padding:16px 18px"><p class="pr" style="margin:0">${CONTRI}</p></div>
       <p class="note c" style="margin-top:14px">Preguntas sencillas para prepararte; tu sacerdote te puede guiar mejor.</p></section>`; },
-    atrio: () => { const vs = mis(), g = 0;
-      return `<section class="v d n in" style="padding-bottom:${g ? 176 : 128}px">${sky()}${hd(["pid"], "Paso 5 de 5")}
-        <div class="nicho"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em">${LOGO}</span><p class="ru">Tu atrio está listo</p><h2>${esc(S.n)}</h2><p class="ins">${esc(estado(S.e))}</p></div></div>
-        <p class="tit">${vs.length > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="meds">${vs.map((a) => `<span class="med"><span class="md">${EMA[a.k]}</span><small>${a.c}</small></span>`).join("")}</div>
-        ${S.pi ? `<p class="tit">Tu intención</p><p class="ci c pin">«${esc(S.pi)}»</p>` : ""}
-        <p class="sub c" style="margin-top:24px">${g ? "Guárdalo con tu cuenta de Google para no perderlo si cambias de teléfono." : `Hoy se rezan los ${MIS[MIS_DIA[now().getDay()]].n.toLowerCase()}.${U ? " Tu avance se guarda en tu cuenta." : ""}`}</p>
-        <div class="pie">${g ? `${gBtn("Guardar con Google")}<button class="lk" data-a="entra" style="display:block;margin:4px auto 0">Ahora no</button>` : `<button class="btn go" data-a="entra">Entrar a Atrio</button>`}</div></section>`; },
+    atrio: () => { const vs = mis(), a0 = vs[0], ved = (n) => (n === 1 ? "la" : "las"), nv = vs.length;
+      return `<section class="v d n in fin5" style="padding-bottom:128px">${sky()}${obHd(5, "pid")}
+        <div class="f5 z"><div class="f5r"></div><div class="nicho f5n"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="em f5e">${LOGO}</span><p class="ru">Tu atrio está listo</p><h2>${esc(S.n)}</h2><p class="ins">${esc(estado(S.e))}</p></div><span class="f5p f5pl"></span><span class="f5p f5pr"></span></div></div>
+        <p class="f5b z">Que ${a0 ? (a0.k === "guadalupe" ? "la Virgen de Guadalupe" : esc(a0.p + " " + a0.c)) : "la Virgen"} te cubra con su manto.</p>
+        <p class="tit z">${nv > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="meds z">${vs.map((a, k) => `<span class="med vmed" style="animation-delay:${(1.5 + k * 0.12).toFixed(2)}s"><span class="vfig">${VIRG(a.k, 60)}</span><small>${a.c}</small></span>`).join("")}</div>
+        ${S.pi ? `<p class="tit z">Tu intención</p><p class="ci c pin z">«${esc(S.pi)}»</p>` : ""}
+        <p class="sub c z" style="margin-top:22px">Hoy se rezan los ${MIS[MIS_DIA[now().getDay()]].n.toLowerCase()}.${U ? " Tu avance se guarda en tu cuenta." : ""}</p>
+        <div class="pie"><button class="btn go bvgo" data-a="entra">Entrar a mi atrio</button></div></section>`; },
     /* Hoy: el rosario del día como protagonista (el rosario real, que se enciende cuando lo rezas),
        el mensaje de la Virgen, rezar con los tuyos y lo que toca hoy. */
     hoy: () => {
@@ -751,12 +986,13 @@
         <p class="tpo"><span style="background:${tp.c}"></span>${tp.t}</p>
         <div class="rh${hh.r ? " lit" : ""}"><div class="rhv" data-a="ros" role="button" aria-label="Rezar el rosario de hoy">${vis}</div>
           <div class="rht"><p class="ru">${hh.r ? "Ya lo rezaste hoy" : "Hoy, " + DIAS[d.getDay()].toLowerCase()}</p><h2>${hh.r ? "Tu veladora está encendida" : "El rosario de hoy"}</h2><p class="rhs">${M.n}${S.pi && !hh.r ? ` · <em>«${esc(S.pi)}»</em>` : ""}</p>
-          ${hh.r ? `<div class="rhb"><button class="btn gh" data-a="go" data-v="mapa">Ver el mapa</button><button class="btn gh" data-a="ros">Rezar otra vez</button></div>` : `<button class="btn go rhgo" data-a="ros">Empezar a rezar</button><button class="lk" data-a="go" data-v="sala">Rezarlo en familia, en vivo</button>`}</div></div>
+          ${hh.r ? `<div class="rhb"><button class="btn gh" data-a="go" data-v="mapa">Ver el mapa</button><button class="btn gh" data-a="ros">Rezar otra vez</button></div>` : `<div class="rhc"><button class="btn go rhgo" data-a="ros">Empezar a rezar</button><button class="btn gh rhf" data-a="go" data-v="sala" aria-label="Rezarlo en familia, en vivo">${I.cam}<span>En familia</span></button></div>`}</div></div>
         ${deHoy("", 1)}
         <p class="tit">Con los tuyos</p>
         <div class="tjs">${jt}${tile('data-a="luzn"', LOGO, "Mándale una luz", "Rezar por alguien", "Le llega por WhatsApp")}${tile('data-a="go" data-v="sala"', I.cam, "En vivo", "Rosario en familia", "Con voz y cámara")}</div>
         <p class="tit">Para hoy</p>
         <div class="card ph"><button class="row" data-a="go" data-v="ang"><span class="md">${EM.angelus}</span><span class="g"><b>Ángelus</b><small>${hh.a ? "Ya lo rezaste hoy" : "A las 12:00, con campana"}</small></span>${hh.a ? '<span class="ok">Hecho</span>' : I.bell}</button><button class="row" data-a="go" data-v="nov"><span class="md">${EM.novena}</span><span class="g"><b>Novena de Guadalupe</b><small>${nvTxt}</small></span>${I.go}</button></div>
+        ${(S.sc || 0) < 4 ? `<button class="sch" data-a="masab" aria-label="Ver lo que hay más abajo"><span class="schp">Desliza para ver más<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>` : ""}
         ${tabs("hoy")}</section>`;
     },
     rezar: () => {
@@ -770,7 +1006,7 @@
           <div class="nb"><span class="em">${EM[set]}</span><p class="ru">${hh.r ? "Ya lo rezaste hoy" : "Hoy, " + DIAS[d.getDay()].toLowerCase()}</p><h2>Santo rosario</h2><p class="ins">${MIS[set].n}</p>
           <button class="btn go" data-a="ros">${hh.r ? "Rezarlo otra vez" : "Empezar a rezar"}</button><button class="lk" data-a="go" data-v="sala">Rezarlo en familia</button></div></div>
         <p class="tit">Los cuatro misterios</p><div class="ret">${ni("gozosos")}${ni("luminosos")}${ni("dolorosos")}${ni("gloriosos")}</div>
-        <p class="tit">${mis().length > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="card">${mis().map((x) => `<button class="row" data-a="verv" data-k="${x.k}"><span class="md">${EMA[x.k]}</span><span class="g"><b>${advN(x)}</b><small>${x.k === delDia().k ? "Hoy te trae el mensaje del día" : "Su historia y su oración"}</small></span>${I.go}</button>`).join("")}<button class="row" data-a="advsel"><span class="g"><b style="font-size:16px">Elegir mis Vírgenes</b></span>${I.go}</button></div>
+        <p class="tit">${mis().length > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="card">${mis().map((x) => `<button class="row" data-a="verv" data-k="${x.k}"><span class="vfig vrow">${VIRG(x.k, 36)}</span><span class="g"><b>${advN(x)}</b><small>${x.k === delDia().k ? "Hoy te trae el mensaje del día" : "Su historia y su oración"}</small></span>${I.go}</button>`).join("")}<button class="row" data-a="advsel"><span class="g"><b style="font-size:16px">Elegir mis Vírgenes</b></span>${I.go}</button></div>
         <p class="tit">Devociones</p><div class="card">${row('data-a="go" data-v="vir"', "virgen", "Devociones a la Virgen", "Bajo tu amparo, Acordaos y más")}${row('data-a="go" data-v="ang"', "angelus", "Ángelus", hh.a ? "Ya lo rezaste hoy" : "A mediodía, con campana")}${row('data-a="go" data-v="nov"', "novena", "Novena de Guadalupe", nvTxt)}</div>${tabs("rezar")}</section>`;
     },
     /* El rosario tiene dos vistas. «Oración»: el texto completo, con el aro de luz arriba (o un acercamiento al colgante
@@ -780,12 +1016,13 @@
       const st = ros.p[ros.i], M = MIS[ros.set], o = ORA[st.t], mm = st.m != null ? M.m[st.m] : null, g = guia(), sigo = ros.sala && !lead, G = !!ros.g, cl = (ros.sala ? " sl" : "") + (ros.an ? " " + ros.an : "");
       const nom = st.t === "let" ? "Letanías" : st.t === "mis" ? "" : o.n, cta = st.of ? st.k + " de " + st.of : "", don = mm ? ORD[st.m] + " misterio: " + mm[0] : st.l ? st.l : st.fin ? "Para terminar" : "Para empezar";
       const it = ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion ? ["Su intención", JT[ros.jt.id].intencion] : S.pi ? ["Tu intención", S.pi] : null;
-      const cab = `<div class="hd z"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}<small class="cnt">${ros.i + 1} de ${ros.p.length}</small></p>${botMu()}</div>`;
-      const tk = G ? "g" : "t", tip = !(S.tp || {})[tk] && !Q.get("notip") ? `<div class="tip" role="dialog" aria-label="Consejo"><p>${G ? "<b>¿Quieres leer las oraciones?</b> Toca este botón y ves cada una completa." : "<b>¿Te lo sabes de memoria?</b> Toca este botón y ves el rosario en grande, sin texto."}</p><p class="tip2">${G ? "Para avanzar, toca el rosario o «Amén»." : "Ahí avanzas tocando el rosario o «Amén»."}</p><button class="tipok" data-a="tipok" data-k="${tk}">Entendido</button></div>` : "";
+            const tk = G ? "g" : "t", tip0 = !(S.tp || {})[tk] && !Q.get("notip") ? `<div class="tip" role="dialog" aria-label="Consejo"><p>${G ? "<b>¿Quieres leer las oraciones?</b> Toca este botón y ves cada una completa." : "<b>¿Te lo sabes de memoria?</b> Toca este botón y ves el rosario en grande, sin texto."}</p><p class="tip2">${G ? "Para avanzar, toca el rosario o «Amén»." : "Ahí avanzas tocando el rosario o «Amén»."}</p><button class="tipok" data-a="tipok" data-k="${tk}">Entendido</button></div>` : "", tip = tip0;
+      const tipM = !tip && !S.mu && !(S.tp || {}).mu && !Q.get("notip") && ros.i >= 1 ? `<div class="tip tm" role="dialog" aria-label="Consejo"><p><b>¿Rezas con música?</b> Toca la notita y te acompaña un coro con órgano, como en una capilla.</p><div class="tipbs"><button class="lk" data-a="tipok" data-k="mu">Sin música</button><button class="tipok" data-a="mu">Poner música</button></div></div>` : "";
+      const cab = `<div class="hd z${tipM ? " htm" : ""}"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}<small class="cnt">${ros.i + 1} de ${ros.p.length}</small></p>${botMu()}${tipM}</div>`;
       const vis = `<button class="ra vt${tip ? " tipon" : ""}" data-a="vista" aria-label="${G ? "Ver la oración escrita" : "Ver el rosario en grande"}">${G ? I.txt : I.ros}</button>`;
       // La barra de abajo queda fija: «Amén» siempre está en el mismo lugar y el pulgar lo encuentra sin mirar
       const pie = `<div class="rpie">${ros.sala ? `<div class="vzl"><p class="note">${peersS.length === 1 ? "Solo tú" : peersS.length + " rezando"}</p>${botVoz(1)}</div>` : ""}<div class="rb">${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" || (st.t === "let" && st.k < st.of) ? "Continuar" : "Amén"}</button>`}${vis}</div>${tip}</div>`;
-      if (G) { const fam = ros.sala && peersS.length > 1;
+      if (G) { const fam = ros.sala && (peersS.length > 1 || !!(VZ && VZ.cam));
         const cara = (p, xy, sz) => { const pr = p.presence || {}, id = esc(p.peer), cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]);
           return `<span class="fb${pr.v ? " vz" : ""}${p.isMe ? " me" : ""}${pr.lead ? " ld" : ""}" data-p="${id}" data-a="foco" data-k="${id}" role="button" aria-label="Ver a ${esc(p.isMe ? "ti" : pr.n || "Alguien")} en grande" style="left:${f1(((xy[0] - 22) / 346) * 100)}%;top:${f1(((xy[1] - 76) / 634) * 100)}%;width:${f1((sz / 346) * 100)}%;--s:${sz}" title="${esc(p.isMe ? "Tú" : pr.n || "Alguien")}"><span class="cara">${cam ? `<video data-v="${id}" autoplay playsinline muted></video>` : `<b>${esc((pr.n || "?").slice(0, 1).toUpperCase())}</b>`}${pr.v === 2 ? `<i class="mm">${I.mute}</i>` : ""}</span></span>`; };
         const fp = fam && ros.fo ? peersS.find((p) => p.peer === ros.fo) : null;
@@ -811,10 +1048,9 @@
       return `<section class="v d ro cg${L ? " lt" : ""}${st.lg === 2 ? " xl" : ""}${cl}">${sky()}${cab}<div class="colg z" data-a="vista"><div class="cgv">${joya(ros.i, 1)}</div><div class="cgt"><small>${don}</small><b class="rn">${nom}</b>${cta ? `<span>${cta}</span>` : ""}${it && !st.lg && !L ? `<p class="cgi"><small>${it[0]}</small>«${esc(it[1])}»</p>` : ""}</div></div>
         <div class="rt z">${L ? lista(L.r, L.inv) + lista(L.r2, L.inv2) + bloques(L.bl) : texto()}</div>${pie}</section>`;
     },
-    listo: () => { const lit = encendidos(), n = vivos().length, ra = racha(), hito = total() <= 1 ? 1 : [3, 7, 14, 30, 60, 100, 200, 365].includes(ra) ? 2 : 0; return `<section class="v d in">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p>${S.pi ? `<p class="pin c z">Lo ofreciste «${esc(S.pi)}»</p>` : ""}<div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
-      <div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>
+    listo: () => { const lit = encendidos(), n = vivos().length, ra = racha(), hito = total() <= 1 ? 1 : [3, 7, 14, 30, 60, 100, 200, 365].includes(ra) ? 2 : 0; const guarda1 = pideG() && hito; return `<section class="v d in${guarda1 ? " lsg" : ""}">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p>${S.pi ? `<p class="pin c z">Lo ofreciste «${esc(S.pi)}»</p>` : ""}<div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>${guarda1 ? `<div class="gua z"><p class="ru">${hito === 1 ? "No la pierdas" : "No los pierdas"}</p><p class="sub" style="margin:2px 0 12px">${hito === 1 ? "Tu veladora y tu racha viven solo en este teléfono. Guárdalas con tu cuenta de Google." : `Tus ${ra} días seguidos viven solo en este teléfono. Guárdalos con tu cuenta de Google.`}</p>${gBtn("Guardar con Google")}</div>` : ""}<div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
       ${n > 1 ? `<p class="note z" style="margin-top:12px">Ahora mismo hay ${n} personas con Atrio abierto.</p>` : ""}
-      ${pideG() && hito ? `<div class="gua z"><p class="ru">${hito === 1 ? "No la pierdas" : "No los pierdas"}</p><p class="sub" style="margin:2px 0 12px">${hito === 1 ? "Tu veladora y tu racha viven solo en este teléfono. Guárdalas con tu cuenta de Google." : `Tus ${ra} días seguidos viven solo en este teléfono. Guárdalos con tu cuenta de Google.`}</p>${gBtn("Guardar con Google")}</div><button class="btn gh z" data-a="go" data-v="hoy" style="margin-top:10px">Volver a hoy</button>` : `<button class="btn go mt z" data-a="go" data-v="hoy">Volver a hoy</button>`}<button class="btn gh z" data-a="luzn" data-q="ros" style="margin-top:10px">Avisarle a alguien que recé por él</button><button class="lk c z" data-a="copiar" style="margin-top:4px">Copiar invitación para mi familia</button></section>`; },
+      ${guarda1 ? `<button class="btn gh z" data-a="go" data-v="hoy" style="margin-top:14px">Volver a hoy</button>` : `<button class="btn go mt z" data-a="go" data-v="hoy">Volver a hoy</button>`}<button class="btn gh z" data-a="luzn" data-q="ros" style="margin-top:10px">Avisarle a alguien que recé por él</button><button class="lk c z" data-a="copiar" style="margin-top:4px">Copiar invitación para mi familia</button></section>`; },
     mapa: () => { const lit = encendidos(), n = vivos().length, r = hoy().r, mio = r && MX.e[S.e] ? 1 : 0, c = Object.keys(lit).filter((k) => MX.e[k]).length + (mio && !lit[S.e] ? 1 : 0), tot = Object.keys(lit).reduce((a, k) => a + (MX.e[k] ? lit[k] : 0), 0) + (mio && (!velasHoy || !lit[S.e]) ? 1 : 0); return `<section class="v d tb in">${sky()}<p class="ru z">México en oración</p><h1 class="z">${r ? "Tu veladora está encendida" : "Enciende tu estado"}</h1><p class="sub z">${r ? esc(estado(S.e)) + " brilla hoy por tu rosario." : "Cada rosario terminado enciende una veladora en " + esc(estado(S.e)) + "."}</p>
       <div class="z mapa-full"><div class="halo"></div>${mapa(lit, r ? S.e : -1, 1, `<div class="cuenta"><p class="num">${tot}</p><p>${tot === 1 ? "veladora encendida" : "veladoras encendidas"} ${velasHoy ? "hoy" : "ahora"}<br>${tot ? `en ${c} ${c === 1 ? "estado" : "estados"}` : "Enciende la primera."}${n > 1 ? `<br>${n} personas con Atrio abierto` : ""}</p></div>`)}</div>
       <p class="note z" style="margin-top:4px">${velasHoy ? "Cada veladora es un rosario terminado hoy en ese estado." : RM ? "El mapa muestra a quienes tienen Atrio abierto en este momento." : "En esta versión el mapa muestra tu veladora."}</p>
@@ -836,8 +1072,8 @@
       return `<section class="v d n tb in">${sky()}<div class="hd" style="align-items:flex-start"><div><p class="ru">Tu bitácora</p><h1>${esc(S.n)}</h1></div><span aria-hidden="true" style="flex:none;margin-top:8px;width:44px;height:44px;border-radius:22px;background:var(--teal);color:var(--card);font-family:var(--se);font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center">${esc(S.n.slice(0, 1).toUpperCase())}</span></div>
       <div class="st"><div><b>${racha()}</b><span>${racha() === 1 ? "día seguido" : "días seguidos"}</span></div><div><b>${total()}</b><span>${total() === 1 ? "rosario rezado" : "rosarios rezados"}</span></div></div>
       <div class="card" style="margin-top:12px;padding:12px 12px 14px"><p class="ru" style="margin:0 6px 6px;font-size:16px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)} de ${y}</p><div class="cal">${c}</div></div>
-      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="go" data-v="pid"><span class="g"><b>Por quién rezo</b><small>${S.pi ? esc(S.pi) : "Escribe tu intención"}</small></span>${I.go}</button>${jtOk() ? `<button class="row" data-a="jnueva"><span class="g"><b>Rosario juntos</b><small>${S.jt.length ? "Crear otro con alguien más" : "Reza por misterios con tu pareja o familia"}</small></span>${I.go}</button>` : ""}<button class="row" data-a="go" data-v="conf"><span class="g"><b>Mi última confesión</b><small>${S.cf ? (() => { const n = Math.max(0, Math.round((now() - new Date(S.cf + "T12:00:00")) / 864e5)); return n === 0 ? "Hoy" : n === 1 ? "Ayer" : n < 60 ? "Hace " + n + " días" : "Hace " + Math.round(n / 30.4) + " meses"; })() : "Solo tú la ves"}</small></span>${I.go}</button><button class="row" data-a="go" data-v="fr"><span class="g"><b>Cómo rezo el rosario</b><small>${forma() === "mx" ? "Como en México, con Salve y letanías" : "Con Credo al inicio"}</small></span>${I.go}</button><label class="row"><span class="g"><b>Música de fondo al rezar</b><small>Órgano suave, como en una capilla</small></span><span class="sw"><input type="checkbox" id="fmu"${S.mu ? " checked" : ""}><span></span></span></label><label class="row"><span class="g"><b>Vibración al rezar</b><small>Un toque en cada cuenta, más fuerte en cada misterio</small></span><span class="sw"><input type="checkbox" id="fv"${S.vib !== 0 ? " checked" : ""}><span></span></span></label><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
-      ${U ? `<div class="card" style="margin-top:12px"><div class="row" style="cursor:default"><span class="g"><b>Tu avance está guardado</b><small>${esc(U.email || "Cuenta de Google")}</small></span><span class="ok">Listo</span></div><button class="row" data-a="logout"><span class="g"><b>Cerrar sesión</b></span>${I.go}</button></div>` : !conG() ? `<p class="note" style="margin-top:12px">Tu avance se guarda solo en este dispositivo.</p>` : pideG() ? `<button class="btn te" data-a="login" style="margin-top:12px">Guardar con Google</button><p class="note" style="margin-top:8px">Sin cuenta, tu avance vive solo en este teléfono.</p>` : ""}<p class="note c" style="margin-top:18px"><a href="/privacidad/">Aviso de privacidad</a> · <a href="/terminos/">Términos de uso</a></p>${tabs("yo")}</section>`; },
+      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="go" data-v="pid"><span class="g"><b>Por quién rezo</b><small>${S.pi ? esc(S.pi) : "Escribe tu intención"}</small></span>${I.go}</button>${jtOk() ? `<button class="row" data-a="jnueva"><span class="g"><b>Rosario juntos</b><small>${S.jt.length ? "Crear otro con alguien más" : "Reza por misterios con tu pareja o familia"}</small></span>${I.go}</button>` : ""}<button class="row" data-a="go" data-v="conf"><span class="g"><b>Mi última confesión</b><small>${S.cf ? (() => { const n = Math.max(0, Math.round((now() - new Date(S.cf + "T12:00:00")) / 864e5)); return n === 0 ? "Hoy" : n === 1 ? "Ayer" : n < 60 ? "Hace " + n + " días" : "Hace " + Math.round(n / 30.4) + " meses"; })() : "Solo tú la ves"}</small></span>${I.go}</button><button class="row" data-a="go" data-v="fr"><span class="g"><b>Cómo rezo el rosario</b><small>${forma() === "mx" ? "Como en México, con Salve y letanías" : "Con Credo al inicio"}</small></span>${I.go}</button><label class="row"><span class="g"><b>Música de fondo al rezar</b><small>Coro y órgano, como en una capilla</small></span><span class="sw"><input type="checkbox" id="fmu"${S.mu ? " checked" : ""}><span></span></span></label><label class="row"><span class="g"><b>Vibración al rezar</b><small>Un toque en cada cuenta, más fuerte en cada misterio</small></span><span class="sw"><input type="checkbox" id="fv"${S.vib !== 0 ? " checked" : ""}><span></span></span></label><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
+      ${U ? `<div class="card" style="margin-top:12px"><div class="row" style="cursor:default"><span class="g"><b>Tu avance está guardado</b><small>${esc(U.email || "Cuenta de Google")}</small></span><span class="ok">Listo</span></div><button class="row" data-a="logout"><span class="g"><b>Cerrar sesión</b></span>${I.go}</button></div>` : !conG() ? `<p class="note" style="margin-top:12px">Tu avance se guarda solo en este dispositivo.</p>` : pideG() ? `<button class="btn te" data-a="login" style="margin-top:12px">Guardar con Google</button><p class="note" style="margin-top:8px">Sin cuenta, tu avance vive solo en este teléfono.</p>` : ""}<p class="note c" style="margin-top:18px"><a href="/privacidad/">Aviso de privacidad</a> · <a href="/terminos/">Términos de uso</a> · <a href="#" data-a="go" data-v="cred">Créditos de imágenes</a></p>${tabs("yo")}</section>`; },
     sala: () => {
       const cab = sky() + hd(["hoy"], "Rosario en familia");
       if (!RM) return `<section class="v d in">${cab}<h1 class="z" style="margin-top:14px">Cada quien desde donde está</h1><p class="sub z" style="font-size:16px;line-height:24px">La sala en vivo todavía no está disponible desde este enlace. Mientras llega, pónganse de acuerdo en una hora y recen el mismo rosario cada quien en su teléfono.</p>
@@ -862,7 +1098,7 @@
   /* Recorrido de la primera vez: cinco globos que señalan lo importante de Hoy */
   let tourI = -1;
   const TOUR = [
-    ['.rhgo, .rhb', "El rosario de hoy", "Toca el rosario o «Empezar a rezar» y te guiamos cuenta por cuenta. Cada cuenta que reces se enciende."],
+    ['.rhgo, .rhb', "Empieza aquí", "Toca este botón y rezas el rosario de hoy. Te guiamos cuenta por cuenta: solo lees y tocas «Amén»."],
     ['.tj[data-a="jnew"], .tj[data-a="jabre"]', "Rosario juntos", "Invita a tu pareja o familia: cada quien reza su misterio a su hora y entre todos lo completan."],
     ['.tj[data-a="luzn"]', "Manda una luz", "Reza un Ave María por alguien y avísale por WhatsApp con una paloma."],
     ['.tj[data-v="sala"]', "Rosario en familia", "Abre una sala y recen al mismo tiempo, con voz y cámara, cada quien desde su casa."],
@@ -874,12 +1110,22 @@
     if (view !== "hoy") return;
     while (n < TOUR.length && !app.querySelector(TOUR[n][0])) n++;
     if (n >= TOUR.length) { tourI = -1; S.tour = 1; save(); return; }
-    tourI = n; const [sel, t, d] = TOUR[n], el = app.querySelector(sel);
-    try { el.scrollIntoView({ block: "center", behavior: "instant" }); } catch (_) { try { el.scrollIntoView(); } catch (_) {} }
-    const r0 = el.getBoundingClientRect(), H = window.innerHeight, alto = r0.height > H * 0.45, r = { left: r0.left, width: r0.width, top: Math.max(8, r0.top), bottom: Math.min(H - 8, r0.bottom) }; r.height = r.bottom - r.top;
-    const abajo = alto ? false : r.top + r.height / 2 < H / 2, quedan = TOUR.slice(n + 1).filter((q) => app.querySelector(q[0])).length;
-    app.insertAdjacentHTML("beforeend", `<div id="tour" role="dialog" aria-label="${t}"><div class="tu-h" style="left:${r.left - 6}px;top:${r.top - 6}px;width:${r.width + 12}px;height:${r.height + 12}px"></div>
-      <div class="tu-b ${abajo ? "ab" : "ar"}" style="${alto ? "bottom:96px" : abajo ? `top:${r.bottom + 16}px` : `bottom:${H - r.top + 16}px`}"><p class="ru">${n + 1} de ${n + 1 + quedan}</p><b>${t}</b><p>${d}</p><div class="tu-f"><button class="lk" data-a="tourx">Saltar</button><button class="btn go sm" data-a="tourn">${quedan ? "Siguiente" : "Empezar"}</button></div></div></div>`);
+    tourI = n; const [sel, t, d] = TOUR[n], el = app.querySelector(sel), quedan = TOUR.slice(n + 1).filter((q) => app.querySelector(q[0])).length, tot = n + 1 + quedan;
+    const pts = Array.from({ length: tot }, (_, k) => `<i class="${k === n ? "on" : k < n ? "ok" : ""}"></i>`).join("");
+    app.insertAdjacentHTML("beforeend", `<div id="tour" role="dialog" aria-label="${t}"><div class="tu-h"><span class="tu-p"></span></div>
+      <div class="tu-b"><div class="tu-t"><div class="tu-d" aria-label="Paso ${n + 1} de ${tot}">${pts}</div><button class="lk tu-x" data-a="tourx">Saltar la guía</button></div><b>${t}</b><p>${d}</p><button class="btn go tu-n" data-a="tourn">${quedan ? "Siguiente" : "Listo, a rezar"}</button></div></div>`);
+    const T = document.getElementById("tour"), hl = T.querySelector(".tu-h"), b = T.querySelector(".tu-b"), bh = b.offsetHeight, H = window.innerHeight, pad = 8, m = 14;
+    const fijo = !!el.closest(".tabs") || getComputedStyle(el).position === "fixed";
+    let r = el.getBoundingClientRect();
+    // primero se acomoda la página: lo señalado queda arriba y deja abajo el sitio justo para su explicación
+    if (!fijo) { const alto = Math.min(r.height, Math.max(60, H - bh - m - pad * 2 - 30)), quiero = Math.max(pad + 14, Math.min((H - (alto + pad * 2 + m + bh)) / 2, H * 0.2)); try { window.scrollBy(0, Math.round(r.top - quiero)); } catch (_) {} r = el.getBoundingClientRect(); }
+    let top = Math.max(pad, r.top), bot = Math.min(H - pad, r.bottom), y;
+    if (bot + pad + m + bh <= H - 6) y = bot + pad + m;            // cabe abajo
+    else if (top - pad - m - bh >= 6) y = top - pad - m - bh;      // cabe arriba
+    else { bot = Math.max(top + 56, H - bh - m - pad - 8); y = bot + pad + m; } // muy alto: se ilumina solo su parte de arriba
+    hl.style.cssText = `left:${Math.round(r.left - pad)}px;top:${Math.round(top - pad)}px;width:${Math.round(r.width + pad * 2)}px;height:${Math.round(bot - top + pad * 2)}px`;
+    b.style.top = Math.round(y) + "px"; b.classList.add(y > top ? "ab" : "ar");
+    const br = b.getBoundingClientRect(); b.style.setProperty("--fx", Math.round(Math.max(30, Math.min(br.width - 30, r.left + r.width / 2 - br.left))) + "px");
   }
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
   function finJt(s) {
@@ -900,7 +1146,7 @@
   const sugEst = () => { let z = ""; try { z = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (_) {} if (Q.get("tz")) z = Q.get("tz");
     const M = { "America/Cancun": 22, "America/Merida": 30, "America/Monterrey": 18, "America/Tijuana": 1, "America/Hermosillo": 25, "America/Chihuahua": 5, "America/Ciudad_Juarez": 5, "America/Ojinaga": 5, "America/Matamoros": 27, "America/Bahia_Banderas": 17, "America/Mazatlan": 24 };
     if (M[z] !== undefined) return M[z]; if (z && !/^America\/(Mexico_City|Monterrey|Merida|Cancun|Matamoros|Chihuahua|Ojinaga|Ciudad_Juarez|Hermosillo|Mazatlan|Bahia_Banderas|Tijuana)$/.test(z) && !/^(UTC|Etc\/)/.test(z)) return 99; return null; };
-  function go(v, b) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est|luzv|entrar|jt)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|est|jt|ros|listo|sala)$/.test(view)) { ob = 1; view = "est"; } try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
+  function go(v, b) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est|luzv|entrar|jt)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|gusto|est|jt|ros|listo|sala)$/.test(view)) { ob = 1; view = "est"; } try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
     // la paloma trae el mensaje la primera vez que se abre Hoy cada día
     if (view === "hoy" && SB) jtTodos();
     if (view === "jt" && SB && jtA) jtVer(jtA);
@@ -908,13 +1154,24 @@
     // hacia adentro la vista entra por la derecha; al regresar, por la izquierda; las pestañas solo suben
     dirN = b ? "bk" : /^(nom|est|advs|adv|pid|nov|novd|ang|vir|vird|sala)$/.test(view) ? "fw" : "";
     render(); dirN = ""; try { window.scrollTo(0, 0); } catch (_) {} }
-  function render(quieto) { despierta(view === "ros" || !!VZ); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); if (view === "ros") setTimeout(mas, 90); if (VZ) { pegaVideos(); escucha(); } volMu(); const x = app.querySelector(".in"); if (x) { if (quieto === 1) x.classList.remove("in"); else if (dirN) x.classList.add(dirN); } }
+  /* Entrar con Google desde el propio sitio: el botón oficial de Google abre una ventanita que dice
+     «para continuar a rosariojuntos.com» y nos da un token que Supabase canjea por la sesión. */
+  const GCID = "62557042429-qme6tamlon3l828rk3bh8fo1r43o2h0p.apps.googleusercontent.com";
+  let GSI = 0;
+  function cargaGsi() { if (GSI || !conG() || !/(^|\.)rosariojuntos\.com$/.test(location.hostname)) return; GSI = 1;
+    const sc = document.createElement("script"); sc.src = "https://accounts.google.com/gsi/client"; sc.async = true; sc.defer = true;
+    sc.onload = () => { try { google.accounts.id.initialize({ client_id: GCID, callback: gsiOk, ux_mode: "popup", auto_select: false, itp_support: true, cancel_on_tap_outside: true }); GSI = 2; pintaG(); } catch (_) { GSI = 3; } };
+    sc.onerror = () => { GSI = 3; }; document.head.appendChild(sc); }
+  function pintaG() { if (GSI !== 2) return; app.querySelectorAll(".gsiw:not(.on)").forEach((w) => { const g = w.querySelector(".gsi"); try { google.accounts.id.renderButton(g, { type: "standard", theme: "outline", size: "large", shape: "pill", text: "continue_with", logo_alignment: "center", locale: "es", width: Math.max(220, Math.min(400, w.offsetWidth || 320)) }); w.classList.add("on"); } catch (_) {} }); }
+  function gsiOk(r) { if (!SB || !r || !r.credential) return; if (vuelveE === "atrio") { ob = 0; delete S.ob; save(); }
+    SB.auth.signInWithIdToken({ provider: "google", token: r.credential }).then((x) => { if (x && x.error) { aviso("No se pudo entrar con Google. Intenta otra vez."); return; } const h = document.getElementById("gsh"); if (h) h.remove(); aviso("Listo. Tu avance ya se guarda en tu cuenta."); if (view === "entrar") go(V[vuelveE] && vuelveE !== "entrar" ? vuelveE : "hoy"); }, () => aviso("No se pudo entrar con Google. Intenta otra vez.")); }
+  function render(quieto) { despierta(view === "ros" || !!VZ); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); if (view === "ros") setTimeout(mas, 90); cargaGsi(); pintaG(); if (VZ) { pegaVideos(); escucha(); } volMu(); const x = app.querySelector(".in"); if (x) { if (quieto === 1) x.classList.remove("in"); else if (dirN) x.classList.add(dirN); } }
   // tras redibujar una lista de opciones, el foco vuelve al botón que se tocó (teclado y lectores de pantalla)
   // y si quedó elegido, su palomita brota y el teléfono da un toque
   const foco = (a, k) => { try { const b = app.querySelector(`[data-a="${a}"][data-k="${k}"]`); if (!b) return; b.focus({ preventScroll: true }); if (b.classList.contains("on") || b.classList.contains("now")) { b.classList.add("ya"); const li = b.closest("li"); if (li) li.classList.add("ya"); } vibra(1); } catch (_) {} };
   const A = {
     go: (d) => go(d.v, d.b),
-    nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; if (ob) S.ob = 1; save(); go("est"); },
+    nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; if (ob) S.ob = 1; save(); go(ob ? "gusto" : "est"); },
     empieza: () => { ob = 1; go("nom"); },
     esab: () => { estAbre = 1; render(1); },
     esc: (d) => { const k = +d.k; if (!(k === 99 || MX.e[k])) return; const b = app.querySelector(`[data-a="esc"][data-k="${k}"]`); if (b) b.classList.add("on"); vibra(1); A.est({ k }); },
@@ -928,6 +1185,11 @@
     verv: (d) => { va = d.k; go("adv"); },
     entra: () => { ob = 0; delete S.ob; save(); go("hoy"); if (!S.tour) setTimeout(() => tour(0), 700); },
     gno: () => { const x = document.getElementById("gsh"); if (x) x.remove(); },
+    lupa: (d) => { LU = { k: d.k, i: -1 }; lupa(); vibra(1); },
+    lupan: (d) => { if (!LU) return; LU.i = +d.k; lupaT(); vibra(1); },
+    lupas: () => { if (!LU) return; const a = ADV.find((q) => q.k === LU.k), n = ((a && a.sim) || []).length; if (LU.i >= n - 1) { LU = null; lupa(); return; } LU.i++; lupaT(); vibra(1); },
+    lupax: () => { LU = null; lupa(); },
+    masab: () => { try { window.scrollBy({ top: Math.round(window.innerHeight * 0.62), behavior: "smooth" }); } catch (_) { window.scrollBy(0, 400); } },
     tourn: () => tour(tourI + 1),
     tourx: () => tour(99),
     ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0, f: forma(), g: Q.get("demo") && Q.get("g") === "1" ? 1 : grande0(0) }; ros.p = pasos(ros.f); if (S.mu) musica(true); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
@@ -986,7 +1248,7 @@
     luzam: () => { luzRe = 1; vibra(1); render(1); },
     luzok: () => { luzRe = 2; vibra(2); render(1); if (S.n) guarda("l", "Tu oración ya va en camino", "Guarda en tu cuenta de Google tus intenciones y a quién le mandaste luz."); },
     luzdev: () => { luzPara = LUZ ? LUZ.d : ""; luzQ = "am"; go(S.n ? "luz" : "bien"); },
-    mu: () => { S.mu = S.mu ? 0 : 1; save(); musica(!!S.mu); vibra(1); render(1); if (S.mu) aviso("Música de fondo encendida. Sube el volumen si no la oyes."); },
+    mu: () => { S.mu = S.mu ? 0 : 1; S.tp = Object.assign({}, S.tp, { mu: 1 }); save(); musica(!!S.mu); vibra(1); render(1); if (S.mu) aviso("Música de fondo encendida. Sube el volumen si no la oyes."); },
     mudo: () => { if (!VZ) return; VZ.mudo = VZ.mudo ? 0 : 1; VZ.st.getAudioTracks().forEach((t) => { t.enabled = !VZ.mudo; }); vibra(1); if (sala) sala.presence({ v: VZ.mudo ? 2 : 1 }).catch(() => {}); pinta(); },
     login: () => { if (!SB) { aviso("Conectando. Intenta de nuevo en un momento."); return; } if (view !== "entrar") vuelveE = view; go("entrar"); },
     gg: () => { if (!SB) return; if (/FBAN|FBAV|FB_IAB|Instagram|TikTok|musical_ly|Snapchat|Line\//i.test(navigator.userAgent)) { aviso("Para entrar con Google, abre Atrio en Safari o Chrome. O entra con tu correo."); return; } if (vuelveE === "atrio") { ob = 0; delete S.ob; save(); } try { SB.auth.signInWithOAuth({ provider: "google", options: { redirectTo: location.origin + location.pathname } }).then((r) => { if (r && r.error) aviso("No se pudo abrir Google. Intenta otra vez."); }, () => aviso("No se pudo abrir Google. Intenta otra vez.")); } catch (_) {} },
@@ -1010,11 +1272,15 @@
   let tSig = 0;
   document.addEventListener("click", (e) => { const t = e.target.closest ? e.target.closest("[data-a]") : null; if (!t || !A[t.dataset.a] || t.disabled) return; if (t.dataset.a === "sig" && e.isTrusted) { const n = Date.now(); if (n - tSig < 240) return; tSig = n; } A[t.dataset.a](t.dataset); });
   document.addEventListener("change", (e) => { if (e.target && e.target.id === "fcd" && e.target.value) { const v = e.target.value; if (/^\d{4}-\d{2}-\d{2}$/.test(v) && v <= key(now())) { S.cf = v; save(); vibra(1); render(1); } } });
-  document.addEventListener("input", (e) => { if (!e.target || e.target.id !== "fb") return; const q = sinAc(e.target.value.trim()); let n = 0; app.querySelectorAll("#esl .es").forEach((b) => { const ok = !q || b.dataset.n.includes(q); b.hidden = !ok; if (ok) n++; }); const x = document.getElementById("esn"); if (x) x.hidden = n > 0; });
+  document.addEventListener("input", (e) => { if (e.target && e.target.id === "fn" && ob) { const vl = app.querySelector(".vel"); if (vl) vl.classList.toggle("lit", !!e.target.value.trim()); return; } if (!e.target || e.target.id !== "fb") return; const q = sinAc(e.target.value.trim()); let n = 0; app.querySelectorAll("#esl .es").forEach((b) => { const ok = !q || b.dataset.n.includes(q); b.hidden = !ok; if (ok) n++; }); const x = document.getElementById("esn"); if (x) x.hidden = n > 0; });
   document.addEventListener("change", (e) => { if (e.target && e.target.id === "fa") { S.ang = e.target.checked ? 1 : 0; save(); if (S.ang) bell(1); } if (e.target && e.target.id === "fmu") { S.mu = e.target.checked ? 1 : 0; save(); } if (e.target && e.target.id === "fv") { S.vib = e.target.checked ? 1 : 0; save(); vibra(2); } });
   // en iPhone los botones solo muestran su estado presionado si alguien escucha el toque
   document.addEventListener("touchstart", () => {}, { passive: true });
   document.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target && e.target.id === "fn") A.nom(); });
+  let scY = 0;
+  window.addEventListener("scroll", () => { const y = window.scrollY || 0; app.classList.toggle("scr", y > 24); if (view === "hoy" && y > 140 && !scY) { scY = 1; S.sc = (S.sc || 0) + 1; save(); } }, { passive: true });
+  // con la guía o una imagen abierta, la página de atrás no se mueve
+  document.addEventListener("touchmove", (e) => { if (document.getElementById("tour") || document.getElementById("lupa")) e.preventDefault(); }, { passive: false });
   window.addEventListener("scroll", () => { if (view === "ros") mas(); }, { passive: true });
   window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (/^(hoy|rezar|mapa|yo)$/.test(h) && h !== view && view !== "ros") go(h); });
   if (Q.get("demo") && Q.get("ob")) ob = 1;
