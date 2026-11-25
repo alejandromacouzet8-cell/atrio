@@ -941,6 +941,20 @@ html,body{background:#06191C}
 #app .sch{position:fixed;z-index:6}
 /* teléfonos bajitos: el botón de rezar nunca queda detrás de la barra */
 @media (max-height:610px){.hv .hg{font-size:26px;line-height:31px}.hv .tpo{margin-top:2px}.rh{margin-top:8px}.rhv{width:19%;margin-top:10px}.rht h2{font-size:25px;line-height:29px}.rhc{margin-top:10px}.rhc .rhgo,.rhf{min-height:54px}}
+/* la foto real siempre visible; el dibujo solo si no carga */
+.vph img{opacity:1!important}
+.vph .vpd{opacity:0}
+.vph.mal .vpd{opacity:1}
+/* zoom a cada detalle */
+.luz{position:absolute;inset:0;transform-origin:0 0;transition:transform .8s cubic-bezier(.45,0,.2,1);will-change:transform}
+.luz>img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;max-width:none}
+.luz>.luh{opacity:0;transition:opacity .5s;object-fit:fill;width:auto;height:auto}
+.luz>.luh.ok{opacity:1}
+.luf .lup{transition:opacity .3s}
+.luf.zm .lup{opacity:0;pointer-events:none}
+.luo{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);min-height:36px;padding:0 14px;border-radius:18px;border:1px solid rgba(244,220,166,.6);background:rgba(7,32,36,.85);color:var(--oroc);font-weight:700;font-size:13.5px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s}
+.luf.zm .luo{opacity:1;pointer-events:auto}
+#lupa{background:#03171A}
 </style>
 </head>
 <body>
@@ -1155,7 +1169,7 @@ const ADV = [
 // Lo que es tradición se dice como tradición; lo reconocido por la Iglesia, como tal.
 const ADX = {
   guadalupe: {
-    n3: [["1531", "año de las apariciones"], ["46", "estrellas en su manto"], ["20 millones", "de peregrinos al año"]],
+    n3: [["4", "apariciones en 1531"], ["46", "estrellas en su manto"], ["20 millones", "de peregrinos al año"]],
     pr: [["La tilma que no se deshace", "El ayate de Juan Diego es de fibra de maguey, una tela burda que suele durar unos veinte años. La imagen lleva casi quinientos, y pasó más de un siglo sin cristal, entre el humo de las velas y las manos de los peregrinos."],
       ["El atentado de 1921", "El 14 de noviembre de 1921 estalló una bomba escondida en un ramo de flores, al pie de la imagen. El altar de mármol se rompió y un crucifijo de bronce quedó doblado; la tilma y su cristal no sufrieron daño. Ese crucifijo, el Cristo del Atentado, se guarda en la Basílica."],
       ["El tío Juan Bernardino", "El tío de Juan Diego agonizaba. La Virgen le dijo a Juan Diego que no se afligiera, que su tío ya estaba sano. Al volver a casa lo encontró de pie: también a él se le había aparecido, y le había dicho su nombre."]],
@@ -1168,7 +1182,7 @@ const ADX = {
       [23, 92, "La luna", "Pisa una luna oscura. El Apocalipsis habla de una mujer vestida de sol, con la luna bajo sus pies."]],
     san: ["Basílica de Santa María de Guadalupe", "Villa de Guadalupe, Ciudad de México", "Basílica de Guadalupe, Ciudad de México"] },
   fatima: {
-    n3: [["1917", "seis apariciones"], ["3", "niños pastores"], ["13", "de mayo a octubre"]],
+    n3: [["6", "apariciones en 1917"], ["3", "niños pastores la vieron"], ["70 mil", "vieron el milagro del sol"]],
     pr: [["El milagro del sol", "El 13 de octubre de 1917 llovía sobre unas setenta mil personas reunidas en Cova da Iria. Al mediodía las nubes se abrieron y, según los testigos, el sol giró y pareció caer sobre la tierra. Lo contaron incluso periódicos contrarios a la Iglesia."],
       ["La bala del 13 de mayo", "El 13 de mayo de 1981, aniversario de la primera aparición, dispararon a san Juan Pablo II en la plaza de San Pedro. Sobrevivió y dijo que una mano materna había desviado la bala. Esa bala está hoy engastada en la corona de la imagen de Fátima."],
       ["Los santos más pequeños", "Francisco y Jacinta murieron de gripe española a los diez y a los nueve años, ofreciendo su enfermedad por los demás. Son los santos no mártires más jóvenes de la Iglesia. Lucía vivió hasta 2005."]],
@@ -1180,7 +1194,7 @@ const ADX = {
       [50, 92, "La nube", "Los niños la vieron sobre una nubecita posada en la encina, «más brillante que el sol»."]],
     san: ["Santuario de Nuestra Señora del Rosario de Fátima", "Cova da Iria, Portugal", "Santuario de Fátima, Portugal"] },
   lourdes: {
-    n3: [["1858", "dieciocho apariciones"], ["72", "milagros reconocidos"], ["7 mil", "curaciones registradas"]],
+    n3: [["18", "apariciones en 1858"], ["72", "milagros reconocidos por la Iglesia"], ["7 mil", "curaciones registradas"]],
     pr: [["El manantial", "El 25 de febrero la Señora pidió a Bernardita beber de una fuente que nadie veía. La niña escarbó en el lodo y brotó un hilo de agua. Hoy ese manantial da más de cien mil litros al día."],
       ["Setenta y dos milagros", "De más de siete mil curaciones registradas, la Iglesia ha reconocido como milagro solo 72, después de años de examen por médicos, creyentes y no creyentes. El más reciente se anunció en 2025."],
       ["Bernardita", "Nunca buscó fama: entró a un convento en Nevers y murió a los 35 años. Su cuerpo, exhumado tres veces, se conserva incorrupto. A quien dudaba le respondía: «No me toca hacérselo creer, me toca decírselo»."]],
@@ -1192,7 +1206,7 @@ const ADX = {
       [54, 47, "La cinta azul", "«Una Señora vestida de blanco, con una cinta azul y una rosa amarilla en cada pie»: así la describió."]],
     san: ["Santuario de Nuestra Señora de Lourdes", "Lourdes, Francia", "Sanctuaire Notre-Dame de Lourdes"] },
   carmen: {
-    n3: [["Siglo XII", "nace en el Carmelo"], ["1251", "el escapulario"], ["16 jul", "su fiesta"]],
+    n3: [["800 años", "de la Orden del Carmen"], ["1251", "año del escapulario"], ["16 jul", "su fiesta"]],
     pr: [["El escapulario", "Dos pedacitos de tela café unidos por un cordón: es el hábito del Carmelo en pequeño. Según la tradición, la Virgen prometió a san Simón Stock acompañar hasta el final a quien lo lleve con fe."],
       ["La isla de los piratas", "Durante más de un siglo los piratas dominaron la laguna de Términos, en Campeche. El 16 de julio de 1717, día de su fiesta, fueron expulsados. Desde entonces la isla y su ciudad se llaman del Carmen."],
       ["El voto de Maipú", "En 1818, antes de la batalla que selló la independencia de Chile, O'Higgins prometió levantarle un templo donde se diera la victoria. Hoy es el santuario nacional de Maipú, y ella, patrona de Chile."]],
@@ -1204,7 +1218,7 @@ const ADX = {
       [71, 45, "El Niño", "María no se guarda nada: todo lo que da, lo da con su Hijo en brazos."]],
     san: ["Monasterio Stella Maris", "Monte Carmelo, Haifa", "Stella Maris Monastery, Haifa"] },
   pilar: {
-    n3: [["Año 40", "según la tradición"], ["Siglo XV", "la talla actual"], ["12 oct", "su fiesta"]],
+    n3: [["Año 40", "la Virgen visita a Santiago"], ["600 años", "tiene su imagen"], ["12 oct", "su fiesta"]],
     pr: [["El milagro de Calanda", "A Miguel Pellicer le amputaron una pierna en Zaragoza. Más de dos años después, la noche del 29 de marzo de 1640, sus padres lo encontraron dormido con las dos piernas. Hubo proceso, testigos y notario: el arzobispo lo declaró milagro en 1641."],
       ["Las bombas de 1936", "La madrugada del 3 de agosto de 1936 un avión dejó caer tres bombas sobre la basílica. Ninguna estalló. Dos de ellas siguen colgadas junto a la Santa Capilla."],
       ["No se apareció: vino", "Es la única vez que la tradición sitúa a María visitando a alguien cuando todavía vivía en la tierra. Por eso en Zaragoza no se habla de aparición, sino de la «Venida»."]],
@@ -1217,7 +1231,7 @@ const ADX = {
       [50, 94, "El pilar", "Una columna de jaspe forrada de bronce y plata: la señal de una fe que no se cae."]],
     san: ["Catedral-Basílica de Nuestra Señora del Pilar", "Zaragoza, España", "Basílica del Pilar, Zaragoza"] },
   sanjuan: {
-    n3: [["1623", "el primer milagro"], ["2 feb", "su gran peregrinación"], ["2.º", "santuario más visitado de México"]],
+    n3: [["1623", "año del primer milagro"], ["+400 años", "de peregrinaciones"], ["2.º", "santuario más visitado de México"]],
     pr: [["El regalo del cirquero", "El padre de la niña que volvió a la vida pidió llevarse la imagen a Guadalajara para restaurarla, porque estaba muy maltratada. Regresó tan hermosa que el pueblo entero salió a recibirla."],
       ["Ana Lucía", "Fue una indígena que cuidaba la capilla quien confió en la «Cihuapilli», la Señora, cuando casi nadie se acordaba de ella. La tradición cuenta que por las mañanas la encontraba fuera de su lugar, en el altar."],
       ["Caminos de fe", "Cada enero salen caravanas a pie desde el Bajío, el centro y el norte del país. Caminan días enteros para llegar el 2 de febrero; muchos cumplen así una promesa heredada de sus abuelos."]],
@@ -1230,7 +1244,7 @@ const ADX = {
       [50, 68, "La media luna", "La luna a sus pies, como la mujer del Apocalipsis."]],
     san: ["Catedral Basílica de Nuestra Señora de San Juan de los Lagos", "San Juan de los Lagos, Jalisco", "Basílica de San Juan de los Lagos, Jalisco"] },
   zapopan: {
-    n3: [["1541", "llega a Zapopan"], ["34 cm", "mide la imagen"], ["+2 millones", "en su Romería"]],
+    n3: [["1541", "llega a Zapopan"], ["34 cm", "mide la imagen"], ["+2 millones", "van a su Romería"]],
     pr: [["La Pacificadora", "En plena guerra del Mixtón, fray Antonio de Segovia subió al cerro con la imagen colgada al pecho para pedir a los indígenas sublevados que bajaran en paz. Bajaron. Desde entonces la llaman la Pacificadora."],
       ["Contra rayos y tempestades", "En 1734, tras temporales y epidemias que castigaban a Guadalajara, la ciudad la juró su protectora. Desde entonces pasa cada temporada de lluvias visitando sus templos."],
       ["La Reina del Lago", "Cuando el lago de Chapala se quedaba sin agua, la llevaron a sus orillas a pedir lluvia. El lago se recuperó, y los ribereños la nombraron su reina."]],
@@ -1242,7 +1256,7 @@ const ADX = {
       [61, 60, "La banda", "La banda de Generala cruza su vestido desde 1821."]],
     san: ["Basílica de Nuestra Señora de Zapopan", "Zapopan, Jalisco", "Basílica de Zapopan, Jalisco"] },
   juquila: {
-    n3: [["30 cm", "mide la imagen"], ["1633", "sale intacta del incendio"], ["8 dic", "su fiesta"]],
+    n3: [["30 cm", "mide la imagen"], ["1633", "sale intacta de un incendio"], ["8 dic", "su fiesta"]],
     pr: [["La que quiso quedarse", "Cuentan que cuando el párroco quiso llevarla a su iglesia de Juquila, la imagen amanecía de vuelta en Amialtepec. Así pasó varias veces, hasta que en 1719 se quedó por fin en su santuario."],
       ["Del color de su gente", "Del incendio salió entera, pero morena. Los chatinos de la sierra dicen que así se quedó: del color de ellos."],
       ["El Pedimento", "Antes de llegar, en un cerro del camino, los peregrinos modelan con barro lo que vienen a pedir: una casita, un bebé, un título, salud. Al año siguiente vuelven a dar gracias."]],
@@ -1254,7 +1268,7 @@ const ADX = {
       [75, 60, "El vestido", "La imagen mide treinta centímetros; casi todo lo que ves es su vestido blanco, bordado por sus devotas."]],
     san: ["Santuario de Nuestra Señora de Juquila", "Santa Catarina Juquila, Oaxaca", "Santuario de Juquila, Oaxaca"] },
   socorro: {
-    n3: [["Siglo XV", "se pinta en Creta"], ["1499", "llega a Roma"], ["1866", "«Denla a conocer»"]],
+    n3: [["+500 años", "tiene el icono"], ["1499", "llega a Roma"], ["1866", "el Papa pide darla a conocer"]],
     pr: [["El icono robado", "Según la tradición, un mercader lo robó de una iglesia de Creta y lo llevó a Roma. Antes de morir pidió que se expusiera en un templo. En 1499 lo entronizaron en la iglesia de San Mateo."],
       ["Perdido casi setenta años", "En 1798 las tropas de Napoleón destruyeron San Mateo. Los frailes escondieron el icono en una capilla y casi todos lo olvidaron, menos un monaguillo que, ya de mayor, contó dónde estaba."],
       ["La novena perpetua", "Miles de parroquias le rezan una novena que nunca termina: cada semana, el mismo día. En Baclaran, Filipinas, cada miércoles acuden decenas de miles de personas."]],
@@ -1268,7 +1282,7 @@ const ADX = {
       [51, 94, "La sandalia", "Con el susto se le suelta una sandalia. Es un Dios que también tuvo miedo y corrió con su mamá."]],
     san: ["Iglesia de San Alfonso María de Ligorio", "Via Merulana, Roma", "Chiesa di Sant'Alfonso all'Esquilino, Roma"] },
   milagrosa: {
-    n3: [["1830", "París, rue du Bac"], ["27 nov", "su fiesta"], ["Millones", "de medallas en el mundo"]],
+    n3: [["1830", "se aparece en París"], ["1832", "se reparten las primeras medallas"], ["27 nov", "su fiesta"]],
     pr: [["El banquero que no creía", "Alfonso Ratisbonne, judío y adversario de la Iglesia, aceptó por reto llevar la medalla. El 20 de enero de 1842 entró a una iglesia de Roma y salió transformado: dijo haber visto a la Virgen tal como aparece en ella. Se hizo sacerdote."],
       ["El secreto de Catalina", "Santa Catalina Labouré pasó 46 años cuidando ancianos sin decir a nadie que ella era la vidente. Solo lo reveló poco antes de morir. Su cuerpo, exhumado en 1933, se conserva incorrupto en la misma capilla."],
       ["Las piedras apagadas", "Catalina vio que de los anillos de la Virgen salían rayos de luz, pero algunas piedras no brillaban. María le explicó que eran las gracias que nadie le pide."]],
@@ -1280,7 +1294,7 @@ const ADX = {
       [72, 43, "El manto", "Azul como el cielo, sobre una túnica blanca «color de aurora», contó Catalina."]],
     san: ["Capilla de Nuestra Señora de la Medalla Milagrosa", "140 rue du Bac, París", "Chapelle Notre-Dame de la Médaille Miraculeuse, Paris"] },
   auxiliadora: {
-    n3: [["1571", "Lepanto"], ["24 may", "su fiesta"], ["1868", "su basílica en Turín"]],
+    n3: [["1571", "batalla de Lepanto"], ["1868", "Don Bosco le dedica su basílica"], ["24 may", "su fiesta"]],
     pr: [["Lepanto", "El 7 de octubre de 1571, mientras la flota cristiana se lo jugaba todo en Lepanto, el papa san Pío V pidió a Europa rezar el rosario. Tras la victoria, según la tradición, añadió a las letanías la invocación «Auxilio de los cristianos»."],
       ["Ocho monedas", "Cuando el maestro de obras le pidió el primer pago de la basílica, Don Bosco le vació el monedero en las manos: ocho monedas, menos de media lira. Le aseguró que la Virgen pondría lo demás. Cinco años después estaba consagrada."],
       ["Cada ladrillo, una gracia", "Don Bosco decía que en ese templo no había un ladrillo que no fuera señal de un favor recibido: la gente daba en agradecimiento por las ayudas que atribuía a María Auxiliadora."]],
@@ -1292,7 +1306,7 @@ const ADX = {
       [70, 38, "El Niño", "Abre los brazos hacia quien mira: el auxilio de María es llevarnos a él."]],
     san: ["Basílica de María Auxiliadora", "Valdocco, Turín", "Basilica di Maria Ausiliatrice, Torino"] },
   dolores: {
-    n3: [["7", "dolores"], ["Siglo XIII", "nace su devoción"], ["15 sep", "su fiesta"]],
+    n3: [["7", "dolores de María"], ["1233", "nacen los Servitas, sus devotos"], ["15 sep", "su fiesta"]],
     pr: [["Los siete dolores", "La profecía de Simeón, la huida a Egipto, el Niño perdido en el templo, el encuentro camino del Calvario, la crucifixión, el descendimiento y la sepultura."],
       ["El Grito de Dolores", "La Independencia de México empezó en el atrio de una parroquia suya: la de Nuestra Señora de los Dolores, en Guanajuato, donde el cura Hidalgo llamó al pueblo la madrugada del 16 de septiembre de 1810."],
       ["Los siete fundadores", "En 1233 siete comerciantes de Florencia lo dejaron todo para vivir como siervos de María al pie de la cruz. De ellos nació la Orden de los Servitas, que extendió esta devoción."]],
@@ -2114,34 +2128,38 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   const VFOTO = {
     guadalupe: { hd: "2/2c/Virgen_de_guadalupe1.jpg", ow: 788, oh: 1226, c: [0.02, 0.005, 0.88], a: "Imagen de la tilma, Basílica de Guadalupe", l: "Dominio público", f: "Virgen_de_guadalupe1.jpg" },
     fatima: { hd: "3/34/Fatima_0752_%2819796283042%29_%28cropped%29.jpg", ow: 614, oh: 1092, c: [0.075, 0.11, 0.83], a: "János Korom", l: "Dominio público", f: "Fatima_0752_%2819796283042%29_%28cropped%29.jpg" },
-    lourdes: { hd: "thumb/6/6a/Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg/960px-Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg", ow: 3654, oh: 5760, c: [0.08, 0.13, 0.8], a: "IgnaceBoitaclou", l: "CC BY 4.0", f: "Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg" },
-    carmen: { hd: "thumb/d/d3/Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png/960px-Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png", ow: 1414, oh: 2000, c: [0.127, 0.08, 0.7355], a: "David.Lopez.Sala", l: "CC BY 4.0", f: "Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png" },
+    lourdes: { hd: "thumb/6/6a/Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg/1920px-Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg", ow: 3654, oh: 5760, c: [0.08, 0.13, 0.8], a: "IgnaceBoitaclou", l: "CC BY 4.0", f: "Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg" },
+    carmen: { hd: "thumb/d/d3/Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png/1280px-Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png", ow: 1414, oh: 2000, c: [0.127, 0.08, 0.7355], a: "David.Lopez.Sala", l: "CC BY 4.0", f: "Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png" },
     pilar: { hd: "thumb/a/a0/13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg/1280px-13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg", ow: 1338, oh: 1441, c: [0.252, 0.28, 0.4954], a: "El Justicia de Aragón", l: "CC0", f: "13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg" },
-    sanjuan: { hd: "thumb/0/0c/Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg/960px-Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg", ow: 1506, oh: 2048, c: [0.0445, 0.001, 0.905], a: "Metropolitanogto", l: "CC0", f: "Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg" },
+    sanjuan: { hd: "thumb/0/0c/Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg/1280px-Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg", ow: 1506, oh: 2048, c: [0.0445, 0.001, 0.905], a: "Metropolitanogto", l: "CC0", f: "Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg" },
     zapopan: { hd: "thumb/3/3a/Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg/1920px-Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg", ow: 1936, oh: 2592, c: [0.4508, 0.03, 0.4284], a: "ExorcisioTe", l: "CC BY-SA 4.0", f: "Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg" },
     juquila: { hd: "8/84/Juquilita.jpg", ow: 314, oh: 400, c: [0.119, 0.01, 0.722], a: "Autor desconocido", l: "Dominio público", f: "Juquilita.jpg" },
     socorro: { hd: "2/26/Perpetual_help_original_icon.jpg", ow: 500, oh: 609, c: [0.12, 0, 0.811], a: "Autor desconocido", l: "Dominio público", f: "Perpetual_help_original_icon.jpg" },
-    milagrosa: { hd: "thumb/f/ff/Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg/960px-Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg", ow: 2122, oh: 3747, c: [0.01, 0.03, 0.93], a: "Nheyob", l: "CC BY-SA 4.0", f: "Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg" },
+    milagrosa: { hd: "thumb/f/ff/Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg/1920px-Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg", ow: 2122, oh: 3747, c: [0.01, 0.03, 0.93], a: "Nheyob", l: "CC BY-SA 4.0", f: "Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg" },
     auxiliadora: { hd: "9/93/Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg", ow: 703, oh: 1000, c: [0.138, 0.128, 0.664], a: "Sanji1986", l: "CC BY-SA 4.0", f: "Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg" },
-    dolores: { hd: "thumb/5/5a/Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg/960px-Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg", ow: 1331, oh: 1704, c: [0.0935, 0, 0.853], a: "Pederseguro", l: "Dominio público", f: "Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg" }
+    dolores: { hd: "thumb/5/5a/Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg/1280px-Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg", ow: 1331, oh: 1704, c: [0.0935, 0, 0.853], a: "Pederseguro", l: "Dominio público", f: "Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg" }
   };
   // la foto en su arco de oro (2:3); mientras llega, o si falta, queda su dibujo
   const VIRG = (k, w, ya) => { if (!VFOTO[k]) return VIRGD(k, w); const h = Math.round(w * 1.5);
-    return `<span class="vph" style="width:${w}px;height:${h}px"><span class="vpd">${VIRGD(k, Math.round(w * 0.86))}</span><img src="v/${k}${w <= 100 ? "-s" : ""}.jpg" width="${w}" height="${h}" alt=""${ya ? "" : ' loading="lazy"'} decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></span>`; };
+    return `<span class="vph" style="width:${w}px;height:${h}px"><span class="vpd">${VIRGD(k, Math.round(w * 0.86))}</span><img src="v/${k}${w <= 100 ? "-s" : ""}.jpg" width="${w}" height="${h}" alt=""${ya ? "" : ' loading="lazy"'} decoding="async" onerror="this.parentNode.classList.add('mal');this.remove()"></span>`; };
   /* Verla de cerca: la imagen grande con puntos dorados; cada punto cuenta un detalle. */
   let LU = null;
-  const luTxt = (sim) => { const s = LU.i >= 0 ? sim[LU.i] : null; return [s ? `<b>${esc(s[2])}</b><p>${esc(s[3])}</p>` : `<b>Mírala de cerca</b><p>Toca los puntos dorados: cada uno guarda un detalle de su imagen.</p>`, LU.i < 0 ? "Ver el primer detalle" : LU.i >= sim.length - 1 ? "Listo" : "Siguiente detalle"]; };
+  const luTxt = (sim) => { const s = LU.i >= 0 ? sim[LU.i] : null; return [s ? `<b>${esc(s[2])}</b><p>${esc(s[3])}</p>` : `<b>Mírala de cerca</b><p>Toca un número y te acercamos a ese detalle.</p>`, LU.i < 0 ? "Ver el primer detalle" : LU.i >= sim.length - 1 ? "Ver la imagen completa" : "Siguiente detalle"]; };
   function lupa() {
     const x = document.getElementById("lupa"); if (x) x.remove(); if (!LU) return;
     const a = ADV.find((q) => q.k === LU.k), f = VFOTO[LU.k]; if (!a || !f) { LU = null; return; }
     const H = window.innerHeight, W = Math.round(Math.max(190, Math.min(app.clientWidth - 44, (H - 262) / 1.5, 380))), x0 = f.c[0], y0 = f.c[1], iw = W / f.c[2], ih = (iw * f.oh) / f.ow, sim = a.sim || [], tx = luTxt(sim);
     app.insertAdjacentHTML("beforeend", `<div id="lupa" role="dialog" aria-label="${esc(advN(a))}, de cerca"><div class="lub"><p class="ru">${esc(a.p)} ${esc(a.c)}</p><button class="ic r" data-a="lupax" aria-label="Cerrar">${I.x}</button></div>
-      <div class="luf" style="width:${W}px;height:${Math.round(W * 1.5)}px"><img src="v/${a.k}.jpg" alt=""><img class="luh" src="${WM + f.hd}" alt="" referrerpolicy="no-referrer" style="width:${f1(iw)}px;height:${f1(ih)}px;left:${f1(-x0 * iw)}px;top:${f1(-y0 * ih)}px" onload="this.classList.add('ok')" onerror="this.remove()">
-        ${sim.map((q, i) => `<button class="lup${i === LU.i ? " on" : ""}" data-a="lupan" data-k="${i}" style="left:${q[0]}%;top:${q[1]}%" aria-label="${esc(q[2])}"><i>${i + 1}</i></button>`).join("")}</div>
+      <div class="luf" style="width:${W}px;height:${Math.round(W * 1.5)}px" data-w="${W}"><div class="luz"><img src="v/${a.k}.jpg" alt=""><img class="luh" src="${WM + f.hd}" alt="" referrerpolicy="no-referrer" style="width:${f1(iw)}px;height:${f1(ih)}px;left:${f1(-x0 * iw)}px;top:${f1(-y0 * ih)}px" onload="this.classList.add('ok')" onerror="this.remove()"></div>
+        ${sim.map((q, i) => `<button class="lup" data-a="lupan" data-k="${i}" style="left:${q[0]}%;top:${q[1]}%" aria-label="${esc(q[2])}"><i>${i + 1}</i></button>`).join("")}<button class="luo" data-a="lupao" aria-label="Ver la imagen completa">Ver completa</button></div>
       <div class="luc" aria-live="polite">${tx[0]}</div><button class="btn go lus" data-a="lupas">${tx[1]}</button></div>`);
+    lupaT(1);
   }
-  function lupaT() { const T = document.getElementById("lupa"), a = LU && ADV.find((q) => q.k === LU.k); if (!T || !a) return; const tx = luTxt(a.sim || []);
-    T.querySelectorAll(".lup").forEach((b, i) => b.classList.toggle("on", i === LU.i)); const c = T.querySelector(".luc"); c.innerHTML = tx[0]; c.classList.remove("lin"); void c.offsetWidth; c.classList.add("lin"); T.querySelector(".lus").textContent = tx[1]; }
+  // acercarse a un detalle: la foto crece y ese punto queda al centro, sin salirse de los bordes
+  function lupaT(sinAnim) { const T = document.getElementById("lupa"), a = LU && ADV.find((q) => q.k === LU.k); if (!T || !a) return; const sim = a.sim || [], tx = luTxt(sim), F = T.querySelector(".luf"), Z = T.querySelector(".luz"), W = +F.dataset.w, Hh = W * 1.5;
+    if (LU.i >= 0 && sim[LU.i]) { const z = 2.6, px = (sim[LU.i][0] / 100) * W, py = (sim[LU.i][1] / 100) * Hh, tx2 = Math.min(0, Math.max(W - W * z, W / 2 - px * z)), ty = Math.min(0, Math.max(Hh - Hh * z, Hh / 2 - py * z)); Z.style.transform = `translate(${f1(tx2)}px,${f1(ty)}px) scale(${z})`; F.classList.add("zm"); }
+    else { Z.style.transform = "none"; F.classList.remove("zm"); }
+    const c = T.querySelector(".luc"); c.innerHTML = tx[0]; if (!sinAnim) { c.classList.remove("lin"); void c.offsetWidth; c.classList.add("lin"); } T.querySelector(".lus").textContent = tx[1]; }
   // la paloma que baja: alas abiertas, cabeza hacia abajo, como se pinta al Espíritu Santo
   const PAL_ES = (() => { const ala = `<path d="M108 104C84 86 52 64 14 38C22 62 34 80 48 92C38 92 30 92 22 90C36 106 52 116 68 122C60 126 52 128 44 128C62 138 84 142 104 138Z" fill="url(#pg2)" stroke="#fff" stroke-opacity=".7" stroke-width=".8" stroke-linejoin="round"/><path d="M104 120C80 110 50 88 26 56M104 131C84 126 62 116 46 104" fill="none" stroke="#9DB9BC" stroke-opacity=".55" stroke-width="1" stroke-linecap="round"/>`;
     return `<svg class="pal0" viewBox="0 0 240 220"><defs><radialGradient id="pg1" cx=".5" cy=".6" r=".65"><stop offset="0" stop-color="#fff"/><stop offset=".65" stop-color="#F4F9F9"/><stop offset="1" stop-color="#C6DADB"/></radialGradient><linearGradient id="pg2" x1=".9" y1=".9" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#EEF5F5"/><stop offset="1" stop-color="#B7CFD1"/></linearGradient><radialGradient id="pgl"><stop offset="0" stop-color="#FFF6D8" stop-opacity=".95"/><stop offset=".32" stop-color="#F4DCA6" stop-opacity=".42"/><stop offset="1" stop-color="#F4DCA6" stop-opacity="0"/></radialGradient></defs>
@@ -2511,8 +2529,9 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     gno: () => { const x = document.getElementById("gsh"); if (x) x.remove(); },
     lupa: (d) => { LU = { k: d.k, i: -1 }; lupa(); vibra(1); },
     lupan: (d) => { if (!LU) return; LU.i = +d.k; lupaT(); vibra(1); },
-    lupas: () => { if (!LU) return; const a = ADV.find((q) => q.k === LU.k), n = ((a && a.sim) || []).length; if (LU.i >= n - 1) { LU = null; lupa(); return; } LU.i++; lupaT(); vibra(1); },
+    lupas: () => { if (!LU) return; const a = ADV.find((q) => q.k === LU.k), n = ((a && a.sim) || []).length; LU.i = LU.i >= n - 1 ? -1 : LU.i + 1; lupaT(); vibra(1); },
     lupax: () => { LU = null; lupa(); },
+    lupao: () => { if (!LU) return; LU.i = -1; lupaT(); },
     masab: () => { try { window.scrollBy({ top: Math.round(window.innerHeight * 0.62), behavior: "smooth" }); } catch (_) { window.scrollBy(0, 400); } },
     tourn: () => tour(tourI + 1),
     tourx: () => tour(99),
