@@ -2181,7 +2181,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       <h1 class="z obt">¿Cómo te llamas?</h1><p class="sub z c">Para que la Virgen y tu familia te reconozcan aquí.</p>
       <input class="fld nm z" id="fn" type="text" autocomplete="given-name" autocapitalize="words" maxlength="24" placeholder="Tu nombre" aria-label="Tu nombre" value="${esc(S.n)}">
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`
-      : `<section class="v d in">${sky()}${hd(["yo"], "Tus datos")}<h1 class="z" style="margin-top:10px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
+      : `<section class="v d in">${sky()}${hd(["yo"], "Tus datos")}<h1 class="z" style="margin-top:10px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Como te dicen en tu casa.</p>
       <label class="lab z" for="fn">Tu nombre</label><input class="fld z" id="fn" type="text" autocomplete="given-name" maxlength="24" value="${esc(S.n)}">
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`,
     // el saludo: una paloma baja con luz, como en Pentecostés, y la invocación más antigua al Espíritu Santo
@@ -2238,7 +2238,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       <div style="padding-top:22px"><button class="btn go" data-a="jcrea">Crear e invitar por WhatsApp</button></div></section>`,
     jt: () => { const id = jtA, d = JT[id], j = S.jt.find((x) => x.id === id) || { id }, set = MIS_DIA[now().getDay()], M = MIS[set], hechos = d ? d.cuentas || [] : [], n = hechos.length, ra = jtRacha(id);
       if (!S.n) return `<section class="v d n in">${sky()}<div class="hd"><span></span><p class="ru">Rosario juntos</p><span></span></div><h1 style="margin-top:30px;font-size:34px;line-height:40px">${d ? esc(d.creador) + " te invitó a rezar el rosario juntos" : "Te invitaron a rezar el rosario juntos"}</h1><p class="sub">Cada quien reza su misterio cuando puede. Para que sepan quién rezó, ¿cómo te llamas?</p>
-        <label class="ru" for="fn" style="display:block;margin-top:22px;font-size:15px">Tu nombre</label><input class="fld" id="fn" maxlength="24" autocomplete="given-name" placeholder="Tu nombre de pila"><div style="padding-top:22px"><button class="btn go" data-a="jnom">Entrar</button></div></section>`;
+        <label class="ru" for="fn" style="display:block;margin-top:22px;font-size:15px">Tu nombre</label><input class="fld" id="fn" maxlength="24" autocomplete="given-name" placeholder="Ej. María, Pepe…"><div style="padding-top:22px"><button class="btn go" data-a="jnom">Entrar</button></div></section>`;
       const fila = (m) => { const c = hechos.find((x) => x.m === m), mm = M.m[m], h = c ? new Date(c.hecho) : null, yo = c && c.quien === S.n;
         return `<li class="jm${c ? " ok" : ""}"><span class="jb">${c ? `<b>${esc(c.quien.slice(0, 1).toUpperCase())}</b>` : `<i>${m + 1}</i>`}</span><span class="g"><span class="ru">${ORD[m]} misterio</span><b>${mm[0]}</b>${c ? `<small>${yo ? "Lo rezaste tú" : "Lo rezó " + esc(c.quien)}${h && !isNaN(h) ? ", " + String(h.getHours()).padStart(2, "0") + ":" + String(h.getMinutes()).padStart(2, "0") : ""}</small>` : ""}</span>${c ? `<span class="pal2">${I.ok}</span>` : `<button class="btn go sm jr" data-a="jtr" data-k="${m}">Rezar</button>`}</li>`; };
       return `<section class="v d n in">${sky()}${hd(["hoy"], "Rosario juntos")}<h1 style="margin-top:10px;font-size:32px;line-height:38px">Con ${esc(jtCon(j))}</h1>
