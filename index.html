@@ -2431,18 +2431,25 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     const pts = Array.from({ length: tot }, (_, k) => `<i class="${k === n ? "on" : k < n ? "ok" : ""}"></i>`).join("");
     app.insertAdjacentHTML("beforeend", `<div id="tour" role="dialog" aria-label="${t}"><div class="tu-h"><span class="tu-p"></span></div>
       <div class="tu-b"><div class="tu-t"><div class="tu-d" aria-label="Paso ${n + 1} de ${tot}">${pts}</div><button class="lk tu-x" data-a="tourx">Saltar la guía</button></div><b>${t}</b><p>${d}</p><button class="btn go tu-n" data-a="tourn">${quedan ? "Siguiente" : "Listo, a rezar"}</button></div></div>`);
-    const T = document.getElementById("tour"), hl = T.querySelector(".tu-h"), b = T.querySelector(".tu-b"), bh = b.offsetHeight, H = window.innerHeight, pad = 8, m = 14;
+    const T = document.getElementById("tour"), hl = T.querySelector(".tu-h"), b = T.querySelector(".tu-b"), pad = 8, m = 14;
     const fijo = !!el.closest(".tabs") || getComputedStyle(el).position === "fixed";
-    let r = el.getBoundingClientRect();
-    // primero se acomoda la página: lo señalado queda arriba y deja abajo el sitio justo para su explicación
-    if (!fijo) { const alto = Math.min(r.height, Math.max(60, H - bh - m - pad * 2 - 30)), quiero = Math.max(pad + 14, Math.min((H - (alto + pad * 2 + m + bh)) / 2, H * 0.2)); try { window.scrollBy(0, Math.round(r.top - quiero)); } catch (_) {} r = el.getBoundingClientRect(); }
-    let top = Math.max(pad, r.top), bot = Math.min(H - pad, r.bottom), y;
-    if (bot + pad + m + bh <= H - 6) y = bot + pad + m;            // cabe abajo
-    else if (top - pad - m - bh >= 6) y = top - pad - m - bh;      // cabe arriba
-    else { bot = Math.max(top + 56, H - bh - m - pad - 8); y = bot + pad + m; } // muy alto: se ilumina solo su parte de arriba
-    hl.style.cssText = `left:${Math.round(r.left - pad)}px;top:${Math.round(top - pad)}px;width:${Math.round(r.width + pad * 2)}px;height:${Math.round(bot - top + pad * 2)}px`;
-    b.style.top = Math.round(y) + "px"; b.classList.add(y > top ? "ab" : "ar");
-    const br = b.getBoundingClientRect(); b.style.setProperty("--fx", Math.round(Math.max(30, Math.min(br.width - 30, r.left + r.width / 2 - br.left))) + "px");
+    // las tarjetas entran con una animación: se mide su lugar final, sin el movimiento de entrada
+    const sinAnim = () => { app.querySelectorAll(".in>*").forEach((x) => { x.style.animation = "none"; }); };
+    sinAnim();
+    if (!fijo) { const H = window.innerHeight, bh = b.offsetHeight, r = el.getBoundingClientRect(), alto = Math.min(r.height, Math.max(60, H - bh - m - pad * 2 - 30)), quiero = Math.max(pad + 14, Math.min((H - (alto + pad * 2 + m + bh)) / 2, H * 0.2));
+      try { window.scrollTo({ top: Math.max(0, window.scrollY + r.top - quiero), behavior: "instant" }); } catch (_) { window.scrollTo(0, Math.max(0, window.scrollY + r.top - quiero)); } }
+    // el marco y la burbuja se recolocan en cada cuadro mientras la guía está abierta: siempre quedan encima de lo que explican
+    let ult = "";
+    const coloca = () => { if (!document.getElementById("tour") || T !== document.getElementById("tour")) return;
+      const H = window.innerHeight, bh = b.offsetHeight, r = el.getBoundingClientRect(), k = [r.left, r.top, r.width, r.height, H, bh].map(Math.round).join();
+      if (k !== ult) { ult = k;
+        let top = Math.max(pad, r.top), bot = Math.min(H - pad, r.bottom), y;
+        if (bot + pad + m + bh <= H - 6) y = bot + pad + m; else if (top - pad - m - bh >= 6) y = top - pad - m - bh; else { bot = Math.max(top + 56, H - bh - m - pad - 8); y = bot + pad + m; }
+        hl.style.cssText = `left:${Math.round(r.left - pad)}px;top:${Math.round(top - pad)}px;width:${Math.round(r.width + pad * 2)}px;height:${Math.round(bot - top + pad * 2)}px;transition:none`;
+        b.style.top = Math.round(y) + "px"; b.classList.toggle("ab", y > top); b.classList.toggle("ar", y <= top);
+        const br = b.getBoundingClientRect(); b.style.setProperty("--fx", Math.round(Math.max(30, Math.min(br.width - 30, r.left + r.width / 2 - br.left))) + "px"); }
+      requestAnimationFrame(coloca); };
+    coloca();
   }
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
   function finJt(s) {
