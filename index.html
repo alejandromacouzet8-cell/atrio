@@ -828,6 +828,119 @@ div.jyt{cursor:default}
 .vrow .vph{box-shadow:0 0 0 1px #E6C27A}
 .crd{cursor:default}.crd small a{color:var(--oroc)}
 .crd .vph{margin:0 12px 0 0}
+/* ================= fondo: luz de cúpula, brocado y grano fino ================= */
+html,body{background:#06191C}
+.d{background-color:#0A2D32;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),radial-gradient(120% 420px at 50% -40px,rgba(244,220,166,.2) 0%,rgba(244,220,166,.06) 42%,rgba(244,220,166,0) 72%),radial-gradient(90% 520px at 50% 0,#207078 0%,rgba(32,112,120,0) 100%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='128' viewBox='0 0 96 128'%3E%3Cg fill='none' stroke='%23F4DCA6' stroke-width='1'%3E%3Cpath stroke-opacity='.06' d='M48 0C64 22 80 34 96 64C80 94 64 106 48 128C32 106 16 94 0 64C16 34 32 22 48 0Z'/%3E%3Cpath stroke-opacity='.035' d='M48 24C58 38 67 47 74 64C67 81 58 90 48 104C38 90 29 81 22 64C29 47 38 38 48 24Z'/%3E%3C/g%3E%3Cg fill='%23F4DCA6' fill-opacity='.055'%3E%3Cpath d='M48 55l2.4 6.6 6.6 2.4-6.6 2.4-2.4 6.6-2.4-6.6-6.6-2.4 6.6-2.4z'/%3E%3Ccircle cx='0' cy='0' r='1.7'/%3E%3Ccircle cx='96' cy='0' r='1.7'/%3E%3Ccircle cx='0' cy='128' r='1.7'/%3E%3Ccircle cx='96' cy='128' r='1.7'/%3E%3C/g%3E%3C/svg%3E"),linear-gradient(180deg,#134E56 0,#0C383E 520px,#082A2F 100%);background-size:160px 160px,100% 100%,100% 100%,96px 128px,100% 100%;background-repeat:repeat,no-repeat,no-repeat,repeat,no-repeat}
+.sky .cup{position:absolute;left:50%;top:-640px;width:900px;height:900px;margin-left:-450px;border-radius:50%;border:1px solid rgba(244,220,166,.1);box-shadow:inset 0 0 0 20px rgba(244,220,166,.014),inset 0 0 0 21px rgba(244,220,166,.055),0 0 80px 6px rgba(244,220,166,.04)}
+.tw.tq{opacity:.6;animation-duration:6.6s}
+/* ================= la imagen de cada Virgen: arco 2:3 ================= */
+.vph{border-radius:50% 50% 7px 7px/31% 31% 7px 7px}
+.advg .ni{min-height:206px}
+.advg .ni.on .vph{animation:vsel .5s cubic-bezier(.3,1.4,.5,1)}
+@keyframes vsel{0%{transform:scale(.93)}60%{transform:scale(1.06)}}
+.vmed{width:92px}
+.vrow{width:44px}
+.vver{position:relative;display:block;padding:0;border:0;background:none;cursor:pointer;margin:0 auto 10px;color:inherit;-webkit-tap-highlight-color:transparent}
+.vver .vph{transition:transform .2s;box-shadow:0 0 0 2px #E6C27A,0 0 0 8px rgba(230,194,122,.16),0 0 46px 8px rgba(244,220,166,.28),0 22px 34px -14px rgba(0,0,0,.75)}
+.vver:active .vph{transform:scale(.97)}
+.vlc{position:absolute;left:50%;bottom:-13px;transform:translateX(-50%);z-index:2;display:flex;align-items:center;gap:6px;white-space:nowrap;padding:7px 13px 7px 10px;border-radius:17px;background:linear-gradient(180deg,#F9E7B6,#E2BC6E);color:var(--manto);font-weight:700;font-size:12.5px;line-height:15px;box-shadow:0 6px 14px -4px rgba(0,0,0,.6)}
+.nb .vver+.ru{margin-top:24px}
+.n3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:18px}
+.n3 div{padding:12px 4px 10px;border-radius:16px;border:1px solid rgba(244,220,166,.24);background:rgba(246,239,233,.05);text-align:center}
+.n3 b{display:block;font-family:var(--se);font-weight:600;font-size:22px;line-height:26px;color:var(--oroc);white-space:nowrap}
+.n3 small{display:block;margin-top:3px;font-size:12px;line-height:15px;color:var(--txt2);text-wrap:balance}
+.prs{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -22px;padding:2px 22px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.prs::-webkit-scrollbar{display:none}
+.prc{flex:none;width:84%;scroll-snap-align:center;padding:16px 18px 18px;border-radius:20px;border:1px solid rgba(244,220,166,.3);background:linear-gradient(165deg,rgba(244,220,166,.12),rgba(246,239,233,.03))}
+.prn{font-family:var(--se);font-style:italic;font-size:14px;color:var(--rosa)}
+.prc h3{margin:4px 0 8px;font-family:var(--se);font-weight:600;font-size:23px;line-height:27px;color:var(--oroc);text-wrap:balance}
+.prc p{font-size:16px;line-height:24px;color:#DCE6E4}
+.prh{margin-top:4px;font-size:13px}
+.sabs{display:flex;flex-direction:column;gap:8px}
+.sab{border-radius:16px;border:1px solid rgba(246,239,233,.16);background:rgba(246,239,233,.045);overflow:hidden;transition:border-color .25s,background .25s}
+.sab summary{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:8px 14px 8px 16px;cursor:pointer;list-style:none;font-family:var(--se);font-weight:600;font-size:19px;line-height:23px}
+.sab summary::-webkit-details-marker{display:none}
+.sab summary i{flex:none;position:relative;width:28px;height:28px;border-radius:14px;border:1px solid rgba(244,220,166,.5)}
+.sab summary i:before,.sab summary i:after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1.6px;margin:-.8px 0 0 -6px;background:var(--oroc);transition:transform .25s}
+.sab summary i:after{transform:rotate(90deg)}
+.sab[open] summary i:after{transform:rotate(0)}
+.sab[open]{border-color:rgba(244,220,166,.45);background:rgba(244,220,166,.08)}
+.sab p{padding:0 16px 14px;font-size:16px;line-height:24px;color:#DCE6E4;animation:bvin .35s ease both}
+.sanc{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;border:1px solid rgba(246,239,233,.16);background:rgba(246,239,233,.045);color:inherit;text-decoration:none}
+.sanc .g{flex:1;min-width:0;display:flex;flex-direction:column}
+.sanc b{font-family:var(--se);font-weight:600;font-size:17px;line-height:21px}
+.sanc small{margin-top:2px;font-size:13.5px;color:var(--txt2)}
+.sanc em{flex:none;font-style:normal;font-weight:700;font-size:13.5px;color:var(--oroc);text-decoration:underline;text-underline-offset:3px}
+/* verla de cerca */
+#lupa{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;padding:10px 22px calc(16px + env(safe-area-inset-bottom));background:rgba(3,18,21,.97);animation:bvf .25s ease both;touch-action:none}
+.lub{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:386px;min-height:44px;color:var(--txt)}
+.luf{position:relative;flex:none;margin-top:6px;border-radius:16px;overflow:hidden;background:#0A2B30;box-shadow:0 0 0 1.5px #E6C27A,0 0 0 7px rgba(230,194,122,.14),0 24px 50px -16px #000;animation:luin .45s cubic-bezier(.2,.8,.2,1) both}
+.luf>img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;max-width:none}
+.luf>.luh{opacity:0;transition:opacity .5s}
+.luf>.luh.ok{opacity:1}
+.lup{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.lup i{position:absolute;left:50%;top:50%;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;background:rgba(244,220,166,.95);color:var(--manto);font:normal 700 13px/24px 'Hanken Grotesk',system-ui,sans-serif;text-align:center;box-shadow:0 0 0 2px rgba(11,50,55,.8),0 2px 8px rgba(0,0,0,.6);transition:transform .25s,background .25s}
+.lup:before{content:"";position:absolute;left:50%;top:50%;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;border:2px solid var(--oroc);animation:lupp 2s ease-out infinite}
+.lup.on i{background:#fff;transform:scale(1.28);box-shadow:0 0 0 3px var(--oro),0 0 18px 6px rgba(244,220,166,.7)}
+@keyframes lupp{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(2.3)}}
+.luc{width:100%;max-width:386px;min-height:104px;margin-top:16px;text-align:center;color:var(--txt)}
+.luc b{display:block;font-family:var(--se);font-weight:600;font-size:23px;line-height:27px;color:var(--oroc)}
+.luc p{margin-top:4px;font-size:16px;line-height:23px;color:#E6EEEC;text-wrap:pretty}
+.luc.lin{animation:bvin .3s ease both}
+.lus{max-width:386px;margin-top:auto;min-height:52px}
+@keyframes luin{from{opacity:0;transform:scale(.92)}}
+/* ================= Hoy: todo lo importante a la vista y aviso de que hay más ================= */
+.rhv{width:27%;margin:16px auto 0}
+.rhs{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rh{padding-bottom:18px}
+.rhc{display:flex;gap:10px;margin-top:14px}
+.rhc .rhgo{flex:1.75;margin-top:0;min-height:60px;font-size:21px;padding:0 8px}
+.rhf{flex:1;min-height:60px;border-radius:30px;gap:7px;padding:0 6px;font-size:15.5px;line-height:17px;border-color:rgba(244,220,166,.55);color:var(--oroc);background:rgba(244,220,166,.06)}
+.rhf svg{flex:none;width:20px;height:20px}
+.sch{left:50%;bottom:calc(70px + env(safe-area-inset-bottom));transform:translateX(-50%);width:100%;max-width:430px;height:74px;display:flex;align-items:flex-end;justify-content:center;padding:0 0 10px;border:0;cursor:pointer;background:linear-gradient(180deg,rgba(8,40,45,0),rgba(8,40,45,.86) 52%,rgba(8,38,43,.97));transition:opacity .3s;animation:bvf .6s ease 1s both;-webkit-tap-highlight-color:transparent}
+.schp{display:flex;align-items:center;gap:6px;min-height:34px;padding:0 12px 0 15px;border-radius:17px;border:1px solid rgba(244,220,166,.5);background:rgba(7,32,36,.9);color:var(--oroc);font-weight:700;font-size:13.5px;box-shadow:0 8px 20px -6px rgba(0,0,0,.6)}
+.schp svg{animation:schb 1.5s ease-in-out infinite}
+.scr .sch{opacity:0!important;pointer-events:none}
+@keyframes schb{0%,100%{transform:translateY(-2px)}50%{transform:translateY(3px)}}
+/* ================= la guía: nunca tapa lo que explica ================= */
+#tour{touch-action:none}
+.tu-b{padding:12px 18px 16px}
+.tu-t{display:flex;align-items:center;justify-content:space-between;min-height:32px;margin-bottom:4px}
+.tu-t .tu-d{margin-bottom:0}
+.tu-t .tu-x{display:inline-block;margin:0;min-height:32px;font-size:14px}
+.tu-b.ab:before,.tu-b.ar:after{left:var(--fx,50%)}
+.tu-n{min-height:52px}
+/* ================= el saludo: la paloma ================= */
+.gst{text-align:center;overflow:hidden}
+.v.gst>.gsa,.v.gst>.gsx{animation:none}
+.gsa{position:relative;width:min(84%,320px);aspect-ratio:240/226;margin:0 auto;flex:none}
+.gsl{position:absolute;left:50%;top:-36%;width:150%;height:150%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(255,244,210,.4),rgba(255,244,210,.1) 55%,rgba(255,244,210,0) 82%);-webkit-clip-path:polygon(44% 0,56% 0,92% 100%,8% 100%);clip-path:polygon(44% 0,56% 0,92% 100%,8% 100%);animation:bvf 1.6s ease .1s both;pointer-events:none}
+.gsr{position:absolute;left:50%;top:52%;width:150%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(244,220,166,.12) 0 1.5deg,rgba(244,220,166,0) 1.5deg 9deg);-webkit-mask-image:radial-gradient(closest-side,#000 20%,transparent 100%);mask-image:radial-gradient(closest-side,#000 20%,transparent 100%);animation:bvf 2s ease 1.1s both,gsrot 80s linear infinite;pointer-events:none}
+@keyframes gsrot{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.pal0{position:relative;display:block;width:100%;height:auto;overflow:visible;filter:drop-shadow(0 12px 22px rgba(0,0,0,.35));animation:pdesc 2s cubic-bezier(.2,.75,.2,1) both,pflo 4.5s ease-in-out 2s infinite}
+@keyframes pdesc{0%{opacity:0;transform:translateY(-170px) scale(.45)}55%{opacity:1}100%{opacity:1;transform:none}}
+@keyframes pflo{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+.pwl{transform-origin:108px 120px;animation:pal1 1.5s ease-in-out infinite alternate}
+.pwr{transform-origin:132px 120px;animation:pal2 1.5s ease-in-out infinite alternate}
+@keyframes pal1{from{transform:rotate(-9deg)}to{transform:rotate(8deg)}}
+@keyframes pal2{from{transform:rotate(9deg)}to{transform:rotate(-8deg)}}
+.pgh{animation:pghl 3.2s ease-in-out 1.6s infinite alternate}
+@keyframes pghl{from{opacity:.72}to{opacity:1}}
+.gsch{position:absolute;inset:0;pointer-events:none}
+.gsch i{position:absolute;top:64%;width:3px;height:3px;border-radius:50%;background:#FFF1C9;box-shadow:0 0 8px 2px rgba(255,236,190,.7);opacity:0;animation:gsdn 6s linear infinite}
+@keyframes gsdn{0%{opacity:0;transform:translateY(0)}12%{opacity:.95}75%{opacity:.5}100%{opacity:0;transform:translateY(180px)}}
+.gsq{font-family:var(--se);font-style:italic;font-weight:500;font-size:24px;line-height:30px;color:var(--txt);animation:bvin 1s ease 1.5s both}
+.gsn{margin:2px 0 0;padding:0 4px 4px;font-size:46px;line-height:54px;font-weight:600;overflow-wrap:anywhere;background:linear-gradient(100deg,#E6C27A 0%,#FFF3D0 35%,#FFFFFF 50%,#FFF3D0 65%,#E6C27A 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:bvin 1.1s cubic-bezier(.2,.8,.2,1) 1.85s both,gsbr 4.5s ease-in-out 3s infinite}
+@keyframes gsbr{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+.gsp{max-width:30ch;margin:14px auto 0;font-family:var(--se);font-style:italic;font-size:18px;line-height:25px;color:var(--oroc);text-wrap:balance;animation:bvin 1s ease 2.5s both}
+.gsk{padding-top:18px;animation:bvin .9s ease 3.1s both}
+.obr b.on{animation:obpop .7s cubic-bezier(.3,1.5,.5,1) both}
+@keyframes obpop{from{transform:scale(.7);box-shadow:none}}
+@media (max-height:700px){.gsa{width:min(64%,250px)}.gsn{font-size:40px;line-height:46px}.gsp{font-size:16.5px;line-height:23px;margin-top:10px}}
+@media (prefers-reduced-motion:reduce){#lupa,.luf,.lup:before,.luc.lin,.sab p,.sch,.schp svg,.gst *,.obr b.on,.advg .ni.on .vph{animation:none!important}}
+#app .sch{position:fixed;z-index:6}
+/* teléfonos bajitos: el botón de rezar nunca queda detrás de la barra */
+@media (max-height:610px){.hv .hg{font-size:26px;line-height:31px}.hv .tpo{margin-top:2px}.rh{margin-top:8px}.rhv{width:19%;margin-top:10px}.rht h2{font-size:25px;line-height:29px}.rhc{margin-top:10px}.rhc .rhgo,.rhf{min-height:54px}}
 </style>
 </head>
 <body>
@@ -1037,6 +1150,162 @@ const ADV = [
     fr: [["c", "La Madre piadosa estaba junto a la cruz y lloraba mientras el Hijo pendía.", "Stabat Mater, versión de Lope de Vega"],
       ["i", "No huyó: se quedó de pie junto a la cruz. Quédate hoy junto a alguien que sufre.", "Evangelio según san Juan 19, 25"]] }
 ];
+
+// Cada Virgen, más a fondo: cifras, historias y prodigios, datos curiosos, los símbolos de su imagen (x, y en % sobre la foto) y su santuario.
+// Lo que es tradición se dice como tradición; lo reconocido por la Iglesia, como tal.
+const ADX = {
+  guadalupe: {
+    n3: [["1531", "año de las apariciones"], ["46", "estrellas en su manto"], ["20 millones", "de peregrinos al año"]],
+    pr: [["La tilma que no se deshace", "El ayate de Juan Diego es de fibra de maguey, una tela burda que suele durar unos veinte años. La imagen lleva casi quinientos, y pasó más de un siglo sin cristal, entre el humo de las velas y las manos de los peregrinos."],
+      ["El atentado de 1921", "El 14 de noviembre de 1921 estalló una bomba escondida en un ramo de flores, al pie de la imagen. El altar de mármol se rompió y un crucifijo de bronce quedó doblado; la tilma y su cristal no sufrieron daño. Ese crucifijo, el Cristo del Atentado, se guarda en la Basílica."],
+      ["El tío Juan Bernardino", "El tío de Juan Diego agonizaba. La Virgen le dijo a Juan Diego que no se afligiera, que su tío ya estaba sano. Al volver a casa lo encontró de pie: también a él se le había aparecido, y le había dicho su nombre."]],
+    sab: [["Una basílica redonda", "La basílica nueva, de 1976, es circular para que la imagen se vea desde cualquier lugar. Bajo ella corren bandas eléctricas: así todos pasan cerca y nadie se queda parado."],
+      ["«No hizo nada igual»", "Cuenta la tradición que el papa Benedicto XIV, al ver una copia de la imagen en 1754, repitió el salmo: «No hizo cosa igual con ninguna otra nación»."],
+      ["El que habla como águila", "El nombre indígena de san Juan Diego era Cuauhtlatoatzin, «el que habla como águila». Tenía unos 57 años cuando vio a la Virgen."]],
+    sim: [[45, 43, "El moño negro", "Las mujeres nahuas lo ataban arriba de la cintura cuando esperaban un hijo. María está encinta: trae a Jesús."],
+      [75, 45, "Las estrellas", "El manto es azul verdoso, color de los gobernantes mexicas, y lleva cuarenta y seis estrellas de oro."],
+      [10, 47, "Los rayos", "Está delante del sol y lo deja ver. Para los indígenas, con ella venía alguien más grande que el sol."],
+      [23, 92, "La luna", "Pisa una luna oscura. El Apocalipsis habla de una mujer vestida de sol, con la luna bajo sus pies."]],
+    san: ["Basílica de Santa María de Guadalupe", "Villa de Guadalupe, Ciudad de México", "Basílica de Guadalupe, Ciudad de México"] },
+  fatima: {
+    n3: [["1917", "seis apariciones"], ["3", "niños pastores"], ["13", "de mayo a octubre"]],
+    pr: [["El milagro del sol", "El 13 de octubre de 1917 llovía sobre unas setenta mil personas reunidas en Cova da Iria. Al mediodía las nubes se abrieron y, según los testigos, el sol giró y pareció caer sobre la tierra. Lo contaron incluso periódicos contrarios a la Iglesia."],
+      ["La bala del 13 de mayo", "El 13 de mayo de 1981, aniversario de la primera aparición, dispararon a san Juan Pablo II en la plaza de San Pedro. Sobrevivió y dijo que una mano materna había desviado la bala. Esa bala está hoy engastada en la corona de la imagen de Fátima."],
+      ["Los santos más pequeños", "Francisco y Jacinta murieron de gripe española a los diez y a los nueve años, ofreciendo su enfermedad por los demás. Son los santos no mártires más jóvenes de la Iglesia. Lucía vivió hasta 2005."]],
+    sab: [["La encina que ya no está", "La Virgen se aparecía sobre una encina pequeña. Los peregrinos se fueron llevando sus ramas de recuerdo hasta que no quedó nada; donde estuvo se levanta hoy la Capillita de las Apariciones."],
+      ["Una imagen que viaja", "Desde 1947 una imagen peregrina de Fátima recorre el mundo. Ha visitado más de sesenta países."],
+      ["Su nombre completo", "En la última aparición dijo quién era: la Señora del Rosario. En las seis repitió la misma petición: recen el rosario todos los días."]],
+    sim: [[54, 13, "La corona", "La original se hizo con joyas que regalaron las mujeres de Portugal en 1942. Dentro lleva la bala del atentado contra Juan Pablo II."],
+      [50, 41, "Las manos", "Juntas, con el rosario: la oración que pidió para alcanzar la paz."],
+      [50, 92, "La nube", "Los niños la vieron sobre una nubecita posada en la encina, «más brillante que el sol»."]],
+    san: ["Santuario de Nuestra Señora del Rosario de Fátima", "Cova da Iria, Portugal", "Santuario de Fátima, Portugal"] },
+  lourdes: {
+    n3: [["1858", "dieciocho apariciones"], ["72", "milagros reconocidos"], ["7 mil", "curaciones registradas"]],
+    pr: [["El manantial", "El 25 de febrero la Señora pidió a Bernardita beber de una fuente que nadie veía. La niña escarbó en el lodo y brotó un hilo de agua. Hoy ese manantial da más de cien mil litros al día."],
+      ["Setenta y dos milagros", "De más de siete mil curaciones registradas, la Iglesia ha reconocido como milagro solo 72, después de años de examen por médicos, creyentes y no creyentes. El más reciente se anunció en 2025."],
+      ["Bernardita", "Nunca buscó fama: entró a un convento en Nevers y murió a los 35 años. Su cuerpo, exhumado tres veces, se conserva incorrupto. A quien dudaba le respondía: «No me toca hacérselo creer, me toca decírselo»."]],
+    sab: [["Habló en su dialecto", "La Señora no habló en francés, sino en el dialecto de Bernardita: «Que soy era Immaculada Councepciou». La niña no entendía esas palabras; las fue repitiendo todo el camino para no olvidarlas."],
+      ["El agua no tiene nada especial", "La han analizado muchas veces: es agua de montaña común. En Lourdes insisten en que no cura el agua, sino Dios, por la fe y la oración."],
+      ["Una gruta en cada pueblo", "Casi no hay ciudad católica sin su gruta de Lourdes. Hasta los jardines del Vaticano tienen una."]],
+    sim: [[50, 12, "La mirada", "Mira al cielo: así la vio Bernardita cuando dijo su nombre, el 25 de marzo."],
+      [35, 50, "El rosario", "Lo llevaba en el brazo y pasaba las cuentas mientras Bernardita rezaba. Solo movía los labios en el Gloria."],
+      [54, 47, "La cinta azul", "«Una Señora vestida de blanco, con una cinta azul y una rosa amarilla en cada pie»: así la describió."]],
+    san: ["Santuario de Nuestra Señora de Lourdes", "Lourdes, Francia", "Sanctuaire Notre-Dame de Lourdes"] },
+  carmen: {
+    n3: [["Siglo XII", "nace en el Carmelo"], ["1251", "el escapulario"], ["16 jul", "su fiesta"]],
+    pr: [["El escapulario", "Dos pedacitos de tela café unidos por un cordón: es el hábito del Carmelo en pequeño. Según la tradición, la Virgen prometió a san Simón Stock acompañar hasta el final a quien lo lleve con fe."],
+      ["La isla de los piratas", "Durante más de un siglo los piratas dominaron la laguna de Términos, en Campeche. El 16 de julio de 1717, día de su fiesta, fueron expulsados. Desde entonces la isla y su ciudad se llaman del Carmen."],
+      ["El voto de Maipú", "En 1818, antes de la batalla que selló la independencia de Chile, O'Higgins prometió levantarle un templo donde se diera la victoria. Hoy es el santuario nacional de Maipú, y ella, patrona de Chile."]],
+    sab: [["La nubecita de Elías", "En el Carmelo el profeta Elías vio subir del mar una nube pequeña que trajo la lluvia tras años de sequía. Los carmelitas vieron en ella una figura de María."],
+      ["Procesiones en el mar", "Cada 16 de julio, en los puertos, los pescadores la suben a una lancha adornada y la pasean entre sirenas y cohetes."],
+      ["Santos de su casa", "De la familia del Carmelo son santa Teresa de Jesús, san Juan de la Cruz y santa Teresita del Niño Jesús: tres doctores de la Iglesia."]],
+    sim: [[72, 75, "El escapulario", "Lo ofrece a quien la mira: es su regalo y la señal de su protección."],
+      [49, 54, "El escudo", "Sobre el pecho lleva el escudo de la Orden del Carmen."],
+      [71, 45, "El Niño", "María no se guarda nada: todo lo que da, lo da con su Hijo en brazos."]],
+    san: ["Monasterio Stella Maris", "Monte Carmelo, Haifa", "Stella Maris Monastery, Haifa"] },
+  pilar: {
+    n3: [["Año 40", "según la tradición"], ["Siglo XV", "la talla actual"], ["12 oct", "su fiesta"]],
+    pr: [["El milagro de Calanda", "A Miguel Pellicer le amputaron una pierna en Zaragoza. Más de dos años después, la noche del 29 de marzo de 1640, sus padres lo encontraron dormido con las dos piernas. Hubo proceso, testigos y notario: el arzobispo lo declaró milagro en 1641."],
+      ["Las bombas de 1936", "La madrugada del 3 de agosto de 1936 un avión dejó caer tres bombas sobre la basílica. Ninguna estalló. Dos de ellas siguen colgadas junto a la Santa Capilla."],
+      ["No se apareció: vino", "Es la única vez que la tradición sitúa a María visitando a alguien cuando todavía vivía en la tierra. Por eso en Zaragoza no se habla de aparición, sino de la «Venida»."]],
+    sab: [["Un manto cada día", "La imagen cambia de manto casi a diario y tiene cientos. Solo los días 2, 12 y 20 de cada mes se muestra sin él, para que se vea la columna."],
+      ["La piedra gastada a besos", "Detrás de la capilla hay un hueco por donde se toca el pilar. Siglos de besos y de manos han dejado su huella en la piedra."],
+      ["Las cintas", "Las «medidas» son cintas de colores tan largas como la imagen. Media España las lleva atadas en el coche, en la mochila o en la muñeca."]],
+    sim: [[50, 22, "El resplandor", "Corona y rayos de oro con miles de piedras preciosas, regalo de los fieles."],
+      [50, 43, "La imagen", "Una talla pequeña de madera, del siglo XV, con el Niño en brazos."],
+      [50, 72, "El manto", "Cubre la columna y cambia según el día. El de esta foto lleva el escudo del Justicia de Aragón."],
+      [50, 94, "El pilar", "Una columna de jaspe forrada de bronce y plata: la señal de una fe que no se cae."]],
+    san: ["Catedral-Basílica de Nuestra Señora del Pilar", "Zaragoza, España", "Basílica del Pilar, Zaragoza"] },
+  sanjuan: {
+    n3: [["1623", "el primer milagro"], ["2 feb", "su gran peregrinación"], ["2.º", "santuario más visitado de México"]],
+    pr: [["El regalo del cirquero", "El padre de la niña que volvió a la vida pidió llevarse la imagen a Guadalajara para restaurarla, porque estaba muy maltratada. Regresó tan hermosa que el pueblo entero salió a recibirla."],
+      ["Ana Lucía", "Fue una indígena que cuidaba la capilla quien confió en la «Cihuapilli», la Señora, cuando casi nadie se acordaba de ella. La tradición cuenta que por las mañanas la encontraba fuera de su lugar, en el altar."],
+      ["Caminos de fe", "Cada enero salen caravanas a pie desde el Bajío, el centro y el norte del país. Caminan días enteros para llegar el 2 de febrero; muchos cumplen así una promesa heredada de sus abuelos."]],
+    sab: [["Hecha de maíz", "Los artesanos purépechas molían la caña del maíz y la mezclaban con un pegamento de orquídea para hacer una pasta ligerísima. Por eso la imagen pesa tan poco y ha durado casi quinientos años."],
+      ["También en Texas", "Los migrantes llevaron su devoción al norte. En San Juan, Texas, hay una basílica dedicada a ella que recibe peregrinos todo el año."],
+      ["Paredes que dan gracias", "En el santuario se guardan miles de exvotos: retablitos pintados, trenzas, fotos y cartas que cuentan un favor recibido."]],
+    sim: [[25, 22, "Los ángeles", "Sostienen una cinta que dice en latín: «Madre Inmaculada, ruega por nosotros»."],
+      [50, 31, "Su rostro", "La imagen mide poco más de treinta centímetros y tiene las manos juntas: es una Inmaculada."],
+      [22, 58, "El vestido", "La talla es sencilla; el manto que la abre en triángulo y las joyas son regalos de los peregrinos."],
+      [50, 68, "La media luna", "La luna a sus pies, como la mujer del Apocalipsis."]],
+    san: ["Catedral Basílica de Nuestra Señora de San Juan de los Lagos", "San Juan de los Lagos, Jalisco", "Basílica de San Juan de los Lagos, Jalisco"] },
+  zapopan: {
+    n3: [["1541", "llega a Zapopan"], ["34 cm", "mide la imagen"], ["+2 millones", "en su Romería"]],
+    pr: [["La Pacificadora", "En plena guerra del Mixtón, fray Antonio de Segovia subió al cerro con la imagen colgada al pecho para pedir a los indígenas sublevados que bajaran en paz. Bajaron. Desde entonces la llaman la Pacificadora."],
+      ["Contra rayos y tempestades", "En 1734, tras temporales y epidemias que castigaban a Guadalajara, la ciudad la juró su protectora. Desde entonces pasa cada temporada de lluvias visitando sus templos."],
+      ["La Reina del Lago", "Cuando el lago de Chapala se quedaba sin agua, la llevaron a sus orillas a pedir lluvia. El lago se recuperó, y los ribereños la nombraron su reina."]],
+    sab: [["La Virgen viajera", "De mayo a octubre casi no duerme en su basílica: visita una parroquia distinta cada día. Por eso viste de peregrina, y cada barrio la recibe con flores, música y tapetes."],
+      ["La Generala", "En 1821 la nombraron Generala, con todo y banda y bastón de mando. Es de las poquísimas imágenes del mundo con grado militar."],
+      ["Su otro nombre", "Su advocación es Nuestra Señora de la Expectación: María esperando el nacimiento de Jesús. Por eso su fiesta litúrgica es el 18 de diciembre."]],
+    sim: [[53, 18, "El sombrero", "Sombrero de peregrina: lo lleva cuando sale a visitar las parroquias."],
+      [52, 52, "El resplandor", "Sobre el vientre lleva un sol de oro: es la Virgen de la Expectación, la que espera a su Hijo."],
+      [61, 60, "La banda", "La banda de Generala cruza su vestido desde 1821."]],
+    san: ["Basílica de Nuestra Señora de Zapopan", "Zapopan, Jalisco", "Basílica de Zapopan, Jalisco"] },
+  juquila: {
+    n3: [["30 cm", "mide la imagen"], ["1633", "sale intacta del incendio"], ["8 dic", "su fiesta"]],
+    pr: [["La que quiso quedarse", "Cuentan que cuando el párroco quiso llevarla a su iglesia de Juquila, la imagen amanecía de vuelta en Amialtepec. Así pasó varias veces, hasta que en 1719 se quedó por fin en su santuario."],
+      ["Del color de su gente", "Del incendio salió entera, pero morena. Los chatinos de la sierra dicen que así se quedó: del color de ellos."],
+      ["El Pedimento", "Antes de llegar, en un cerro del camino, los peregrinos modelan con barro lo que vienen a pedir: una casita, un bebé, un título, salud. Al año siguiente vuelven a dar gracias."]],
+    sab: [["A pie, en bici y con antorcha", "Hay quien camina una semana para verla. Los ciclistas llegan en caravanas con su imagen a la espalda, y los relevos de antorchistas corren día y noche."],
+      ["Corona del Papa", "El 8 de octubre de 2014 fue coronada en nombre del papa Francisco, que mandó un mensaje a Oaxaca para la ocasión."],
+      ["Juquilita", "Así, en diminutivo, la llaman en todo el sur de México. La verás en taxis, mercados y camiones: chiquita, de vestido blanco y cabello largo."]],
+    sim: [[49, 8, "La corona", "Corona pontificia, puesta en 2014."],
+      [49, 19, "Su rostro", "Moreno, con los ojos bajos y las manos juntas."],
+      [75, 60, "El vestido", "La imagen mide treinta centímetros; casi todo lo que ves es su vestido blanco, bordado por sus devotas."]],
+    san: ["Santuario de Nuestra Señora de Juquila", "Santa Catarina Juquila, Oaxaca", "Santuario de Juquila, Oaxaca"] },
+  socorro: {
+    n3: [["Siglo XV", "se pinta en Creta"], ["1499", "llega a Roma"], ["1866", "«Denla a conocer»"]],
+    pr: [["El icono robado", "Según la tradición, un mercader lo robó de una iglesia de Creta y lo llevó a Roma. Antes de morir pidió que se expusiera en un templo. En 1499 lo entronizaron en la iglesia de San Mateo."],
+      ["Perdido casi setenta años", "En 1798 las tropas de Napoleón destruyeron San Mateo. Los frailes escondieron el icono en una capilla y casi todos lo olvidaron, menos un monaguillo que, ya de mayor, contó dónde estaba."],
+      ["La novena perpetua", "Miles de parroquias le rezan una novena que nunca termina: cada semana, el mismo día. En Baclaran, Filipinas, cada miércoles acuden decenas de miles de personas."]],
+    sab: [["Ella te mira a ti", "El Niño mira asustado a los ángeles, pero María no lo mira a él: te mira a ti. Te está presentando a su Hijo."],
+      ["Letras griegas", "Junto a cada figura hay iniciales en griego: «Madre de Dios», «Jesucristo», «Arcángel Miguel», «Arcángel Gabriel»."],
+      ["El fondo de oro", "El dorado no es adorno: en los iconos significa el cielo, la luz que no se apaga."]],
+    sim: [[56, 11, "La estrella", "Sobre el velo: ella es la estrella que guía hasta Jesús."],
+      [54, 24, "Los ojos", "Grandes y serenos, vueltos hacia quien reza."],
+      [91, 28, "Los arcángeles", "Gabriel lleva la cruz y los clavos; del otro lado, Miguel lleva la lanza y la esponja."],
+      [51, 62, "Las manos", "Las dos manos del Niño caben en la de su Madre, que no aprieta: sostiene."],
+      [51, 94, "La sandalia", "Con el susto se le suelta una sandalia. Es un Dios que también tuvo miedo y corrió con su mamá."]],
+    san: ["Iglesia de San Alfonso María de Ligorio", "Via Merulana, Roma", "Chiesa di Sant'Alfonso all'Esquilino, Roma"] },
+  milagrosa: {
+    n3: [["1830", "París, rue du Bac"], ["27 nov", "su fiesta"], ["Millones", "de medallas en el mundo"]],
+    pr: [["El banquero que no creía", "Alfonso Ratisbonne, judío y adversario de la Iglesia, aceptó por reto llevar la medalla. El 20 de enero de 1842 entró a una iglesia de Roma y salió transformado: dijo haber visto a la Virgen tal como aparece en ella. Se hizo sacerdote."],
+      ["El secreto de Catalina", "Santa Catalina Labouré pasó 46 años cuidando ancianos sin decir a nadie que ella era la vidente. Solo lo reveló poco antes de morir. Su cuerpo, exhumado en 1933, se conserva incorrupto en la misma capilla."],
+      ["Las piedras apagadas", "Catalina vio que de los anillos de la Virgen salían rayos de luz, pero algunas piedras no brillaban. María le explicó que eran las gracias que nadie le pide."]],
+    sab: [["Antes del dogma", "La medalla dice «sin pecado concebida» 24 años antes de que la Iglesia definiera la Inmaculada Concepción, en 1854."],
+      ["El reverso", "Por detrás lleva una M con una cruz, doce estrellas y dos corazones: el de Jesús, coronado de espinas, y el de María, atravesado por una espada."],
+      ["El sillón", "En la capilla de París se conserva el sillón donde la Virgen se sentó la primera noche; Catalina apoyó las manos en sus rodillas."]],
+    sim: [[49, 11, "La mirada", "Baja, hacia el mundo que tiene a sus pies."],
+      [10, 48, "Las manos", "Abiertas hacia abajo: de ellas bajan las gracias para quien las pide."],
+      [72, 43, "El manto", "Azul como el cielo, sobre una túnica blanca «color de aurora», contó Catalina."]],
+    san: ["Capilla de Nuestra Señora de la Medalla Milagrosa", "140 rue du Bac, París", "Chapelle Notre-Dame de la Médaille Miraculeuse, Paris"] },
+  auxiliadora: {
+    n3: [["1571", "Lepanto"], ["24 may", "su fiesta"], ["1868", "su basílica en Turín"]],
+    pr: [["Lepanto", "El 7 de octubre de 1571, mientras la flota cristiana se lo jugaba todo en Lepanto, el papa san Pío V pidió a Europa rezar el rosario. Tras la victoria, según la tradición, añadió a las letanías la invocación «Auxilio de los cristianos»."],
+      ["Ocho monedas", "Cuando el maestro de obras le pidió el primer pago de la basílica, Don Bosco le vació el monedero en las manos: ocho monedas, menos de media lira. Le aseguró que la Virgen pondría lo demás. Cinco años después estaba consagrada."],
+      ["Cada ladrillo, una gracia", "Don Bosco decía que en ese templo no había un ladrillo que no fuera señal de un favor recibido: la gente daba en agradecimiento por las ayudas que atribuía a María Auxiliadora."]],
+    sab: [["El cuadro", "Don Bosco le explicó al pintor Tomás Lorenzone cómo quería la imagen. Tardó tres años. El artista contaba que, al pintar el rostro, sintió que alguien le guiaba la mano."],
+      ["El sueño de los nueve años", "De niño, Juan Bosco soñó con una Señora que convertía una manada de fieras en corderos. «A su tiempo lo comprenderás todo», le dijo. Fue su maestra toda la vida."],
+      ["La bendición", "Los salesianos terminan el día con la bendición de María Auxiliadora, que compuso el mismo Don Bosco."]],
+    sim: [[47, 7, "Doce estrellas", "La corona de estrellas del Apocalipsis: es reina del cielo."],
+      [20, 68, "El cetro", "Lo empuña como quien tiene poder para ayudar."],
+      [70, 38, "El Niño", "Abre los brazos hacia quien mira: el auxilio de María es llevarnos a él."]],
+    san: ["Basílica de María Auxiliadora", "Valdocco, Turín", "Basilica di Maria Ausiliatrice, Torino"] },
+  dolores: {
+    n3: [["7", "dolores"], ["Siglo XIII", "nace su devoción"], ["15 sep", "su fiesta"]],
+    pr: [["Los siete dolores", "La profecía de Simeón, la huida a Egipto, el Niño perdido en el templo, el encuentro camino del Calvario, la crucifixión, el descendimiento y la sepultura."],
+      ["El Grito de Dolores", "La Independencia de México empezó en el atrio de una parroquia suya: la de Nuestra Señora de los Dolores, en Guanajuato, donde el cura Hidalgo llamó al pueblo la madrugada del 16 de septiembre de 1810."],
+      ["Los siete fundadores", "En 1233 siete comerciantes de Florencia lo dejaron todo para vivir como siervos de María al pie de la cruz. De ellos nació la Orden de los Servitas, que extendió esta devoción."]],
+    sab: [["«¿Ya lloró la Virgen?»", "En Guanajuato, el Viernes de Dolores se pregunta eso de casa en casa, y la respuesta es un vaso de agua fresca o una nieve: las lágrimas de María convertidas en dulzura."],
+      ["Su altar", "Naranjas agrias con banderitas de papel dorado, trigo germinado, velas y aguas de colores: así se viste en México su altar."],
+      ["Stabat Mater", "El poema medieval que la canta de pie junto a la cruz ha sido puesto en música por Vivaldi, Pergolesi, Rossini y Dvořák, entre muchos otros."]],
+    sim: [[46, 25, "La corona", "Reina también en el dolor: la corona y la ráfaga de oro la rodean como un sol."],
+      [60, 58, "Las lágrimas", "De cristal, sobre un rostro sereno: llora, pero no se derrumba."],
+      [86, 63, "Los cirios", "La candelería encendida con que la acompañan en Semana Santa."],
+      [22, 93, "El pañuelo", "En la mano lleva un pañuelo de encaje para enjugar el llanto: el suyo y el nuestro."]],
+    san: ["Parroquia de Nuestra Señora de los Dolores", "Dolores Hidalgo, Guanajuato", "Parroquia de Nuestra Señora de los Dolores, Dolores Hidalgo"] }
+};
+ADV.forEach((a) => Object.assign(a, ADX[a.k] || {}));
 
 // Confesión: preguntas sencillas para prepararse (escritas para Atrio), pasos y el acto de contrición tradicional
 const EXA = [
@@ -1393,11 +1662,11 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   function cuelga(id) { if (!VZ || !VZ.pcs[id]) return; try { VZ.pcs[id].close(); } catch (_) {} delete VZ.pcs[id]; delete VZ.cola[id]; delete VZ.rs[id]; delete VZ.an[id]; const a = document.getElementById("vz-" + id); if (a) { a.srcObject = null; a.remove(); } pinta(); }
   function par(id, ofrece) {
     if (!VZ) return null; if (VZ.pcs[id]) return VZ.pcs[id];
-    const pc = new RTCPeerConnection(ICE); VZ.pcs[id] = pc; VZ.cola[id] = VZ.cola[id] || [];
+    const pc = new RTCPeerConnection(ICE); VZ.pcs[id] = pc; VZ.cola[id] = VZ.cola[id] || []; pc._t = Date.now(); pc._c = [];
     VZ.st.getAudioTracks().forEach((t) => pc.addTrack(t, VZ.st));
     // el canal de video se abre desde el principio, vacío; al prender la cámara solo se le pone la imagen
     if (ofrece) { const tv = pc.addTransceiver("video", { direction: "sendrecv" }); if (VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); }
-    pc.onicecandidate = (e) => { if (e.candidate && sala) sala.manda({ para: id, t: "ice", d: e.candidate.toJSON ? e.candidate.toJSON() : e.candidate }); };
+    pc.onicecandidate = (e) => { if (!e.candidate) return; pc._c.push(e.candidate.toJSON ? e.candidate.toJSON() : e.candidate); if (!pc._ct) pc._ct = setTimeout(() => { pc._ct = 0; const d = pc._c.splice(0); if (d.length && sala && VZ && VZ.pcs[id] === pc) sala.manda({ para: id, t: "ices", d }); }, 250); };
     pc.ontrack = (e) => {
       const ms = VZ.rs[id] || (VZ.rs[id] = new MediaStream()); if (!ms.getTracks().includes(e.track)) ms.addTrack(e.track);
       if (e.track.kind === "video") { e.track.onunmute = () => pegaVideos(); return; }
@@ -1405,9 +1674,21 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       a.srcObject = ms; try { const r = a.play(); if (r && r.catch) r.catch(() => {}); } catch (_) {}
       mide(id, new MediaStream([e.track]));
     };
-    pc.onconnectionstatechange = () => { const s = pc.connectionState; if (s === "failed" || s === "closed") cuelga(id); else if (s === "connected") { vibra(1); pinta(); } };
+    pc.onconnectionstatechange = () => { if (!VZ || VZ.pcs[id] !== pc) return; const s = pc.connectionState; pc._d = s === "disconnected" ? Date.now() : 0; if (s === "failed" || s === "closed") cuelga(id); else if (s === "connected") { vibra(1); pinta(); } };
     if (ofrece) pc.createOffer().then((o) => pc.setLocalDescription(o)).then(() => { if (sala) sala.manda({ para: id, t: "offer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id));
     return pc;
+  }
+  // soltar una conexión que no cuajó, para volver a intentarla desde cero
+  const suelta = (id) => { const pc = VZ && VZ.pcs[id]; if (!pc) return; clearTimeout(pc._ct); try { pc.close(); } catch (_) {} delete VZ.pcs[id]; delete VZ.rs[id]; VZ.cola[id] = []; };
+  const viva = (pc, t) => !!pc && (pc.connectionState === "connected" || (pc.connectionState === "disconnected" ? t - (pc._d || t) < 9000 : t - pc._t < 10000));
+  /* Con diez o quince en la sala hay decenas de conexiones entre teléfonos; si un aviso se pierde en el camino,
+     ese par se quedaría mudo. Cada pocos segundos se revisa quién falta y se vuelve a llamar. */
+  function repara() {
+    if (!VZ || !sala) return; const t = Date.now();
+    peersS.forEach((p) => { const id = p.peer; if (p.isMe || !(p.presence || {}).v) return; const pc = VZ.pcs[id];
+      if (viva(pc, t)) { if (pc.connectionState === "disconnected" && !pc._d) pc._d = t; return; }
+      suelta(id); if (sala.yo < id) par(id, true); else sala.manda({ para: id, t: "hola" }); });
+    Object.keys(VZ.pcs).forEach((id) => { if (!peersS.some((p) => p.peer === id)) cuelga(id); });
   }
   const vacia = (id) => { const pc = VZ && VZ.pcs[id]; if (!pc) return; (VZ.cola[id] || []).splice(0).forEach((c) => pc.addIceCandidate(c).catch(() => {})); };
   function senal(q) {
@@ -1415,11 +1696,11 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     const id = q.de;
     if (q.t === "_listo") { sala.manda({ t: "hola" }); return; }
     // el de identificador menor llama; el otro contesta. Así cada par se conecta una sola vez.
-    if (q.t === "hola") { if (!q.para) sala.manda({ para: id, t: "hola" }); if (sala.yo < id && !VZ.pcs[id]) par(id, true); return; }
+    if (q.t === "hola") { if (!q.para) sala.manda({ para: id, t: "hola" }); if (sala.yo < id) { if (q.para && VZ.pcs[id] && !viva(VZ.pcs[id], Date.now() + 6000)) suelta(id); if (!VZ.pcs[id]) par(id, true); } return; }
     if (q.t === "adios") { cuelga(id); return; }
-    if (q.t === "offer") { const pc = par(id, false); pc.setRemoteDescription(q.d).then(() => { const tv = vidT(pc); if (tv) { tv.direction = "sendrecv"; if (VZ && VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); } return pc.createAnswer(); }).then((a) => pc.setLocalDescription(a)).then(() => { vacia(id); sala.manda({ para: id, t: "answer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id)); return; }
+    if (q.t === "offer") { if (VZ.pcs[id]) suelta(id); const pc = par(id, false); pc.setRemoteDescription(q.d).then(() => { const tv = vidT(pc); if (tv) { tv.direction = "sendrecv"; if (VZ && VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); } return pc.createAnswer(); }).then((a) => pc.setLocalDescription(a)).then(() => { vacia(id); sala.manda({ para: id, t: "answer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id)); return; }
     if (q.t === "answer") { const pc = VZ.pcs[id]; if (pc && pc.signalingState === "have-local-offer") pc.setRemoteDescription(q.d).then(() => vacia(id)).catch(() => cuelga(id)); return; }
-    if (q.t === "ice") { const pc = VZ.pcs[id]; if (!pc || !pc.remoteDescription) { (VZ.cola[id] = VZ.cola[id] || []).push(q.d); return; } pc.addIceCandidate(q.d).catch(() => {}); }
+    if (q.t === "ice" || q.t === "ices") { const L = q.t === "ice" ? [q.d] : q.d || [], pc = VZ.pcs[id]; if (!pc || !pc.remoteDescription) { VZ.cola[id] = (VZ.cola[id] || []).concat(L); return; } L.forEach((c) => pc.addIceCandidate(c).catch(() => {})); }
   }
   async function prendeVoz() {
     if (VZ || !hayVoz()) return;
@@ -1429,7 +1710,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     if (!sala) { st.getTracks().forEach((t) => t.stop()); return; }
     VZ = { st, pcs: {}, cola: {}, rs: {}, an: {}, mudo: 0, cam: null, camMs: null, ac: null };
     try { VZ.ac = new (window.AudioContext || window.webkitAudioContext)(); if (VZ.ac.state === "suspended") VZ.ac.resume(); } catch (_) {}
-    mide(sala.yo, st); VZ.tk = setInterval(escucha, 140);
+    mide(sala.yo, st); VZ.tk = setInterval(escucha, 140); VZ.rp = setInterval(repara, 4000);
     if (!sala.vz) { sala.vz = 1; sala.senal(senal); }
     sala.presence({ v: 1 }).catch(() => {}); sala.manda({ t: "hola" }); vibra(2); despierta(true); pinta();
   }
@@ -1437,11 +1718,12 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     if (!VZ) return;
     if (sala) { sala.manda({ t: "adios" }); sala.presence({ v: null }).catch(() => {}); }
     Object.keys(VZ.pcs).forEach((id) => { try { VZ.pcs[id].close(); } catch (_) {} });
-    VZ.st.getTracks().forEach((t) => t.stop()); if (VZ.cam) VZ.cam.stop(); clearInterval(VZ.tk); try { if (VZ.ac) VZ.ac.close(); } catch (_) {} VZ = null;
+    VZ.st.getTracks().forEach((t) => t.stop()); if (VZ.cam) VZ.cam.stop(); clearInterval(VZ.tk); clearInterval(VZ.rp); try { if (VZ.ac) VZ.ac.close(); } catch (_) {} VZ = null;
     if (sala) sala.presence({ c: null }).catch(() => {});
     const b = document.getElementById("voces"); if (b) b.innerHTML = "";
     despierta(view === "ros"); if (!callado) pinta();
   }
+  if (Q.get("demo") || Q.get("prueba")) window.atrioVz = () => (!VZ ? Promise.resolve(null) : Promise.all(Object.keys(VZ.pcs).map((id) => { const pc = VZ.pcs[id]; return pc.getStats().then((st) => { let rx = 0, lv = 0; st.forEach((r) => { if (r.type === "inbound-rtp" && r.kind === "audio") { rx += r.packetsReceived || 0; lv = Math.max(lv, r.audioLevel || 0); } }); return { id, s: pc.connectionState, rx, lv }; }, () => ({ id, s: "x", rx: 0, lv: 0 })); })).then((L) => ({ yo: sala && sala.yo, n: L.length, con: L.filter((x) => x.s === "connected").length, rx: L.filter((x) => x.rx > 20).length, oyen: L.filter((x) => x.lv > 0.001).length, gente: peersS.length })));
   // botones de voz, iguales en la sala y durante el rosario
   const botVoz = (chico) => {
     if (!hayVoz()) return "";
@@ -1476,38 +1758,88 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   let LUZ = null, luzQ = "am", luzPara = "", luzRe = 0;
   try { if (Q.get("luz")) { const j = JSON.parse(decodeURIComponent(escape(atob(Q.get("luz").replace(/-/g, "+").replace(/_/g, "/"))))); if (j && j.d && LQ[j.q]) LUZ = { d: String(j.d).slice(0, 40), p: String(j.p || "").slice(0, 40), q: j.q }; } } catch (_) {}
   const ligaLuz = (o) => { const b = btoa(unescape(encodeURIComponent(JSON.stringify(o)))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); return location.origin + location.pathname + "?luz=" + b; };
-  /* ---------- música de fondo: acordes lentos de órgano con eco de capilla, generados aquí ---------- */
+  /* ---------- cánticos: un coro canta, sin letra, una melodía modal como las del canto llano, sobre un bajo de órgano y con eco de catedral.
+     Todo se genera aquí; no hay grabaciones. Cada grupo de misterios tiene su modo, su altura y su paso. ---------- */
   let MU = null;
-  const MUS = [[62, 69, 74, 78, 81], [55, 67, 74, 79, 83], [59, 66, 71, 74, 78], [57, 64, 69, 74, 76], [57, 64, 69, 73, 76], [62, 69, 74, 78, 81], [55, 62, 71, 74, 79], [57, 64, 69, 73, 81]];
   const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
-  function acorde(t0, i) {
-    if (!MU) return; const ac = MU.ac, d = 11;
-    MUS[i % MUS.length].forEach((m, j) => { [["sine", 0, 1], ["triangle", 5, 0.6], ["sine", 1200, 0.18], ["sine", -1200, j === 0 ? 0.5 : 0]].forEach(([ty, dt, vol]) => {
-      const o = ac.createOscillator(), g = ac.createGain(); o.type = ty; o.frequency.value = hz(m); o.detune.value = dt + (j % 2 ? 2 : -2);
-      const v = (j === 0 ? 0.05 : 0.032) * vol; g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(v, t0 + 3.5); g.gain.setValueAtTime(v, t0 + d - 3.5); g.gain.linearRampToValueAtTime(0, t0 + d + 1.5);
-      o.connect(g); g.connect(MU.in); o.start(t0); o.stop(t0 + d + 2); }); });
+  const MAY = [0, 2, 4, 5, 7, 9, 11], DOR = [0, 2, 3, 5, 7, 9, 10], MIX = [0, 2, 4, 5, 7, 9, 10];
+  const MODO = { gozosos: [50, MAY, 0.64], luminosos: [52, MIX, 0.62], dolorosos: [50, DOR, 0.76], gloriosos: [53, MAY, 0.6] };
+  // frases en grados del modo (0 es la nota final; 4, la cuerda donde se recita) con su duración en pulsos
+  const FRA = [
+    [[0, 1], [2, 1], [3, 1], [4, 2], [4, 1], [5, 1], [4, 3]],
+    [[4, 1], [4, 1], [5, 1], [4, 1], [3, 1], [4, 2], [3, 1], [2, 1], [3, 1], [2, 2], [1, 1], [0, 4]],
+    [[2, 1], [3, 1], [4, 1], [4, 1], [6, 1], [5, 1], [4, 2], [5, 1], [4, 1], [3, 1], [2, 3]],
+    [[4, 1], [5, 1], [7, 2], [6, 1], [5, 1], [4, 2], [3, 1], [4, 1], [2, 1], [1, 1], [0, 4]],
+    [[0, 1], [-1, 1], [0, 1], [2, 1], [3, 2], [2, 1], [3, 1], [4, 3]],
+    [[4, 1], [3, 1], [4, 1], [5, 2], [4, 1], [3, 1], [2, 1], [3, 1], [1, 1], [0, 4]],
+    [[7, 2], [6, 1], [7, 1], [5, 1], [4, 2], [5, 1], [3, 1], [4, 1], [2, 2], [1, 1], [0, 5]],
+    [[0, 2], [1, 1], [2, 1], [1, 1], [0, 5]]
+  ], ORDF = [0, 1, 2, 3, 4, 5, 2, 6, 4, 1, 7];
+  const VOC = { o: [430, 820, 2650], a: [690, 1140, 2700] };
+  // eco de catedral: ruido que se apaga en cinco segundos y se va oscureciendo, con unas primeras reflexiones
+  function eco(ac) {
+    const sr = ac.sampleRate, n = Math.floor(sr * 5.5), b = ac.createBuffer(2, n, sr);
+    for (let c = 0; c < 2; c++) { const x = b.getChannelData(c); let y = 0;
+      for (let i = 0; i < n; i++) { const t = i / n, a = 0.55 - 0.47 * Math.min(1, t * 2.2); y += a * (Math.random() * 2 - 1 - y); x[i] = y * Math.pow(1 - t, 2.6) * (1 + 1.6 * (0.55 - a)) * Math.min(1, i / (sr * 0.012)); }
+      [0.019, 0.031, 0.047, 0.063].forEach((d, k) => { x[Math.floor(sr * (d + c * 0.004))] += (k % 2 ? -0.5 : 0.6) / (k + 1); }); }
+    return b;
+  }
+  function motor(ac, set) {
+    const md = MODO[set] || MODO.gozosos, fin = md[0], esc_ = md[1], pulso = md[2], nota = (g) => fin + esc_[((g % 7) + 7) % 7] + 12 * Math.floor(g / 7);
+    const out = ac.createGain(), bus = ac.createGain(), lp = ac.createBiquadFilter(), rv = ac.createConvolver(), seco = ac.createGain(), hum = ac.createGain(), cmp = ac.createDynamicsCompressor();
+    lp.type = "lowpass"; lp.frequency.value = 3800; lp.Q.value = 0.3; rv.buffer = eco(ac); seco.gain.value = 0.34; hum.gain.value = 0.95; out.gain.value = 0; bus.gain.value = 0.8;
+    cmp.threshold.value = -22; cmp.knee.value = 20; cmp.ratio.value = 3; cmp.attack.value = 0.03; cmp.release.value = 0.5;
+    bus.connect(lp); lp.connect(seco); lp.connect(rv); rv.connect(hum); const lim = ac.createDynamicsCompressor(); lim.threshold.value = -2.5; lim.knee.value = 2; lim.ratio.value = 20; lim.attack.value = 0.003; lim.release.value = 0.2;
+    seco.connect(cmp); hum.connect(cmp); cmp.connect(out); out.connect(lim); lim.connect(ac.destination);
+    // la voz: una onda de garganta (armónicos que se apagan suave), su pecho y tres formantes que hacen la vocal
+    const N = 26, re = new Float32Array(N), im = new Float32Array(N); for (let k = 1; k < N; k++) im[k] = 1 / Math.pow(k, 1.22);
+    const onda = ac.createPeriodicWave(re, im), cant = [];
+    const cantor = (oct, pan, vol, des) => {
+      const g = ac.createGain(), mix = ac.createGain(), pe = ac.createBiquadFilter(), pg = ac.createGain(), lf = ac.createOscillator(), lg = ac.createGain(), os = [ac.createOscillator(), ac.createOscillator()], k = oct ? 1.15 : 1;
+      g.gain.value = 0; mix.gain.value = 0.5; pe.type = "lowpass"; pe.frequency.value = oct ? 900 : 520; pg.gain.value = 0.3; mix.connect(pe); pe.connect(pg); pg.connect(g);
+      os.forEach((o, q) => { o.setPeriodicWave(onda); o.frequency.value = hz(fin + 12 * oct); o.detune.value = des + (q ? 7 : -6); o.connect(mix); });
+      lf.frequency.value = 4.3 + Math.random() * 1.2; lg.gain.value = 6 + Math.random() * 5; lf.connect(lg); os.forEach((o) => lg.connect(o.detune));
+      const fs = [0, 1, 2].map((q) => { const f = ac.createBiquadFilter(), fg = ac.createGain(); f.type = "bandpass"; f.Q.value = [4.5, 7, 8][q]; f.frequency.value = k * VOC.o[q]; fg.gain.value = [1.25, 0.62, 0.22][q]; mix.connect(f); f.connect(fg); fg.connect(g); return f; });
+      if (ac.createStereoPanner) { const pn = ac.createStereoPanner(); pn.pan.value = pan; g.connect(pn); pn.connect(bus); } else g.connect(bus);
+      os.forEach((o) => o.start()); lf.start(); cant.push({ g, os, fs, oct, vol, k, dt: Math.random() * 0.035 });
+    };
+    cantor(0, -0.4, 1, -4); cantor(0, 0.35, 0.95, 5); cantor(0, 0, 1, 0); cantor(1, -0.2, 0.3, 3); cantor(1, 0.22, 0.27, -5);
+    // el órgano: un bajo que no se mueve (la final y su quinta) y un acorde suave que responde entre frase y frase
+    const tubo = (m, tipo, vol, t0, dur) => { const o = ac.createOscillator(), g = ac.createGain(); o.type = tipo; o.frequency.value = hz(m); o.detune.value = Math.random() * 6 - 3; g.gain.value = 0; o.connect(g); g.connect(bus);
+      if (dur) { g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(vol, t0 + dur * 0.4); g.gain.setTargetAtTime(0, t0 + dur * 0.55, dur * 0.3); o.start(t0); o.stop(t0 + dur * 2.4); } else { g.gain.setTargetAtTime(vol, t0, 2.5); o.start(t0); } };
+    let t = ac.currentTime + 0.3, n = 0;
+    [[fin - 12, "sine", 0.02], [fin, "sine", 0.03], [fin, "triangle", 0.012], [fin + 7, "sine", 0.02]].forEach((q) => tubo(q[0], q[1], q[2], t, 0));
+    const resp = (t0, gr) => { [0, 4, 7, 9].forEach((d, q) => { tubo(nota(gr + d), q % 2 ? "triangle" : "sine", [0.034, 0.026, 0.024, 0.014][q], t0, 3.6); }); };
+    const camp = (t0) => { const f = hz(fin + 24); [[0.5, 0.5, 4.5], [1, 1, 3.6], [1.19, 0.4, 2.8], [1.5, 0.28, 2.3], [2, 0.42, 1.9], [2.74, 0.16, 1.2], [3, 0.12, 0.9]].forEach((q) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = f * q[0]; g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.026 * q[1], t0 + 0.008); g.gain.setTargetAtTime(0, t0 + 0.02, q[2] / 3); o.connect(g); g.connect(bus); o.start(t0); o.stop(t0 + q[2] * 2.2); }); };
+    const canta = (t0, fr, alto) => { let x = t0;
+      cant.forEach((c) => { if (c.oct && !alto) return; c.g.gain.setTargetAtTime(c.vol * 0.24, t0 + c.dt, 0.3); });
+      fr.forEach((q) => { const ab = Math.max(0, Math.min(1, (q[0] - 1) / 5));
+        cant.forEach((c) => { if (c.oct && !alto) return; const tt = x + c.dt; c.os.forEach((o) => o.frequency.setTargetAtTime(hz(nota(q[0]) + 12 * c.oct), tt, 0.032)); c.fs.forEach((f, w) => f.frequency.setTargetAtTime(c.k * (VOC.o[w] + (VOC.a[w] - VOC.o[w]) * ab), tt, 0.14)); });
+        x += q[1] * pulso; });
+      cant.forEach((c) => c.g.gain.setTargetAtTime(0, x - 0.3 + c.dt, 0.45));
+      return x; };
+    // se va escribiendo por adelantado, frase por frase
+    const agenda = (hasta) => { while (t < hasta) { const k = n % ORDF.length, fr = FRA[ORDF[k]]; if (!k) { camp(t); t += 1.3; }
+        const f2 = canta(t, fr, k % 4 === 3 || ORDF[k] === 6); resp(f2 - 0.7, fr[fr.length - 1][0] === 2 ? -2 : 0); t = f2 + 2.2 + (n % 3) * 0.3; n++; } };
+    return { out, agenda };
   }
   function musica(on) {
     if (on && !MU) {
       try { if (navigator.audioSession) navigator.audioSession.type = "playback"; } catch (_) {}
       let ac; try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (_) { return; }
-      const lp = ac.createBiquadFilter(), rv = ac.createConvolver(), seco = ac.createGain(), humedo = ac.createGain(), out = ac.createGain();
-      lp.type = "lowpass"; lp.frequency.value = 2600; lp.Q.value = 0.4;
-      // eco de capilla: ruido que se apaga en cinco segundos
-      const n = ac.sampleRate * 5, b = ac.createBuffer(2, n, ac.sampleRate); for (let c = 0; c < 2; c++) { const x = b.getChannelData(c); for (let i = 0; i < n; i++) x[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / n, 3.2); } rv.buffer = b;
-      seco.gain.value = 0.45; humedo.gain.value = 0.9; out.gain.value = 0;
-      lp.connect(seco); lp.connect(rv); rv.connect(humedo); seco.connect(out); humedo.connect(out); out.connect(ac.destination);
-      MU = { ac, in: lp, out, i: 0, t: 0 }; if (ac.state !== "running") ac.resume().catch(() => {});
+      let m; try { m = motor(ac, ros && ros.set); } catch (_) { try { ac.close(); } catch (_) {} return; }
+      MU = { ac, out: m.out, m }; if (ac.state !== "running") ac.resume().catch(() => {});
       // si el teléfono interrumpe el audio (llamada, otra app), se reanuda al volver
       ac.onstatechange = () => { if (MU && MU.ac === ac && ac.state !== "running" && ac.state !== "closed") ac.resume().catch(() => {}); };
-      const t = ac.currentTime + 0.1; MU.t = t; acorde(t, 0); MU.i = 1; MU.t = t + 8;
-      MU.k = setInterval(() => { if (!MU) return; while (MU.t < MU.ac.currentTime + 4) { acorde(MU.t, MU.i++); MU.t += 8; } }, 1000);
+      m.agenda(ac.currentTime + 9); MU.k = setInterval(() => { if (MU) try { MU.m.agenda(MU.ac.currentTime + 9); } catch (_) {} }, 1000);
       volMu();
     } else if (!on && MU) { const m = MU; MU = null; clearInterval(m.k); try { m.out.gain.cancelScheduledValues(m.ac.currentTime); m.out.gain.setTargetAtTime(0, m.ac.currentTime, 0.6); } catch (_) {} setTimeout(() => { try { m.ac.close(); } catch (_) {} }, 3500); }
   }
   // más bajita cuando la familia habla por la sala
   function volMu() { if (!MU) return; const v = VZ ? 0.6 : 1.8; try { MU.out.gain.cancelScheduledValues(MU.ac.currentTime); MU.out.gain.setTargetAtTime(v, MU.ac.currentTime, 0.8); } catch (_) {} }
-  if (Q.get("demo") || Q.get("prueba")) window.atrioMu = () => { if (!MU) return null; if (!MU.an) { MU.an = MU.ac.createAnalyser(); MU.out.connect(MU.an); } const b = new Float32Array(2048); MU.an.getFloatTimeDomainData(b); let q = 0; for (const v of b) q += v * v; return { st: MU.ac.state, rms: Math.sqrt(q / b.length) }; };
+  if (Q.get("demo") || Q.get("prueba")) { window.atrioMu = () => { if (!MU) return null; if (!MU.an) { MU.an = MU.ac.createAnalyser(); MU.out.connect(MU.an); } const b = new Float32Array(2048); MU.an.getFloatTimeDomainData(b); let q = 0; for (const v of b) q += v * v; return { st: MU.ac.state, rms: Math.sqrt(q / b.length) }; };
+    // para oírlo sin teléfono: lo graba fuera de tiempo real y devuelve el sonido y su volumen
+    window.atrioCanto = (seg, set) => { const oc = new OfflineAudioContext(2, 44100 * seg, 44100), m = motor(oc, set); m.out.gain.value = 1.8; m.agenda(seg); return oc.startRendering().then((b) => { const L = b.getChannelData(0), R = b.getChannelData(1), mono = new Array(L.length >> 1); let pk = 0, q = 0; for (let i = 0; i < L.length; i++) { const v = (L[i] + R[i]) / 2; pk = Math.max(pk, Math.abs(L[i]), Math.abs(R[i])); q += v * v; if (!(i & 1)) mono[i >> 1] = Math.round(Math.max(-1, Math.min(1, v)) * 32767); } return { pk, rms: Math.sqrt(q / L.length), mono }; }); }; }
   const botMu = () => `<button class="ic r mu${S.mu ? " on" : ""}" data-a="mu" aria-label="${S.mu ? "Apagar la música" : "Poner música de fondo"}" aria-pressed="${!!S.mu}">${S.mu ? I.nota : I.notano}</button>`;
   const presSala = () => { if (sala) sala.presence({ n: S.n.slice(0, 24), e: S.e, lead: lead ? 1 : 0, on: ros && ros.sala ? 1 : 0, i: ros ? ros.i : 0, set: ros ? ros.set : "", f: ros ? ros.f : "", fin: null }).catch(() => {}); };
   const guia = () => peersS.filter((p) => p.presence && p.presence.lead).sort((a, b) => (a.peer < b.peer ? -1 : 1))[0];
@@ -1534,7 +1866,8 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   function salir() { apagaVoz(1); try { if (sala) sala.leave(); } catch (_) {} sala = null; peersS = []; lead = false; codigo = ""; }
 
   /* ---------- piezas visuales ---------- */
-  const sky = () => '<div class="sky">' + [[20, 5, 10, 0], [55, 8, 8, 1.4], [86, 4, 10, 2.6], [1.5, 430, 9, 0.8], [96.5, 300, 9, 3.3], [96, 610, 8, 2], [1.5, 700, 8, 1.1]].map(([x, y, s, d]) => star(s, "#F4DCA6", `class="tw" style="left:${x}%;top:${y}px;animation-delay:${d}s"`)).join("") + "</div>";
+  const SKY = [[20, 5, 10, 0], [55, 8, 8, 1.4], [86, 4, 10, 2.6], [1.5, 430, 9, 0.8], [96.5, 300, 9, 3.3], [96, 610, 8, 2], [1.5, 700, 8, 1.1], [9, 92, 5, 2.1], [38, 30, 5, 3.7], [70, 58, 6, 0.4], [93, 140, 5, 1.7], [4, 236, 6, 2.9], [97, 468, 5, 0.2], [3, 560, 5, 3.1], [95, 820, 7, 1.3], [2, 930, 6, 2.4], [97, 1080, 6, 0.9], [3, 1240, 7, 1.9]];
+  const sky = () => '<div class="sky"><i class="cup"></i>' + SKY.map(([x, y, sz, d]) => star(sz, "#F4DCA6", `class="tw${sz < 7 ? " tq" : ""}" style="left:${x}%;top:${y}px;animation-delay:${d}s"`)).join("") + "</div>";
   function portal() {
     let r = "";
     for (let i = 0; i < 61; i++) { const a = Math.PI + (Math.PI * i) / 60, r1 = 104, r2 = r1 + (i % 2 ? 40 : 24); r += `<line x1="${(150 + r1 * Math.cos(a)).toFixed(1)}" y1="${(132 + r1 * Math.sin(a)).toFixed(1)}" x2="${(150 + r2 * Math.cos(a)).toFixed(1)}" y2="${(132 + r2 * Math.sin(a)).toFixed(1)}"/>`; }
@@ -1774,23 +2107,49 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       return `<svg class="vir" viewBox="0 0 60 82" width="${w}" height="${f(w * 82 / 60)}" aria-hidden="true">${g}${bg}${body}${pie}</svg>`;
     };
   })();
+  /* La imagen real de cada Virgen. Son fotos de Wikimedia Commons, recortadas para Atrio (c = x0, y0 y ancho del recorte,
+     en fracción de la foto) y guardadas en /v. «hd» es la original en grande: solo se pide al verla de cerca. */
+  const WM = "https://upload.wikimedia.org/wikipedia/commons/";
+  const LIC = { "CC0": "https://creativecommons.org/publicdomain/zero/1.0/deed.es", "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/deed.es", "CC BY-SA 4.0": "https://creativecommons.org/licenses/by-sa/4.0/deed.es" };
   const VFOTO = {
-    guadalupe: { u: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Virgen_de_guadalupe1.jpg/500px-Virgen_de_guadalupe1.jpg", p: "50% 28%", z: 1, a: "Imagen de la tilma, Basílica de Guadalupe", l: "Dominio público", lu: "", f: "https://commons.wikimedia.org/wiki/File:Virgen_de_guadalupe1.jpg" },
-    fatima: { u: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Fatima_0752_%2819796283042%29_%28cropped%29.jpg/500px-Fatima_0752_%2819796283042%29_%28cropped%29.jpg", p: "50% 38%", z: 1.05, a: "János Korom", l: "Dominio público", lu: "", f: "https://commons.wikimedia.org/wiki/File:Fatima_0752_%2819796283042%29_%28cropped%29.jpg" },
-    lourdes: { u: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg/500px-Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg", p: "50% 28%", z: 1, a: "IgnaceBoitaclou", l: "CC BY 4.0", lu: "https://creativecommons.org/licenses/by/4.0/deed.es", f: "https://commons.wikimedia.org/wiki/File:Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg" },
-    carmen: { u: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png/500px-Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png", p: "50% 30%", z: 1, a: "David.Lopez.Sala", l: "CC BY 4.0", lu: "https://creativecommons.org/licenses/by/4.0/deed.es", f: "https://commons.wikimedia.org/wiki/File:Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png" },
-    pilar: { u: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg/500px-13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg", p: "50% 44%", z: 1.55, a: "El Justicia de Aragón", l: "CC0", lu: "https://creativecommons.org/publicdomain/zero/1.0/deed.es", f: "https://commons.wikimedia.org/wiki/File:13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg" },
-    sanjuan: { u: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg/500px-Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg", p: "50% 40%", z: 1.05, a: "Metropolitanogto", l: "CC0", lu: "https://creativecommons.org/publicdomain/zero/1.0/deed.es", f: "https://commons.wikimedia.org/wiki/File:Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg" },
-    zapopan: { u: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg/960px-Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg", p: "72% 4%", z: 2.3, a: "ExorcisioTe", l: "CC BY-SA 4.0", lu: "https://creativecommons.org/licenses/by-sa/4.0/deed.es", f: "https://commons.wikimedia.org/wiki/File:Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg" },
-    juquila: { u: "https://upload.wikimedia.org/wikipedia/commons/8/84/Juquilita.jpg", p: "50% 30%", z: 1, a: "Autor desconocido", l: "Dominio público", lu: "", f: "https://commons.wikimedia.org/wiki/File:Juquilita.jpg" },
-    socorro: { u: "https://upload.wikimedia.org/wikipedia/commons/2/26/Perpetual_help_original_icon.jpg", p: "50% 28%", z: 1, a: "Autor desconocido", l: "Dominio público", lu: "", f: "https://commons.wikimedia.org/wiki/File:Perpetual_help_original_icon.jpg" },
-    milagrosa: { u: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg/500px-Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg", p: "50% 22%", z: 1, a: "Nheyob", l: "CC BY-SA 4.0", lu: "https://creativecommons.org/licenses/by-sa/4.0/deed.es", f: "https://commons.wikimedia.org/wiki/File:Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg" },
-    auxiliadora: { u: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg/500px-Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg", p: "50% 36%", z: 1.38, a: "Sanji1986", l: "CC BY-SA 4.0", lu: "https://creativecommons.org/licenses/by-sa/4.0/deed.es", f: "https://commons.wikimedia.org/wiki/File:Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg" },
-    dolores: { u: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg/500px-Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg", p: "50% 42%", z: 1, a: "Pederseguro", l: "Dominio público", lu: "", f: "https://commons.wikimedia.org/wiki/File:Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg" }
+    guadalupe: { hd: "2/2c/Virgen_de_guadalupe1.jpg", ow: 788, oh: 1226, c: [0.02, 0.005, 0.88], a: "Imagen de la tilma, Basílica de Guadalupe", l: "Dominio público", f: "Virgen_de_guadalupe1.jpg" },
+    fatima: { hd: "3/34/Fatima_0752_%2819796283042%29_%28cropped%29.jpg", ow: 614, oh: 1092, c: [0.075, 0.11, 0.83], a: "János Korom", l: "Dominio público", f: "Fatima_0752_%2819796283042%29_%28cropped%29.jpg" },
+    lourdes: { hd: "thumb/6/6a/Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg/960px-Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg", ow: 3654, oh: 5760, c: [0.08, 0.13, 0.8], a: "IgnaceBoitaclou", l: "CC BY 4.0", f: "Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg" },
+    carmen: { hd: "thumb/d/d3/Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png/960px-Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png", ow: 1414, oh: 2000, c: [0.127, 0.08, 0.7355], a: "David.Lopez.Sala", l: "CC BY 4.0", f: "Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png" },
+    pilar: { hd: "thumb/a/a0/13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg/1280px-13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg", ow: 1338, oh: 1441, c: [0.252, 0.28, 0.4954], a: "El Justicia de Aragón", l: "CC0", f: "13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg" },
+    sanjuan: { hd: "thumb/0/0c/Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg/960px-Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg", ow: 1506, oh: 2048, c: [0.0445, 0.001, 0.905], a: "Metropolitanogto", l: "CC0", f: "Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg" },
+    zapopan: { hd: "thumb/3/3a/Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg/1920px-Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg", ow: 1936, oh: 2592, c: [0.4508, 0.03, 0.4284], a: "ExorcisioTe", l: "CC BY-SA 4.0", f: "Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg" },
+    juquila: { hd: "8/84/Juquilita.jpg", ow: 314, oh: 400, c: [0.119, 0.01, 0.722], a: "Autor desconocido", l: "Dominio público", f: "Juquilita.jpg" },
+    socorro: { hd: "2/26/Perpetual_help_original_icon.jpg", ow: 500, oh: 609, c: [0.12, 0, 0.811], a: "Autor desconocido", l: "Dominio público", f: "Perpetual_help_original_icon.jpg" },
+    milagrosa: { hd: "thumb/f/ff/Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg/960px-Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg", ow: 2122, oh: 3747, c: [0.01, 0.03, 0.93], a: "Nheyob", l: "CC BY-SA 4.0", f: "Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg" },
+    auxiliadora: { hd: "9/93/Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg", ow: 703, oh: 1000, c: [0.138, 0.128, 0.664], a: "Sanji1986", l: "CC BY-SA 4.0", f: "Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg" },
+    dolores: { hd: "thumb/5/5a/Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg/960px-Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg", ow: 1331, oh: 1704, c: [0.0935, 0, 0.853], a: "Pederseguro", l: "Dominio público", f: "Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg" }
   };
-  // la imagen real de cada Virgen en su arco de oro; si no carga, queda su dibujo
-  const VIRG = (k, w) => { const f = VFOTO[k]; if (!f) return VIRGD(k, w); const h = Math.round(w * 4 / 3);
-    return `<span class="vph" style="width:${w}px;height:${h}px"><span class="vpd">${VIRGD(k, w * 0.9)}</span><img src="${f.u}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" style="object-position:${f.p};transform:scale(${f.z});transform-origin:${f.p}" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></span>`; };
+  // la foto en su arco de oro (2:3); mientras llega, o si falta, queda su dibujo
+  const VIRG = (k, w, ya) => { if (!VFOTO[k]) return VIRGD(k, w); const h = Math.round(w * 1.5);
+    return `<span class="vph" style="width:${w}px;height:${h}px"><span class="vpd">${VIRGD(k, Math.round(w * 0.86))}</span><img src="v/${k}${w <= 100 ? "-s" : ""}.jpg" width="${w}" height="${h}" alt=""${ya ? "" : ' loading="lazy"'} decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></span>`; };
+  /* Verla de cerca: la imagen grande con puntos dorados; cada punto cuenta un detalle. */
+  let LU = null;
+  const luTxt = (sim) => { const s = LU.i >= 0 ? sim[LU.i] : null; return [s ? `<b>${esc(s[2])}</b><p>${esc(s[3])}</p>` : `<b>Mírala de cerca</b><p>Toca los puntos dorados: cada uno guarda un detalle de su imagen.</p>`, LU.i < 0 ? "Ver el primer detalle" : LU.i >= sim.length - 1 ? "Listo" : "Siguiente detalle"]; };
+  function lupa() {
+    const x = document.getElementById("lupa"); if (x) x.remove(); if (!LU) return;
+    const a = ADV.find((q) => q.k === LU.k), f = VFOTO[LU.k]; if (!a || !f) { LU = null; return; }
+    const H = window.innerHeight, W = Math.round(Math.max(190, Math.min(app.clientWidth - 44, (H - 262) / 1.5, 380))), x0 = f.c[0], y0 = f.c[1], iw = W / f.c[2], ih = (iw * f.oh) / f.ow, sim = a.sim || [], tx = luTxt(sim);
+    app.insertAdjacentHTML("beforeend", `<div id="lupa" role="dialog" aria-label="${esc(advN(a))}, de cerca"><div class="lub"><p class="ru">${esc(a.p)} ${esc(a.c)}</p><button class="ic r" data-a="lupax" aria-label="Cerrar">${I.x}</button></div>
+      <div class="luf" style="width:${W}px;height:${Math.round(W * 1.5)}px"><img src="v/${a.k}.jpg" alt=""><img class="luh" src="${WM + f.hd}" alt="" referrerpolicy="no-referrer" style="width:${f1(iw)}px;height:${f1(ih)}px;left:${f1(-x0 * iw)}px;top:${f1(-y0 * ih)}px" onload="this.classList.add('ok')" onerror="this.remove()">
+        ${sim.map((q, i) => `<button class="lup${i === LU.i ? " on" : ""}" data-a="lupan" data-k="${i}" style="left:${q[0]}%;top:${q[1]}%" aria-label="${esc(q[2])}"><i>${i + 1}</i></button>`).join("")}</div>
+      <div class="luc" aria-live="polite">${tx[0]}</div><button class="btn go lus" data-a="lupas">${tx[1]}</button></div>`);
+  }
+  function lupaT() { const T = document.getElementById("lupa"), a = LU && ADV.find((q) => q.k === LU.k); if (!T || !a) return; const tx = luTxt(a.sim || []);
+    T.querySelectorAll(".lup").forEach((b, i) => b.classList.toggle("on", i === LU.i)); const c = T.querySelector(".luc"); c.innerHTML = tx[0]; c.classList.remove("lin"); void c.offsetWidth; c.classList.add("lin"); T.querySelector(".lus").textContent = tx[1]; }
+  // la paloma que baja: alas abiertas, cabeza hacia abajo, como se pinta al Espíritu Santo
+  const PAL_ES = (() => { const ala = `<path d="M108 104C84 86 52 64 14 38C22 62 34 80 48 92C38 92 30 92 22 90C36 106 52 116 68 122C60 126 52 128 44 128C62 138 84 142 104 138Z" fill="url(#pg2)" stroke="#fff" stroke-opacity=".7" stroke-width=".8" stroke-linejoin="round"/><path d="M104 120C80 110 50 88 26 56M104 131C84 126 62 116 46 104" fill="none" stroke="#9DB9BC" stroke-opacity=".55" stroke-width="1" stroke-linecap="round"/>`;
+    return `<svg class="pal0" viewBox="0 0 240 220"><defs><radialGradient id="pg1" cx=".5" cy=".6" r=".65"><stop offset="0" stop-color="#fff"/><stop offset=".65" stop-color="#F4F9F9"/><stop offset="1" stop-color="#C6DADB"/></radialGradient><linearGradient id="pg2" x1=".9" y1=".9" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#EEF5F5"/><stop offset="1" stop-color="#B7CFD1"/></linearGradient><radialGradient id="pgl"><stop offset="0" stop-color="#FFF6D8" stop-opacity=".95"/><stop offset=".32" stop-color="#F4DCA6" stop-opacity=".42"/><stop offset="1" stop-color="#F4DCA6" stop-opacity="0"/></radialGradient></defs>
+      <circle class="pgh" cx="120" cy="120" r="104" fill="url(#pgl)"/>
+      <g class="pwl">${ala}</g><g class="pwr"><g transform="translate(240 0) scale(-1 1)">${ala}</g></g>
+      <path d="M120 98L99 36Q109 27 120 31Q131 27 141 36Z" fill="url(#pg1)" stroke="#fff" stroke-opacity=".7" stroke-width=".8" stroke-linejoin="round"/><path d="M120 96V33M120 96L108 33M120 96L132 33" stroke="#9DB9BC" stroke-opacity=".5" stroke-width="1" stroke-linecap="round"/>
+      <path d="M120 68C105 86 100 118 104 140C106 154 112 164 120 168C128 164 134 154 136 140C140 118 135 86 120 68Z" fill="url(#pg1)"/>
+      <circle cx="120" cy="170" r="11.5" fill="url(#pg1)"/><path d="M116.2 179.5L120 191.5L123.8 179.5Z" fill="#E9B95A"/><circle cx="115.2" cy="171.5" r="1.5" fill="#23464A"/><circle cx="124.8" cy="171.5" r="1.5" fill="#23464A"/></svg>`; })();
   /* ---------- bienvenida: el camino de cinco cuentas y la veladora ---------- */
   // el avance del onboarding es una pequeña decena de oro: cada paso enciende una cuenta
   const obHd = (n, back) => `<div class="hd z obh"><button class="ic" data-a="go" data-v="${back}" data-b="1" aria-label="Regresar">${I.back}</button><div class="obr"><span class="sr">Paso ${n} de 5</span><i class="obc" aria-hidden="true"></i>${[1, 2, 3, 4, 5].map((k) => `<b class="${k < n ? "ok" : k === n ? "on" : ""}"></b>`).join("")}<svg class="obx" width="12" height="16" viewBox="0 0 12 16" aria-hidden="true"><path d="M6 1v14M1.5 5h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><span class="ic"></span></div>`;
@@ -1821,11 +2180,16 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     nom: () => ob ? `<section class="v d in obv">${sky()}${obHd(1, "bien")}${VEL(!!S.n)}
       <h1 class="z obt">¿Cómo te llamas?</h1><p class="sub z c">Para que la Virgen y tu familia te reconozcan aquí.</p>
       <input class="fld nm z" id="fn" type="text" autocomplete="given-name" autocapitalize="words" maxlength="24" placeholder="Tu nombre" aria-label="Tu nombre" value="${esc(S.n)}">
-      <p class="obg z" id="fng">${S.n ? "Qué gusto tenerte aquí, " + esc(S.n.split(" ")[0]) + "." : "&nbsp;"}</p>
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`
       : `<section class="v d in">${sky()}${hd(["yo"], "Tus datos")}<h1 class="z" style="margin-top:10px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
       <label class="lab z" for="fn">Tu nombre</label><input class="fld z" id="fn" type="text" autocomplete="given-name" maxlength="24" value="${esc(S.n)}">
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`,
+    // el saludo: una paloma baja con luz, como en Pentecostés, y la invocación más antigua al Espíritu Santo
+    gusto: () => `<section class="v d in gst">${sky()}${obHd(1, "nom")}
+      <div class="gsa z" aria-hidden="true"><div class="gsl"></div><div class="gsr"></div>${PAL_ES}<div class="gsch">${Array.from({ length: 16 }, (_, k) => `<i style="left:${(22 + ((k * 29) % 56)).toFixed(0)}%;animation-delay:${(1.4 + ((k * 0.47) % 4.4)).toFixed(2)}s;animation-duration:${(4.6 + (k % 5) * 0.7).toFixed(1)}s"></i>`).join("")}</div></div>
+      <div class="gsx z"><p class="gsq">Qué gusto tenerte aquí,</p><h1 class="gsn">${esc((S.n || "").split(" ")[0])}</h1></div>
+      <p class="gsp z">Ven, Espíritu Santo, llena los corazones de tus fieles y enciende en ellos el fuego de tu amor.</p>
+      <div class="mt z gsk"><button class="btn go bvgo" data-a="go" data-v="est">Continuar</button></div></section>`,
     est: () => { const su = sugEst(), L = MX.e.map((e, i) => [i, e[0]]).concat([[99, "Fuera de México"]]), cab = `${sky()}${ob ? obHd(2, "nom") : hd(["nom"], "Tus datos")}<h1 class="z" style="margin-top:${ob ? 18 : 10}px;font-size:34px;line-height:40px">¿Desde dónde rezas?</h1>`;
       // 1) una sola pregunta, si el teléfono sabe dónde está
       if (su !== null && !estAbre && S.e < 0) return `<section class="v d n in">${cab}<p class="sub z">Ahí se enciende tu veladora en el mapa.</p>
@@ -1835,15 +2199,19 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       <input class="fld bus z" id="fb" type="search" placeholder="Busca tu estado" autocomplete="off" aria-label="Busca tu estado">
       <div class="esl z" id="esl">${L.map(([i, n]) => `<button class="es${S.e === i ? " on" : ""}" data-a="esc" data-k="${i}" data-n="${esc(sinAc(n))}"><span>${n}</span>${S.e === i ? `<i class="pal">${I.ok}</i>` : I.go}</button>`).join("")}<p class="note c" id="esn" hidden>No encontramos ese estado.</p></div></section>`; },
     advs: () => { const n = sel.length; return `<section class="v d in" style="padding-bottom:120px">${sky()}${ob ? obHd(3, "est") : hd(["adv"], "Tus Vírgenes")}<h1 class="z" style="margin-top:${ob ? 18 : 10}px;font-size:34px;line-height:40px">¿A qué Virgen le rezas?</h1><p class="sub z">Elige una o varias. Es la misma María, con el nombre que le dan en tu casa.</p>
-      <div class="advg z">${ADV.map((a) => { const on = sel.includes(a.k); return `<button class="ni${on ? " on" : ""}" data-a="advt" data-k="${a.k}" aria-pressed="${on}" aria-label="${advN(a)}">${on ? `<span class="pal">${I.ok}</span>` : ""}<span class="vfig">${VIRG(a.k, 74)}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`; }).join("")}</div>
+      <div class="advg z">${ADV.map((a) => { const on = sel.includes(a.k); return `<button class="ni${on ? " on" : ""}" data-a="advt" data-k="${a.k}" aria-pressed="${on}" aria-label="${advN(a)}">${on ? `<span class="pal">${I.ok}</span>` : ""}<span class="vfig">${VIRG(a.k, 76)}</span><b>${a.c}</b><small>${a.f[0]} ${MESES[a.f[1] - 1].slice(0, 3)}</small></button>`; }).join("")}</div>
       <p class="note z" style="margin-top:18px">¿No está la tuya? Iremos sumando más advocaciones.</p>
       <div class="pie"><button class="btn go" data-a="advok"${n ? "" : " disabled"}>${n ? (n === 1 ? "Listo, elegí 1" : "Listo, elegí " + n) : "Elige al menos una"}</button></div></section>`; },
     adv: () => { const a = adv(), ff = fiesta(a), f = frase(a);
-      return `<section class="v d in">${sky()}${hd([vuelve], "Tu Virgen")}
+      return `<section class="v d in advp">${sky()}${hd([vuelve], "Tu Virgen")}
         ${mis().length > 1 ? `<div class="chips z">${mis().map((x) => `<button class="chip${x.k === a.k ? " on" : ""}" data-a="verv" data-k="${x.k}">${x.c}</button>`).join("")}</div>` : ""}
-        <div class="nicho z"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><span class="vfig vbig">${VIRG(a.k, 132)}</span><p class="ru">${a.p}</p><h2>${a.c}</h2><p class="ins">${a.l}</p><p class="fie">${ff ? `Su fiesta es el ${a.f[0]} de ${MESES[a.f[1] - 1]}. ${ff === 1 ? "Es mañana." : "Faltan " + ff + " días."}` : "Hoy es su fiesta."}</p></div></div>
+        <div class="nicho z"><i class="n1"></i><i class="n2"></i>${ARCO}<div class="nb"><button class="vver" data-a="lupa" data-k="${a.k}" aria-label="Ver su imagen de cerca">${VIRG(a.k, 140, 1)}${a.sim ? `<span class="vlc"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>Tócala para verla de cerca</span>` : ""}</button><p class="ru">${a.p}</p><h2>${a.c}</h2><p class="ins">${a.l}</p><p class="fie">${ff ? `Su fiesta es el ${a.f[0]} de ${MESES[a.f[1] - 1]}. ${ff === 1 ? "Es mañana." : "Faltan " + ff + " días."}` : "Hoy es su fiesta."}</p></div></div>
+        ${a.n3 ? `<div class="n3 z">${a.n3.map((q) => `<div><b>${q[0]}</b><small>${q[1]}</small></div>`).join("")}</div>` : ""}
         <p class="tit z">${a.k === delDia().k ? "Mensaje del día" : "Su mensaje"}</p><div class="z c">${cita(f)}<p class="note" style="margin-top:8px">${f[2]}</p></div>
         <p class="tit z">Su historia</p>${a.h.map((x) => `<p class="his z">${x}</p>`).join("")}${a.fx ? `<p class="note z" style="margin-top:12px">${a.fx}</p>` : ""}
+        ${a.pr ? `<p class="tit z">Historias y prodigios</p><div class="prs z">${a.pr.map((q, i) => `<article class="prc"><span class="prn">${i + 1} de ${a.pr.length}</span><h3>${q[0]}</h3><p>${q[1]}</p></article>`).join("")}</div><p class="note c z prh">Desliza hacia un lado para leer las ${a.pr.length}</p>` : ""}
+        ${a.sab ? `<p class="tit z">¿Sabías que…?</p><div class="sabs z">${a.sab.map((q) => `<details class="sab"><summary><span>${q[0]}</span><i aria-hidden="true"></i></summary><p>${q[1]}</p></details>`).join("")}</div>` : ""}
+        ${a.san ? `<p class="tit z">Dónde visitarla</p><a class="sanc z" href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(a.san[2])}" target="_blank" rel="noopener"><span class="md">${I.pin}</span><span class="g"><b>${a.san[0]}</b><small>${a.san[1]}</small></span><em>Ver mapa</em></a>` : ""}
         <p class="tit z">Oración</p>${a.o[0] === "Oración" ? "" : `<p class="ru z c">${a.o[0]}</p>`}<p class="pr z c" style="font-size:20px;line-height:30px">${a.o[1]}</p>
         <div class="z" style="padding-top:28px"><button class="btn go" data-a="ros">Rezar el rosario de hoy</button><button class="lk" data-a="advsel" style="display:block;margin:4px auto 0">Elegir mis Vírgenes</button></div></section>`; },
     pid: () => `<section class="v d n in">${sky()}${ob ? obHd(4, "advs") : hd(["yo"], "Tu intención")}<h1 style="margin-top:${ob ? 18 : 10}px;font-size:34px;line-height:40px">¿Por quién vas a rezar?</h1><p class="sub">Cada rosario se ofrece por alguien. Escríbelo y te lo recordamos cada vez que reces. Solo tú lo ves.</p>
@@ -1861,8 +2229,8 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
         <label class="ru" for="fm" style="display:block;font-size:15px">Tu correo</label><input class="fld" id="fm" type="email" inputmode="email" autocomplete="email" autocapitalize="off" placeholder="tucorreo@gmail.com" value="${esc(correo)}">
         <button class="btn go" data-a="otp" style="margin-top:14px"${otpE === 1 ? " disabled" : ""}>${otpE === 1 ? "Mandando…" : "Mandarme un código"}</button>
         <p class="note c" style="margin-top:12px">Te llega un código de un solo uso. No guardamos contraseñas.</p>` : ""}</section>`; },
-    cred: () => `<section class="v d in">${sky()}${hd(["yo"], "Créditos")}<h1 class="z" style="margin-top:10px;font-size:32px;line-height:38px">Las imágenes de la Virgen</h1><p class="sub z">Fotografías y pinturas de Wikimedia Commons. Gracias a quienes las compartieron.</p>
-      <div class="card z">${ADV.map((a) => { const f = VFOTO[a.k]; return f ? `<div class="row crd">${VIRG(a.k, 36)}<span class="g"><b>${a.c}</b><small>${esc(f.a)} · ${f.lu ? `<a href="${f.lu}" target="_blank" rel="noopener">${f.l}</a>` : f.l} · <a href="${f.f}" target="_blank" rel="noopener">ver original</a></small></span></div>` : ""; }).join("")}</div></section>`,
+    cred: () => `<section class="v d in">${sky()}${hd(["yo"], "Créditos")}<h1 class="z" style="margin-top:10px;font-size:32px;line-height:38px">Las imágenes de la Virgen</h1><p class="sub z">Fotografías y pinturas de Wikimedia Commons, recortadas para Atrio. Gracias a quienes las compartieron. Las versiones recortadas se comparten con la misma licencia que su original.</p>
+      <div class="card z" style="margin-top:16px">${ADV.map((a) => { const f = VFOTO[a.k], lu = f && LIC[f.l]; return f ? `<div class="row crd">${VIRG(a.k, 36)}<span class="g"><b>${a.c}</b><small>${esc(f.a)} · ${lu ? `<a href="${lu}" target="_blank" rel="noopener">${f.l}</a>` : f.l} · <a href="https://commons.wikimedia.org/wiki/File:${f.f}" target="_blank" rel="noopener">ver original</a></small></span></div>` : ""; }).join("")}</div></section>`,
     jnew: () => `<section class="v d n in">${sky()}${hd(["hoy"], "Rosario juntos")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">Recen juntos el rosario de cada día</h1>
       <ol class="jex"><li><b>Cada quien a su hora.</b> El rosario de hoy tiene cinco misterios; cada uno reza los que pueda.</li><li><b>Se va llenando solo.</b> Ves quién rezó cada misterio y cuántos faltan.</li><li><b>El último cierra.</b> Quien reza el quinto termina con la Salve y se enciende su veladora.</li></ol>
       <label class="ru" for="fj" style="display:block;margin-top:22px;font-size:15px">¿Con quién?</label><input class="fld" id="fj" maxlength="40" autocomplete="off" placeholder="Constanza, mi mamá…">
@@ -1935,12 +2303,13 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
         <p class="tpo"><span style="background:${tp.c}"></span>${tp.t}</p>
         <div class="rh${hh.r ? " lit" : ""}"><div class="rhv" data-a="ros" role="button" aria-label="Rezar el rosario de hoy">${vis}</div>
           <div class="rht"><p class="ru">${hh.r ? "Ya lo rezaste hoy" : "Hoy, " + DIAS[d.getDay()].toLowerCase()}</p><h2>${hh.r ? "Tu veladora está encendida" : "El rosario de hoy"}</h2><p class="rhs">${M.n}${S.pi && !hh.r ? ` · <em>«${esc(S.pi)}»</em>` : ""}</p>
-          ${hh.r ? `<div class="rhb"><button class="btn gh" data-a="go" data-v="mapa">Ver el mapa</button><button class="btn gh" data-a="ros">Rezar otra vez</button></div>` : `<button class="btn go rhgo" data-a="ros">Empezar a rezar</button><button class="lk" data-a="go" data-v="sala">Rezarlo en familia, en vivo</button>`}</div></div>
+          ${hh.r ? `<div class="rhb"><button class="btn gh" data-a="go" data-v="mapa">Ver el mapa</button><button class="btn gh" data-a="ros">Rezar otra vez</button></div>` : `<div class="rhc"><button class="btn go rhgo" data-a="ros">Empezar a rezar</button><button class="btn gh rhf" data-a="go" data-v="sala" aria-label="Rezarlo en familia, en vivo">${I.cam}<span>En familia</span></button></div>`}</div></div>
         ${deHoy("", 1)}
         <p class="tit">Con los tuyos</p>
         <div class="tjs">${jt}${tile('data-a="luzn"', LOGO, "Mándale una luz", "Rezar por alguien", "Le llega por WhatsApp")}${tile('data-a="go" data-v="sala"', I.cam, "En vivo", "Rosario en familia", "Con voz y cámara")}</div>
         <p class="tit">Para hoy</p>
         <div class="card ph"><button class="row" data-a="go" data-v="ang"><span class="md">${EM.angelus}</span><span class="g"><b>Ángelus</b><small>${hh.a ? "Ya lo rezaste hoy" : "A las 12:00, con campana"}</small></span>${hh.a ? '<span class="ok">Hecho</span>' : I.bell}</button><button class="row" data-a="go" data-v="nov"><span class="md">${EM.novena}</span><span class="g"><b>Novena de Guadalupe</b><small>${nvTxt}</small></span>${I.go}</button></div>
+        ${(S.sc || 0) < 4 ? `<button class="sch" data-a="masab" aria-label="Ver lo que hay más abajo"><span class="schp">Desliza para ver más<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>` : ""}
         ${tabs("hoy")}</section>`;
     },
     rezar: () => {
@@ -1965,7 +2334,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       const nom = st.t === "let" ? "Letanías" : st.t === "mis" ? "" : o.n, cta = st.of ? st.k + " de " + st.of : "", don = mm ? ORD[st.m] + " misterio: " + mm[0] : st.l ? st.l : st.fin ? "Para terminar" : "Para empezar";
       const it = ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion ? ["Su intención", JT[ros.jt.id].intencion] : S.pi ? ["Tu intención", S.pi] : null;
             const tk = G ? "g" : "t", tip0 = !(S.tp || {})[tk] && !Q.get("notip") ? `<div class="tip" role="dialog" aria-label="Consejo"><p>${G ? "<b>¿Quieres leer las oraciones?</b> Toca este botón y ves cada una completa." : "<b>¿Te lo sabes de memoria?</b> Toca este botón y ves el rosario en grande, sin texto."}</p><p class="tip2">${G ? "Para avanzar, toca el rosario o «Amén»." : "Ahí avanzas tocando el rosario o «Amén»."}</p><button class="tipok" data-a="tipok" data-k="${tk}">Entendido</button></div>` : "", tip = tip0;
-      const tipM = !tip && !S.mu && !(S.tp || {}).mu && !Q.get("notip") && ros.i >= 1 ? `<div class="tip tm" role="dialog" aria-label="Consejo"><p><b>¿Rezas con música?</b> Toca la notita y suena un órgano suave de capilla mientras rezas.</p><div class="tipbs"><button class="lk" data-a="tipok" data-k="mu">Sin música</button><button class="tipok" data-a="mu">Poner música</button></div></div>` : "";
+      const tipM = !tip && !S.mu && !(S.tp || {}).mu && !Q.get("notip") && ros.i >= 1 ? `<div class="tip tm" role="dialog" aria-label="Consejo"><p><b>¿Rezas con música?</b> Toca la notita y te acompaña un coro con órgano, como en una capilla.</p><div class="tipbs"><button class="lk" data-a="tipok" data-k="mu">Sin música</button><button class="tipok" data-a="mu">Poner música</button></div></div>` : "";
       const cab = `<div class="hd z${tipM ? " htm" : ""}"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}<small class="cnt">${ros.i + 1} de ${ros.p.length}</small></p>${botMu()}${tipM}</div>`;
       const vis = `<button class="ra vt${tip ? " tipon" : ""}" data-a="vista" aria-label="${G ? "Ver la oración escrita" : "Ver el rosario en grande"}">${G ? I.txt : I.ros}</button>`;
       // La barra de abajo queda fija: «Amén» siempre está en el mismo lugar y el pulgar lo encuentra sin mirar
@@ -2020,7 +2389,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       return `<section class="v d n tb in">${sky()}<div class="hd" style="align-items:flex-start"><div><p class="ru">Tu bitácora</p><h1>${esc(S.n)}</h1></div><span aria-hidden="true" style="flex:none;margin-top:8px;width:44px;height:44px;border-radius:22px;background:var(--teal);color:var(--card);font-family:var(--se);font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center">${esc(S.n.slice(0, 1).toUpperCase())}</span></div>
       <div class="st"><div><b>${racha()}</b><span>${racha() === 1 ? "día seguido" : "días seguidos"}</span></div><div><b>${total()}</b><span>${total() === 1 ? "rosario rezado" : "rosarios rezados"}</span></div></div>
       <div class="card" style="margin-top:12px;padding:12px 12px 14px"><p class="ru" style="margin:0 6px 6px;font-size:16px">${MESES[m][0].toUpperCase() + MESES[m].slice(1)} de ${y}</p><div class="cal">${c}</div></div>
-      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="go" data-v="pid"><span class="g"><b>Por quién rezo</b><small>${S.pi ? esc(S.pi) : "Escribe tu intención"}</small></span>${I.go}</button>${jtOk() ? `<button class="row" data-a="jnueva"><span class="g"><b>Rosario juntos</b><small>${S.jt.length ? "Crear otro con alguien más" : "Reza por misterios con tu pareja o familia"}</small></span>${I.go}</button>` : ""}<button class="row" data-a="go" data-v="conf"><span class="g"><b>Mi última confesión</b><small>${S.cf ? (() => { const n = Math.max(0, Math.round((now() - new Date(S.cf + "T12:00:00")) / 864e5)); return n === 0 ? "Hoy" : n === 1 ? "Ayer" : n < 60 ? "Hace " + n + " días" : "Hace " + Math.round(n / 30.4) + " meses"; })() : "Solo tú la ves"}</small></span>${I.go}</button><button class="row" data-a="go" data-v="fr"><span class="g"><b>Cómo rezo el rosario</b><small>${forma() === "mx" ? "Como en México, con Salve y letanías" : "Con Credo al inicio"}</small></span>${I.go}</button><label class="row"><span class="g"><b>Música de fondo al rezar</b><small>Órgano suave, como en una capilla</small></span><span class="sw"><input type="checkbox" id="fmu"${S.mu ? " checked" : ""}><span></span></span></label><label class="row"><span class="g"><b>Vibración al rezar</b><small>Un toque en cada cuenta, más fuerte en cada misterio</small></span><span class="sw"><input type="checkbox" id="fv"${S.vib !== 0 ? " checked" : ""}><span></span></span></label><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
+      <div class="card" style="margin-top:12px"><button class="row" data-a="go" data-v="nom"><span class="g"><b>Cambiar mi nombre o mi estado</b><small>${esc(estado(S.e))}</small></span>${I.go}</button><button class="row" data-a="advsel"><span class="g"><b>${mis().length > 1 ? "Mis Vírgenes" : "Mi Virgen"}</b><small>${mis().map((x) => x.c).join(", ")}</small></span>${I.go}</button><button class="row" data-a="go" data-v="pid"><span class="g"><b>Por quién rezo</b><small>${S.pi ? esc(S.pi) : "Escribe tu intención"}</small></span>${I.go}</button>${jtOk() ? `<button class="row" data-a="jnueva"><span class="g"><b>Rosario juntos</b><small>${S.jt.length ? "Crear otro con alguien más" : "Reza por misterios con tu pareja o familia"}</small></span>${I.go}</button>` : ""}<button class="row" data-a="go" data-v="conf"><span class="g"><b>Mi última confesión</b><small>${S.cf ? (() => { const n = Math.max(0, Math.round((now() - new Date(S.cf + "T12:00:00")) / 864e5)); return n === 0 ? "Hoy" : n === 1 ? "Ayer" : n < 60 ? "Hace " + n + " días" : "Hace " + Math.round(n / 30.4) + " meses"; })() : "Solo tú la ves"}</small></span>${I.go}</button><button class="row" data-a="go" data-v="fr"><span class="g"><b>Cómo rezo el rosario</b><small>${forma() === "mx" ? "Como en México, con Salve y letanías" : "Con Credo al inicio"}</small></span>${I.go}</button><label class="row"><span class="g"><b>Música de fondo al rezar</b><small>Coro y órgano, como en una capilla</small></span><span class="sw"><input type="checkbox" id="fmu"${S.mu ? " checked" : ""}><span></span></span></label><label class="row"><span class="g"><b>Vibración al rezar</b><small>Un toque en cada cuenta, más fuerte en cada misterio</small></span><span class="sw"><input type="checkbox" id="fv"${S.vib !== 0 ? " checked" : ""}><span></span></span></label><button class="row" data-a="copiar"><span class="g"><b>Invitar a mi familia</b><small>Copia un mensaje para WhatsApp</small></span>${I.go}</button></div>
       ${U ? `<div class="card" style="margin-top:12px"><div class="row" style="cursor:default"><span class="g"><b>Tu avance está guardado</b><small>${esc(U.email || "Cuenta de Google")}</small></span><span class="ok">Listo</span></div><button class="row" data-a="logout"><span class="g"><b>Cerrar sesión</b></span>${I.go}</button></div>` : !conG() ? `<p class="note" style="margin-top:12px">Tu avance se guarda solo en este dispositivo.</p>` : pideG() ? `<button class="btn te" data-a="login" style="margin-top:12px">Guardar con Google</button><p class="note" style="margin-top:8px">Sin cuenta, tu avance vive solo en este teléfono.</p>` : ""}<p class="note c" style="margin-top:18px"><a href="/privacidad/">Aviso de privacidad</a> · <a href="/terminos/">Términos de uso</a> · <a href="#" data-a="go" data-v="cred">Créditos de imágenes</a></p>${tabs("yo")}</section>`; },
     sala: () => {
       const cab = sky() + hd(["hoy"], "Rosario en familia");
@@ -2058,18 +2427,22 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     if (view !== "hoy") return;
     while (n < TOUR.length && !app.querySelector(TOUR[n][0])) n++;
     if (n >= TOUR.length) { tourI = -1; S.tour = 1; save(); return; }
-    tourI = n; const [sel, t, d] = TOUR[n], el = app.querySelector(sel);
-    try { el.scrollIntoView({ block: "center", behavior: "instant" }); } catch (_) { try { el.scrollIntoView(); } catch (_) {} }
-    const r0 = el.getBoundingClientRect(), H = window.innerHeight, alto = r0.height > H * 0.45, r = { left: r0.left, width: r0.width, top: Math.max(8, r0.top), bottom: Math.min(H - 8, r0.bottom) }; r.height = r.bottom - r.top;
-    const abajo = alto ? false : r.top + r.height / 2 < H / 2, quedan = TOUR.slice(n + 1).filter((q) => app.querySelector(q[0])).length;
-    const tot = n + 1 + quedan, pts = Array.from({ length: tot }, (_, k) => `<i class="${k === n ? "on" : k < n ? "ok" : ""}"></i>`).join("");
-    app.insertAdjacentHTML("beforeend", `<div id="tour" role="dialog" aria-label="${t}"><div class="tu-h" style="left:${r.left - 8}px;top:${r.top - 8}px;width:${r.width + 16}px;height:${r.height + 16}px"><span class="tu-p"></span></div>
-      <div class="tu-b"><div class="tu-d" aria-label="Paso ${n + 1} de ${tot}">${pts}</div><b>${t}</b><p>${d}</p><button class="btn go tu-n" data-a="tourn">${quedan ? "Siguiente" : "Listo, a rezar"}</button><button class="lk tu-x" data-a="tourx">Saltar la guía</button></div></div>`);
-    // la burbuja nunca se sale de la pantalla: va junto al botón, arriba o abajo según quepa
-    const b = app.querySelector("#tour .tu-b"), bh = b.offsetHeight, m = 14, arriba = r.top - 8 - m - bh, abajo2 = r.bottom + 8 + m;
-    let y = alto ? H - bh - 96 : abajo2 + bh <= H - 12 && (arriba < 12 || r.top + r.height / 2 < H / 2) ? abajo2 : arriba >= 12 ? arriba : Math.max(12, H - bh - 12);
-    b.style.top = Math.round(y) + "px"; b.classList.add(y > r.top ? "ab" : "ar");
-
+    tourI = n; const [sel, t, d] = TOUR[n], el = app.querySelector(sel), quedan = TOUR.slice(n + 1).filter((q) => app.querySelector(q[0])).length, tot = n + 1 + quedan;
+    const pts = Array.from({ length: tot }, (_, k) => `<i class="${k === n ? "on" : k < n ? "ok" : ""}"></i>`).join("");
+    app.insertAdjacentHTML("beforeend", `<div id="tour" role="dialog" aria-label="${t}"><div class="tu-h"><span class="tu-p"></span></div>
+      <div class="tu-b"><div class="tu-t"><div class="tu-d" aria-label="Paso ${n + 1} de ${tot}">${pts}</div><button class="lk tu-x" data-a="tourx">Saltar la guía</button></div><b>${t}</b><p>${d}</p><button class="btn go tu-n" data-a="tourn">${quedan ? "Siguiente" : "Listo, a rezar"}</button></div></div>`);
+    const T = document.getElementById("tour"), hl = T.querySelector(".tu-h"), b = T.querySelector(".tu-b"), bh = b.offsetHeight, H = window.innerHeight, pad = 8, m = 14;
+    const fijo = !!el.closest(".tabs") || getComputedStyle(el).position === "fixed";
+    let r = el.getBoundingClientRect();
+    // primero se acomoda la página: lo señalado queda arriba y deja abajo el sitio justo para su explicación
+    if (!fijo) { const alto = Math.min(r.height, Math.max(60, H - bh - m - pad * 2 - 30)), quiero = Math.max(pad + 14, Math.min((H - (alto + pad * 2 + m + bh)) / 2, H * 0.2)); try { window.scrollBy(0, Math.round(r.top - quiero)); } catch (_) {} r = el.getBoundingClientRect(); }
+    let top = Math.max(pad, r.top), bot = Math.min(H - pad, r.bottom), y;
+    if (bot + pad + m + bh <= H - 6) y = bot + pad + m;            // cabe abajo
+    else if (top - pad - m - bh >= 6) y = top - pad - m - bh;      // cabe arriba
+    else { bot = Math.max(top + 56, H - bh - m - pad - 8); y = bot + pad + m; } // muy alto: se ilumina solo su parte de arriba
+    hl.style.cssText = `left:${Math.round(r.left - pad)}px;top:${Math.round(top - pad)}px;width:${Math.round(r.width + pad * 2)}px;height:${Math.round(bot - top + pad * 2)}px`;
+    b.style.top = Math.round(y) + "px"; b.classList.add(y > top ? "ab" : "ar");
+    const br = b.getBoundingClientRect(); b.style.setProperty("--fx", Math.round(Math.max(30, Math.min(br.width - 30, r.left + r.width / 2 - br.left))) + "px");
   }
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
   function finJt(s) {
@@ -2090,7 +2463,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   const sugEst = () => { let z = ""; try { z = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (_) {} if (Q.get("tz")) z = Q.get("tz");
     const M = { "America/Cancun": 22, "America/Merida": 30, "America/Monterrey": 18, "America/Tijuana": 1, "America/Hermosillo": 25, "America/Chihuahua": 5, "America/Ciudad_Juarez": 5, "America/Ojinaga": 5, "America/Matamoros": 27, "America/Bahia_Banderas": 17, "America/Mazatlan": 24 };
     if (M[z] !== undefined) return M[z]; if (z && !/^America\/(Mexico_City|Monterrey|Merida|Cancun|Matamoros|Chihuahua|Ojinaga|Ciudad_Juarez|Hermosillo|Mazatlan|Bahia_Banderas|Tijuana)$/.test(z) && !/^(UTC|Etc\/)/.test(z)) return 99; return null; };
-  function go(v, b) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est|luzv|entrar|jt)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|est|jt|ros|listo|sala)$/.test(view)) { ob = 1; view = "est"; } try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
+  function go(v, b) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est|luzv|entrar|jt)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|gusto|est|jt|ros|listo|sala)$/.test(view)) { ob = 1; view = "est"; } try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
     // la paloma trae el mensaje la primera vez que se abre Hoy cada día
     if (view === "hoy" && SB) jtTodos();
     if (view === "jt" && SB && jtA) jtVer(jtA);
@@ -2115,7 +2488,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   const foco = (a, k) => { try { const b = app.querySelector(`[data-a="${a}"][data-k="${k}"]`); if (!b) return; b.focus({ preventScroll: true }); if (b.classList.contains("on") || b.classList.contains("now")) { b.classList.add("ya"); const li = b.closest("li"); if (li) li.classList.add("ya"); } vibra(1); } catch (_) {} };
   const A = {
     go: (d) => go(d.v, d.b),
-    nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; if (ob) S.ob = 1; save(); go("est"); },
+    nom: () => { const v = (document.getElementById("fn").value || "").trim(); if (!v) { document.getElementById("fn").focus(); return; } S.n = v; if (ob) S.ob = 1; save(); go(ob ? "gusto" : "est"); },
     empieza: () => { ob = 1; go("nom"); },
     esab: () => { estAbre = 1; render(1); },
     esc: (d) => { const k = +d.k; if (!(k === 99 || MX.e[k])) return; const b = app.querySelector(`[data-a="esc"][data-k="${k}"]`); if (b) b.classList.add("on"); vibra(1); A.est({ k }); },
@@ -2129,6 +2502,11 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     verv: (d) => { va = d.k; go("adv"); },
     entra: () => { ob = 0; delete S.ob; save(); go("hoy"); if (!S.tour) setTimeout(() => tour(0), 700); },
     gno: () => { const x = document.getElementById("gsh"); if (x) x.remove(); },
+    lupa: (d) => { LU = { k: d.k, i: -1 }; lupa(); vibra(1); },
+    lupan: (d) => { if (!LU) return; LU.i = +d.k; lupaT(); vibra(1); },
+    lupas: () => { if (!LU) return; const a = ADV.find((q) => q.k === LU.k), n = ((a && a.sim) || []).length; if (LU.i >= n - 1) { LU = null; lupa(); return; } LU.i++; lupaT(); vibra(1); },
+    lupax: () => { LU = null; lupa(); },
+    masab: () => { try { window.scrollBy({ top: Math.round(window.innerHeight * 0.62), behavior: "smooth" }); } catch (_) { window.scrollBy(0, 400); } },
     tourn: () => tour(tourI + 1),
     tourx: () => tour(99),
     ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0, f: forma(), g: Q.get("demo") && Q.get("g") === "1" ? 1 : grande0(0) }; ros.p = pasos(ros.f); if (S.mu) musica(true); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
@@ -2211,11 +2589,15 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
   let tSig = 0;
   document.addEventListener("click", (e) => { const t = e.target.closest ? e.target.closest("[data-a]") : null; if (!t || !A[t.dataset.a] || t.disabled) return; if (t.dataset.a === "sig" && e.isTrusted) { const n = Date.now(); if (n - tSig < 240) return; tSig = n; } A[t.dataset.a](t.dataset); });
   document.addEventListener("change", (e) => { if (e.target && e.target.id === "fcd" && e.target.value) { const v = e.target.value; if (/^\d{4}-\d{2}-\d{2}$/.test(v) && v <= key(now())) { S.cf = v; save(); vibra(1); render(1); } } });
-  document.addEventListener("input", (e) => { if (e.target && e.target.id === "fn" && ob) { const v = e.target.value.replace(/\s+/g, " ").trim().split(" ")[0], g = document.getElementById("fng"), vl = app.querySelector(".vel"); if (g) g.innerHTML = v ? "Qué gusto tenerte aquí, " + esc(v) + "." : "&nbsp;"; if (vl) vl.classList.toggle("lit", !!v); return; } if (!e.target || e.target.id !== "fb") return; const q = sinAc(e.target.value.trim()); let n = 0; app.querySelectorAll("#esl .es").forEach((b) => { const ok = !q || b.dataset.n.includes(q); b.hidden = !ok; if (ok) n++; }); const x = document.getElementById("esn"); if (x) x.hidden = n > 0; });
+  document.addEventListener("input", (e) => { if (e.target && e.target.id === "fn" && ob) { const vl = app.querySelector(".vel"); if (vl) vl.classList.toggle("lit", !!e.target.value.trim()); return; } if (!e.target || e.target.id !== "fb") return; const q = sinAc(e.target.value.trim()); let n = 0; app.querySelectorAll("#esl .es").forEach((b) => { const ok = !q || b.dataset.n.includes(q); b.hidden = !ok; if (ok) n++; }); const x = document.getElementById("esn"); if (x) x.hidden = n > 0; });
   document.addEventListener("change", (e) => { if (e.target && e.target.id === "fa") { S.ang = e.target.checked ? 1 : 0; save(); if (S.ang) bell(1); } if (e.target && e.target.id === "fmu") { S.mu = e.target.checked ? 1 : 0; save(); } if (e.target && e.target.id === "fv") { S.vib = e.target.checked ? 1 : 0; save(); vibra(2); } });
   // en iPhone los botones solo muestran su estado presionado si alguien escucha el toque
   document.addEventListener("touchstart", () => {}, { passive: true });
   document.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target && e.target.id === "fn") A.nom(); });
+  let scY = 0;
+  window.addEventListener("scroll", () => { const y = window.scrollY || 0; app.classList.toggle("scr", y > 24); if (view === "hoy" && y > 140 && !scY) { scY = 1; S.sc = (S.sc || 0) + 1; save(); } }, { passive: true });
+  // con la guía o una imagen abierta, la página de atrás no se mueve
+  document.addEventListener("touchmove", (e) => { if (document.getElementById("tour") || document.getElementById("lupa")) e.preventDefault(); }, { passive: false });
   window.addEventListener("scroll", () => { if (view === "ros") mas(); }, { passive: true });
   window.addEventListener("hashchange", () => { const h = location.hash.slice(1); if (/^(hoy|rezar|mapa|yo)$/.test(h) && h !== view && view !== "ros") go(h); });
   if (Q.get("demo") && Q.get("ob")) ob = 1;

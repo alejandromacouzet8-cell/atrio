@@ -62,7 +62,7 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   click(a, '[data-a="go"][data-v="yo"]'); if (!txt(a).includes("Tu avance está guardado") || !nubeRows.u1 || !nubeRows.u1.datos.d["2026-12-03"].r) throw new Error("nube: " + JSON.stringify(nubeRows).slice(0, 200) + txt(a).slice(0, 200));
   const e = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?fecha=2026-12-04&google=1", pretendToBeVisual: true }); e.window.scrollTo = () => {}; const fs2 = fakeSupabase(); e.window.supabase = fs2; e.window.eval(sc); await wait(30);
   if (!txt(e).includes("Ya tengo cuenta")) throw new Error("bienvenida sin «Ya tengo cuenta»");
-  click(e, '[data-a="empieza"]'); e.window.document.getElementById("fn").value = "Lucía"; click(e, '[data-a="nom"]'); click(e, '#esl [data-a="esc"][data-k="22"]'); click(e, '[data-a="advt"][data-k="lourdes"]'); click(e, '[data-a="advok"]'); e.window.document.getElementById("fi").value = "Por mi abuela"; click(e, '.btn[data-a="piok"]');
+  click(e, '[data-a="empieza"]'); e.window.document.getElementById("fn").value = "Lucía"; click(e, '[data-a="nom"]'); click(e, '.gsk [data-a="go"]'); click(e, '#esl [data-a="esc"][data-k="22"]'); click(e, '[data-a="advt"][data-k="lourdes"]'); click(e, '[data-a="advok"]'); e.window.document.getElementById("fi").value = "Por mi abuela"; click(e, '.btn[data-a="piok"]');
   if (txt(e).includes("Guardar con Google")) throw new Error("el resumen ya no debe pedir la cuenta: " + txt(e).slice(-300));
   click(e, '[data-a="entra"]'); await wait(900); const tv = e.window.document.getElementById("tour"); if (tv) click(e, '[data-a="tourx"]');
   if (!e.window.document.querySelector(".pfe")) throw new Error("Hoy sin «Entrar» con Google");

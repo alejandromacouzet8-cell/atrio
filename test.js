@@ -21,6 +21,10 @@ click(d, '[data-a="nom"]'); // vacío: se queda
 if (!txt(d).includes("Cómo te llamas") || !txt(d).includes("Paso 1 de 5")) throw new Error("avanzó sin nombre");
 d.window.document.getElementById("fn").value = "Lucía <b>";
 click(d, '[data-a="nom"]');
+// el saludo llega después de escribir el nombre: la paloma, su nombre (escapado) y la invocación al Espíritu Santo
+if (!txt(d).includes("Qué gusto tenerte aquí") || !txt(d).includes("Ven, Espíritu Santo") || !d.window.document.querySelector(".pal0")) throw new Error("saludo: " + txt(d).slice(0, 160));
+if (d.window.document.querySelector(".gsn").innerHTML.includes("<b>") || d.window.document.querySelector(".gsn").textContent !== "Lucía") throw new Error("nombre en el saludo: " + d.window.document.querySelector(".gsn").innerHTML);
+click(d, '.gsk [data-a="go"][data-v="est"]');
 if (!txt(d).includes("Paso 2 de 5")) throw new Error("paso 2");
 if (d.window.document.querySelector(".es.on")) throw new Error("estado preseleccionado");
 { const f = d.window.document.getElementById("fb"); f.value = "quintana"; f.dispatchEvent(new d.window.Event("input", { bubbles: true })); const vis = [...d.window.document.querySelectorAll("#esl .es")].filter((b) => !b.hidden).map((b) => b.textContent); if (vis.length !== 1 || !vis[0].includes("Quintana Roo")) throw new Error("buscador de estado: " + vis); }
@@ -39,7 +43,7 @@ click(d, '[data-a="pich"][data-k="2"]'); if (d.window.document.getElementById("f
 click(d, '[data-a="pich"][data-k="2"]'); if (d.window.document.getElementById("fi").value !== "Por mi mamá <i>, por un enfermo") throw new Error("chip repetido");
 click(d, '.btn[data-a="piok"]');
 // paso 5: resumen
-{ const x = txt(d); for (const m of ["Tu atrio está listo", "Paso 5 de 5", "Lucía <b>", "Quintana Roo", "Fátima", "Tu intención", "«Por mi mamá <i>, por un enfermo»", "Entrar a Atrio"]) if (!x.includes(m)) throw new Error("resumen sin «" + m + "»: " + x.slice(0, 300)); if (x.includes("Bautismo") || x.includes("Google") || d.window.document.querySelector(".tabs")) throw new Error("resumen con de más: " + x.slice(0, 300)); if (d.window.document.querySelector("h2").innerHTML.includes("<b>")) throw new Error("nombre sin escapar en el resumen"); }
+{ const x = txt(d); for (const m of ["Tu atrio está listo", "Paso 5 de 5", "Lucía <b>", "Quintana Roo", "Fátima", "Tu intención", "«Por mi mamá <i>, por un enfermo»", "Entrar a mi atrio"]) if (!x.includes(m)) throw new Error("resumen sin «" + m + "»: " + x.slice(0, 300)); if (x.includes("Bautismo") || x.includes("Google") || d.window.document.querySelector(".tabs")) throw new Error("resumen con de más: " + x.slice(0, 300)); if (d.window.document.querySelector("h2").innerHTML.includes("<b>")) throw new Error("nombre sin escapar en el resumen"); }
 click(d, '.hd [data-a="go"]'); if (!txt(d).includes("Paso 4 de 5")) throw new Error("regresar del resumen");
 { const g = open("https://atrio.test/?fecha=2026-11-23", d.window.localStorage.getItem("atrio1")); if (!txt(g).includes("Paso 4 de 5") || g.window.document.getElementById("fi").value !== "Por mi mamá <i>, por un enfermo") throw new Error("no retoma en la intención: " + txt(g).slice(0, 160)); }
 click(d, '.btn[data-a="piok"]');
