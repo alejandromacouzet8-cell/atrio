@@ -35,11 +35,13 @@ html = f'''<!DOCTYPE html>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap"></noscript>
-<style>
-{r("app.css")}</style>
+<style>html,body{{margin:0;background:#0B3237}}#carga{{margin:38vh 0 0;text-align:center;font:17px/1.5 Georgia,serif;color:#F4DCA6}}#carga small{{display:block;margin-top:10px;font:14px/1.4 system-ui,sans-serif;color:#B9C7C5;opacity:0;transition:opacity .6s}}</style>
 </head>
 <body>
-<main id="app"><p id="carga" style="margin:40vh 0 0;text-align:center;font:16px/1.4 system-ui,sans-serif;color:#F4DCA6">Abriendo Atrio…</p></main>
+<main id="app"><p id="carga"><svg width="34" height="34" viewBox="0 0 28 28" fill="none" aria-hidden="true" style="display:block;margin:0 auto 12px"><path d="M6.5 24.5V13a7.5 7.5 0 0 1 15 0v11.5M3.5 24.5h21" stroke="#E6C27A" stroke-width="1.6" stroke-linecap="round"/></svg>Abriendo Atrio…<small id="lento">Tu señal está lenta. Ya casi.</small></p></main>
+<script id="lt">setTimeout(function(){{var x=document.getElementById("lento");if(x)x.style.opacity=1}},6000)</script>
+<style>
+{r("app.css")}</style>
 <noscript><p style="padding:24px;font:16px system-ui;color:#fff">Atrio necesita JavaScript. Ábrelo en Safari o Chrome.</p></noscript>
 <script>
 {ERR}
