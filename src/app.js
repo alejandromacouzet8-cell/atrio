@@ -22,7 +22,8 @@
     notano: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity:.75"><path d="M9 18V5.5l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/><path d="M3.5 3.5l17 17" stroke-width="2"/></svg>',
     txt: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h9"/></svg>',
     ros: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="9" r="6.4" stroke-width="2.1" stroke-dasharray=".1 3.35"/><path d="M12 15.6v6.2M10.2 18.6h3.6" stroke-width="1.7"/></svg>',
-    yo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.9-4 3.9-6 7.5-6s6.6 2 7.5 6"/></svg>'
+    yo: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c.9-4 3.9-6 7.5-6s6.6 2 7.5 6"/></svg>',
+    comp: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3.5M7.8 7.6L12 3.4l4.2 4.2M6 11.5v7A1.5 1.5 0 0 0 7.5 20h9a1.5 1.5 0 0 0 1.5-1.5v-7"/></svg>'
   };
 
   /* ---------- emblemas (línea fina, como grabado) ---------- */
@@ -37,6 +38,9 @@
     angelus: em('<path d="M24 9c-6 0-9.5 4.6-9.5 11.5V29l-4 6.5h27l-4-6.5v-8.5C33.5 13.6 30 9 24 9zM24 5v4M20.5 35.5v1a3.5 3.5 0 0 0 7 0v-1"/><path d="M6.5 17c-1 2.6-1 5.4 0 8M41.5 17c1 2.6 1 5.4 0 8" stroke-opacity=".6"/>'),
     novena: em('<path d="M19.77 18.18A6.2 6.2 0 1 1 28.23 18.18A6.2 6.2 0 1 1 30.85 26.22A6.2 6.2 0 1 1 24 31.2A6.2 6.2 0 1 1 17.15 26.22A6.2 6.2 0 1 1 19.77 18.18z"/><circle cx="24" cy="24" r="3"/>')
   };
+  // la rosa del ramillete: dos coronas de cinco pétalos, como la rosa de los vitrales
+  const cinco = (R, r, g) => { const P = [0, 1, 2, 3, 4].map((k) => { const a = ((g + k * 72) * Math.PI) / 180; return (24 + R * Math.cos(a)).toFixed(2) + " " + (24 + R * Math.sin(a)).toFixed(2); }); return "M" + P[0] + P.slice(1).concat(P[0]).map((p) => `A${r} ${r} 0 1 1 ${p}`).join("") + "z"; };
+  EM.rosa = em(`<path d="${cinco(10.6, 9.2, -126)}"/><path d="${cinco(5.1, 4.5, -90)}"/><circle cx="24" cy="24" r="1.7" fill="currentColor" stroke="none"/>`);
 
   const rayos = (rx, ry, n) => { let r = ""; for (let i = 0; i < n; i++) { const a = (2 * Math.PI * i) / n, c = Math.cos(a), q = Math.sin(a), l = i % 2 ? 2 : 3.6; r += `M${(24 + (rx + 1.6) * c).toFixed(1)} ${(24 + (ry + 1.6) * q).toFixed(1)}L${(24 + (rx + 1.6 + l) * c).toFixed(1)} ${(24 + (ry + 1.6 + l) * q).toFixed(1)}`; } return r; };
   const doce = () => { let r = ""; for (let i = 0; i < 12; i++) { const a = ((i * 30 + 15) * Math.PI) / 180; r += `<circle cx="${(24 + 11.4 * Math.cos(a)).toFixed(1)}" cy="${(26 + 14.9 * Math.sin(a)).toFixed(1)}" r=".75" fill="currentColor" stroke="none"/>`; } return r; };
@@ -101,14 +105,15 @@
   const perfil = () => { if (!conG()) return ""; if (U) { const m = U.user_metadata || {}, f = m.avatar_url || m.picture; return `<button class="pf" data-a="go" data-v="yo" aria-label="Tu perfil">${f ? `<img src="${esc(f)}" alt="" referrerpolicy="no-referrer">` : `<b>${esc((S.n || m.full_name || "?").slice(0, 1).toUpperCase())}</b>`}</button>`; }
     if (!pideG()) return "";
     return `<button class="pfe" data-a="login" aria-label="Entrar con Google"><svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span>Entrar</span></button>`; };
-  const gBtn = (t) => `<div class="gsiw"><button class="btn gw" data-a="gg"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg><span>${t || "Continuar con Google"}</span></button><div class="gsi"></div></div>`;
+  const GLOGO = '<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>';
+  const gBtn = (t) => `<div class="gsiw"><button class="btn gw" data-a="gg">${GLOGO}<span>${t || "Continuar con Google"}</span></button><div class="gsi"></div></div>`;
   /* Pedir la cuenta en el momento justo: después de rezar algo, no antes. Una hoja que sube desde abajo,
      una vez por motivo y no más de una vez cada tres días. */
   function guarda(motivo, t, d) {
     if (!pideG() || (S.gx || {})[motivo] || Date.now() - (S.gt || 0) < 3 * 864e5) return;
     S.gx = Object.assign({}, S.gx, { [motivo]: 1 }); S.gt = Date.now(); save(); vuelveE = view;
     setTimeout(() => { const x = document.getElementById("gsh"); if (x) x.remove();
-      app.insertAdjacentHTML("beforeend", `<div id="gsh" role="dialog" aria-label="${t}"><div class="gsf" data-a="gno"></div><div class="gsb"><span class="gsv"><svg viewBox="0 0 40 52" width="40" height="52" aria-hidden="true"><defs><radialGradient id="vlg"><stop offset="0" stop-color="#FFF3D0"/><stop offset=".5" stop-color="#F4C76A" stop-opacity=".55"/><stop offset="1" stop-color="#E6C27A" stop-opacity="0"/></radialGradient></defs><circle cx="20" cy="14" r="14" fill="url(#vlg)"/><path d="M20 4c2.4 4 5 6 5 10a5 5 0 0 1-10 0c0-4 2.6-6 5-10z" fill="#FFE7A8"/><rect x="11" y="24" width="18" height="24" rx="3" fill="#F6EFE9"/><rect x="11" y="24" width="18" height="5" rx="2.5" fill="#E6C27A"/></svg></span><b>${t}</b><p>${d}</p>${gBtn()}<button class="lk" data-a="gno" style="display:block;margin:6px auto 0">Ahora no</button><p class="note c" style="margin-top:4px">Sin contraseñas. Al entrar aceptas los <a href="/terminos/">términos</a> y el <a href="/privacidad/">aviso de privacidad</a>.</p></div></div>`); pintaG(); vibra(1); }, 650);
+      document.body.insertAdjacentHTML("beforeend", `<div id="gsh" role="dialog" aria-label="${t}"><div class="gsf" data-a="gno"></div><div class="gsb"><span class="gsv"><svg viewBox="0 0 40 52" width="40" height="52" aria-hidden="true"><defs><radialGradient id="vlg"><stop offset="0" stop-color="#FFF3D0"/><stop offset=".5" stop-color="#F4C76A" stop-opacity=".55"/><stop offset="1" stop-color="#E6C27A" stop-opacity="0"/></radialGradient></defs><circle cx="20" cy="14" r="14" fill="url(#vlg)"/><path d="M20 4c2.4 4 5 6 5 10a5 5 0 0 1-10 0c0-4 2.6-6 5-10z" fill="#FFE7A8"/><rect x="11" y="24" width="18" height="24" rx="3" fill="#F6EFE9"/><rect x="11" y="24" width="18" height="5" rx="2.5" fill="#E6C27A"/></svg></span><b>${t}</b><p>${d}</p>${gBtn()}<button class="lk" data-a="gno" style="display:block;margin:6px auto 0">Ahora no</button><p class="note c" style="margin-top:4px">Sin contraseñas. Al entrar aceptas los <a href="/terminos/">términos</a> y el <a href="/privacidad/">aviso de privacidad</a>.</p></div></div>`); pintaG(); vibra(1); }, 650);
   }
   const pideG = () => conG() && !U && (lista === 1 || !pista);
 
@@ -204,8 +209,8 @@
       else if (WL) { const w = WL; WL = null; w.release().catch(() => {}); }
     } catch (_) {}
   }
-  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") { despierta(view === "ros"); if (view === "mapa" || view === "listo") cargaVelas(); } });
-  setInterval(() => { if (!document.hidden && SB) { if (view === "jt" && jtA) jtVer(jtA); else if (view === "hoy" && tic % 3 === 0) jtTodos(); } }, 20000);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") { despierta(view === "ros"); if (view === "mapa" || view === "listo") cargaVelas(); if (view === "fam") famAbre(); else if (view === "hoy" && SB) famTodos(); famFluye(); } });
+  setInterval(() => { if (!document.hidden && SB) { if (view === "jt" && jtA) jtVer(jtA); else if (view === "hoy") { if (tic % 3 === 0) jtTodos(); famTodos(); } else if (famS && (view === "fam" || view === "ros")) famVer(famS, view === "ros" ? 2 : 1); else if (view === "fam" && famA) famVer(famA); if (S.fq.length) famFluye(); } }, 20000);
   setInterval(() => { const d = now(); if (++tic % 3 === 0 && (view === "mapa" || view === "listo") && !document.hidden) cargaVelas(); if (S.ang && S.n && d.getHours() === 12 && d.getMinutes() < 10 && sono !== key(d) && !hoy().a && view !== "ros") { sono = key(d); bell(3); go("ang"); } }, 20000);
 
   /* ---------- sala y mapa en vivo (solo cuando la plataforma lo permite) ---------- */
@@ -219,9 +224,11 @@
     const me = Math.random().toString(36).slice(2, 12), RAPIDO = { on: 1, i: 1, set: 1, fin: 1 };
     let marcas = [];
     const mk = (name) => {
-      let ch = null, st = {}, subs = [], rtc = [], lento = {}, rapido = {}, deOtros = {}, ok = false, fuera = false, ultimo = "", llaves = "", tT = 0, tR = 0;
-      const fire = () => { const peers = Object.keys(st).map((k) => { const m = st[k] || []; return { peer: k, isMe: k === me, kind: "viewer", presence: Object.assign({}, m[m.length - 1] || {}, k === me ? rapido : deOtros[k] || {}) }; }); subs.forEach((f) => { try { f({ peers }); } catch (_) {} }); };
-      const di = () => { if (ok && !fuera && lento.lead) try { ch.send({ type: "broadcast", event: "st", payload: { k: me, s: rapido } }); } catch (_) {} };
+      let ch = null, st = {}, subs = [], rtc = [], lento = {}, rapido = {}, deOtros = {}, deT = {}, ok = false, fuera = false, ultimo = "", llaves = "", tT = 0, tR = 0;
+      const fire = () => { const peers = Object.keys(st).map((k) => { const m = st[k] || []; return { peer: k, isMe: k === me, kind: "viewer", presence: Object.assign({}, m[m.length - 1] || {}, k === me ? lento : null, k === me ? rapido : deOtros[k] || {}) }; }); subs.forEach((f) => { try { f({ peers }); } catch (_) {} }); };
+      // Quien dirige avisa por aquí en qué cuenta va, y también que dirige y con qué forma reza: la presencia tiene tope
+      // de cambios y puede tardar medio minuto. Quien deja de dirigir lo avisa una vez (suelta).
+      const di = (suelta) => { if (ok && !fuera && (lento.lead || suelta)) try { ch.send({ type: "broadcast", event: "st", payload: { k: me, s: Object.assign({ lead: lento.lead ? 1 : 0, f: lento.f || "" }, rapido) } }); } catch (_) {} };
       const track = () => {
         clearTimeout(tT); if (!ok || fuera) return;
         const j = JSON.stringify(lento); if (j === ultimo) return;
@@ -232,10 +239,10 @@
       const abre = () => {
         if (fuera) return; ok = false;
         const c = ch = cli.channel(name, { config: { presence: { key: me } } });
-        c.on("presence", { event: "sync" }, () => { if (c !== ch) return; st = c.presenceState(); Object.keys(deOtros).forEach((k) => { if (!st[k]) delete deOtros[k]; }); const l = Object.keys(st).sort().join(); if (l !== llaves) { llaves = l; di(); } fire(); });
+        c.on("presence", { event: "sync" }, () => { if (c !== ch) return; st = c.presenceState(); Object.keys(deOtros).forEach((k) => { if (!st[k]) { delete deOtros[k]; delete deT[k]; } }); const l = Object.keys(st).sort().join(); if (l !== llaves) { llaves = l; di(); } fire(); });
         // voz: los teléfonos se presentan por aquí y luego hablan directo entre ellos
         c.on("broadcast", { event: "rtc" }, (m) => { const q = m && m.payload; if (c === ch && q && q.de && q.de !== me && (!q.para || q.para === me)) rtc.forEach((f) => { try { f(q); } catch (_) {} }); });
-        c.on("broadcast", { event: "st" }, (m) => { const q = m && m.payload; if (c === ch && q && q.k && q.k !== me) { deOtros[q.k] = q.s || {}; fire(); } });
+        c.on("broadcast", { event: "st" }, (m) => { const q = m && m.payload; if (c === ch && q && q.k && q.k !== me) { deOtros[q.k] = q.s || {}; deT[q.k] = Date.now(); fire(); } });
         c.subscribe((x) => {
           if (c !== ch || fuera) return;
           if (x === "SUBSCRIBED") { ok = true; ultimo = ""; track(); di(); rtc.forEach((f) => { try { f({ t: "_listo" }); } catch (_) {} }); }
@@ -243,31 +250,36 @@
         });
       };
       abre();
-      const tB = setInterval(di, 5000);
+      const tB = setInterval(() => di(), 5000);
+      // si quien dirige deja de avisar (se le fue la señal o se durmió su teléfono), a los 16 s su cuenta ya no vale
+      const tV = setInterval(() => { const t = Date.now(); let v = 0; Object.keys(deOtros).forEach((k) => { if (t - (deT[k] || 0) > 16000) { delete deOtros[k]; delete deT[k]; v = 1; } }); if (v) fire(); }, 4000);
       return {
-        presence: (q) => { let l = 0, r = 0; Object.keys(q).forEach((k) => { const T = RAPIDO[k] ? rapido : lento, v = q[k]; if (v === null || v === undefined) { if (k in T) { delete T[k]; RAPIDO[k] ? r++ : l++; } } else if (T[k] !== v) { T[k] = v; RAPIDO[k] ? r++ : l++; } }); if (l) track(); if (r) { di(); fire(); } return Promise.resolve(); },
+        presence: (q) => { let l = 0, r = 0; const era = !!lento.lead; Object.keys(q).forEach((k) => { const T = RAPIDO[k] ? rapido : lento, v = q[k]; if (v === null || v === undefined) { if (k in T) { delete T[k]; RAPIDO[k] ? r++ : l++; } } else if (T[k] !== v) { T[k] = v; RAPIDO[k] ? r++ : l++; } }); if (l) track(); const solto = era && !lento.lead; if (r || solto || (l && lento.lead)) { di(solto); if (solto) setTimeout(() => { if (!lento.lead) di(1); }, 2500); } if (r || l) fire(); return Promise.resolve(); },
         onPeers: (fn) => { subs.push(fn); fire(); return () => {}; },
         yo: me,
         senal: (fn) => { rtc.push(fn); },
         manda: (q) => { if (ok && !fuera) try { ch.send({ type: "broadcast", event: "rtc", payload: Object.assign({ de: me }, q) }); } catch (_) {} },
-        leave: () => { fuera = true; clearTimeout(tT); clearTimeout(tR); clearInterval(tB); try { cli.removeChannel(ch); } catch (_) {} return Promise.resolve(); }
+        leave: () => { fuera = true; clearTimeout(tT); clearTimeout(tR); clearInterval(tB); clearInterval(tV); try { cli.removeChannel(ch); } catch (_) {} return Promise.resolve(); }
       };
     };
     // Sin canal general: el mapa se arma con las veladoras guardadas, así solo abre conexión quien entra a una sala.
     return { presence: () => Promise.resolve(), onPeers: () => () => {}, join: (n) => Promise.resolve(mk(n)) };
   }
-  function nube() { if (!SB || !U) return; try { SB.from("progreso").upsert({ user_id: U.id, datos: Object.assign({}, S, { cf: undefined }), actualizado: new Date().toISOString() }).then(() => {}, () => {}); } catch (_) {} }
+  function nube() { if (!SB || !U) return; try { SB.from("progreso").upsert({ user_id: U.id, datos: Object.assign({}, S, { cf: undefined, fq: undefined }), actualizado: new Date().toISOString() }).then(() => {}, () => {}); } catch (_) {} }
   function sincroniza() {
     if (!SB || !U) return;
     try { SB.from("progreso").select("datos").eq("user_id", U.id).maybeSingle().then((r) => {
       const R = (r && r.data && r.data.datos) || null;
-      if (R) { const d = Object.assign({}, R.d || {}); Object.keys(S.d).forEach((k) => { d[k] = Object.assign({}, d[k] || {}, S.d[k]); }); const nv = Object.assign({}, R.nov || {}); Object.keys(S.nov).forEach((y) => { nv[y] = Object.assign({}, nv[y] || {}, S.nov[y]); }); S.d = d; S.nov = nv; if (!S.n && R.n) S.n = R.n; if (!S.vs.length && (R.vs || R.v)) S.vs = R.vs || [R.v]; if (S.e < 0 && R.e >= 0) S.e = R.e; if (!S.pi && R.pi) S.pi = R.pi; }
+      if (R) { const d = Object.assign({}, R.d || {}); Object.keys(S.d).forEach((k) => { d[k] = Object.assign({}, d[k] || {}, S.d[k]); }); const nv = Object.assign({}, R.nov || {}); Object.keys(S.nov).forEach((y) => { nv[y] = Object.assign({}, nv[y] || {}, S.nov[y]); }); S.d = d; S.nov = nv; if (!S.n && R.n) S.n = R.n; if (!S.vs.length && (R.vs || R.v)) S.vs = R.vs || [R.v]; if (S.e < 0 && R.e >= 0) S.e = R.e; if (!S.pi && R.pi) S.pi = R.pi;
+        // familias: manda la llave de la cuenta; lo que este teléfono rezó sin cuenta se pasa a ella
+        if (UUID.test(R.mi || "") && R.mi !== S.mi) { const vieja = S.mi; S.mi = R.mi; if (UUID.test(vieja || "")) S.fam.forEach((j) => { if (!j.p) try { SB.rpc("fam_une", { f: j.id, de: vieja, a: R.mi }).then(() => famVer(j.id), () => {}); } catch (_) {} }); }
+        (Array.isArray(R.fam) ? R.fam : []).forEach((j) => { if (j && FID.test(j.id || "") && !famJ(j.id) && S.fam.length < 5) S.fam.push({ id: j.id, n: j.n || "", i: j.i || "" }); }); if (!famJ(famA) && S.fam.length) famA = S.fam[0].id; }
       // quien ya tenía avance en su cuenta y abre un teléfono nuevo se salta la bienvenida
       const g = deG, vuelta = !!(S.n && S.e >= 0 && view === "bien"); deG = 0;
       if (vuelta) { ob = 0; delete S.ob; }
       try { localStorage.setItem("atrio1", JSON.stringify(S)); } catch (_) {} nube();
       if (vuelta) { go("hoy"); if (g) aviso("Listo. Aquí está tu avance."); return; }
-      if (!/^(nom|est|sala|ros)$/.test(view)) render(1);
+      if (!/^(nom|est|sala|ros|fnew|fed)$/.test(view) && !(view === "fam" && !S.n)) render(1); famPend();
       if (g) aviso(S.n ? "Listo. Tu avance ya se guarda en tu cuenta." : "Esa cuenta todavía no tiene avance guardado. Toca Empezar para crearlo.");
     }, () => { if (/^(hoy|yo|listo|atrio|bien)$/.test(view)) render(1); }); } catch (_) {}
   }
@@ -284,7 +296,7 @@
   }
   function conectaSB() {
     if (SB_URL.indexOf("http") !== 0 || RM) return;
-    const init = () => { try { SB = window.supabase.createClient(SB_URL, SB_KEY, { auth: { flowType: "pkce" } }); RM = sbRoom(SB); setTimeout(() => { jtTodos(); if (jtA && !S.jt.some((x) => x.id === jtA)) jtVer(jtA); }, 0);
+    const init = () => { try { SB = window.supabase.createClient(SB_URL, SB_KEY, { auth: { flowType: "pkce" } }); RM = sbRoom(SB); setTimeout(() => { jtTodos(); if (jtA && !S.jt.some((x) => x.id === jtA)) jtVer(jtA); famPend(); }, 0);
       const sesion = (u) => { const cambia = (u && u.id) !== (U && U.id), p0 = pideG(); U = u; lista = 1; if (U && view === "entrar" && otpE === 0) { go(V[vuelveE] && vuelveE !== "entrar" ? vuelveE : "hoy"); } if (U && cambia) setTimeout(sincroniza, 0); else if ((cambia || p0 !== pideG()) && /^(hoy|yo|listo|atrio|bien)$/.test(view)) render(1); };
       try { SB.auth.getSession().then((r) => sesion((r && r.data && r.data.session && r.data.session.user) || null), () => sesion(null)); SB.auth.onAuthStateChange((_e, ses) => sesion((ses && ses.user) || null)); } catch (_) {} RM.onPeers((c) => { peersL = c.peers || []; if (view === "mapa" || view === "listo" || (view === "sala" && !sala)) render(); }); presLobby(); cargaVelas(); if (hoy().r) enciende(); if (view === "sala") render(); } catch (_) { RM = null; SB = null; } };
     if (window.supabase && window.supabase.createClient) return init();
@@ -311,7 +323,7 @@
   const conVoz = () => peersS.filter((p) => p.presence && p.presence.v).length;
   const oidos = () => (VZ ? Object.keys(VZ.pcs).filter((k) => VZ.pcs[k].connectionState === "connected").length : 0);
   function cajaVoz() { let b = document.getElementById("voces"); if (!b) { b = document.createElement("div"); b.id = "voces"; b.style.display = "none"; document.body.appendChild(b); } return b; }
-  const pinta = () => { if (view === "sala") render(1); else if (view === "ros") render(); };
+  const pinta = () => { if (view === "sala" || view === "fam") render(1); else if (view === "ros") render(); };
   const vidT = (pc) => pc.getTransceivers().find((t) => t.receiver && t.receiver.track && t.receiver.track.kind === "video");
   // quién está hablando: se mide el volumen de cada voz y su círculo se ilumina
   function mide(id, ms) { if (!VZ || !VZ.ac) return; try { const src = VZ.ac.createMediaStreamSource(ms), an = VZ.ac.createAnalyser(); an.fftSize = 512; src.connect(an); VZ.an[id] = { an, b: new Uint8Array(512), h: 0 }; } catch (_) {} }
@@ -337,7 +349,7 @@
     if (sala) sala.presence({ c: 1 }).catch(() => {}); vibra(1); pinta();
   }
   // los participantes, como en una videollamada: círculo con inicial o con su cámara
-  const tiles = (gr) => !sala ? "" : `<div class="ppl${gr ? " gr" : ""}">` + peersS.map((p) => { const pr = p.presence || {}, id = esc(p.peer), cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]); return `<div class="pp${pr.v ? " vz" : ""}${p.isMe ? " me" : ""}" data-p="${id}"><span class="cara">${cam ? `<video data-v="${id}" autoplay playsinline muted></video>` : `<b>${esc((pr.n || "?").slice(0, 1).toUpperCase())}</b>`}${pr.v === 2 ? `<i class="mm" aria-label="Sin micrófono">${I.mute}</i>` : pr.v ? "" : ""}</span><small>${esc(p.isMe ? "Tú" : (pr.n || "Alguien").split(" ")[0])}${pr.lead ? `<em>dirige</em>` : ""}</small></div>`; }).join("") + "</div>";
+  const tiles = (gr) => !sala ? "" : `<div class="ppl${gr ? " gr" : ""}">` + peersS.map((p) => { const pr = p.presence || {}, id = esc(p.peer), cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]); return `<div class="pp${pr.v ? " vz" : ""}${p.isMe ? " me" : ""}" data-p="${id}"><span class="cara">${cam ? `<video data-v="${id}" autoplay playsinline muted></video>` : `<b>${esc((pr.n || "?").slice(0, 1).toUpperCase())}</b>`}${pr.v === 2 ? `<i class="mm" aria-label="Sin micrófono">${I.mute}</i>` : pr.v ? "" : ""}</span><small>${esc(p.isMe ? "Tú" : (pr.n || "Alguien").split(" ")[0])}${pr.lead && (pr.on || !famS) ? `<em>dirige</em>` : ""}</small></div>`; }).join("") + "</div>";
   // en el rosario la familia rodea las cuentas, como si rezaran en círculo
   const orbita = () => { const L = peersS.slice(0, 12), n = L.length; if (!n) return ""; const ab = Math.min(300, (n - 1) * 46), a0 = -90 - ab / 2, R = 132;
     return `<span class="orb">` + L.map((p, i) => { const pr = p.presence || {}, id = esc(p.peer), a = ((n === 1 ? -90 : a0 + (i * ab) / (n - 1)) * Math.PI) / 180, x = ((130 + R * Math.cos(a)) / 260) * 100, y = ((100 + R * Math.sin(a)) / 270) * 100, cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]);
@@ -436,6 +448,126 @@
   const jtTodos = () => S.jt.forEach((j) => jtVer(j.id));
   const ligaJt = (id) => location.origin + location.pathname + "?j=" + id;
   const jtComparte = (id, txt) => { const t = txt + "\n" + ligaJt(id); if (navigator.share) { navigator.share({ text: t }).catch(() => {}); return; } try { window.open("https://wa.me/?text=" + encodeURIComponent(t), "_blank"); } catch (_) {} };
+  /* ---------- rosario en familia: un grupo con una intención. Se entra con la liga, sin código; lo que reza cada
+     quien se suma al de todos, y quien esté en ese momento aparece en vivo en la sala de la familia. ---------- */
+  if (!Array.isArray(S.fam)) S.fam = [];
+  if (!Array.isArray(S.fq)) S.fq = [];
+  const FM = {}, FID = /^[a-km-np-z2-9]{10}$/, famCreando = {};
+  let famA = S.fam.length ? S.fam[0].id : "", famS = "", famErr = 0, famB = 0, famEnv = 0, famEnt = 0, tSinG = 0, noSigo = 0, famOjo = 0, pk0 = "", gente0 = 0, tGente = 0;
+  const uuid4 = () => { try { if (crypto.randomUUID) return crypto.randomUUID(); } catch (_) {} const b = []; for (let i = 0; i < 16; i++) b.push(Math.floor(Math.random() * 256)); try { crypto.getRandomValues(new Uint8Array(16)).forEach((x, i) => { b[i] = x; }); } catch (_) {} b[6] = (b[6] & 15) | 64; b[8] = (b[8] & 63) | 128; const h = b.map((x) => x.toString(16).padStart(2, "0")).join(""); return h.slice(0, 8) + "-" + h.slice(8, 12) + "-" + h.slice(12, 16) + "-" + h.slice(16, 20) + "-" + h.slice(20); };
+  // la llave privada de este teléfono dentro de sus familias; con cuenta de Google viaja a tus otros teléfonos
+  const miId = () => { if (!UUID.test(S.mi || "")) { S.mi = uuid4(); save(); } return S.mi; };
+  const famNuevoId = () => { const L = "abcdefghijkmnpqrstuvwxyz23456789", b = []; for (let i = 0; i < 10; i++) b.push(Math.floor(Math.random() * 256)); try { crypto.getRandomValues(new Uint8Array(10)).forEach((x, i) => { b[i] = x; }); } catch (_) {} return b.map((x) => L[x % 32]).join(""); };
+  const famJ = (id) => S.fam.find((x) => x.id === id);
+  const ligaFam = (id) => location.origin + location.pathname + "?f=" + id;
+  const mil = (n) => { try { return Number(n || 0).toLocaleString("es-MX"); } catch (_) { return String(n || 0); } };
+  const cuantos = (n, uno, varios) => mil(n) + " " + (+n === 1 ? uno : varios);
+  // lo que se ve de una familia sin abrirla (para no volver a pintar Hoy si nada cambió)
+  const famFirma = (id) => { const d = FM[id]; return !d ? String(d) : [d.nombre, d.intencion, d.rosarios, d.misterios, d.aves, d.dias, (d.miembros || []).map((m) => m.n + m.est + m.hoy).join()].join("|"); };
+  function famPon(id, d) { if (!d || d.id !== id) return;
+    // lo que llega del servidor se usa como texto o como número, nunca como HTML
+    ["dias", "rosarios", "misterios", "aves", "gente", "rezados"].forEach((k) => { d[k] = +d[k] || 0; }); d.nombre = String(d.nombre || "Familia"); d.intencion = d.intencion ? String(d.intencion) : ""; d.creador = String(d.creador || "Alguien"); d.hoy = d.hoy || {};
+    d.miembros = (Array.isArray(d.miembros) ? d.miembros : []).map((m) => ({ n: String(m.n || "Alguien"), yo: !!m.yo, ros: +m.ros || 0, mis: +m.mis || 0, aves: +m.aves || 0, hoy: +m.hoy || 0, est: +m.est || 0 }));
+    d.reciente = (Array.isArray(d.reciente) ? d.reciente : []).map((r) => ({ n: String(r.n || "Alguien"), mis: +r.mis || 0, c: !!r.c, h: String(r.h || "") }));
+    FM[id] = d; famErr = 0; const j = famJ(id); if (j && (j.n !== d.nombre || (j.i || "") !== (d.intencion || "") || j.p)) { j.n = d.nombre; j.i = d.intencion || ""; delete j.p; save(); } }
+  // en la invitación hay un campo de nombre: ahí solo se cambia el texto de arriba, para no borrar lo que la persona va escribiendo
+  function famPinta(id, antes) {
+    if (view === "fam" && famA === id) { const x = document.getElementById("finv"); if (!S.n && x && FM[id]) x.innerHTML = famInv(); else if (!S.n && x && FM[id] !== 0) return; else render(1); }
+    else if ((view === "hoy" || view === "listo") && antes !== famFirma(id) && !document.getElementById("tour")) render(1);
+  }
+  function famVer(id, e) {
+    if (!SB || !FID.test(id)) return Promise.resolve(null);
+    const j = famJ(id); if (j && j.p) { famCrea(id); return Promise.resolve(null); }
+    const d = key(now()), antes = famFirma(id), q = e === undefined || !S.n ? SB.rpc("fam_ver", { f: id, d, mi: UUID.test(S.mi || "") ? S.mi : null }) : SB.rpc("fam_entra", { f: id, mi: miId(), n: S.n.slice(0, 24), e, d });
+    return q.then((r) => { if (r && !r.error) { if (r.data && r.data.id === id) famPon(id, r.data); else { FM[id] = 0; const j = famJ(id); if (j && !j.n && !(view === "fam" && famA === id)) { S.fam = S.fam.filter((x) => x.id !== id); save(); if (famA === id) famA = S.fam.length ? S.fam[0].id : ""; } } } else famErr = 1; famPinta(id, antes); return FM[id]; }, () => { famErr = 1; famPinta(id, antes); return null; });
+  }
+  const famTodos = () => S.fam.slice(0, 3).forEach((j) => famVer(j.id));
+  // La familia nace en el teléfono (así la liga se puede compartir al instante) y se guarda en el servidor; si no hay señal, se reintenta sola.
+  function famCrea(id) {
+    const j = famJ(id); if (!j || !j.p || !SB || famCreando[id]) return;
+    famCreando[id] = 1;
+    const otra = () => { delete famCreando[id]; famErr = 1; if (view === "fam" && famA === id) render(1); setTimeout(() => famCrea(id), 5000); };
+    SB.rpc("fam_crear", { f: id, n: j.n || "", i: j.i || "", mi: miId(), q: (S.n || "Alguien").slice(0, 24), d: key(now()) }).then((r) => {
+      if (r && !r.error && r.data && r.data.id === id) { delete famCreando[id]; famPon(id, r.data); if (view === "fam" && famA === id) { render(1); famAbre(); } return; }
+      const m = (r && r.error && (r.error.message || "")) || "";
+      if (/ocupado|muchas|datos/.test(m)) { delete famCreando[id]; S.fam = S.fam.filter((x) => x.id !== id); save(); delete FM[id]; if (famA === id) { famA = S.fam.length ? S.fam[0].id : ""; if (view === "fam") go("hoy"); } aviso(/muchas/.test(m) ? "Hoy ya se crearon muchas familias desde este teléfono. Intenta mañana." : "No se pudo crear la familia. Intenta otra vez."); return; }
+      otra();
+    }, otra);
+  }
+  function famTxt(id, tipo) {
+    const d = FM[id] || {}, j = famJ(id) || {}, n = d.nombre || j.n || "Mi familia", i = d.intencion || j.i || "", it = i ? ` Nuestra intención: «${i}».` : "";
+    if (tipo === "vivo") return `Estoy en la sala de ${n}, en Atrio, para rezar el rosario.${i ? ` Lo ofrecemos: «${i}».` : ""} Entra directo con esta liga y nos vemos:`;
+    if (d.misterios > 0) return `${n}: ${d.dias > 1 ? `en ${d.dias} días llevamos` : "hoy llevamos"} ${d.rosarios ? cuantos(d.rosarios, "rosario", "rosarios") + " y " : ""}${cuantos(d.aves, "Ave María", "Ave Marías")}.${it}\n\n¿Rezas hoy con nosotros? Entras directo con esta liga, sin código ni contraseña:`;
+    return `${n}\nDesde hoy vamos a rezar el rosario en familia.${it}\n\nToca la liga y entras directo, sin código ni contraseña. Es gratis. Cada quien reza cuando pueda y todo se va sumando; si coincidimos, nos vemos y rezamos juntos en vivo.`;
+  }
+  const famComparte = (id, tipo) => { const t = famTxt(id, tipo) + "\n" + ligaFam(id); if (navigator.share) { navigator.share({ text: t }).catch(() => {}); return; } try { window.open("https://wa.me/?text=" + encodeURIComponent(t), "_blank"); } catch (_) {} };
+  // Lo rezado en este rosario desde que entré: las Ave Marías pasadas y los misterios completos (de su primera Ave María a su Gloria).
+  function famCta() {
+    const fs = ros.fs, p = ros.p; let a = 0, m = 0;
+    for (let k = fs.i0; k < fs.mx && k < p.length; k++) if (/^am\d?$/.test(p[k].t)) a++;
+    for (let k = 0; k < 5; k++) { const a1 = p.findIndex((s) => s.t === "am" && s.m === k), g = p.findIndex((s) => s.t === "gl" && s.m === k); if (a1 >= 0 && g >= 0 && a1 >= fs.i0 && g < fs.mx) m++; }
+    return { a, m, c: !ros.jt && m === 5 && fs.mx >= p.length };
+  }
+  // Se avisa al terminar cada misterio, al terminar el rosario y al cerrarlo. cierra: 1 al cerrar a medias, 2 al terminar.
+  function famSuma(cierra) {
+    if (!ros || !ros.p) return;
+    const fs = ros.fs || (ros.fs = { s: uuid4(), i0: ros.i, mx: ros.i, m: 0, a: 0, c: false, d: key(now()) });
+    if (cierra === 2) fs.mx = ros.p.length; else if (ros.i > fs.mx) fs.mx = ros.i;
+    if (!S.fam.length || !jtOk()) return;
+    const q = famCta();
+    if (q.m === fs.m && q.c === fs.c && !(cierra && q.a !== fs.a)) return;
+    fs.m = q.m; fs.a = q.a; fs.c = q.c;
+    S.fam.filter((j) => !j.p).slice(0, 3).forEach((j) => { S.fq = S.fq.filter((x) => !(x.f === j.id && x.s === fs.s)); S.fq.push({ f: j.id, s: fs.s, d: fs.d, m: q.m, a: q.a, c: q.c }); });
+    if (S.fq.length > 60) S.fq = S.fq.slice(-60);
+    save(); famFluye();
+  }
+  // La cola aguanta sin señal: lo rezado se manda cuando vuelve el internet y nunca cuenta doble.
+  function famFluye() {
+    if (!SB || famEnv || !S.fq.length || !UUID.test(S.mi || "")) return;
+    const viejo = key(add(now(), -7)); S.fq = S.fq.filter((x) => x.d >= viejo && famJ(x.f)); if (!S.fq.length) { save(); return; }
+    const q = S.fq[0]; famEnv = 1;
+    const quita = () => { S.fq = S.fq.filter((x) => !(x.f === q.f && x.s === q.s && x.m === q.m && x.a === q.a && x.c === q.c)); save(); };
+    SB.rpc("fam_reza", { f: q.f, mi: S.mi, n: (S.n || "Alguien").slice(0, 24), d: q.d, s: q.s, ms: q.m, av: q.a, c: !!q.c }).then((r) => {
+      famEnv = 0;
+      if (r && !r.error) { quita(); if (r.data && r.data.id === q.f && q.d === key(now())) { const antes = famFirma(q.f); famPon(q.f, r.data); famPinta(q.f, antes); } else famVer(q.f); famFluye(); return; }
+      // lo que el servidor rechaza por regla (día muy viejo, familia borrada) no se reintenta; lo demás espera a que vuelva la señal
+      const e = (r && r.error) || {}; if (/^(P0|2[23])/.test(e.code || "") || /fuera de rango|no existe|muchos|llena|datos/.test(e.message || "")) { quita(); famFluye(); }
+    }, () => { famEnv = 0; });
+  }
+  // Al abrir la página de la familia: me apunto, cargo lo rezado y entro a su sala en vivo.
+  function famAbre() {
+    if (view !== "fam" || !FID.test(famA)) return;
+    const j = famJ(famA); if (j && j.p) { famCrea(famA); return; }
+    if (!S.n) { famVer(famA); return; }
+    famVer(famA, 1); famFluye();
+    if (RM && !famEnt && (!sala || famS !== famA)) { if (sala) salir(); famS = famA; famEnt = 1; const fin0 = () => { famEnt = 0; if (sala && famS && ros && ros.fam === famS && !ros.sala && !ros.jt && view === "ros") { ros.sala = 1; lead = true; presSala(); render(); famVer(famS, 2); } }; entrar("F" + famA, false).then(fin0, fin0); }
+  }
+  const FIS = ["Por nuestra familia", "Por un enfermo", "Por un difunto", "Por la paz en México"];
+  // «Mamá», «Mamá y Pau», «Mamá, Pau y Papá», «Mamá, Pau y 2 más»: primero quien dirige
+  const junta = (n) => (n.length <= 1 ? n.join("") : n.length <= 3 ? n.slice(0, -1).join(", ") + " y " + n[n.length - 1] : n.slice(0, 2).join(", ") + " y " + (n.length - 2) + " más");
+  const nombresP = (L, g) => { const n = L.slice().sort((a, b) => (g && a.peer === g.peer ? -1 : g && b.peer === g.peer ? 1 : 0)).map((p) => ((p.presence || {}).n || "Alguien").split(" ")[0]); return junta(n); };
+  const nombresM = (L) => junta(L.map((m) => (m.n || "Alguien").split(" ")[0]));
+  const conLa = (n) => (/^familia\b/i.test(n || "") ? "la " + n : n || "su familia");
+  const famCuando = (h) => { const t = new Date(h); if (isNaN(t)) return ""; const hm = String(t.getHours()).padStart(2, "0") + ":" + String(t.getMinutes()).padStart(2, "0"), k = key(t); return k === key(now()) ? "hoy, " + hm : k === key(add(now(), -1)) ? "ayer, " + hm : t.getDate() + " de " + MESES[t.getMonth()]; };
+  // Cada rosario completo es una rosa del ramillete; las de hoy brillan.
+  function famRam(d) {
+    const r = d.rosarios || 0, m = d.misterios || 0, a = d.aves || 0, h = (d.hoy || {}).rosarios || 0;
+    if (!m && !a) return `<div class="fra vac z"><span class="fro">${EM.rosa}</span><p class="pin c">Todavía no tiene rosas</p><p class="sub c" style="margin-top:4px">Cada rosario que rece alguien de la familia pone una rosa aquí. La primera puede ser la tuya.</p></div>`;
+    const N = Math.min(r, 24), ros = Array.from({ length: N }, (_, k) => `<i${k >= N - Math.min(h, N) ? ' class="h"' : ""}>${EM.rosa}</i>`).join("") + (r > N ? `<em>+${mil(r - N)}</em>` : "");
+    return `<div class="fra z"><p class="fral">${d.dias > 1 ? `En ${d.dias} días han rezado` : "Hoy han rezado"}</p>
+      <div class="frn"><p><b>${mil(r)}</b><span>${r === 1 ? "rosario" : "rosarios"}</span></p><p><b>${mil(m)}</b><span>${m === 1 ? "misterio" : "misterios"}</span></p><p><b>${mil(a)}</b><span>${a === 1 ? "Ave María" : "Ave Marías"}</span></p></div>
+      ${r ? `<div class="frr" role="img" aria-label="${cuantos(r, "rosa", "rosas")}, una por cada rosario completo">${ros}</div><p class="note c" style="margin-top:8px">Una rosa por cada rosario completo.</p>` : `<p class="note c" style="margin-top:12px">Cuando alguien complete un rosario aparece la primera rosa.</p>`}</div>`;
+  }
+  function famInv() {
+    const d = FM[famA], aq = d ? (d.miembros || []).filter((m) => m.est > 0) : [], rz = aq.filter((m) => m.est === 2);
+    if (!d) return `<h1 style="margin-top:30px;font-size:34px;line-height:40px">Te invitaron a rezar el rosario en familia</h1><p class="sub">${famErr ? "No pudimos cargar la invitación. Revisa tu internet." : "Cargando la invitación…"}</p>`;
+    return `<h1 style="margin-top:30px;font-size:34px;line-height:40px">${esc(d.creador)} te invitó a rezar con ${esc(conLa(d.nombre))}</h1>${d.intencion ? `<p class="pin" style="margin-top:8px">«${esc(d.intencion)}»</p>` : ""}
+      ${rz.length || aq.length ? `<p class="fah"><i class="pto"></i>${esc(nombresM(rz.length ? rz : aq))} ${rz.length ? (rz.length === 1 ? "está rezando" : "están rezando") + " ahora mismo" : (aq.length === 1 ? "está" : "están") + " en la sala ahora"}</p>` : ""}
+      <p class="sub">${d.misterios ? `${d.dias > 1 ? "En " + d.dias + " días llevan" : "Hoy llevan"} ${d.rosarios ? cuantos(d.rosarios, "rosario", "rosarios") + " y " : ""}${cuantos(d.aves, "Ave María", "Ave Marías")}. ` : "Reza cuando puedas: todo se va sumando. "}Para que sepan quién eres, ¿cómo te llamas?</p>`;
+  }
+  function famQuita(id) { if (sala && famS === id) salir(); S.fam = S.fam.filter((x) => x.id !== id); S.fq = S.fq.filter((x) => x.f !== id); save(); delete FM[id]; famOjo = 0; famA = S.fam.length ? S.fam[0].id : ""; go(famA ? "fam" : "hoy"); }
+  if (Q.get("demo") || Q.get("prueba")) window.atrioF = () => ({ view, i: ros ? ros.i : -1, de: ros ? ros.p.length : 0, sala: !!sala, lead, famS, famA, gente: peersS.length, guia: (guia() && guia().presence.n) || "", cola: S.fq.length, fam: S.fam.map((x) => x.id + (x.p ? "?" : "")), fm: FM[famA] || null, noSigo, n: S.n });
+  const famPend = () => { S.fam.forEach((j) => { if (j.p) famCrea(j.id); }); famFluye(); if (view === "fam") famAbre(); else if (view === "hoy") famTodos(); };
   /* ---------- rezar por alguien: se manda una luz por WhatsApp ---------- */
   const LQ = { am: ["un Ave María", "Ave María"], ros: ["un rosario", "Rosario"], vel: ["una veladora", "Veladora"] };
   let LUZ = null, luzQ = "am", luzPara = "", luzRe = 0;
@@ -525,28 +657,46 @@
     window.atrioCanto = (seg, set) => { const oc = new OfflineAudioContext(2, 44100 * seg, 44100), m = motor(oc, set); m.out.gain.value = 1.8; m.agenda(seg); return oc.startRendering().then((b) => { const L = b.getChannelData(0), R = b.getChannelData(1), mono = new Array(L.length >> 1); let pk = 0, q = 0; for (let i = 0; i < L.length; i++) { const v = (L[i] + R[i]) / 2; pk = Math.max(pk, Math.abs(L[i]), Math.abs(R[i])); q += v * v; if (!(i & 1)) mono[i >> 1] = Math.round(Math.max(-1, Math.min(1, v)) * 32767); } return { pk, rms: Math.sqrt(q / L.length), mono }; }); }; }
   const botMu = () => `<button class="ic r mu${S.mu ? " on" : ""}" data-a="mu" aria-label="${S.mu ? "Apagar la música" : "Poner música de fondo"}" aria-pressed="${!!S.mu}">${S.mu ? I.nota : I.notano}</button>`;
   const presSala = () => { if (sala) sala.presence({ n: S.n.slice(0, 24), e: S.e, lead: lead ? 1 : 0, on: ros && ros.sala ? 1 : 0, i: ros ? ros.i : 0, set: ros ? ros.set : "", f: ros ? ros.f : "", fin: null }).catch(() => {}); };
-  const guia = () => peersS.filter((p) => p.presence && p.presence.lead).sort((a, b) => (a.peer < b.peer ? -1 : 1))[0];
+  // dirige quien está rezando; si ya terminó, quien avisó que terminó
+  const guia = () => { const L = peersS.filter((p) => p.presence && p.presence.lead).sort((a, b) => (a.peer < b.peer ? -1 : 1)); return L.find((p) => p.presence.on) || L.find((p) => p.presence.fin) || L[0]; };
+  // en qué va el rosario de quien dirige: «Van en el tercer misterio»
+  const PASOS = {};
+  const faseDe = (g) => { const f = g.presence.f === "mx" ? "mx" : "un", p = PASOS[f] || (PASOS[f] = pasos(f)), st = p[Math.max(0, Math.min(p.length - 1, g.presence.i | 0))]; return st.m != null ? "Van en el " + ORD[st.m].toLowerCase() + " misterio" : st.fin ? "Ya van terminando" : "Van empezando"; };
+  // lo que hace falta volver a pintar: quién está y, si dirige otro, en qué va (en la página de la familia basta el misterio; quien dirige ya pinta su propia cuenta)
+  const pkAhora = () => { const g = guia(); return peersS.map((p) => { const r = p.presence || {}; return p.peer + ":" + (r.n || "") + (r.v || 0) + (r.c || 0) + (r.lead || 0) + (r.on || 0) + (r.fin || 0); }).join() + "|" + (g && !g.isMe && g.presence.on ? (view === "fam" ? faseDe(g) : g.presence.i | 0) + (g.presence.set || "") : ""); };
+  // Cada vez que cambia algo en la sala: quién está, quién dirige y en qué cuenta va
+  function salaCambio() {
+    if (!sala) return;
+    if (VZ) Object.keys(VZ.pcs).forEach((id) => { if (!peersS.some((p) => p.peer === id)) cuelga(id); });
+    // en la sala de una familia cualquiera puede empezar; si dos empiezan a la vez, dirige quien tiene la llave menor y el otro lo sigue
+    if (lead && famS && ros && ros.sala && peersS.some((p) => !p.isMe && p.presence && p.presence.lead && p.presence.on && p.peer < sala.yo)) { famSuma(1); lead = false; presSala(); }
+    const g = guia(), sigue = !lead && g && !g.isMe, pk = pkAhora(), cambio = pk !== pk0; pk0 = pk;
+    if (sigue && g.presence.fin && ros && ros.sala) { fin(); return; }
+    if (sigue && g.presence.on && !(famS && (noSigo || view === "fed"))) {
+      tSinG = 0;
+      const gf = g.presence.f === "mx" ? "mx" : "un", antes = view + "|" + (ros && ros.sala ? ros.i : -1);
+      if (!ros || !ros.sala || ros.set !== g.presence.set || ros.f !== gf) { if (ros) famSuma(1); ros = { set: MIS[g.presence.set] ? g.presence.set : MIS_DIA[now().getDay()], i: 0, sala: 1, f: gf, g: grande0(1) }; if (famS) { ros.fam = famS; famB = 0; famVer(famS, 2); } ros.p = pasos(gf); view = "ros"; }
+      const i = Math.max(0, Math.min(ros.p.length - 1, g.presence.i | 0));
+      if (i !== ros.i || view !== "ros") { ros.an = i < ros.i ? "at" : "sg"; ros.i = i; view = "ros"; vibraPaso(); }
+      famSuma();
+      if (cambio || antes !== view + "|" + ros.i) render(); ros.an = "";
+    } else {
+      // quien dirigía se fue a medio rosario: a los nueve segundos cualquiera puede seguir dirigiendo
+      if (ros && ros.sala && !lead && view === "ros") { if (!tSinG) { tSinG = Date.now(); setTimeout(() => { if (tSinG && view === "ros" && ros && ros.sala && !lead) render(); }, 9200); } } else tSinG = 0;
+      if (cambio) { if (view === "sala" || view === "fam") render(1); else if (view === "ros" && ros && ros.sala) render(); }
+    }
+    if (famS && gente0 !== peersS.length) { gente0 = peersS.length; clearTimeout(tGente); tGente = setTimeout(() => { if (famS && view === "fam") famVer(famS, 1); }, 1500); }
+  }
   async function entrar(code, crea) {
     if (!RM) return;
     try {
-      codigo = code; lead = !!crea; sala = await RM.join("s-" + code.toLowerCase());
-      sala.onPeers((c) => {
-        peersS = c.peers || [];
-        if (VZ) Object.keys(VZ.pcs).forEach((id) => { if (!peersS.some((p) => p.peer === id)) cuelga(id); });
-        const g = guia();
-        if (!lead && g && !g.isMe && g.presence.fin && ros && ros.sala) { fin(); return; }
-        if (!lead && g && !g.isMe && g.presence.on) {
-          const gf = g.presence.f === "mx" ? "mx" : "un";
-          if (!ros || !ros.sala || ros.set !== g.presence.set || ros.f !== gf) { ros = { set: MIS[g.presence.set] ? g.presence.set : MIS_DIA[now().getDay()], i: 0, sala: 1, f: gf, g: grande0(1) }; ros.p = pasos(gf); view = "ros"; }
-          const i = Math.max(0, Math.min(ros.p.length - 1, g.presence.i | 0));
-          if (i !== ros.i || view !== "ros") { ros.an = i < ros.i ? "at" : "sg"; ros.i = i; view = "ros"; vibraPaso(); }
-          render(); ros.an = "";
-        } else if (view === "sala") render();
-      }, () => { sala = null; peersS = []; if (view === "sala") render(); });
-      presSala(); render();
-    } catch (_) { sala = null; render(); aviso("No se pudo abrir la sala. Intenta otra vez."); }
+      codigo = code; lead = !!crea; pk0 = ""; sala = await RM.join("s-" + code.toLowerCase());
+      sala.onPeers((c) => { peersS = c.peers || []; salaCambio(); }, () => { sala = null; peersS = []; if (view === "sala" || view === "fam") render(1); });
+      presSala(); if (view === "sala" || view === "fam") render(1);
+    } catch (_) { sala = null; if (view === "sala" || view === "fam") render(1); aviso("No se pudo abrir la sala. Intenta otra vez."); }
   }
-  function salir() { apagaVoz(1); try { if (sala) sala.leave(); } catch (_) {} sala = null; peersS = []; lead = false; codigo = ""; }
+  function salir() { const f = famS; apagaVoz(1); try { if (sala) sala.leave(); } catch (_) {} sala = null; peersS = []; lead = false; codigo = ""; famS = ""; tSinG = 0; noSigo = 0; pk0 = "";
+    if (f && SB && S.n && UUID.test(S.mi || "")) try { SB.rpc("fam_entra", { f, mi: S.mi, n: S.n.slice(0, 24), e: 0, d: key(now()) }).then(() => {}, () => {}); } catch (_) {} }
 
   /* ---------- piezas visuales ---------- */
   const SKY = [[20, 5, 10, 0], [55, 8, 8, 1.4], [86, 4, 10, 2.6], [1.5, 430, 9, 0.8], [96.5, 300, 9, 3.3], [96, 610, 8, 2], [1.5, 700, 8, 1.1], [9, 92, 5, 2.1], [38, 30, 5, 3.7], [70, 58, 6, 0.4], [93, 140, 5, 1.7], [4, 236, 6, 2.9], [97, 468, 5, 0.2], [3, 560, 5, 3.1], [95, 820, 7, 1.3], [2, 930, 6, 2.4], [97, 1080, 6, 0.9], [3, 1240, 7, 1.9]];
@@ -797,34 +947,38 @@
   const VFOTO = {
     guadalupe: { hd: "2/2c/Virgen_de_guadalupe1.jpg", ow: 788, oh: 1226, c: [0.02, 0.005, 0.88], a: "Imagen de la tilma, Basílica de Guadalupe", l: "Dominio público", f: "Virgen_de_guadalupe1.jpg" },
     fatima: { hd: "3/34/Fatima_0752_%2819796283042%29_%28cropped%29.jpg", ow: 614, oh: 1092, c: [0.075, 0.11, 0.83], a: "János Korom", l: "Dominio público", f: "Fatima_0752_%2819796283042%29_%28cropped%29.jpg" },
-    lourdes: { hd: "thumb/6/6a/Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg/960px-Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg", ow: 3654, oh: 5760, c: [0.08, 0.13, 0.8], a: "IgnaceBoitaclou", l: "CC BY 4.0", f: "Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg" },
-    carmen: { hd: "thumb/d/d3/Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png/960px-Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png", ow: 1414, oh: 2000, c: [0.127, 0.08, 0.7355], a: "David.Lopez.Sala", l: "CC BY 4.0", f: "Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png" },
+    lourdes: { hd: "thumb/6/6a/Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg/1920px-Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg", ow: 3654, oh: 5760, c: [0.08, 0.13, 0.8], a: "IgnaceBoitaclou", l: "CC BY 4.0", f: "Villers-Ch%C3%A2tel_-_Grotte_-_Statue_mariale.jpg" },
+    carmen: { hd: "thumb/d/d3/Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png/1280px-Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png", ow: 1414, oh: 2000, c: [0.127, 0.08, 0.7355], a: "David.Lopez.Sala", l: "CC BY 4.0", f: "Nuestra_Se%C3%B1ora_del_Carmen_Perchelerita.png" },
     pilar: { hd: "thumb/a/a0/13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg/1280px-13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg", ow: 1338, oh: 1441, c: [0.252, 0.28, 0.4954], a: "El Justicia de Aragón", l: "CC0", f: "13_de_Mayo%2C_Virgen_del_Pilar_con_el_manto_de_la_Instituci%C3%B3n_%2852103197996%29.jpg" },
-    sanjuan: { hd: "thumb/0/0c/Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg/960px-Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg", ow: 1506, oh: 2048, c: [0.0445, 0.001, 0.905], a: "Metropolitanogto", l: "CC0", f: "Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg" },
+    sanjuan: { hd: "thumb/0/0c/Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg/1280px-Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg", ow: 1506, oh: 2048, c: [0.0445, 0.001, 0.905], a: "Metropolitanogto", l: "CC0", f: "Virgen_de_San_Juan_de_los_Lagos_%282023%29.jpg" },
     zapopan: { hd: "thumb/3/3a/Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg/1920px-Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg", ow: 1936, oh: 2592, c: [0.4508, 0.03, 0.4284], a: "ExorcisioTe", l: "CC BY-SA 4.0", f: "Our_Lady_of_Zapopan_relic_on_tour_for_veneration_in_the_atrium_of_the_Cathedral.jpg" },
     juquila: { hd: "8/84/Juquilita.jpg", ow: 314, oh: 400, c: [0.119, 0.01, 0.722], a: "Autor desconocido", l: "Dominio público", f: "Juquilita.jpg" },
     socorro: { hd: "2/26/Perpetual_help_original_icon.jpg", ow: 500, oh: 609, c: [0.12, 0, 0.811], a: "Autor desconocido", l: "Dominio público", f: "Perpetual_help_original_icon.jpg" },
-    milagrosa: { hd: "thumb/f/ff/Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg/960px-Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg", ow: 2122, oh: 3747, c: [0.01, 0.03, 0.93], a: "Nheyob", l: "CC BY-SA 4.0", f: "Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg" },
+    milagrosa: { hd: "thumb/f/ff/Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg/1920px-Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg", ow: 2122, oh: 3747, c: [0.01, 0.03, 0.93], a: "Nheyob", l: "CC BY-SA 4.0", f: "Old_Saint_Mary%27s_Church_%28Cincinnati%2C_Ohio%29_-_Immaculate_Conception_statue_2.jpg" },
     auxiliadora: { hd: "9/93/Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg", ow: 703, oh: 1000, c: [0.138, 0.128, 0.664], a: "Sanji1986", l: "CC BY-SA 4.0", f: "Maria_Auxilium_Christianorum%2C_ora_pro_nobis.jpg" },
-    dolores: { hd: "thumb/5/5a/Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg/960px-Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg", ow: 1331, oh: 1704, c: [0.0935, 0, 0.853], a: "Pederseguro", l: "Dominio público", f: "Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg" }
+    dolores: { hd: "thumb/5/5a/Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg/1280px-Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg", ow: 1331, oh: 1704, c: [0.0935, 0, 0.853], a: "Pederseguro", l: "Dominio público", f: "Nuestra_Se%C3%B1ora_de_los_Dolores_-_Camas_%28Sevilla%29.jpg" }
   };
   // la foto en su arco de oro (2:3); mientras llega, o si falta, queda su dibujo
   const VIRG = (k, w, ya) => { if (!VFOTO[k]) return VIRGD(k, w); const h = Math.round(w * 1.5);
-    return `<span class="vph" style="width:${w}px;height:${h}px"><span class="vpd">${VIRGD(k, Math.round(w * 0.86))}</span><img src="v/${k}${w <= 100 ? "-s" : ""}.jpg" width="${w}" height="${h}" alt=""${ya ? "" : ' loading="lazy"'} decoding="async" onload="this.parentNode.classList.add('ok')" onerror="this.remove()"></span>`; };
+    return `<span class="vph" style="width:${w}px;height:${h}px"><span class="vpd">${VIRGD(k, Math.round(w * 0.86))}</span><img src="v/${k}${w <= 100 ? "-s" : ""}.jpg" width="${w}" height="${h}" alt=""${ya ? "" : ' loading="lazy"'} decoding="async" onerror="this.parentNode.classList.add('mal');this.remove()"></span>`; };
   /* Verla de cerca: la imagen grande con puntos dorados; cada punto cuenta un detalle. */
   let LU = null;
-  const luTxt = (sim) => { const s = LU.i >= 0 ? sim[LU.i] : null; return [s ? `<b>${esc(s[2])}</b><p>${esc(s[3])}</p>` : `<b>Mírala de cerca</b><p>Toca los puntos dorados: cada uno guarda un detalle de su imagen.</p>`, LU.i < 0 ? "Ver el primer detalle" : LU.i >= sim.length - 1 ? "Listo" : "Siguiente detalle"]; };
+  const luTxt = (sim) => { const s = LU.i >= 0 ? sim[LU.i] : null; return [s ? `<b>${esc(s[2])}</b><p>${esc(s[3])}</p>` : `<b>Mírala de cerca</b><p>Toca un número y te acercamos a ese detalle.</p>`, LU.i < 0 ? "Ver el primer detalle" : LU.i >= sim.length - 1 ? "Ver la imagen completa" : "Siguiente detalle"]; };
   function lupa() {
     const x = document.getElementById("lupa"); if (x) x.remove(); if (!LU) return;
     const a = ADV.find((q) => q.k === LU.k), f = VFOTO[LU.k]; if (!a || !f) { LU = null; return; }
     const H = window.innerHeight, W = Math.round(Math.max(190, Math.min(app.clientWidth - 44, (H - 262) / 1.5, 380))), x0 = f.c[0], y0 = f.c[1], iw = W / f.c[2], ih = (iw * f.oh) / f.ow, sim = a.sim || [], tx = luTxt(sim);
     app.insertAdjacentHTML("beforeend", `<div id="lupa" role="dialog" aria-label="${esc(advN(a))}, de cerca"><div class="lub"><p class="ru">${esc(a.p)} ${esc(a.c)}</p><button class="ic r" data-a="lupax" aria-label="Cerrar">${I.x}</button></div>
-      <div class="luf" style="width:${W}px;height:${Math.round(W * 1.5)}px"><img src="v/${a.k}.jpg" alt=""><img class="luh" src="${WM + f.hd}" alt="" referrerpolicy="no-referrer" style="width:${f1(iw)}px;height:${f1(ih)}px;left:${f1(-x0 * iw)}px;top:${f1(-y0 * ih)}px" onload="this.classList.add('ok')" onerror="this.remove()">
-        ${sim.map((q, i) => `<button class="lup${i === LU.i ? " on" : ""}" data-a="lupan" data-k="${i}" style="left:${q[0]}%;top:${q[1]}%" aria-label="${esc(q[2])}"><i>${i + 1}</i></button>`).join("")}</div>
+      <div class="luf" style="width:${W}px;height:${Math.round(W * 1.5)}px" data-w="${W}"><div class="luz"><img src="v/${a.k}.jpg" alt=""><img class="luh" src="${WM + f.hd}" alt="" referrerpolicy="no-referrer" style="width:${f1(iw)}px;height:${f1(ih)}px;left:${f1(-x0 * iw)}px;top:${f1(-y0 * ih)}px" onload="this.classList.add('ok')" onerror="this.remove()"></div>
+        ${sim.map((q, i) => `<button class="lup" data-a="lupan" data-k="${i}" style="left:${q[0]}%;top:${q[1]}%" aria-label="${esc(q[2])}"><i>${i + 1}</i></button>`).join("")}<button class="luo" data-a="lupao" aria-label="Ver la imagen completa">Ver completa</button></div>
       <div class="luc" aria-live="polite">${tx[0]}</div><button class="btn go lus" data-a="lupas">${tx[1]}</button></div>`);
+    lupaT(1);
   }
-  function lupaT() { const T = document.getElementById("lupa"), a = LU && ADV.find((q) => q.k === LU.k); if (!T || !a) return; const tx = luTxt(a.sim || []);
-    T.querySelectorAll(".lup").forEach((b, i) => b.classList.toggle("on", i === LU.i)); const c = T.querySelector(".luc"); c.innerHTML = tx[0]; c.classList.remove("lin"); void c.offsetWidth; c.classList.add("lin"); T.querySelector(".lus").textContent = tx[1]; }
+  // acercarse a un detalle: la foto crece y ese punto queda al centro, sin salirse de los bordes
+  function lupaT(sinAnim) { const T = document.getElementById("lupa"), a = LU && ADV.find((q) => q.k === LU.k); if (!T || !a) return; const sim = a.sim || [], tx = luTxt(sim), F = T.querySelector(".luf"), Z = T.querySelector(".luz"), W = +F.dataset.w, Hh = W * 1.5;
+    if (LU.i >= 0 && sim[LU.i]) { const z = 2.6, px = (sim[LU.i][0] / 100) * W, py = (sim[LU.i][1] / 100) * Hh, tx2 = Math.min(0, Math.max(W - W * z, W / 2 - px * z)), ty = Math.min(0, Math.max(Hh - Hh * z, Hh / 2 - py * z)); Z.style.transform = `translate(${f1(tx2)}px,${f1(ty)}px) scale(${z})`; F.classList.add("zm"); }
+    else { Z.style.transform = "none"; F.classList.remove("zm"); }
+    const c = T.querySelector(".luc"); c.innerHTML = tx[0]; if (!sinAnim) { c.classList.remove("lin"); void c.offsetWidth; c.classList.add("lin"); } T.querySelector(".lus").textContent = tx[1]; }
   // la paloma que baja: alas abiertas, cabeza hacia abajo, como se pinta al Espíritu Santo
   const PAL_ES = (() => { const ala = `<path d="M108 104C84 86 52 64 14 38C22 62 34 80 48 92C38 92 30 92 22 90C36 106 52 116 68 122C60 126 52 128 44 128C62 138 84 142 104 138Z" fill="url(#pg2)" stroke="#fff" stroke-opacity=".7" stroke-width=".8" stroke-linejoin="round"/><path d="M104 120C80 110 50 88 26 56M104 131C84 126 62 116 46 104" fill="none" stroke="#9DB9BC" stroke-opacity=".55" stroke-width="1" stroke-linecap="round"/>`;
     return `<svg class="pal0" viewBox="0 0 240 220"><defs><radialGradient id="pg1" cx=".5" cy=".6" r=".65"><stop offset="0" stop-color="#fff"/><stop offset=".65" stop-color="#F4F9F9"/><stop offset="1" stop-color="#C6DADB"/></radialGradient><linearGradient id="pg2" x1=".9" y1=".9" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#EEF5F5"/><stop offset="1" stop-color="#B7CFD1"/></linearGradient><radialGradient id="pgl"><stop offset="0" stop-color="#FFF6D8" stop-opacity=".95"/><stop offset=".32" stop-color="#F4DCA6" stop-opacity=".42"/><stop offset="1" stop-color="#F4DCA6" stop-opacity="0"/></radialGradient></defs>
@@ -864,7 +1018,7 @@
       <h1 class="z obt">¿Cómo te llamas?</h1><p class="sub z c">Para que la Virgen y tu familia te reconozcan aquí.</p>
       <input class="fld nm z" id="fn" type="text" autocomplete="given-name" autocapitalize="words" maxlength="24" placeholder="Tu nombre" aria-label="Tu nombre" value="${esc(S.n)}">
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`
-      : `<section class="v d in">${sky()}${hd(["yo"], "Tus datos")}<h1 class="z" style="margin-top:10px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Solo tu nombre de pila.</p>
+      : `<section class="v d in">${sky()}${hd(["yo"], "Tus datos")}<h1 class="z" style="margin-top:10px;font-size:34px;line-height:40px">¿Cómo te llamas?</h1><p class="sub z">Como te dicen en tu casa.</p>
       <label class="lab z" for="fn">Tu nombre</label><input class="fld z" id="fn" type="text" autocomplete="given-name" maxlength="24" value="${esc(S.n)}">
       <button class="btn go mt z" data-a="nom">Continuar</button></section>`,
     // el saludo: una paloma baja con luz, como en Pentecostés, y la invocación más antigua al Espíritu Santo
@@ -921,7 +1075,7 @@
       <div style="padding-top:22px"><button class="btn go" data-a="jcrea">Crear e invitar por WhatsApp</button></div></section>`,
     jt: () => { const id = jtA, d = JT[id], j = S.jt.find((x) => x.id === id) || { id }, set = MIS_DIA[now().getDay()], M = MIS[set], hechos = d ? d.cuentas || [] : [], n = hechos.length, ra = jtRacha(id);
       if (!S.n) return `<section class="v d n in">${sky()}<div class="hd"><span></span><p class="ru">Rosario juntos</p><span></span></div><h1 style="margin-top:30px;font-size:34px;line-height:40px">${d ? esc(d.creador) + " te invitó a rezar el rosario juntos" : "Te invitaron a rezar el rosario juntos"}</h1><p class="sub">Cada quien reza su misterio cuando puede. Para que sepan quién rezó, ¿cómo te llamas?</p>
-        <label class="ru" for="fn" style="display:block;margin-top:22px;font-size:15px">Tu nombre</label><input class="fld" id="fn" maxlength="24" autocomplete="given-name" placeholder="Tu nombre de pila"><div style="padding-top:22px"><button class="btn go" data-a="jnom">Entrar</button></div></section>`;
+        <label class="ru" for="fn" style="display:block;margin-top:22px;font-size:15px">Tu nombre</label><input class="fld" id="fn" maxlength="24" autocomplete="given-name" placeholder="Ej. María, Pepe…"><div style="padding-top:22px"><button class="btn go" data-a="jnom">Entrar</button></div></section>`;
       const fila = (m) => { const c = hechos.find((x) => x.m === m), mm = M.m[m], h = c ? new Date(c.hecho) : null, yo = c && c.quien === S.n;
         return `<li class="jm${c ? " ok" : ""}"><span class="jb">${c ? `<b>${esc(c.quien.slice(0, 1).toUpperCase())}</b>` : `<i>${m + 1}</i>`}</span><span class="g"><span class="ru">${ORD[m]} misterio</span><b>${mm[0]}</b>${c ? `<small>${yo ? "Lo rezaste tú" : "Lo rezó " + esc(c.quien)}${h && !isNaN(h) ? ", " + String(h.getHours()).padStart(2, "0") + ":" + String(h.getMinutes()).padStart(2, "0") : ""}</small>` : ""}</span>${c ? `<span class="pal2">${I.ok}</span>` : `<button class="btn go sm jr" data-a="jtr" data-k="${m}">Rezar</button>`}</li>`; };
       return `<section class="v d n in">${sky()}${hd(["hoy"], "Rosario juntos")}<h1 style="margin-top:10px;font-size:32px;line-height:38px">Con ${esc(jtCon(j))}</h1>
@@ -933,6 +1087,45 @@
         ${ra > 1 ? `<p class="jra"><b>${ra}</b> días seguidos rezando juntos</p>` : ""}`}
         <div class="jbt"><button class="vzb" data-a="jtv">${I.cam}<span>Videollamada</span></button><button class="vzb" data-a="jtw">${n && n < 5 ? "Avisarles" : "Invitar"}</button></div>
         <p class="note c" style="margin-top:12px">Quien tenga la liga puede ver y rezar este rosario. Compártela solo con tu familia.</p></section>`; },
+    fnew: () => `<section class="v d n in">${sky()}${hd([S.fam.length ? "fam" : "hoy"], "Rosario en familia")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">Recen en familia, cada quien desde donde esté</h1>
+      <p class="sub">Creas tu familia y mandas la liga por WhatsApp. Quien la toca entra directo, sin código ni contraseña, y lo que reza cada quien se va sumando.</p>
+      <label class="ru" for="ff" style="display:block;margin-top:22px;font-size:15px">¿Cómo se llama tu familia o tu grupo?</label><input class="fld" id="ff" maxlength="40" autocomplete="off" autocapitalize="words" placeholder="Familia Hernández">
+      <label class="ru" for="ffi" style="display:block;margin-top:16px;font-size:15px">¿Por quién van a rezar? <span style="font-family:var(--sa);font-style:normal;font-size:13px;color:var(--txt2)">opcional</span></label><textarea class="fld fli" id="ffi" rows="2" maxlength="140" autocomplete="off" placeholder="Por la salud de mi papá…"></textarea>
+      <div class="chips wr">${FIS.map((t, i) => `<button class="chip" data-a="fich" data-k="${i}">${t}</button>`).join("")}</div>
+      <div style="padding-top:22px"><button class="btn go" data-a="fcrea">${I.comp}<span>Crear y compartir la liga</span></button></div>
+      <p class="note c" style="margin-top:12px">El nombre y la intención los ve quien tenga la liga.</p></section>`,
+    fed: () => { const d = FM[famA] || {}, j = famJ(famA) || {}; return `<section class="v d n in">${sky()}${hd(["fam"], "Tu familia")}<h1 style="margin-top:10px;font-size:32px;line-height:38px">Nombre e intención</h1><p class="sub">Lo que cambies aquí lo ve toda la familia.</p>
+      <label class="ru" for="ff" style="display:block;margin-top:22px;font-size:15px">Nombre de la familia</label><input class="fld" id="ff" maxlength="40" autocomplete="off" autocapitalize="words" value="${esc(d.nombre || j.n || "")}">
+      <label class="ru" for="ffi" style="display:block;margin-top:16px;font-size:15px">¿Por quién rezan?</label><textarea class="fld fli" id="ffi" rows="2" maxlength="140" autocomplete="off" placeholder="Por la salud de mi papá…">${esc(d.intencion || j.i || "")}</textarea>
+      <div style="padding-top:22px"><button class="btn go" data-a="fguarda">Guardar</button></div>
+      <button class="lk c" data-a="fborra" style="margin-top:22px;color:var(--rosa)">${famOjo === 2 ? "Toca otra vez y se borra con todo lo rezado" : "Borrar esta familia"}</button></section>`; },
+    fam: () => { const id = famA, j = famJ(id) || { id }, d = FM[id];
+      if (d === 0) return `<section class="v d n in">${sky()}${hd(["hoy"], "Rosario en familia")}<h1 style="margin-top:22px;font-size:34px;line-height:40px">No encontramos esta familia</h1><p class="sub">Puede que la liga llegara incompleta o que quien la creó la haya borrado. Pide que te la manden otra vez.</p><div style="padding-top:22px"><button class="btn go" data-a="fquita">Entendido</button></div></section>`;
+      if (!S.n) return `<section class="v d n in">${sky()}<div class="hd"><span class="ic"></span><p class="ru">Rosario en familia</p><span class="ic"></span></div><div id="finv">${famInv()}</div>
+        <label class="ru" for="fn" style="display:block;margin-top:22px;font-size:15px">Tu nombre</label><input class="fld" id="fn" maxlength="24" autocomplete="given-name" autocapitalize="words" placeholder="Ej. María, Pepe…">
+        <div style="padding-top:22px"><button class="btn go" data-a="fnom">Entrar a rezar</button></div><p class="note c" style="margin-top:12px">Entras directo, sin código ni contraseña. Tu nombre solo lo ve tu familia.</p></section>`;
+      const nom = (d && d.nombre) || j.n || "Tu familia", it = d ? d.intencion || "" : j.i || "", enSala = !!(sala && famS === id), g = enSala ? guia() : null, curso = !!(g && !g.isMe && g.presence.on), otros = enSala ? peersS.filter((p) => !p.isMe) : [], sola = (!d || (d.gente || 0) <= 1) && !otros.length;
+      if (famB && Date.now() - famB > 45000) famB = 0;
+      const vivo = !jtOk() ? "" : !enSala ? `<p class="note c z fvc">${j.p ? (famErr ? "Sin señal. Tu familia se guarda sola en cuanto vuelva el internet." : "Guardando tu familia…") : RM ? "Entrando a la sala de tu familia…" : "Conectando…"}</p>`
+        : `<div class="fvv z${curso ? " on" : ""}"><p class="fvt">${curso || otros.length ? '<i class="pto"></i>' : ""}${curso ? esc(nombresP(otros, g)) + (otros.length === 1 ? " está rezando ahora" : " están rezando ahora") : otros.length ? (otros.length === 1 ? esc(nombresP(otros)) + " está aquí ahora" : "Aquí están ahora") : "Estás en la sala de tu familia"}</p>
+          ${curso ? `<p class="fvs">${faseDe(g)}. Entras y sigues desde ahí.</p>` : otros.length ? "" : `<p class="fvs">Cuando alguien abra la liga, aquí aparece su cara.</p>`}
+          ${tiles()}${hayVoz() ? `<div class="fvz">${botVoz()}</div>${VZ ? `<p class="note c fvn">${conVoz() > 1 ? "Usa audífonos para que no haya eco." : "Cuando otro toque Hablar, se van a escuchar."}</p>` : conVoz() ? `<p class="note c fvn">${conVoz() === 1 ? "1 persona habla" : conVoz() + " personas hablan"} en la sala. Toca Hablar para escucharlos.</p>` : ""}` : ""}</div>`;
+      const bRos = curso ? `<button class="btn go z" data-a="funir">Unirme al rosario</button>` : `<button class="btn ${sola ? "gh" : "go"} z" data-a="fros">${otros.length ? "Empezar el rosario con " + (otros.length === 1 ? esc(nombresP(otros)) : "ellos") : "Empezar el rosario"}</button>`;
+      const bInv = `<button class="btn ${sola && !curso ? "go" : "gh"} z" data-a="fcomp">${I.comp}<span>${sola ? "Mandar la liga por WhatsApp" : "Invitar a alguien más"}</span></button>`;
+      const gente = d && (d.miembros || []).length && (!sola || d.aves > 0) ? `<p class="tit z">Quién ha rezado</p><div class="fmg z">${d.miembros.slice(0, 14).map((m) => `<div class="fmi${m.hoy ? " hoy" : ""}"><span class="fma">${esc((m.n || "?").slice(0, 1).toUpperCase())}</span><span class="g"><b>${esc(m.n)}${m.yo ? " <i>(tú)</i>" : ""}</b><small>${m.aves ? (m.ros ? cuantos(m.ros, "rosario", "rosarios") + " · " : m.mis ? cuantos(m.mis, "misterio", "misterios") + " · " : "") + cuantos(m.aves, "Ave María", "Ave Marías") : "Todavía no reza aquí"}</small></span>${m.hoy ? `<span class="fmh">${I.ok}Hoy</span>` : ""}</div>`).join("")}${d.gente > 14 ? `<p class="note c">y ${d.gente - 14} más</p>` : ""}</div>` : "";
+      const ult = d && (d.reciente || []).length ? `<p class="tit z">Lo último</p><ul class="ful z">${d.reciente.slice(0, 4).map((r) => `<li><span><b>${esc(r.n)}</b> ${r.c ? "rezó el rosario completo" : r.mis === 1 ? "rezó un misterio" : "rezó " + r.mis + " misterios"}</span><small>${famCuando(r.h)}</small></li>`).join("")}</ul>` : "";
+      return `<section class="v d n in fam">${sky()}<div class="hd z"><button class="ic" data-a="go" data-v="hoy" data-b="1" aria-label="Regresar">${I.back}</button><p class="ru">Rosario en familia</p><button class="ic" data-a="fcomp" aria-label="Compartir la liga de la familia">${I.comp}</button></div>
+        ${famB ? `<div class="fbn z" role="status"><span>${EM.rosa}</span><p><b>Amén.</b> Lo que rezaste ya se sumó al de tu familia.</p></div>` : ""}
+        <h1 class="z" style="margin-top:${famB ? 14 : 10}px;font-size:34px;line-height:40px">${esc(nom)}</h1>${it ? `<p class="pin z" style="margin-top:6px">«${esc(it)}»</p>` : d && d.mia ? `<button class="lk z fpi" data-a="go" data-v="fed">Escribir por quién rezan</button>` : ""}
+        ${sola && !curso ? `<p class="sub z" style="margin-top:14px">Ya está lista. Manda la liga al grupo de tu familia: quien la toque entra directo, sin código ni contraseña.</p>` : ""}
+        ${vivo}
+        <div class="fbs z">${sola && !curso ? bInv + bRos : bRos + bInv}</div>
+        <p class="tit z">Ramillete espiritual</p>${d ? famRam(d) : `<p class="note c z">${famErr ? "No pudimos cargar lo rezado. Revisa tu internet." : "Cargando…"}</p>`}
+        ${gente}${ult}
+        ${pideG() ? `<div class="gua z" style="margin-top:22px"><p class="ru">Que no se pierda</p><p class="sub" style="margin:2px 0 12px">Guarda tu familia y lo que has rezado con tu cuenta de Google. Es gratis y te sigue si cambias de teléfono.</p><button class="btn gw" data-a="login">${GLOGO}<span>Guardar con Google</span></button></div>` : ""}
+        ${S.fam.length > 1 ? `<p class="tit z">Tus familias</p><div class="chips wr z" style="margin-top:0">${S.fam.map((x) => `<button class="chip${x.id === id ? " on" : ""}" data-a="fotra" data-k="${x.id}">${esc(x.n || "Familia")}</button>`).join("")}</div>` : ""}
+        <p class="note c z" style="margin-top:22px">Quien tenga la liga puede ver y rezar con esta familia. Compártela solo con los tuyos.</p>
+        <div class="fpl z">${d && d.mia ? `<button class="lk" data-a="go" data-v="fed">Cambiar el nombre o la intención</button>` : ""}<button class="lk" data-a="fnueva">Crear otra familia</button><button class="lk" data-a="fsale">${famOjo === 1 ? "Toca otra vez para salir" : "Salir de esta familia"}</button></div></section>`; },
     luz: () => `<section class="v d n in">${sky()}${hd(["hoy"], "Rezar por alguien")}<h1 style="margin-top:10px;font-size:34px;line-height:40px">¿Por quién rezaste?</h1><p class="sub">Le llega por WhatsApp con una paloma. Así sabe que alguien lo tuvo en su oración.</p>
       <label class="ru" for="fl" style="display:block;margin-top:22px;font-size:15px">Su nombre</label><input class="fld" id="fl" maxlength="40" autocomplete="off" placeholder="Constanza, mi mamá…" value="${esc(luzPara)}">
       <p class="ru" style="margin-top:22px;font-size:15px">Recé</p><div class="lq">${Object.keys(LQ).map((k) => `<button class="lqo${luzQ === k ? " on" : ""}" data-a="luzq" data-k="${k}" aria-pressed="${luzQ === k}"><span class="md">${k === "am" ? EM.virgen : k === "ros" ? EM.gozosos : LOGO}</span><b>${LQ[k][1]}</b></button>`).join("")}</div>
@@ -979,17 +1172,21 @@
       const M = MIS[set], tile = (a, em, ru, t, sub, extra) => `<button class="tj" ${a}><span class="tje">${em}</span><span class="ru">${ru}</span><b>${t}</b>${sub ? `<small>${sub}</small>` : ""}${extra || ""}</button>`;
       const jt = jtOk() ? (S.jt.length ? S.jt.slice(0, 1).map((j) => { const dd = JT[j.id], c = dd ? dd.cuentas || [] : [], n = c.length, ot = c.filter((x) => x.quien !== S.n).sort((a, b) => (a.hecho < b.hecho ? 1 : -1))[0];
           return tile(`data-a="jabre" data-k="${j.id}"`, EM[set], ot && n < 5 ? esc(ot.quien) + " rezó el " + ORD[ot.m].toLowerCase() + " misterio" : "Con " + esc(jtCon(j)), n === 5 ? "Completo hoy" : dd ? `Van ${n} de 5` : "Rosario juntos", "", `<span class="jmini">${[0, 1, 2, 3, 4].map((m) => `<i${c.some((x) => x.m === m) ? ' class="on"' : ""}></i>`).join("")}</span>`); }).join("")
-        : tile('data-a="jnew"', EM[set], "Cada quien a su hora", "Rezar el rosario con alguien", "Tu pareja o tu familia, un misterio cada quien")) : "";
+        : tile('data-a="jnew"', EM[set], "Cada quien a su hora", "Rezar el rosario con alguien", "Tu pareja o alguien cercano, un misterio cada quien")) : "";
+      const fj = S.fam[0], fd = fj ? FM[fj.id] : null, fviv = fd ? (fd.miembros || []).filter((m) => !m.yo && m.est > 0) : [], frez = fviv.filter((m) => m.est === 2);
+      const ft = !jtOk() ? "" : fj ? tile('data-a="fam"', EM.rosa, frez.length ? esc(nombresM(frez)) + (frez.length === 1 ? " está rezando ahora" : " están rezando ahora") : fviv.length ? esc(nombresM(fviv)) + (fviv.length === 1 ? " está en la sala" : " están en la sala") : "Rosario en familia", esc((fd && fd.nombre) || fj.n || "Tu familia"), fd && fd.misterios ? `${fd.rosarios ? cuantos(fd.rosarios, "rosario", "rosarios") + " y " : ""}${cuantos(fd.aves, "Ave María", "Ave Marías")}${fd.dias > 1 ? " en " + fd.dias + " días" : " hoy"}. Lo que reces se suma.` : "Lo que rece cada quien se va sumando aquí.", fviv.length ? '<i class="pto tjp"></i>' : "")
+        : tile('data-a="fam"', I.cam, "En vivo o cada quien a su hora", "Rosario en familia", "Mandas una liga y entran directo, sin código");
       return `<section class="v d n tb in hv">${sky()}<div class="hd hh"><p class="ru">${DIAS[d.getDay()]} ${d.getDate()} de ${MESES[d.getMonth()]}</p>
         <button class="rch" data-a="go" data-v="yo" aria-label="Tu racha: ${rc} ${rc === 1 ? "día" : "días"}"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path fill="#E6B356" d="M8 1.5c.4 2.2 3.5 3.7 3.5 7.2a3.5 3.5 0 0 1-7 0c0-1.3.6-2.3 1.4-3.1.2 1 .8 1.6 1.3 1.7C7 5.5 7.3 3.3 8 1.5z"/></svg>${rc}</button>${perfil()}</div>
         <h1 class="hg">${h < 12 ? "Buenos días" : h < 19 ? "Buenas tardes" : "Buenas noches"}, ${esc(S.n)}</h1>
         <p class="tpo"><span style="background:${tp.c}"></span>${tp.t}</p>
+        ${fviv.length ? `<button class="fhv" data-a="fam"><i class="pto"></i><span class="g"><b>${esc(nombresM(frez.length ? frez : fviv))} ${frez.length ? (frez.length === 1 ? "está rezando" : "están rezando") + " ahora" : (fviv.length === 1 ? "está" : "están") + " en la sala"}</b><small>${esc((fd && fd.nombre) || fj.n || "Tu familia")}</small></span><em>Entrar</em></button>` : ""}
         <div class="rh${hh.r ? " lit" : ""}"><div class="rhv" data-a="ros" role="button" aria-label="Rezar el rosario de hoy">${vis}</div>
           <div class="rht"><p class="ru">${hh.r ? "Ya lo rezaste hoy" : "Hoy, " + DIAS[d.getDay()].toLowerCase()}</p><h2>${hh.r ? "Tu veladora está encendida" : "El rosario de hoy"}</h2><p class="rhs">${M.n}${S.pi && !hh.r ? ` · <em>«${esc(S.pi)}»</em>` : ""}</p>
-          ${hh.r ? `<div class="rhb"><button class="btn gh" data-a="go" data-v="mapa">Ver el mapa</button><button class="btn gh" data-a="ros">Rezar otra vez</button></div>` : `<div class="rhc"><button class="btn go rhgo" data-a="ros">Empezar a rezar</button><button class="btn gh rhf" data-a="go" data-v="sala" aria-label="Rezarlo en familia, en vivo">${I.cam}<span>En familia</span></button></div>`}</div></div>
+          ${hh.r ? `<div class="rhb"><button class="btn gh" data-a="go" data-v="mapa">Ver el mapa</button><button class="btn gh" data-a="ros">Rezar otra vez</button></div>` : `<div class="rhc"><button class="btn go rhgo" data-a="ros">Empezar a rezar</button><button class="btn gh rhf" data-a="fam" aria-label="Rezarlo en familia">${I.cam}<span>En familia</span></button></div>`}</div></div>
         ${deHoy("", 1)}
         <p class="tit">Con los tuyos</p>
-        <div class="tjs">${jt}${tile('data-a="luzn"', LOGO, "Mándale una luz", "Rezar por alguien", "Le llega por WhatsApp")}${tile('data-a="go" data-v="sala"', I.cam, "En vivo", "Rosario en familia", "Con voz y cámara")}</div>
+        <div class="tjs">${ft}${jt}${tile('data-a="luzn"', LOGO, "Mándale una luz", "Rezar por alguien", "Le llega por WhatsApp")}${ft ? "" : tile('data-a="go" data-v="sala"', I.cam, "En vivo", "Rosario en familia", "Con voz y cámara")}</div>
         <p class="tit">Para hoy</p>
         <div class="card ph"><button class="row" data-a="go" data-v="ang"><span class="md">${EM.angelus}</span><span class="g"><b>Ángelus</b><small>${hh.a ? "Ya lo rezaste hoy" : "A las 12:00, con campana"}</small></span>${hh.a ? '<span class="ok">Hecho</span>' : I.bell}</button><button class="row" data-a="go" data-v="nov"><span class="md">${EM.novena}</span><span class="g"><b>Novena de Guadalupe</b><small>${nvTxt}</small></span>${I.go}</button></div>
         ${(S.sc || 0) < 4 ? `<button class="sch" data-a="masab" aria-label="Ver lo que hay más abajo"><span class="schp">Desliza para ver más<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span></button>` : ""}
@@ -1004,7 +1201,7 @@
       return `<section class="v d n tb in">${sky()}<h1 class="xl">Rezar</h1><p class="sub">Todo va guiado, cuenta por cuenta.</p>
         <div class="nicho"><i class="n1"></i><i class="n2"></i>${ARCO}
           <div class="nb"><span class="em">${EM[set]}</span><p class="ru">${hh.r ? "Ya lo rezaste hoy" : "Hoy, " + DIAS[d.getDay()].toLowerCase()}</p><h2>Santo rosario</h2><p class="ins">${MIS[set].n}</p>
-          <button class="btn go" data-a="ros">${hh.r ? "Rezarlo otra vez" : "Empezar a rezar"}</button><button class="lk" data-a="go" data-v="sala">Rezarlo en familia</button></div></div>
+          <button class="btn go" data-a="ros">${hh.r ? "Rezarlo otra vez" : "Empezar a rezar"}</button><button class="lk" data-a="fam">Rezarlo en familia</button></div></div>
         <p class="tit">Los cuatro misterios</p><div class="ret">${ni("gozosos")}${ni("luminosos")}${ni("dolorosos")}${ni("gloriosos")}</div>
         <p class="tit">${mis().length > 1 ? "Tus Vírgenes" : "Tu Virgen"}</p><div class="card">${mis().map((x) => `<button class="row" data-a="verv" data-k="${x.k}"><span class="vfig vrow">${VIRG(x.k, 36)}</span><span class="g"><b>${advN(x)}</b><small>${x.k === delDia().k ? "Hoy te trae el mensaje del día" : "Su historia y su oración"}</small></span>${I.go}</button>`).join("")}<button class="row" data-a="advsel"><span class="g"><b style="font-size:16px">Elegir mis Vírgenes</b></span>${I.go}</button></div>
         <p class="tit">Devociones</p><div class="card">${row('data-a="go" data-v="vir"', "virgen", "Devociones a la Virgen", "Bajo tu amparo, Acordaos y más")}${row('data-a="go" data-v="ang"', "angelus", "Ángelus", hh.a ? "Ya lo rezaste hoy" : "A mediodía, con campana")}${row('data-a="go" data-v="nov"', "novena", "Novena de Guadalupe", nvTxt)}</div>${tabs("rezar")}</section>`;
@@ -1015,13 +1212,13 @@
     ros: () => {
       const st = ros.p[ros.i], M = MIS[ros.set], o = ORA[st.t], mm = st.m != null ? M.m[st.m] : null, g = guia(), sigo = ros.sala && !lead, G = !!ros.g, cl = (ros.sala ? " sl" : "") + (ros.an ? " " + ros.an : "");
       const nom = st.t === "let" ? "Letanías" : st.t === "mis" ? "" : o.n, cta = st.of ? st.k + " de " + st.of : "", don = mm ? ORD[st.m] + " misterio: " + mm[0] : st.l ? st.l : st.fin ? "Para terminar" : "Para empezar";
-      const it = ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion ? ["Su intención", JT[ros.jt.id].intencion] : S.pi ? ["Tu intención", S.pi] : null;
+      const it = ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion ? ["Su intención", JT[ros.jt.id].intencion] : ros.fam && FM[ros.fam] && FM[ros.fam].intencion ? ["La intención de tu familia", FM[ros.fam].intencion] : S.pi ? ["Tu intención", S.pi] : null, solos = sigo && tSinG && Date.now() - tSinG > 8500 && !(g && g.presence.on);
             const tk = G ? "g" : "t", tip0 = !(S.tp || {})[tk] && !Q.get("notip") ? `<div class="tip" role="dialog" aria-label="Consejo"><p>${G ? "<b>¿Quieres leer las oraciones?</b> Toca este botón y ves cada una completa." : "<b>¿Te lo sabes de memoria?</b> Toca este botón y ves el rosario en grande, sin texto."}</p><p class="tip2">${G ? "Para avanzar, toca el rosario o «Amén»." : "Ahí avanzas tocando el rosario o «Amén»."}</p><button class="tipok" data-a="tipok" data-k="${tk}">Entendido</button></div>` : "", tip = tip0;
       const tipM = !tip && !S.mu && !(S.tp || {}).mu && !Q.get("notip") && ros.i >= 1 ? `<div class="tip tm" role="dialog" aria-label="Consejo"><p><b>¿Rezas con música?</b> Toca la notita y te acompaña un coro con órgano, como en una capilla.</p><div class="tipbs"><button class="lk" data-a="tipok" data-k="mu">Sin música</button><button class="tipok" data-a="mu">Poner música</button></div></div>` : "";
       const cab = `<div class="hd z${tipM ? " htm" : ""}"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}<small class="cnt">${ros.i + 1} de ${ros.p.length}</small></p>${botMu()}${tipM}</div>`;
       const vis = `<button class="ra vt${tip ? " tipon" : ""}" data-a="vista" aria-label="${G ? "Ver la oración escrita" : "Ver el rosario en grande"}">${G ? I.txt : I.ros}</button>`;
       // La barra de abajo queda fija: «Amén» siempre está en el mismo lugar y el pulgar lo encuentra sin mirar
-      const pie = `<div class="rpie">${ros.sala ? `<div class="vzl"><p class="note">${peersS.length === 1 ? "Solo tú" : peersS.length + " rezando"}</p>${botVoz(1)}</div>` : ""}<div class="rb">${sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" || (st.t === "let" && st.k < st.of) ? "Continuar" : "Amén"}</button>`}${vis}</div>${tip}</div>`;
+      const pie = `<div class="rpie">${ros.sala ? `<div class="vzl"><p class="note">${peersS.length === 1 ? "Solo tú" : peersS.length + " rezando"}</p>${botVoz(1)}</div>` : ""}<div class="rb">${solos ? `<p class="rs rs2">Ya nadie dirige.</p><button class="btn go se" data-a="dirijo">Seguir yo</button>` : sigo ? `<p class="rs">${esc((g && g.presence.n) || "Tu familia")} dirige. Tú respondes.</p>` : `<button class="ra" data-a="ant" aria-label="Regresar una cuenta"${ros.i > 0 ? "" : " disabled"}>${I.back}</button><button class="btn go se" data-a="sig">${st.t === "mis" || (st.t === "let" && st.k < st.of) ? "Continuar" : "Amén"}</button>`}${vis}</div>${tip}</div>`;
       if (G) { const fam = ros.sala && (peersS.length > 1 || !!(VZ && VZ.cam));
         const cara = (p, xy, sz) => { const pr = p.presence || {}, id = esc(p.peer), cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]);
           return `<span class="fb${pr.v ? " vz" : ""}${p.isMe ? " me" : ""}${pr.lead ? " ld" : ""}" data-p="${id}" data-a="foco" data-k="${id}" role="button" aria-label="Ver a ${esc(p.isMe ? "ti" : pr.n || "Alguien")} en grande" style="left:${f1(((xy[0] - 22) / 346) * 100)}%;top:${f1(((xy[1] - 76) / 634) * 100)}%;width:${f1((sz / 346) * 100)}%;--s:${sz}" title="${esc(p.isMe ? "Tú" : pr.n || "Alguien")}"><span class="cara">${cam ? `<video data-v="${id}" autoplay playsinline muted></video>` : `<b>${esc((pr.n || "?").slice(0, 1).toUpperCase())}</b>`}${pr.v === 2 ? `<i class="mm">${I.mute}</i>` : ""}</span></span>`; };
@@ -1048,7 +1245,7 @@
       return `<section class="v d ro cg${L ? " lt" : ""}${st.lg === 2 ? " xl" : ""}${cl}">${sky()}${cab}<div class="colg z" data-a="vista"><div class="cgv">${joya(ros.i, 1)}</div><div class="cgt"><small>${don}</small><b class="rn">${nom}</b>${cta ? `<span>${cta}</span>` : ""}${it && !st.lg && !L ? `<p class="cgi"><small>${it[0]}</small>«${esc(it[1])}»</p>` : ""}</div></div>
         <div class="rt z">${L ? lista(L.r, L.inv) + lista(L.r2, L.inv2) + bloques(L.bl) : texto()}</div>${pie}</section>`;
     },
-    listo: () => { const lit = encendidos(), n = vivos().length, ra = racha(), hito = total() <= 1 ? 1 : [3, 7, 14, 30, 60, 100, 200, 365].includes(ra) ? 2 : 0; const guarda1 = pideG() && hito; return `<section class="v d in${guarda1 ? " lsg" : ""}">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p>${S.pi ? `<p class="pin c z">Lo ofreciste «${esc(S.pi)}»</p>` : ""}<div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>${guarda1 ? `<div class="gua z"><p class="ru">${hito === 1 ? "No la pierdas" : "No los pierdas"}</p><p class="sub" style="margin:2px 0 12px">${hito === 1 ? "Tu veladora y tu racha viven solo en este teléfono. Guárdalas con tu cuenta de Google." : `Tus ${ra} días seguidos viven solo en este teléfono. Guárdalos con tu cuenta de Google.`}</p>${gBtn("Guardar con Google")}</div>` : ""}<div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
+    listo: () => { const lit = encendidos(), n = vivos().length, ra = racha(), hito = total() <= 1 ? 1 : [3, 7, 14, 30, 60, 100, 200, 365].includes(ra) ? 2 : 0; const guarda1 = pideG() && hito; return `<section class="v d in${guarda1 ? " lsg" : ""}">${sky()}${hd(["hoy", "x"], "México en oración")}<h1 class="c z" style="margin-top:14px;font-size:34px;line-height:40px">Tu veladora ya<br>está encendida</h1><p class="ru c z" style="margin-top:6px">${esc(estado(S.e))}</p>${S.pi ? `<p class="pin c z">Lo ofreciste «${esc(S.pi)}»</p>` : ""}<div class="z" style="display:flex;align-items:center;gap:16px;margin-top:4px"><p style="font-family:var(--se);font-weight:600;font-size:46px;line-height:48px;color:var(--oroc)">${racha()}</p><p class="sub" style="margin:0">${racha() === 1 ? "día seguido rezando. Mañana vuelve por el segundo." : "días seguidos rezando el rosario."}</p></div>${S.fam.length && jtOk() ? `<button class="fls z" data-a="fam"><span>${EM.rosa}</span><span class="g"><b>Se sumó al ramillete de ${esc(conLa((FM[S.fam[0].id] && FM[S.fam[0].id].nombre) || S.fam[0].n || "tu familia"))}</b>${FM[S.fam[0].id] && FM[S.fam[0].id].rosarios ? `<small>Ya llevan ${cuantos(FM[S.fam[0].id].rosarios, "rosario", "rosarios")}</small>` : ""}</span>${I.go}</button>` : ""}${guarda1 ? `<div class="gua z"><p class="ru">${hito === 1 ? "No la pierdas" : "No los pierdas"}</p><p class="sub" style="margin:2px 0 12px">${hito === 1 ? "Tu veladora y tu racha viven solo en este teléfono. Guárdalas con tu cuenta de Google." : `Tus ${ra} días seguidos viven solo en este teléfono. Guárdalos con tu cuenta de Google.`}</p>${gBtn("Guardar con Google")}</div>` : ""}<div class="z mapa-full"><div class="halo"></div>${mapa(lit, S.e, 1)}</div>
       ${n > 1 ? `<p class="note z" style="margin-top:12px">Ahora mismo hay ${n} personas con Atrio abierto.</p>` : ""}
       ${guarda1 ? `<button class="btn gh z" data-a="go" data-v="hoy" style="margin-top:14px">Volver a hoy</button>` : `<button class="btn go mt z" data-a="go" data-v="hoy">Volver a hoy</button>`}<button class="btn gh z" data-a="luzn" data-q="ros" style="margin-top:10px">Avisarle a alguien que recé por él</button><button class="lk c z" data-a="copiar" style="margin-top:4px">Copiar invitación para mi familia</button></section>`; },
     mapa: () => { const lit = encendidos(), n = vivos().length, r = hoy().r, mio = r && MX.e[S.e] ? 1 : 0, c = Object.keys(lit).filter((k) => MX.e[k]).length + (mio && !lit[S.e] ? 1 : 0), tot = Object.keys(lit).reduce((a, k) => a + (MX.e[k] ? lit[k] : 0), 0) + (mio && (!velasHoy || !lit[S.e]) ? 1 : 0); return `<section class="v d tb in">${sky()}<p class="ru z">México en oración</p><h1 class="z">${r ? "Tu veladora está encendida" : "Enciende tu estado"}</h1><p class="sub z">${r ? esc(estado(S.e)) + " brilla hoy por tu rosario." : "Cada rosario terminado enciende una veladora en " + esc(estado(S.e)) + "."}</p>
@@ -1099,9 +1296,9 @@
   let tourI = -1;
   const TOUR = [
     ['.rhgo, .rhb', "Empieza aquí", "Toca este botón y rezas el rosario de hoy. Te guiamos cuenta por cuenta: solo lees y tocas «Amén»."],
-    ['.tj[data-a="jnew"], .tj[data-a="jabre"]', "Rosario juntos", "Invita a tu pareja o familia: cada quien reza su misterio a su hora y entre todos lo completan."],
+    ['.tj[data-a="fam"], .tj[data-v="sala"]', "Rosario en familia", "Crea tu familia y manda la liga por WhatsApp: entran directo, sin código. Lo que reza cada quien se va sumando y, si coinciden, se ven en vivo."],
+    ['.tj[data-a="jnew"], .tj[data-a="jabre"]', "Rosario juntos", "Con tu pareja o alguien cercano: cada quien reza su misterio a su hora y entre los dos lo completan."],
     ['.tj[data-a="luzn"]', "Manda una luz", "Reza un Ave María por alguien y avísale por WhatsApp con una paloma."],
-    ['.tj[data-v="sala"]', "Rosario en familia", "Abre una sala y recen al mismo tiempo, con voz y cámara, cada quien desde su casa."],
     ['.tabs', "Tu Atrio", "En Rezar están todas las oraciones; en Mapa ves las veladoras de México; en Yo, tu racha y tus ajustes."],
     ['.pfe, .pf', "Guarda tu avance", "Entra con Google para no perder tu racha si cambias de teléfono."]
   ];
@@ -1114,18 +1311,25 @@
     const pts = Array.from({ length: tot }, (_, k) => `<i class="${k === n ? "on" : k < n ? "ok" : ""}"></i>`).join("");
     app.insertAdjacentHTML("beforeend", `<div id="tour" role="dialog" aria-label="${t}"><div class="tu-h"><span class="tu-p"></span></div>
       <div class="tu-b"><div class="tu-t"><div class="tu-d" aria-label="Paso ${n + 1} de ${tot}">${pts}</div><button class="lk tu-x" data-a="tourx">Saltar la guía</button></div><b>${t}</b><p>${d}</p><button class="btn go tu-n" data-a="tourn">${quedan ? "Siguiente" : "Listo, a rezar"}</button></div></div>`);
-    const T = document.getElementById("tour"), hl = T.querySelector(".tu-h"), b = T.querySelector(".tu-b"), bh = b.offsetHeight, H = window.innerHeight, pad = 8, m = 14;
+    const T = document.getElementById("tour"), hl = T.querySelector(".tu-h"), b = T.querySelector(".tu-b"), pad = 8, m = 14;
     const fijo = !!el.closest(".tabs") || getComputedStyle(el).position === "fixed";
-    let r = el.getBoundingClientRect();
-    // primero se acomoda la página: lo señalado queda arriba y deja abajo el sitio justo para su explicación
-    if (!fijo) { const alto = Math.min(r.height, Math.max(60, H - bh - m - pad * 2 - 30)), quiero = Math.max(pad + 14, Math.min((H - (alto + pad * 2 + m + bh)) / 2, H * 0.2)); try { window.scrollBy(0, Math.round(r.top - quiero)); } catch (_) {} r = el.getBoundingClientRect(); }
-    let top = Math.max(pad, r.top), bot = Math.min(H - pad, r.bottom), y;
-    if (bot + pad + m + bh <= H - 6) y = bot + pad + m;            // cabe abajo
-    else if (top - pad - m - bh >= 6) y = top - pad - m - bh;      // cabe arriba
-    else { bot = Math.max(top + 56, H - bh - m - pad - 8); y = bot + pad + m; } // muy alto: se ilumina solo su parte de arriba
-    hl.style.cssText = `left:${Math.round(r.left - pad)}px;top:${Math.round(top - pad)}px;width:${Math.round(r.width + pad * 2)}px;height:${Math.round(bot - top + pad * 2)}px`;
-    b.style.top = Math.round(y) + "px"; b.classList.add(y > top ? "ab" : "ar");
-    const br = b.getBoundingClientRect(); b.style.setProperty("--fx", Math.round(Math.max(30, Math.min(br.width - 30, r.left + r.width / 2 - br.left))) + "px");
+    // las tarjetas entran con una animación: se mide su lugar final, sin el movimiento de entrada
+    const sinAnim = () => { app.querySelectorAll(".in>*").forEach((x) => { x.style.animation = "none"; }); };
+    sinAnim();
+    if (!fijo) { const H = window.innerHeight, bh = b.offsetHeight, r = el.getBoundingClientRect(), alto = Math.min(r.height, Math.max(60, H - bh - m - pad * 2 - 30)), quiero = Math.max(pad + 14, Math.min((H - (alto + pad * 2 + m + bh)) / 2, H * 0.2));
+      try { window.scrollTo({ top: Math.max(0, window.scrollY + r.top - quiero), behavior: "instant" }); } catch (_) { window.scrollTo(0, Math.max(0, window.scrollY + r.top - quiero)); } }
+    // el marco y la burbuja se recolocan en cada cuadro mientras la guía está abierta: siempre quedan encima de lo que explican
+    let ult = "";
+    const coloca = () => { if (!document.getElementById("tour") || T !== document.getElementById("tour")) return;
+      const H = window.innerHeight, bh = b.offsetHeight, r = el.getBoundingClientRect(), k = [r.left, r.top, r.width, r.height, H, bh].map(Math.round).join();
+      if (k !== ult) { ult = k;
+        let top = Math.max(pad, r.top), bot = Math.min(H - pad, r.bottom), y;
+        if (bot + pad + m + bh <= H - 6) y = bot + pad + m; else if (top - pad - m - bh >= 6) y = top - pad - m - bh; else { bot = Math.max(top + 56, H - bh - m - pad - 8); y = bot + pad + m; }
+        hl.style.cssText = `left:${Math.round(r.left - pad)}px;top:${Math.round(top - pad)}px;width:${Math.round(r.width + pad * 2)}px;height:${Math.round(bot - top + pad * 2)}px;transition:none`;
+        b.style.top = Math.round(y) + "px"; b.classList.toggle("ab", y > top); b.classList.toggle("ar", y <= top);
+        const br = b.getBoundingClientRect(); b.style.setProperty("--fx", Math.round(Math.max(30, Math.min(br.width - 30, r.left + r.width / 2 - br.left))) + "px"); }
+      requestAnimationFrame(coloca); };
+    coloca();
   }
   function aviso(t) { msg = t; const x = app.querySelector(".toast"); if (x) x.remove(); app.insertAdjacentHTML("beforeend", `<div class="toast" role="status">${esc(t)}</div>`); clearTimeout(tMsg); tMsg = setTimeout(() => { msg = ""; const y = app.querySelector(".toast"); if (y) y.remove(); }, Math.max(2600, 1400 + t.length * 45)); }
   function finJt(s) {
@@ -1138,7 +1342,10 @@
       else { render(1); aviso(pend() === 1 ? "Listo. Falta un misterio." : `Listo. Faltan ${pend()} misterios.`); guarda("j", "Rezaste tu misterio", "Guarda con tu cuenta de Google tus rosarios juntos y tu racha."); }
     }, () => aviso("No se pudo guardar. Revisa tu internet e intenta otra vez."));
   }
-  function fin() { const s = ros; if (s && s.jt) return finJt(s); ros = null; vibra(3); musica(false); marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {}); go("listo"); }
+  function fin() { const s = ros; if (s) famSuma(2); if (s && s.jt) return finJt(s); ros = null; vibra(3); musica(false); marca("r"); enciende(); if (s && s.nov) { const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [s.nov]: 1 }); save(); } if (lead && sala) sala.presence({ fin: 1, on: 0 }).catch(() => {});
+    // rosario rezado en la familia: se regresa a su página, donde ya aparece sumado; quien dirigía suelta la guía para que otro pueda empezar después
+    if (s && s.fam && famJ(s.fam)) { famA = s.fam; famB = Date.now(); if (lead && famS) setTimeout(() => { if (lead && famS && !ros) { lead = false; presSala(); } }, 12000); go("fam"); guarda("f", "Tu rosario ya se sumó", "Guarda tu familia y lo que has rezado con tu cuenta de Google. Es gratis y te sigue si cambias de teléfono."); return; }
+    go("listo"); }
   const OTP_ON = SB_URL.indexOf("http") === 0 && (Q.get("correo") || "__OTP__" === "1");
   let dirN = "", estAbre = 0, vuelveE = "hoy", correo = "", otpE = 0, otpT = 0;
   const sinAc = (t) => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -1146,13 +1353,14 @@
   const sugEst = () => { let z = ""; try { z = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (_) {} if (Q.get("tz")) z = Q.get("tz");
     const M = { "America/Cancun": 22, "America/Merida": 30, "America/Monterrey": 18, "America/Tijuana": 1, "America/Hermosillo": 25, "America/Chihuahua": 5, "America/Ciudad_Juarez": 5, "America/Ojinaga": 5, "America/Matamoros": 27, "America/Bahia_Banderas": 17, "America/Mazatlan": 24 };
     if (M[z] !== undefined) return M[z]; if (z && !/^America\/(Mexico_City|Monterrey|Merida|Cancun|Matamoros|Chihuahua|Ojinaga|Ciudad_Juarez|Hermosillo|Mazatlan|Bahia_Banderas|Tijuana)$/.test(z) && !/^(UTC|Etc\/)/.test(z)) return 99; return null; };
-  function go(v, b) { if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est|luzv|entrar|jt)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|gusto|est|jt|ros|listo|sala)$/.test(view)) { ob = 1; view = "est"; } try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
+  function go(v, b) { const gs0 = document.getElementById("gsh"); if (gs0) gs0.remove(); if (v === "advs" && !sel.length) sel = S.vs.slice(); if (v === "adv" && /^(hoy|vir|yo|rezar)$/.test(view)) vuelve = view; view = V[v] ? v : "hoy"; if (v === "mapa") cargaVelas(); if (view === "ros" && !ros) view = "hoy"; if (!S.n && !/^(bien|nom|est|luzv|entrar|jt|fam)$/.test(view)) view = "bien"; if (S.n && S.e < 0 && !/^(bien|nom|gusto|est|jt|ros|listo|sala|fam|fnew|fed|entrar)$/.test(view)) { ob = 1; view = "est"; } if (famS && !/^(fam|fed|ros)$/.test(view)) salir(); if (view !== "fam" && view !== "fed") famOjo = 0; try { if (/^(hoy|rezar|mapa|yo)$/.test(view)) history.replaceState(null, "", "#" + view); } catch (_) {}
     // la paloma trae el mensaje la primera vez que se abre Hoy cada día
-    if (view === "hoy" && SB) jtTodos();
+    if (view === "hoy" && SB) { jtTodos(); famTodos(); }
     if (view === "jt" && SB && jtA) jtVer(jtA);
+    if (view === "fam") setTimeout(famAbre, 0);
     if (view === "hoy" && S.n && S.pd !== key(now())) { palT = Date.now(); S.pd = key(now()); save(); }
     // hacia adentro la vista entra por la derecha; al regresar, por la izquierda; las pestañas solo suben
-    dirN = b ? "bk" : /^(nom|est|advs|adv|pid|nov|novd|ang|vir|vird|sala)$/.test(view) ? "fw" : "";
+    dirN = b ? "bk" : /^(nom|est|advs|adv|pid|nov|novd|ang|vir|vird|sala|fam|fnew|fed)$/.test(view) ? "fw" : "";
     render(); dirN = ""; try { window.scrollTo(0, 0); } catch (_) {} }
   /* Entrar con Google desde el propio sitio: el botón oficial de Google abre una ventanita que dice
      «para continuar a rosariojuntos.com» y nos da un token que Supabase canjea por la sesión. */
@@ -1162,7 +1370,7 @@
     const sc = document.createElement("script"); sc.src = "https://accounts.google.com/gsi/client"; sc.async = true; sc.defer = true;
     sc.onload = () => { try { google.accounts.id.initialize({ client_id: GCID, callback: gsiOk, ux_mode: "popup", auto_select: false, itp_support: true, cancel_on_tap_outside: true }); GSI = 2; pintaG(); } catch (_) { GSI = 3; } };
     sc.onerror = () => { GSI = 3; }; document.head.appendChild(sc); }
-  function pintaG() { if (GSI !== 2) return; app.querySelectorAll(".gsiw:not(.on)").forEach((w) => { const g = w.querySelector(".gsi"); try { google.accounts.id.renderButton(g, { type: "standard", theme: "outline", size: "large", shape: "pill", text: "continue_with", logo_alignment: "center", locale: "es", width: Math.max(220, Math.min(400, w.offsetWidth || 320)) }); w.classList.add("on"); } catch (_) {} }); }
+  function pintaG() { if (GSI !== 2) return; document.querySelectorAll(".gsiw:not(.on)").forEach((w) => { const g = w.querySelector(".gsi"); try { google.accounts.id.renderButton(g, { type: "standard", theme: "outline", size: "large", shape: "pill", text: "continue_with", logo_alignment: "center", locale: "es", width: Math.max(220, Math.min(400, w.offsetWidth || 320)) }); w.classList.add("on"); } catch (_) {} }); }
   function gsiOk(r) { if (!SB || !r || !r.credential) return; if (vuelveE === "atrio") { ob = 0; delete S.ob; save(); }
     SB.auth.signInWithIdToken({ provider: "google", token: r.credential }).then((x) => { if (x && x.error) { aviso("No se pudo entrar con Google. Intenta otra vez."); return; } const h = document.getElementById("gsh"); if (h) h.remove(); aviso("Listo. Tu avance ya se guarda en tu cuenta."); if (view === "entrar") go(V[vuelveE] && vuelveE !== "entrar" ? vuelveE : "hoy"); }, () => aviso("No se pudo entrar con Google. Intenta otra vez.")); }
   function render(quieto) { despierta(view === "ros" || !!VZ); app.innerHTML = V[view]() + (msg ? `<div class="toast" role="status">${esc(msg)}</div>` : ""); if (view === "ros") setTimeout(mas, 90); cargaGsi(); pintaG(); if (VZ) { pegaVideos(); escucha(); } volMu(); const x = app.querySelector(".in"); if (x) { if (quieto === 1) x.classList.remove("in"); else if (dirN) x.classList.add(dirN); } }
@@ -1187,19 +1395,20 @@
     gno: () => { const x = document.getElementById("gsh"); if (x) x.remove(); },
     lupa: (d) => { LU = { k: d.k, i: -1 }; lupa(); vibra(1); },
     lupan: (d) => { if (!LU) return; LU.i = +d.k; lupaT(); vibra(1); },
-    lupas: () => { if (!LU) return; const a = ADV.find((q) => q.k === LU.k), n = ((a && a.sim) || []).length; if (LU.i >= n - 1) { LU = null; lupa(); return; } LU.i++; lupaT(); vibra(1); },
+    lupas: () => { if (!LU) return; const a = ADV.find((q) => q.k === LU.k), n = ((a && a.sim) || []).length; LU.i = LU.i >= n - 1 ? -1 : LU.i + 1; lupaT(); vibra(1); },
     lupax: () => { LU = null; lupa(); },
+    lupao: () => { if (!LU) return; LU.i = -1; lupaT(); },
     masab: () => { try { window.scrollBy({ top: Math.round(window.innerHeight * 0.62), behavior: "smooth" }); } catch (_) { window.scrollBy(0, 400); } },
     tourn: () => tour(tourI + 1),
     tourx: () => tour(99),
-    ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0, f: forma(), g: Q.get("demo") && Q.get("g") === "1" ? 1 : grande0(0) }; ros.p = pasos(ros.f); if (S.mu) musica(true); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
-    rosala: () => { ros = { set: MIS_DIA[now().getDay()], i: 0, sala: 1, f: forma(), g: grande0(1) }; ros.p = pasos(ros.f); if (S.mu) musica(true); presSala(); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
+    ros: (d) => { ros = { set: d.set || MIS_DIA[now().getDay()], i: 0, nov: d.nov ? +d.nov : 0, f: forma(), g: Q.get("demo") && Q.get("g") === "1" ? 1 : grande0(0) }; ros.p = pasos(ros.f); if (S.mu) musica(true); famSuma(); if (Q.get("paso")) ros.i = Math.min(ros.p.length - 1, +Q.get("paso")); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
+    rosala: () => { ros = { set: MIS_DIA[now().getDay()], i: 0, sala: 1, f: forma(), g: grande0(1) }; ros.p = pasos(ros.f); if (S.mu) musica(true); presSala(); famSuma(); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
     foco: (d) => { if (!ros) return; ros.fo = d.k && ros.fo !== d.k ? d.k : ""; vibra(1); render(); },
     tipok: (d) => { S.tp = Object.assign({}, S.tp, { [d.k]: 1 }); save(); render(); },
     vista: () => { if (!ros) return; S.tp = Object.assign({}, S.tp, { [ros.g ? "g" : "t"]: 1 }); ros.g = ros.g ? 0 : 1; S.rg = ros.g; save(); vibra(1); ros.an = "sg"; render(); ros.an = ""; try { window.scrollTo(0, 0); } catch (_) {} },
-    sig: () => { if (!ros) return; if (!ros.g && falta()) return baja(); if (ros.i >= ros.p.length - 1) return fin(); ros.i++; vibraPaso(); presSala(); ros.an = "sg"; render(); ros.an = ""; try { window.scrollTo(0, 0); } catch (_) {} },
+    sig: () => { if (!ros) return; if (!ros.g && falta()) return baja(); if (ros.i >= ros.p.length - 1) return fin(); ros.i++; famSuma(); vibraPaso(); presSala(); ros.an = "sg"; render(); ros.an = ""; try { window.scrollTo(0, 0); } catch (_) {} },
     ant: () => { if (ros && ros.i > 0) { ros.i--; vibra(1); presSala(); ros.an = "at"; render(); ros.an = ""; } },
-    cerrar: () => { const s = ros && ros.sala; ros = null; musica(false); if (s) presSala(); go(s ? "sala" : "hoy"); },
+    cerrar: () => { const s = ros && ros.sala, f = ros && ros.fam && famJ(ros.fam) ? ros.fam : ""; famSuma(1); if (s && famS) { lead = false; noSigo = 1; } ros = null; tSinG = 0; musica(false); if (s) presSala(); if (f) { famA = f; go("fam", 1); if (famS) famVer(f, 1); return; } go(s ? "sala" : "hoy"); },
     novd: (d) => { nd = +d.n; go("novd"); },
     vird: (d) => { vn = +d.n; go("vird"); },
     novok: () => { vibra(2); const y = now().getFullYear(); S.nov[y] = Object.assign(S.nov[y] || {}, { [nd]: 1 }); save(); go("nov"); guarda("n", "Un día más de tu novena", "Guárdala con tu cuenta de Google para seguirla en cualquier teléfono."); },
@@ -1214,6 +1423,33 @@
     cam: () => { camara(); },
     frk: (d) => { if (d.k !== "mx" && d.k !== "un") return; S.fr = d.k; save(); vibra(1); render(1); },
     cfhoy: () => { S.cf = key(now()); save(); vibra(2); render(1); aviso("Que Dios te bendiga."); },
+    fam: () => { if (!jtOk()) { go("sala"); return; } if (S.fam.length) { if (!famJ(famA)) famA = S.fam[0].id; go("fam"); } else go("fnew"); },
+    fnueva: () => { if (S.fam.length >= 5) { aviso("Puedes tener hasta 5 familias. Sal de una para crear otra."); return; } go("fnew"); },
+    fich: (d) => { const f = document.getElementById("ffi"), t = FIS[+d.k]; if (f && t) { f.value = t; vibra(1); } },
+    fcrea: () => {
+      const val = (k, n) => ((document.getElementById(k) || {}).value || "").replace(/\s+/g, " ").trim().slice(0, n);
+      if (S.fam.length >= 5) { aviso("Puedes tener hasta 5 familias. Sal de una para crear otra."); return; }
+      const n = val("ff", 40) || "Familia de " + (S.n || "todos").slice(0, 24), i = val("ffi", 140), id = famNuevoId();
+      miId(); if (sala && famS) salir(); S.fam.unshift({ id, n, i, p: 1 }); save(); famA = id; famB = 0; vibra(2);
+      FM[id] = { id, nombre: n, intencion: i, creador: S.n, mia: true, dias: 1, rosarios: 0, misterios: 0, aves: 0, rezados: 0, hoy: { rosarios: 0, misterios: 0, aves: 0 }, gente: 1, miembros: [{ n: S.n, yo: true, ros: 0, mis: 0, aves: 0, hoy: 0, est: 1 }], reciente: [] };
+      // la hoja de compartir se abre con este mismo toque (el teléfono no la deja abrir después); la familia se guarda mientras tanto
+      famCrea(id); famComparte(id); go("fam");
+    },
+    fcomp: () => { vibra(1); famComparte(famA, sala && famS === famA && peersS.length === 1 && FM[famA] && FM[famA].gente > 1 ? "vivo" : ""); },
+    fros: () => { const g = sala && famS ? guia() : null; if (g && !g.isMe && g.presence.on) { noSigo = 0; salaCambio(); return; }
+      const s = sala && famS === famA ? 1 : 0; ros = { set: MIS_DIA[now().getDay()], i: 0, sala: s, f: forma(), g: grande0(s), fam: famA }; ros.p = pasos(ros.f); if (s) lead = true; famB = 0; if (S.mu) musica(true); presSala(); famSuma(); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; if (s) famVer(famA, 2); },
+    funir: () => { noSigo = 0; pk0 = ""; salaCambio(); },
+    dirijo: () => { if (!ros || !ros.sala || !sala) return; lead = true; tSinG = 0; presSala(); vibra(1); render(); },
+    fnom: () => { const f = document.getElementById("fn"), v = ((f && f.value) || "").replace(/\s+/g, " ").trim().slice(0, 24); if (!v) { if (f) f.focus(); return; } S.n = v; if (S.e < 0) S.ob = 1; save(); vibra(2); render(); famAbre(); },
+    fguarda: () => { const val = (k, n) => ((document.getElementById(k) || {}).value || "").replace(/\s+/g, " ").trim().slice(0, n), n = val("ff", 40), i = val("ffi", 140), id = famA;
+      if (!n) { const f = document.getElementById("ff"); if (f) f.focus(); return; } if (!SB) { aviso("Sin conexión. Intenta otra vez."); return; }
+      const b = app.querySelector('[data-a="fguarda"]'); if (b) { b.disabled = true; b.textContent = "Guardando…"; }
+      SB.rpc("fam_edita", { f: id, mi: miId(), n, i, d: key(now()) }).then((r) => { if (r && !r.error && r.data && r.data.id === id) { famPon(id, r.data); vibra(2); go("fam", 1); aviso("Guardado."); } else { aviso("No se pudo guardar. Solo quien creó la familia puede cambiarla."); render(1); } }, () => { aviso("Sin conexión. Intenta otra vez."); render(1); }); },
+    fotra: (d) => { if (!famJ(d.k) || d.k === famA) return; if (sala && famS) salir(); famA = d.k; famB = 0; go("fam"); },
+    fsale: () => { if (famOjo !== 1) { famOjo = 1; render(1); setTimeout(() => { if (famOjo === 1) { famOjo = 0; if (view === "fam") render(1); } }, 4500); return; } famQuita(famA); aviso("Listo. Si quieres volver, abre otra vez la liga."); },
+    fquita: () => famQuita(famA),
+    fborra: () => { if (famOjo !== 2) { famOjo = 2; render(1); setTimeout(() => { if (famOjo === 2) { famOjo = 0; if (view === "fed") render(1); } }, 4500); return; } const id = famA; if (!SB) { aviso("Sin conexión. Intenta otra vez."); return; }
+      SB.rpc("fam_borra", { f: id, mi: miId() }).then((r) => { if (r && !r.error && r.data) { famQuita(id); aviso("La familia se borró."); } else { famOjo = 0; aviso("No se pudo borrar. Solo quien la creó puede hacerlo."); render(1); } }, () => { famOjo = 0; aviso("Sin conexión. Intenta otra vez."); render(1); }); },
     jnew: () => { if (!jtOk()) { aviso("Necesitas internet para rezar juntos."); return; } go(S.jt.length && !Q.get("nuevo") ? "jt" : "jnew"); },
     jnueva: () => go("jnew"),
     jabre: (d) => { jtA = d.k; go("jt"); jtVer(d.k); },
@@ -1231,7 +1467,7 @@
     jtr: (d) => { if (!SB) return; const m = +d.k, h = jtHechos(jtA); if (h.includes(m)) return; const set = MIS_DIA[now().getDay()], ult = h.length === 4;
       const f = forma(); ros = { set, i: 0, jt: { id: jtA, m }, f, g: grande0(0) };
       ros.p = [{ t: "cruz", b: "x" }]; decena(ros.p, m, f === "mx"); if (ult) cierre(ros.p, f === "mx", 1);
-      if (S.mu) musica(true); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
+      if (S.mu) musica(true); famSuma(); ros.an = "sg"; go("ros"); if (ros) ros.an = ""; },
     jtv: () => { if (!RM) { aviso("La videollamada necesita internet."); return; } const c = "J" + jtA.replace(/-/g, "").slice(0, 5).toUpperCase(); if (!sala || codigo !== c) { if (sala) salir(); entrar(c, false); } go("sala"); },
     jtw: () => { const d = JT[jtA], n = d ? (d.cuentas || []).length : 0, f = 5 - n, j = S.jt.find((x) => x.id === jtA) || {};
       jtComparte(jtA, n && n < 5 ? `Ya vamos ${n} de 5 misterios del rosario de hoy. ${f === 1 ? "Falta uno" : "Faltan " + f}, ¿te echas uno?` : `${j.con ? j.con + ", r" : "R"}ecemos juntos el rosario de hoy en Atrio. Cada quien reza su misterio cuando pueda.`); },
@@ -1276,7 +1512,7 @@
   document.addEventListener("change", (e) => { if (e.target && e.target.id === "fa") { S.ang = e.target.checked ? 1 : 0; save(); if (S.ang) bell(1); } if (e.target && e.target.id === "fmu") { S.mu = e.target.checked ? 1 : 0; save(); } if (e.target && e.target.id === "fv") { S.vib = e.target.checked ? 1 : 0; save(); vibra(2); } });
   // en iPhone los botones solo muestran su estado presionado si alguien escucha el toque
   document.addEventListener("touchstart", () => {}, { passive: true });
-  document.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target && e.target.id === "fn") A.nom(); });
+  document.addEventListener("keydown", (e) => { if (e.key !== "Enter" || !e.target) return; const k = e.target.id; if (k === "fn") { const b = app.querySelector('[data-a="fnom"],[data-a="jnom"]'); if (b) b.click(); else A.nom(); } else if (k === "ff" || k === "ffi") { e.preventDefault(); const b = app.querySelector('[data-a="fcrea"],[data-a="fguarda"]'); if (k === "ff" && document.getElementById("ffi") && view === "fnew") document.getElementById("ffi").focus(); else if (b) { e.target.blur(); b.click(); } } });
   let scY = 0;
   window.addEventListener("scroll", () => { const y = window.scrollY || 0; app.classList.toggle("scr", y > 24); if (view === "hoy" && y > 140 && !scY) { scY = 1; S.sc = (S.sc || 0) + 1; save(); } }, { passive: true });
   // con la guía o una imagen abierta, la página de atrás no se mueve
@@ -1290,12 +1526,25 @@
   if (S.ob && S.n && !Q.get("demo")) { ob = 1; h0 = S.e < 0 ? "est" : S.vs.length ? "pid" : "advs"; }
   const jQ = Q.get("j");
   if (jQ && UUID.test(jQ)) { if (!S.jt.some((x) => x.id === jQ)) { S.jt.unshift({ id: jQ }); save(); } jtA = jQ; h0 = "jt"; try { history.replaceState(null, "", location.pathname); } catch (_) {} }
+  const fQ = (Q.get("f") || "").toLowerCase();
+  if (FID.test(fQ)) { if (!famJ(fQ)) { S.fam.unshift({ id: fQ }); S.fam = S.fam.slice(0, 5); save(); } famA = fQ; h0 = "fam"; try { history.replaceState(null, "", location.pathname); } catch (_) {} }
   if (LUZ) { h0 = "luzv"; try { history.replaceState(null, "", location.pathname); } catch (_) {} }
   if (h0 === "ros" && S.n) A.ros({}); else if (h0 === "novd" && S.n) { nd = +(Q.get("n") || 6); go("novd"); } else go(V[h0] ? h0 : "hoy");
   if (errG) { try { history.replaceState(null, "", location.pathname); } catch (_) {} setTimeout(() => aviso("No se pudo entrar con Google. Intenta de nuevo."), 400); }
   if (Q.get("demo") && Q.get("gente") && ros) { const N = ["Lucía", "Pedro", "Ana", "Rosa", "Juan", "Carmen", "Toño", "Sofía", "Diego", "Elena", "Pablo", "Marta", "Mateo", "Valeria", "Emilio", "Regina"]; ros.sala = 1; ros.g = Q.get("g") !== null ? +Q.get("g") : grande0(1); lead = !Q.get("sigo"); if (Q.get("fo")) ros.fo = Q.get("fo"); peersS = N.slice(0, +Q.get("gente")).map((n, i) => ({ peer: "p" + i, isMe: !i, presence: { n, v: i % 4 === 3 ? 2 : 1, lead: !i ? 1 : 0 } })); render(); const h = app.querySelector('[data-p="p2"]'); if (h) h.classList.add("habla"); }
   if (Q.get("demo") && Q.get("jtd")) { const id = "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed", n = +Q.get("jtd"), Q2 = ["Constanza", S.n, "Constanza", S.n, "Constanza"], hh = ["T13:40:00", "T15:05:00", "T19:20:00", "T21:10:00", "T22:30:00"];
     S.jt = [{ id, con: "Constanza" }]; JT[id] = { creador: S.n, intencion: "Por nuestra familia", cuentas: [0, 1, 2, 3, 4].slice(0, n).map((m) => ({ m, quien: Q2[m], hecho: key(now()) + hh[m] })), completos: n === 5 ? [key(now()), key(add(now(), -1)), key(add(now(), -2))] : [key(add(now(), -1)), key(add(now(), -2))], gente: ["Constanza"] }; jtA = id; if (Q.get("v") === "jt") go("jt"); else render(1); }
+  if (Q.get("demo") && Q.get("famd") !== null) { const id = "k7m2q9xpta", n = +Q.get("famd"), hace = (m) => new Date(Date.now() - m * 60000).toISOString(), yo = S.n;
+    S.fam = [{ id, n: "Familia Macouzet", i: n === 9 ? "" : "Por Rodrigo, que le vaya bien en su operación" }]; if (Q.get("dos")) S.fam.push({ id: "aaaaaaaaaa", n: "Grupo de la parroquia" }); S.mi = "11111111-1111-4111-8111-111111111111"; famA = id;
+    const M = [["Mamá", 5, 25, 265, 5, 2], [yo, 4, 20, 212, 5, 1], ["Paulina", 2, 12, 127, 0, 0], ["Papá", 1, 6, 63, 1, 0], ["Abuela Tere", 0, 0, 0, 0, 0]];
+    FM[id] = n <= 0 || n === 9 ? { id, nombre: "Familia Macouzet", intencion: S.fam[0].i, creador: yo, mia: true, dias: 1, rosarios: 0, misterios: 0, aves: 0, rezados: 0, hoy: { rosarios: 0, misterios: 0, aves: 0 }, gente: 1, miembros: [{ n: yo, yo: true, ros: 0, mis: 0, aves: 0, hoy: 0, est: 1 }], reciente: [] }
+      : { id, nombre: "Familia Macouzet", intencion: S.fam[0].i, creador: n === 3 ? "Alejandro" : yo, mia: n !== 3, dias: 3, rosarios: 12, misterios: 63, aves: 667, rezados: 3, hoy: { rosarios: 2, misterios: 11, aves: 116 }, gente: 5,
+          miembros: M.map((m) => ({ n: m[0], yo: m[0] === yo, ros: m[1], mis: m[2], aves: m[3], hoy: m[4], est: Q.get("viv") ? m[5] : 0 })), reciente: [{ n: "Mamá", mis: 5, c: true, h: hace(18) }, { n: yo, mis: 5, c: true, h: hace(95) }, { n: "Papá", mis: 1, c: false, h: hace(60 * 26) }, { n: "Paulina", mis: 5, c: true, h: hace(60 * 30) }] };
+    if (n === 3) S.n = "";
+    if (Q.get("sal")) { const k = +Q.get("sal"), N = ["Mamá", "Paulina", "Papá", "Tía Lupe", "Diego"]; sala = { yo: "p0", presence: () => Promise.resolve(), manda() {}, senal() {}, leave() {}, onPeers() {} }; famS = id;
+      peersS = [{ peer: "p0", isMe: true, presence: { n: yo, v: 0 } }].concat(N.slice(0, k).map((x, i) => ({ peer: "p" + (i + 1), isMe: false, presence: { n: x, v: i === 0 ? 1 : 0, lead: Q.get("cur") && i === 0 ? 1 : 0, on: Q.get("cur") && i === 0 ? 1 : 0, i: 38, f: "mx", set: "gozosos" } }))); if (Q.get("cur")) noSigo = 1; }
+    if (Q.get("ban")) famB = Date.now();
+    if (Q.get("v") === "fam" || Q.get("v") === "fed") { view = Q.get("v"); render(1); } else if (Q.get("v") === "fnew") { S.fam = []; go("fnew"); } else render(1); }
   if (Q.get("demo") && Q.get("t")) setTimeout(() => aviso(Q.get("t")), 30);
   if (Q.get("demo") && Q.get("lista")) { lista = 1; render(1); }
   if (Q.get("demo") && Q.get("tour")) setTimeout(() => tour(+Q.get("tour") - 1), 300);
