@@ -32,12 +32,14 @@ function fakeSupabase(sesIni) {
 }
 const mkWin = (q) => { const w = new JSDOM(html, { runScripts: "outside-only", url: "https://atrio.test/?demo=1&google=1&fecha=2026-12-03" + q, pretendToBeVisual: true }); w.window.scrollTo = () => {}; w.window.supabase = fakeSupabase(); w.window.addEventListener("error", (e) => errs.push(e.message)); w.window.eval(sc); return w; };
 const click = (d, sel) => { const el = d.window.document.querySelector(sel); if (!el) throw new Error("no encuentro " + sel + " | " + d.window.document.querySelector("#app").textContent.slice(0, 160)); el.dispatchEvent(new d.window.MouseEvent("click", { bubbles: true })); };
+// la sala con código ya no tiene botón en Hoy (ahora se entra con la liga de la familia); se abre directo
+const ir = (d, v) => { const b = d.window.document.createElement("button"); b.dataset.a = "go"; b.dataset.v = v; d.window.document.querySelector("#app").appendChild(b); b.dispatchEvent(new d.window.MouseEvent("click", { bubbles: true })); };
 const txt = (d) => d.window.document.querySelector("#app").textContent; const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 (async () => {
   const a = mkWin(""), b = mkWin(""); await wait(40);
-  click(a, '[data-a="go"][data-v="sala"]'); if (!txt(a).includes("Abre una sala y comparte el código")) throw new Error("sala no disponible con servidor: " + txt(a).slice(0, 200));
+  ir(a, "sala"); if (!txt(a).includes("Abre una sala y comparte el código")) throw new Error("sala no disponible con servidor: " + txt(a).slice(0, 200));
   click(a, '[data-a="crear"]'); await wait(40); const code = a.window.document.querySelector(".code").textContent;
-  click(b, '[data-a="go"][data-v="sala"]'); b.window.document.getElementById("fc").value = code; click(b, '[data-a="unir"]'); await wait(40);
+  ir(b, "sala"); b.window.document.getElementById("fc").value = code; click(b, '[data-a="unir"]'); await wait(40);
   if (!txt(a).includes("2 conectados") || !txt(b).includes("Esperando a que Lucía empiece")) throw new Error("presencia: " + txt(a).slice(0, 220) + " || " + txt(b).slice(0, 220));
   click(a, '[data-a="rosala"]'); await wait(40); for (let i = 0; i < 20; i++) click(a, '[data-a="sig"]'); await wait(40);
   if (!txt(b).includes("21 de 82") || b.window.document.querySelector('[data-a="sig"]')) throw new Error("no sincroniza: " + txt(b).slice(0, 200));
@@ -52,9 +54,9 @@ const txt = (d) => d.window.document.querySelector("#app").textContent; const wa
   if (velas.length !== 2) throw new Error("duplicó la veladora del día: " + velas.length);
   // alguien que entra tarde a la sala alcanza a quien dirige
   const a2 = mkWin("&x=2"), b2 = mkWin("&x=3"); await wait(40);
-  click(a2, '[data-a="go"][data-v="sala"]'); click(a2, '[data-a="crear"]'); await wait(40); const code2 = a2.window.document.querySelector(".code").textContent;
+  ir(a2, "sala"); click(a2, '[data-a="crear"]'); await wait(40); const code2 = a2.window.document.querySelector(".code").textContent;
   click(a2, '[data-a="rosala"]'); await wait(20); for (let i = 0; i < 10; i++) click(a2, '[data-a="sig"]'); await wait(40);
-  click(b2, '[data-a="go"][data-v="sala"]'); b2.window.document.getElementById("fc").value = code2; click(b2, '[data-a="unir"]'); await wait(80);
+  ir(b2, "sala"); b2.window.document.getElementById("fc").value = code2; click(b2, '[data-a="unir"]'); await wait(80);
   if (!txt(b2).includes("11 de 82")) throw new Error("quien entra tarde no alcanza la cuenta: " + txt(b2).slice(0, 200));
   click(a2, '[data-a="sig"]'); await wait(40); if (!txt(b2).includes("12 de 82")) throw new Error("no sigue después de entrar tarde: " + txt(b2).slice(0, 120));
   // cuenta de Google: guarda el avance en la nube y lo recupera en otro teléfono

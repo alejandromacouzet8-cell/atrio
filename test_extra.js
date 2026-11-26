@@ -42,7 +42,7 @@ ok(txt(f).includes("Hace 60 días") || txt(f).includes("Hace 2 meses"), "días d
 fd.value = "2027-01-01"; f.window.document.getElementById("fcd").dispatchEvent(new f.window.Event("change", { bubbles: true }));
 ok(JSON.parse(f.window.localStorage.getItem("atrio1")).cf === "2026-09-25", "acepta fecha futura");
 click(f, '[data-a="cfhoy"]'); ok(txt(f).includes("Hoy") && JSON.parse(f.window.localStorage.getItem("atrio1")).cf === "2026-11-24", "me confesé hoy");
-const src = fs.readFileSync("src/app.js", "utf8"); ok(src.includes("datos: Object.assign({}, S, { cf: undefined })"), "la confesión no debe subir a la cuenta");
+const src = fs.readFileSync("src/app.js", "utf8"); ok(/datos: Object\.assign\(\{\}, S, \{ cf: undefined[,} ]/.test(src), "la confesión no debe subir a la cuenta");
 
 // 4) música: el botón cambia y se recuerda (sin sonido en pruebas)
 let g = open("https://atrio.test/?fecha=2026-11-24", base);
