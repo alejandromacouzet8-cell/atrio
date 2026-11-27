@@ -987,7 +987,10 @@ html,body{background:#06191C}
 .fvv .pp{width:56px}
 .fvz{display:flex;gap:10px;margin-top:14px}
 .fvz .vzr{flex:1;display:flex;gap:8px}
-.fvz .vzb{padding:0 12px;white-space:nowrap}
+.fvz .vzr{min-width:0}
+.fvz .vzb{padding:0 14px;min-width:0;line-height:19px;text-align:center}
+.fvz .vzb.ic2{padding:0}
+.fvz .vzb span{min-width:0}
 .fvn{margin-top:8px}
 .fbs{display:flex;flex-direction:column;gap:10px;margin-top:16px}
 .fbs .btn svg{flex:none}
@@ -1770,13 +1773,16 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     return `<span class="orb">` + L.map((p, i) => { const pr = p.presence || {}, id = esc(p.peer), a = ((n === 1 ? -90 : a0 + (i * ab) / (n - 1)) * Math.PI) / 180, x = ((130 + R * Math.cos(a)) / 260) * 100, y = ((100 + R * Math.sin(a)) / 270) * 100, cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]);
       return `<span class="of${pr.v ? " vz" : ""}${p.isMe ? " me" : ""}${pr.lead ? " ld" : ""}" data-p="${id}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%" title="${esc(p.isMe ? "Tú" : pr.n || "Alguien")}"><span class="cara">${cam ? `<video data-v="${id}" autoplay playsinline muted></video>` : `<b>${esc((pr.n || "?").slice(0, 1).toUpperCase())}</b>`}${pr.v === 2 ? `<i class="mm">${I.mute}</i>` : ""}</span></span>`; }).join("") + "</span>"; };
   function cuelga(id) { if (!VZ || !VZ.pcs[id]) return; try { VZ.pcs[id].close(); } catch (_) {} delete VZ.pcs[id]; delete VZ.cola[id]; delete VZ.rs[id]; delete VZ.an[id]; const a = document.getElementById("vz-" + id); if (a) { a.srcObject = null; a.remove(); } pinta(); }
-  function par(id, ofrece) {
+  function par(id, ofrece, k0) {
     if (!VZ) return null; if (VZ.pcs[id]) return VZ.pcs[id];
-    const pc = new RTCPeerConnection(ICE); VZ.pcs[id] = pc; VZ.cola[id] = VZ.cola[id] || []; pc._t = Date.now(); pc._c = [];
+    const pc = new RTCPeerConnection(ICE); VZ.pcs[id] = pc; VZ.cola[id] = []; pc._t = Date.now(); pc._c = [];
+    // Cada intento lleva su número (lo pone quien llama y el otro lo repite): así una respuesta o unas rutas que
+    // llegan tarde, de un intento anterior, no se mezclan con el intento nuevo y lo dejan mudo.
+    pc._k = ofrece ? Math.random().toString(36).slice(2, 8) : k0;
     VZ.st.getAudioTracks().forEach((t) => pc.addTrack(t, VZ.st));
     // el canal de video se abre desde el principio, vacío; al prender la cámara solo se le pone la imagen
     if (ofrece) { const tv = pc.addTransceiver("video", { direction: "sendrecv" }); if (VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); }
-    pc.onicecandidate = (e) => { if (!e.candidate) return; pc._c.push(e.candidate.toJSON ? e.candidate.toJSON() : e.candidate); if (!pc._ct) pc._ct = setTimeout(() => { pc._ct = 0; const d = pc._c.splice(0); if (d.length && sala && VZ && VZ.pcs[id] === pc) sala.manda({ para: id, t: "ices", d }); }, 250); };
+    pc.onicecandidate = (e) => { if (!e.candidate) return; pc._c.push(e.candidate.toJSON ? e.candidate.toJSON() : e.candidate); if (!pc._ct) pc._ct = setTimeout(() => { pc._ct = 0; const d = pc._c.splice(0); if (d.length && sala && VZ && VZ.pcs[id] === pc) sala.manda({ para: id, t: "ices", k: pc._k, d }); }, 250); };
     pc.ontrack = (e) => {
       const ms = VZ.rs[id] || (VZ.rs[id] = new MediaStream()); if (!ms.getTracks().includes(e.track)) ms.addTrack(e.track);
       if (e.track.kind === "video") { e.track.onunmute = () => pegaVideos(); return; }
@@ -1785,7 +1791,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       mide(id, new MediaStream([e.track]));
     };
     pc.onconnectionstatechange = () => { if (!VZ || VZ.pcs[id] !== pc) return; const s = pc.connectionState; pc._d = s === "disconnected" ? Date.now() : 0; if (s === "failed" || s === "closed") cuelga(id); else if (s === "connected") { vibra(1); pinta(); } };
-    if (ofrece) pc.createOffer().then((o) => pc.setLocalDescription(o)).then(() => { if (sala) sala.manda({ para: id, t: "offer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id));
+    if (ofrece) pc.createOffer().then((o) => pc.setLocalDescription(o)).then(() => { if (sala && VZ && VZ.pcs[id] === pc) sala.manda({ para: id, t: "offer", k: pc._k, d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id));
     return pc;
   }
   // soltar una conexión que no cuajó, para volver a intentarla desde cero
@@ -1808,9 +1814,9 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     // el de identificador menor llama; el otro contesta. Así cada par se conecta una sola vez.
     if (q.t === "hola") { if (!q.para) sala.manda({ para: id, t: "hola" }); if (sala.yo < id) { if (q.para && VZ.pcs[id] && !viva(VZ.pcs[id], Date.now() + 6000)) suelta(id); if (!VZ.pcs[id]) par(id, true); } return; }
     if (q.t === "adios") { cuelga(id); return; }
-    if (q.t === "offer") { if (VZ.pcs[id]) suelta(id); const pc = par(id, false); pc.setRemoteDescription(q.d).then(() => { const tv = vidT(pc); if (tv) { tv.direction = "sendrecv"; if (VZ && VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); } return pc.createAnswer(); }).then((a) => pc.setLocalDescription(a)).then(() => { vacia(id); sala.manda({ para: id, t: "answer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id)); return; }
-    if (q.t === "answer") { const pc = VZ.pcs[id]; if (pc && pc.signalingState === "have-local-offer") pc.setRemoteDescription(q.d).then(() => vacia(id)).catch(() => cuelga(id)); return; }
-    if (q.t === "ice" || q.t === "ices") { const L = q.t === "ice" ? [q.d] : q.d || [], pc = VZ.pcs[id]; if (!pc || !pc.remoteDescription) { VZ.cola[id] = (VZ.cola[id] || []).concat(L); return; } L.forEach((c) => pc.addIceCandidate(c).catch(() => {})); }
+    if (q.t === "offer") { if (VZ.pcs[id]) suelta(id); const pc = par(id, false, q.k); pc.setRemoteDescription(q.d).then(() => { const tv = vidT(pc); if (tv) { tv.direction = "sendrecv"; if (VZ && VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); } return pc.createAnswer(); }).then((a) => pc.setLocalDescription(a)).then(() => { if (!VZ || VZ.pcs[id] !== pc) return; vacia(id); sala.manda({ para: id, t: "answer", k: pc._k, d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => { if (VZ && VZ.pcs[id] === pc) cuelga(id); }); return; }
+    if (q.t === "answer") { const pc = VZ.pcs[id]; if (pc && (q.k === undefined || q.k === pc._k) && pc.signalingState === "have-local-offer") pc.setRemoteDescription(q.d).then(() => { if (VZ && VZ.pcs[id] === pc) vacia(id); }).catch(() => { if (VZ && VZ.pcs[id] === pc) cuelga(id); }); return; }
+    if (q.t === "ice" || q.t === "ices") { const L = q.t === "ice" ? [q.d] : q.d || [], pc = VZ.pcs[id]; if (!pc || (q.k !== undefined && pc._k !== undefined && q.k !== pc._k)) return; if (!pc.remoteDescription) { VZ.cola[id] = (VZ.cola[id] || []).concat(L); return; } L.forEach((c) => pc.addIceCandidate(c).catch(() => {})); }
   }
   async function prendeVoz() {
     if (VZ || !hayVoz()) return;
@@ -1841,6 +1847,8 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
     const lb = VZ.mudo ? (chico ? "Silenciado" : "Te silenciaste") : oidos() ? "Te escuchan" : conVoz() > 1 ? "Conectando…" : chico ? "Micrófono abierto" : "Esperando a los demás";
     return `<span class="vzr${chico ? " ch" : ""}"><button class="vzb on${VZ.mudo ? " mu" : ""}" data-a="mudo" aria-pressed="${!VZ.mudo}">${VZ.mudo ? I.mute : I.mic}<span>${lb}</span></button><button class="vzb ic2${VZ.cam ? " on" : ""}" data-a="cam" aria-label="${VZ.cam ? "Apagar cámara" : "Encender cámara"}" aria-pressed="${!!VZ.cam}">${VZ.cam ? I.cam : I.camno}</button>${chico ? "" : `<button class="vzb" data-a="cuelga">Colgar</button>`}</span>`;
   };
+  if (Q.get("demo") || Q.get("prueba")) window.atrioVp = () => Promise.all(Object.keys(VZ ? VZ.pcs : {}).filter((id) => VZ.pcs[id].connectionState !== "connected").map((id) => VZ.pcs[id].getStats().then((st) => { const o = { id: id.slice(0, 4), k: VZ.pcs[id]._k, pares: [], tr: "", loc: 0, rem: 0 }; st.forEach((r) => { if (r.type === "candidate-pair") o.pares.push(r.state + (r.nominated ? "*" : "") + ":" + (r.requestsSent || 0) + ">" + (r.responsesReceived || 0)); if (r.type === "transport") o.tr = r.dtlsState + "/" + r.iceState + "/" + r.iceRole; if (r.type === "local-candidate") o.loc++; if (r.type === "remote-candidate") o.rem++; }); return o; })));
+  if (Q.get("demo") || Q.get("prueba")) window.atrioVd = () => ({ yo: sala && sala.yo, voz: !!VZ, pcs: VZ ? Object.keys(VZ.pcs).map((id) => { const pc = VZ.pcs[id]; const cl = ((pc.localDescription && pc.localDescription.sdp) || "").split("a=candidate").length - 1, cr = ((pc.remoteDescription && pc.remoteDescription.sdp) || "").split("a=candidate").length - 1; return id.slice(0, 4) + ":" + pc.connectionState + "/" + pc.signalingState + "/" + pc.iceConnectionState + "/" + pc.iceGatheringState + "/k" + pc._k + "/loc" + cl + "/rem" + cr + "/cola" + (VZ.cola[id] || []).length + "/" + Math.round((Date.now() - pc._t) / 1000) + "s"; }) : [], gente: peersS.map((p) => p.peer.slice(0, 4) + ":" + ((p.presence || {}).v || 0)) });
   if (Q.get("demo") || Q.get("prueba")) window.atrioVoz = () => (VZ ? { mudo: VZ.mudo, pcs: Object.keys(VZ.pcs).map((k) => VZ.pcs[k].connectionState), audios: document.querySelectorAll("#voces audio").length } : null);
   /* ---------- rosario juntos: cada quien reza su misterio cuando puede, y el rosario del día se va llenando ---------- */
   if (!Array.isArray(S.jt)) S.jt = [];
@@ -2526,7 +2534,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
           ${curso ? `<p class="fvs">${faseDe(g)}. Entras y sigues desde ahí.</p>` : otros.length ? "" : `<p class="fvs">Cuando alguien abra la liga, aquí aparece su cara.</p>`}
           ${tiles()}${hayVoz() ? `<div class="fvz">${botVoz()}</div>${VZ ? `<p class="note c fvn">${conVoz() > 1 ? "Usa audífonos para que no haya eco." : "Cuando otro toque Hablar, se van a escuchar."}</p>` : conVoz() ? `<p class="note c fvn">${conVoz() === 1 ? "1 persona habla" : conVoz() + " personas hablan"} en la sala. Toca Hablar para escucharlos.</p>` : ""}` : ""}</div>`;
       const bRos = curso ? `<button class="btn go z" data-a="funir">Unirme al rosario</button>` : `<button class="btn ${sola ? "gh" : "go"} z" data-a="fros">${otros.length ? "Empezar el rosario con " + (otros.length === 1 ? esc(nombresP(otros)) : "ellos") : "Empezar el rosario"}</button>`;
-      const bInv = `<button class="btn ${sola && !curso ? "go" : "gh"} z" data-a="fcomp">${I.comp}<span>${sola ? "Mandar la liga por WhatsApp" : "Invitar a alguien más"}</span></button>`;
+      const bInv = `<button class="btn ${sola && !curso ? "go" : "gh"} z" data-a="fcomp">${I.comp}<span>${sola ? "Mandar la liga por WhatsApp" : enSala && !otros.length ? "Avisarles que estoy aquí" : "Invitar a alguien más"}</span></button>`;
       const gente = d && (d.miembros || []).length && (!sola || d.aves > 0) ? `<p class="tit z">Quién ha rezado</p><div class="fmg z">${d.miembros.slice(0, 14).map((m) => `<div class="fmi${m.hoy ? " hoy" : ""}"><span class="fma">${esc((m.n || "?").slice(0, 1).toUpperCase())}</span><span class="g"><b>${esc(m.n)}${m.yo ? " <i>(tú)</i>" : ""}</b><small>${m.aves ? (m.ros ? cuantos(m.ros, "rosario", "rosarios") + " · " : m.mis ? cuantos(m.mis, "misterio", "misterios") + " · " : "") + cuantos(m.aves, "Ave María", "Ave Marías") : "Todavía no reza aquí"}</small></span>${m.hoy ? `<span class="fmh">${I.ok}Hoy</span>` : ""}</div>`).join("")}${d.gente > 14 ? `<p class="note c">y ${d.gente - 14} más</p>` : ""}</div>` : "";
       const ult = d && (d.reciente || []).length ? `<p class="tit z">Lo último</p><ul class="ful z">${d.reciente.slice(0, 4).map((r) => `<li><span><b>${esc(r.n)}</b> ${r.c ? "rezó el rosario completo" : r.mis === 1 ? "rezó un misterio" : "rezó " + r.mis + " misterios"}</span><small>${famCuando(r.h)}</small></li>`).join("")}</ul>` : "";
       return `<section class="v d n in fam">${sky()}<div class="hd z"><button class="ic" data-a="go" data-v="hoy" data-b="1" aria-label="Regresar">${I.back}</button><p class="ru">Rosario en familia</p><button class="ic" data-a="fcomp" aria-label="Compartir la liga de la familia">${I.comp}</button></div>
@@ -2628,7 +2636,7 @@ const CONTRI = "Señor mío Jesucristo, Dios y hombre verdadero, Creador, Padre 
       const st = ros.p[ros.i], M = MIS[ros.set], o = ORA[st.t], mm = st.m != null ? M.m[st.m] : null, g = guia(), sigo = ros.sala && !lead, G = !!ros.g, cl = (ros.sala ? " sl" : "") + (ros.an ? " " + ros.an : "");
       const nom = st.t === "let" ? "Letanías" : st.t === "mis" ? "" : o.n, cta = st.of ? st.k + " de " + st.of : "", don = mm ? ORD[st.m] + " misterio: " + mm[0] : st.l ? st.l : st.fin ? "Para terminar" : "Para empezar";
       const it = ros.jt && JT[ros.jt.id] && JT[ros.jt.id].intencion ? ["Su intención", JT[ros.jt.id].intencion] : ros.fam && FM[ros.fam] && FM[ros.fam].intencion ? ["La intención de tu familia", FM[ros.fam].intencion] : S.pi ? ["Tu intención", S.pi] : null, solos = sigo && tSinG && Date.now() - tSinG > 8500 && !(g && g.presence.on);
-            const tk = G ? "g" : "t", tip0 = !(S.tp || {})[tk] && !Q.get("notip") ? `<div class="tip" role="dialog" aria-label="Consejo"><p>${G ? "<b>¿Quieres leer las oraciones?</b> Toca este botón y ves cada una completa." : "<b>¿Te lo sabes de memoria?</b> Toca este botón y ves el rosario en grande, sin texto."}</p><p class="tip2">${G ? "Para avanzar, toca el rosario o «Amén»." : "Ahí avanzas tocando el rosario o «Amén»."}</p><button class="tipok" data-a="tipok" data-k="${tk}">Entendido</button></div>` : "", tip = tip0;
+            const tk = G ? "g" : "t", tip0 = !(S.tp || {})[tk] && !Q.get("notip") ? `<div class="tip" role="dialog" aria-label="Consejo"><p>${G ? "<b>¿Quieres leer las oraciones?</b> Toca este botón y ves cada una completa." : "<b>¿Te lo sabes de memoria?</b> Toca este botón y ves el rosario en grande, sin texto."}</p><p class="tip2">${ros.sala && !lead ? "Quien dirige va pasando las cuentas; tú respondes." : G ? "Para avanzar, toca el rosario o «Amén»." : "Ahí avanzas tocando el rosario o «Amén»."}</p><button class="tipok" data-a="tipok" data-k="${tk}">Entendido</button></div>` : "", tip = tip0;
       const tipM = !tip && !S.mu && !(S.tp || {}).mu && !Q.get("notip") && ros.i >= 1 ? `<div class="tip tm" role="dialog" aria-label="Consejo"><p><b>¿Rezas con música?</b> Toca la notita y te acompaña un coro con órgano, como en una capilla.</p><div class="tipbs"><button class="lk" data-a="tipok" data-k="mu">Sin música</button><button class="tipok" data-a="mu">Poner música</button></div></div>` : "";
       const cab = `<div class="hd z${tipM ? " htm" : ""}"><button class="ic" data-a="cerrar" aria-label="Cerrar el rosario">${I.x}</button><p class="ru">${M.n}<small class="cnt">${ros.i + 1} de ${ros.p.length}</small></p>${botMu()}${tipM}</div>`;
       const vis = `<button class="ra vt${tip ? " tipon" : ""}" data-a="vista" aria-label="${G ? "Ver la oración escrita" : "Ver el rosario en grande"}">${G ? I.txt : I.ros}</button>`;
