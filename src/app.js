@@ -355,13 +355,16 @@
     return `<span class="orb">` + L.map((p, i) => { const pr = p.presence || {}, id = esc(p.peer), a = ((n === 1 ? -90 : a0 + (i * ab) / (n - 1)) * Math.PI) / 180, x = ((130 + R * Math.cos(a)) / 260) * 100, y = ((100 + R * Math.sin(a)) / 270) * 100, cam = pr.c && VZ && (p.isMe ? VZ.cam : VZ.rs[p.peer]);
       return `<span class="of${pr.v ? " vz" : ""}${p.isMe ? " me" : ""}${pr.lead ? " ld" : ""}" data-p="${id}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%" title="${esc(p.isMe ? "Tú" : pr.n || "Alguien")}"><span class="cara">${cam ? `<video data-v="${id}" autoplay playsinline muted></video>` : `<b>${esc((pr.n || "?").slice(0, 1).toUpperCase())}</b>`}${pr.v === 2 ? `<i class="mm">${I.mute}</i>` : ""}</span></span>`; }).join("") + "</span>"; };
   function cuelga(id) { if (!VZ || !VZ.pcs[id]) return; try { VZ.pcs[id].close(); } catch (_) {} delete VZ.pcs[id]; delete VZ.cola[id]; delete VZ.rs[id]; delete VZ.an[id]; const a = document.getElementById("vz-" + id); if (a) { a.srcObject = null; a.remove(); } pinta(); }
-  function par(id, ofrece) {
+  function par(id, ofrece, k0) {
     if (!VZ) return null; if (VZ.pcs[id]) return VZ.pcs[id];
-    const pc = new RTCPeerConnection(ICE); VZ.pcs[id] = pc; VZ.cola[id] = VZ.cola[id] || []; pc._t = Date.now(); pc._c = [];
+    const pc = new RTCPeerConnection(ICE); VZ.pcs[id] = pc; VZ.cola[id] = []; pc._t = Date.now(); pc._c = [];
+    // Cada intento lleva su número (lo pone quien llama y el otro lo repite): así una respuesta o unas rutas que
+    // llegan tarde, de un intento anterior, no se mezclan con el intento nuevo y lo dejan mudo.
+    pc._k = ofrece ? Math.random().toString(36).slice(2, 8) : k0;
     VZ.st.getAudioTracks().forEach((t) => pc.addTrack(t, VZ.st));
     // el canal de video se abre desde el principio, vacío; al prender la cámara solo se le pone la imagen
     if (ofrece) { const tv = pc.addTransceiver("video", { direction: "sendrecv" }); if (VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); }
-    pc.onicecandidate = (e) => { if (!e.candidate) return; pc._c.push(e.candidate.toJSON ? e.candidate.toJSON() : e.candidate); if (!pc._ct) pc._ct = setTimeout(() => { pc._ct = 0; const d = pc._c.splice(0); if (d.length && sala && VZ && VZ.pcs[id] === pc) sala.manda({ para: id, t: "ices", d }); }, 250); };
+    pc.onicecandidate = (e) => { if (!e.candidate) return; pc._c.push(e.candidate.toJSON ? e.candidate.toJSON() : e.candidate); if (!pc._ct) pc._ct = setTimeout(() => { pc._ct = 0; const d = pc._c.splice(0); if (d.length && sala && VZ && VZ.pcs[id] === pc) sala.manda({ para: id, t: "ices", k: pc._k, d }); }, 250); };
     pc.ontrack = (e) => {
       const ms = VZ.rs[id] || (VZ.rs[id] = new MediaStream()); if (!ms.getTracks().includes(e.track)) ms.addTrack(e.track);
       if (e.track.kind === "video") { e.track.onunmute = () => pegaVideos(); return; }
@@ -370,7 +373,7 @@
       mide(id, new MediaStream([e.track]));
     };
     pc.onconnectionstatechange = () => { if (!VZ || VZ.pcs[id] !== pc) return; const s = pc.connectionState; pc._d = s === "disconnected" ? Date.now() : 0; if (s === "failed" || s === "closed") cuelga(id); else if (s === "connected") { vibra(1); pinta(); } };
-    if (ofrece) pc.createOffer().then((o) => pc.setLocalDescription(o)).then(() => { if (sala) sala.manda({ para: id, t: "offer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id));
+    if (ofrece) pc.createOffer().then((o) => pc.setLocalDescription(o)).then(() => { if (sala && VZ && VZ.pcs[id] === pc) sala.manda({ para: id, t: "offer", k: pc._k, d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id));
     return pc;
   }
   // soltar una conexión que no cuajó, para volver a intentarla desde cero
@@ -393,9 +396,9 @@
     // el de identificador menor llama; el otro contesta. Así cada par se conecta una sola vez.
     if (q.t === "hola") { if (!q.para) sala.manda({ para: id, t: "hola" }); if (sala.yo < id) { if (q.para && VZ.pcs[id] && !viva(VZ.pcs[id], Date.now() + 6000)) suelta(id); if (!VZ.pcs[id]) par(id, true); } return; }
     if (q.t === "adios") { cuelga(id); return; }
-    if (q.t === "offer") { if (VZ.pcs[id]) suelta(id); const pc = par(id, false); pc.setRemoteDescription(q.d).then(() => { const tv = vidT(pc); if (tv) { tv.direction = "sendrecv"; if (VZ && VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); } return pc.createAnswer(); }).then((a) => pc.setLocalDescription(a)).then(() => { vacia(id); sala.manda({ para: id, t: "answer", d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => cuelga(id)); return; }
-    if (q.t === "answer") { const pc = VZ.pcs[id]; if (pc && pc.signalingState === "have-local-offer") pc.setRemoteDescription(q.d).then(() => vacia(id)).catch(() => cuelga(id)); return; }
-    if (q.t === "ice" || q.t === "ices") { const L = q.t === "ice" ? [q.d] : q.d || [], pc = VZ.pcs[id]; if (!pc || !pc.remoteDescription) { VZ.cola[id] = (VZ.cola[id] || []).concat(L); return; } L.forEach((c) => pc.addIceCandidate(c).catch(() => {})); }
+    if (q.t === "offer") { if (VZ.pcs[id]) suelta(id); const pc = par(id, false, q.k); pc.setRemoteDescription(q.d).then(() => { const tv = vidT(pc); if (tv) { tv.direction = "sendrecv"; if (VZ && VZ.cam) tv.sender.replaceTrack(VZ.cam).catch(() => {}); } return pc.createAnswer(); }).then((a) => pc.setLocalDescription(a)).then(() => { if (!VZ || VZ.pcs[id] !== pc) return; vacia(id); sala.manda({ para: id, t: "answer", k: pc._k, d: { type: pc.localDescription.type, sdp: pc.localDescription.sdp } }); }).catch(() => { if (VZ && VZ.pcs[id] === pc) cuelga(id); }); return; }
+    if (q.t === "answer") { const pc = VZ.pcs[id]; if (pc && (q.k === undefined || q.k === pc._k) && pc.signalingState === "have-local-offer") pc.setRemoteDescription(q.d).then(() => { if (VZ && VZ.pcs[id] === pc) vacia(id); }).catch(() => { if (VZ && VZ.pcs[id] === pc) cuelga(id); }); return; }
+    if (q.t === "ice" || q.t === "ices") { const L = q.t === "ice" ? [q.d] : q.d || [], pc = VZ.pcs[id]; if (!pc || (q.k !== undefined && pc._k !== undefined && q.k !== pc._k)) return; if (!pc.remoteDescription) { VZ.cola[id] = (VZ.cola[id] || []).concat(L); return; } L.forEach((c) => pc.addIceCandidate(c).catch(() => {})); }
   }
   async function prendeVoz() {
     if (VZ || !hayVoz()) return;
@@ -426,6 +429,8 @@
     const lb = VZ.mudo ? (chico ? "Silenciado" : "Te silenciaste") : oidos() ? "Te escuchan" : conVoz() > 1 ? "Conectando…" : chico ? "Micrófono abierto" : "Esperando a los demás";
     return `<span class="vzr${chico ? " ch" : ""}"><button class="vzb on${VZ.mudo ? " mu" : ""}" data-a="mudo" aria-pressed="${!VZ.mudo}">${VZ.mudo ? I.mute : I.mic}<span>${lb}</span></button><button class="vzb ic2${VZ.cam ? " on" : ""}" data-a="cam" aria-label="${VZ.cam ? "Apagar cámara" : "Encender cámara"}" aria-pressed="${!!VZ.cam}">${VZ.cam ? I.cam : I.camno}</button>${chico ? "" : `<button class="vzb" data-a="cuelga">Colgar</button>`}</span>`;
   };
+  if (Q.get("demo") || Q.get("prueba")) window.atrioVp = () => Promise.all(Object.keys(VZ ? VZ.pcs : {}).filter((id) => VZ.pcs[id].connectionState !== "connected").map((id) => VZ.pcs[id].getStats().then((st) => { const o = { id: id.slice(0, 4), k: VZ.pcs[id]._k, pares: [], tr: "", loc: 0, rem: 0 }; st.forEach((r) => { if (r.type === "candidate-pair") o.pares.push(r.state + (r.nominated ? "*" : "") + ":" + (r.requestsSent || 0) + ">" + (r.responsesReceived || 0)); if (r.type === "transport") o.tr = r.dtlsState + "/" + r.iceState + "/" + r.iceRole; if (r.type === "local-candidate") o.loc++; if (r.type === "remote-candidate") o.rem++; }); return o; })));
+  if (Q.get("demo") || Q.get("prueba")) window.atrioVd = () => ({ yo: sala && sala.yo, voz: !!VZ, pcs: VZ ? Object.keys(VZ.pcs).map((id) => { const pc = VZ.pcs[id]; const cl = ((pc.localDescription && pc.localDescription.sdp) || "").split("a=candidate").length - 1, cr = ((pc.remoteDescription && pc.remoteDescription.sdp) || "").split("a=candidate").length - 1; return id.slice(0, 4) + ":" + pc.connectionState + "/" + pc.signalingState + "/" + pc.iceConnectionState + "/" + pc.iceGatheringState + "/k" + pc._k + "/loc" + cl + "/rem" + cr + "/cola" + (VZ.cola[id] || []).length + "/" + Math.round((Date.now() - pc._t) / 1000) + "s"; }) : [], gente: peersS.map((p) => p.peer.slice(0, 4) + ":" + ((p.presence || {}).v || 0)) });
   if (Q.get("demo") || Q.get("prueba")) window.atrioVoz = () => (VZ ? { mudo: VZ.mudo, pcs: Object.keys(VZ.pcs).map((k) => VZ.pcs[k].connectionState), audios: document.querySelectorAll("#voces audio").length } : null);
   /* ---------- rosario juntos: cada quien reza su misterio cuando puede, y el rosario del día se va llenando ---------- */
   if (!Array.isArray(S.jt)) S.jt = [];

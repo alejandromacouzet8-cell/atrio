@@ -957,7 +957,10 @@ html,body{background:#06191C}
 .fvv .pp{width:56px}
 .fvz{display:flex;gap:10px;margin-top:14px}
 .fvz .vzr{flex:1;display:flex;gap:8px}
-.fvz .vzb{padding:0 12px;white-space:nowrap}
+.fvz .vzr{min-width:0}
+.fvz .vzb{padding:0 14px;min-width:0;line-height:19px;text-align:center}
+.fvz .vzb.ic2{padding:0}
+.fvz .vzb span{min-width:0}
 .fvn{margin-top:8px}
 .fbs{display:flex;flex-direction:column;gap:10px;margin-top:16px}
 .fbs .btn svg{flex:none}
